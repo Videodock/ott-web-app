@@ -1,0 +1,11 @@
+html {
+  padding-top: env(safe-area-inset-top, 0);
+  margin-bottom: env(safe-area-inset-bottom, 0);
+}
+
+// select shelf containers generated class names
+// and add paddings so the content doesn't overlap with the nodge on landscape
+div[class^="_shelfContainer"] {
+  padding-left: max(env(safe-area-inset-left), 32px);
+  padding-right: max(env(safe-area-inset-right), 32px);
+}

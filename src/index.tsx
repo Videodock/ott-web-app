@@ -7,6 +7,10 @@ import App from './App';
 
 const rootElement = document.getElementById('root');
 
+if ('Capacitor' in window) {
+  import('./bootstrap-capacitor');
+}
+
 // Use React 18's createRoot API for rendering the app and handle unavailable root element
 if (rootElement) {
   const root = createRoot(rootElement);
