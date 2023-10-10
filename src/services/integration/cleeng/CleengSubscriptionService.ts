@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 
-import SubscriptionService from '#src/services/subscription.service';
-import CleengService from '#src/services/cleeng.service';
+import SubscriptionService from '#src/services/integration/SubscriptionService';
+import CleengService from '#src/services/integration/cleeng/CleengService';
 import { addQueryParams } from '#src/utils/formatting';
 import type {
   ChangeSubscription,

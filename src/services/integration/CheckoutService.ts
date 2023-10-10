@@ -17,15 +17,19 @@ import type {
   GetDirectPostCardPayment,
   UpdateOrder,
   UpdatePaymentWithPayPal,
-  GetOffer,
+  GetOffer, CreateOrderArgs, CreateOrderResponse,
 } from '#types/checkout';
 
+export const CheckoutServiceFactoryId = Symbol('CheckoutServiceFactory');
+
+export type CheckoutServiceFactory = (integration: string | undefined) => CheckoutService | undefined;
+
 export default abstract class CheckoutService {
-  abstract getOffer: GetOffer;
+  getOffer?(): GetOffer;
 
   abstract getOffers: GetOffers;
 
-  abstract createOrder: CreateOrder;
+  abstract createOrder(order: CreateOrderArgs): Promise<CreateOrderResponse>;
 
   abstract updateOrder: UpdateOrder;
 

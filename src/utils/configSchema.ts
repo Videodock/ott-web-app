@@ -52,16 +52,20 @@ export const configSchema: SchemaOf<Config> = object({
   adSchedule: string().nullable(),
   assets: object({
     banner: string().notRequired().nullable(),
-  }).notRequired(),
-  content: array().of(contentSchema),
-  menu: array().of(menuSchema),
-  styling: stylingSchema.notRequired(),
-  features: featuresSchema.notRequired(),
+  })
+    .notRequired()
+    .default({ banner: '/images/logo.png' }),
+  content: array().of(contentSchema).default([]),
+  menu: array().of(menuSchema).default([]),
+  styling: stylingSchema.notRequired().default({ footerText: '' }),
+  features: featuresSchema.notRequired().default({}),
   integrations: object({
     cleeng: cleengSchema.notRequired(),
     jwp: jwpSchema.notRequired(),
-  }).notRequired(),
-  custom: object().notRequired(),
+  })
+    .notRequired()
+    .default({}),
+  custom: object().notRequired().default({}),
   contentSigningService: object().shape({
     // see {@link https://github.com/jquense/yup/issues/1367}
     host: string().required() as StringSchema<string>,

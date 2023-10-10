@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import InPlayer, { PurchaseDetails, Card, GetItemAccessV1, SubscriptionDetails as InplayerSubscription } from '@inplayer-org/inplayer.js';
 import { injectable } from 'inversify';
 
-import SubscriptionService from '#src/services/subscription.service';
+import SubscriptionService from '#src/services/integration/SubscriptionService';
 import type {
   ChangeSubscription,
   FetchReceipt,
@@ -35,7 +35,7 @@ interface SubscriptionDetails extends InplayerSubscription {
 }
 
 @injectable()
-export default class InplayerSubscriptionService extends SubscriptionService {
+export default class InPlayerSubscriptionService extends SubscriptionService {
   private formatCardDetails(card: Card & { card_type: string; account_id: number; currency: string }): PaymentDetail {
     const { number, exp_month, exp_year, card_name, card_type, account_id, currency } = card;
     const zeroFillExpMonth = `0${exp_month}`.slice(-2);

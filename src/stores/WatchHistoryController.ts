@@ -6,8 +6,8 @@ import { useWatchHistoryStore } from '#src/stores/WatchHistoryStore';
 import type { PlaylistItem } from '#types/playlist';
 import type { SerializedWatchHistoryItem, WatchHistoryItem } from '#types/watchHistory';
 import WatchHistoryService from '#src/services/WatchHistoryService';
-import AccountService from '#src/services/account.service';
 import type { Customer } from '#types/account';
+import type AccountService from '#src/services/integration/AccountService';
 
 @injectable()
 export default class WatchHistoryController {

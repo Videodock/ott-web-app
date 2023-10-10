@@ -34,6 +34,10 @@ interface AccountServiceFeatures {
   readonly canShowReceipts: boolean;
 }
 
+export const AccountServiceFactoryId = Symbol('AccountServiceFactory');
+
+export type AccountServiceFactory = (integration: string | undefined) => AccountService | undefined;
+
 export default abstract class AccountService {
   readonly features: AccountServiceFeatures;
 
@@ -51,7 +55,10 @@ export default abstract class AccountService {
 
   abstract logout: () => Promise<void>;
 
-  abstract getUser: ({ config }: { config: Config }) => Promise<{ user: Customer; customerConsents: CustomerConsent[] }>;
+  abstract getUser: ({ config }: { config: Config }) => Promise<{
+    user: Customer;
+    customerConsents: CustomerConsent[];
+  }>;
 
   abstract getPublisherConsents: GetPublisherConsents;
 

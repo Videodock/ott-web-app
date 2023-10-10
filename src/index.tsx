@@ -1,8 +1,10 @@
+import 'reflect-metadata'; // Required for DI / IOC container
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import 'wicg-inert';
 import { registerSW } from 'virtual:pwa-register';
 
+import './containers';
 import App from './App';
 
 const rootElement = document.getElementById('root');

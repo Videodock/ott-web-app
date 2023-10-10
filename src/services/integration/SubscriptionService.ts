@@ -11,6 +11,10 @@ import type {
   GetActiveSubscription,
 } from '#types/subscription';
 
+export const SubscriptionServiceFactoryId = Symbol('SubscriptionServiceFactory');
+
+export type SubscriptionServiceFactory = (integration: string | undefined) => SubscriptionService | undefined;
+
 export default abstract class SubscriptionService {
   abstract getActiveSubscription: GetActiveSubscription;
 

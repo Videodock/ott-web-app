@@ -9,6 +9,7 @@ type ConfigState = {
   adScheduleData: AdSchedule | null | undefined;
   getSandbox: () => boolean;
   getAuthProvider: () => string | undefined;
+  getAuthProviderName: () => string | undefined;
 };
 
 export const useConfigStore = createStore<ConfigState>('ConfigStore', (_, get) => ({
@@ -44,6 +45,14 @@ export const useConfigStore = createStore<ConfigState>('ConfigStore', (_, get) =
     if (cleeng?.id) return !!cleeng.useSandbox;
 
     return true;
+  },
+
+  getAuthProviderName: () => {
+    const { cleeng, jwp } = get().config?.integrations;
+
+    if (jwp?.clientId) return 'inplayer';
+
+    if (cleeng?.id) return 'cleeng';
   },
 
   getAuthProvider: (): string | undefined => {

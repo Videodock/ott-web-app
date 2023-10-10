@@ -15,10 +15,11 @@ type Props = {
   item: PlaylistItem;
 };
 
+const favoritesController = getModule(FavoritesController);
+
 const FavoriteButton: React.VFC<Props> = ({ item }) => {
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
-  const favoritesController = getModule(FavoritesController);
 
   const { isFavorite, clearWarning, warning } = useFavoritesStore((state) => ({
     isFavorite: !!item && state.hasItem(item),
@@ -28,7 +29,7 @@ const FavoriteButton: React.VFC<Props> = ({ item }) => {
 
   const onFavoriteButtonClick = useCallback(async () => {
     await favoritesController.toggleFavorite(item);
-  }, [item, favoritesController]);
+  }, [item]);
 
   useEffect(() => {
     // clear warning on unmount (probably by navigating away from the page using the back button)

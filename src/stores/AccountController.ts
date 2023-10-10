@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { injectable, optional } from 'inversify';
+import { injectable, inject, optional } from 'inversify';
 
 import { useProfileStore } from './ProfileStore';
 import FavoritesController from './FavoritesController';
@@ -24,14 +24,20 @@ import type {
 } from '#types/account';
 import type { Offer } from '#types/checkout';
 import { unpersistProfile } from '#src/hooks/useProfiles';
-import SubscriptionService from '#src/services/subscription.service';
-import AccountService from '#src/services/account.service';
-import CheckoutService from '#src/services/checkout.service';
 import { addQueryParams } from '#src/utils/formatting';
 import { simultaneousLoginWarningKey } from '#components/LoginForm/LoginForm';
 import { ACCESS_MODEL } from '#src/config';
 import { container } from '#src/modules/container';
-import { ProfileService } from '#src/services/profile.service';
+import type CheckoutService from '#src/services/integration/CheckoutService';
+import type { CheckoutServiceFactory } from '#src/services/integration/CheckoutService';
+import type SubscriptionService from '#src/services/integration/SubscriptionService';
+import type { SubscriptionServiceFactory } from '#src/services/integration/SubscriptionService';
+import type AccountService from '#src/services/integration/AccountService';
+import ProfileService from '#src/services/integration/ProfileService';
+import type { AccountServiceFactory } from '#src/services/integration/AccountService';
+import { AccountServiceFactoryId } from '#src/services/integration/AccountService';
+import { CheckoutServiceFactoryId } from '#src/services/integration/CheckoutService';
+import { SubscriptionServiceFactoryId } from '#src/services/integration/SubscriptionService';
 
 const PERSIST_PROFILE = 'profile';
 
@@ -47,24 +53,31 @@ enum NotificationsTypes {
 
 @injectable()
 export default class AccountController {
-  private readonly checkoutService: CheckoutService;
-  private readonly accountService: AccountService;
-  private readonly subscriptionService: SubscriptionService;
+  private readonly checkoutService?: CheckoutService;
+  private readonly accountService?: AccountService;
+  private readonly subscriptionService?: SubscriptionService;
   private readonly favoritesController?: FavoritesController;
   private readonly watchHistoryController?: WatchHistoryController;
 
   constructor(
-    checkoutService: CheckoutService,
-    accountService: AccountService,
-    subscriptionService: SubscriptionService,
+    @inject(CheckoutServiceFactoryId) checkoutServiceFactory: CheckoutServiceFactory,
+    @inject(AccountServiceFactoryId) accountServiceFactory: AccountServiceFactory,
+    @inject(SubscriptionServiceFactoryId) subscriptionServiceFactory: SubscriptionServiceFactory,
     @optional() favoritesController?: FavoritesController,
     @optional() watchHistoryController?: WatchHistoryController,
   ) {
-    this.checkoutService = checkoutService;
-    this.accountService = accountService;
-    this.subscriptionService = subscriptionService;
+    const { getAuthProviderName } = useConfigStore.getState();
+
+    this.checkoutService = checkoutServiceFactory(getAuthProviderName());
+    this.accountService = accountServiceFactory(getAuthProviderName());
+    this.subscriptionService = subscriptionServiceFactory(getAuthProviderName());
+
     this.favoritesController = favoritesController;
     this.watchHistoryController = watchHistoryController;
+
+    if (this.accountService) {
+      this.initializeAccount();
+    }
   }
 
   async initializeAccount() {
@@ -190,6 +203,7 @@ export default class AccountController {
 
     try {
       const response = await this.accountService.getUser({ config });
+
       if (response) {
         await this.afterLogin(response.user, response.customerConsents, accessModel);
       }

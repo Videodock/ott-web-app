@@ -1,7 +1,8 @@
 import InPlayer, { AccessFee, MerchantPaymentMethod } from '@inplayer-org/inplayer.js';
 import { injectable } from 'inversify';
 
-import CheckoutService from '#src/services/checkout.service';
+import CheckoutService from '#src/services/integration/CheckoutService';
+
 import type {
   AddAdyenPaymentDetails,
   CardPaymentData,
@@ -14,7 +15,6 @@ import type {
   GetEntitlementsResponse,
   GetFinalizeAdyenPayment,
   GetInitialAdyenPayment,
-  GetOffer,
   GetOffers,
   GetPaymentMethods,
   GetSubscriptionSwitch,
@@ -32,7 +32,7 @@ import type {
 import { isSVODOffer } from '#src/utils/subscription';
 
 @injectable()
-export default class InplayerCheckoutService extends CheckoutService {
+export default class InPlayerCheckoutService extends CheckoutService {
   private readonly cardPaymentProvider = 'stripe';
 
   private formatPaymentMethod(method: MerchantPaymentMethod): PaymentMethod {
@@ -91,16 +91,16 @@ export default class InplayerCheckoutService extends CheckoutService {
     } as Order;
   }
 
-  createOrder: CreateOrder = async (payload) => {
-    return {
+  async createOrder(payload) {
+    return Promise.resolve({
       errors: [],
       responseData: {
         message: '',
         order: this.formatOrder(payload),
         success: true,
       },
-    };
-  };
+    });
+  }
 
   getOffers: GetOffers = async (payload) => {
     const offers = await Promise.all(
@@ -248,45 +248,5 @@ export default class InplayerCheckoutService extends CheckoutService {
       },
       errors: [],
     };
-  };
-
-  switchSubscription: SwitchSubscription = () => {
-    throw new Error('Method is not supported');
-  };
-
-  getSubscriptionSwitch: GetSubscriptionSwitch = () => {
-    throw new Error('Method is not supported');
-  };
-
-  createAdyenPaymentSession: GetAdyenPaymentSession = () => {
-    throw new Error('Method is not supported');
-  };
-
-  initialAdyenPayment: GetInitialAdyenPayment = () => {
-    throw new Error('Method is not supported');
-  };
-
-  finalizeAdyenPayment: GetFinalizeAdyenPayment = () => {
-    throw new Error('Method is not supported');
-  };
-
-  updatePaymentMethodWithPayPal: UpdatePaymentWithPayPal = () => {
-    throw new Error('Method is not supported');
-  };
-
-  deletePaymentMethod: DeletePaymentMethod = () => {
-    throw new Error('Method is not supported');
-  };
-
-  addAdyenPaymentDetails: AddAdyenPaymentDetails = () => {
-    throw new Error('Method is not supported');
-  };
-
-  finalizeAdyenPaymentDetails: FinalizeAdyenPaymentDetails = () => {
-    throw new Error('Method is not supported');
-  };
-
-  getOffer: GetOffer = () => {
-    throw new Error('Method is not supported');
   };
 }

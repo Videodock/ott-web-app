@@ -8,24 +8,24 @@ import ApiController from '#src/stores/ApiController';
 import WatchHistoryService from '#src/services/WatchHistoryService';
 import WatchHistoryController from '#src/stores/WatchHistoryController';
 import getIntegration, { IntegrationType } from '#src/utils/getIntegration';
-import CleengService from '#src/services/cleeng.service';
-import AccountService from '#src/services/account.service';
-import CleengAccountService from '#src/services/cleeng.account.service';
-import CheckoutService from '#src/services/checkout.service';
-import CleengCheckoutService from '#src/services/cleeng.checkout.service';
-import SubscriptionService from '#src/services/subscription.service';
-import CleengSubscriptionService from '#src/services/cleeng.subscription.service';
-import InplayerAccountService from '#src/services/inplayer.account.service';
-import InplayerCheckoutService from '#src/services/inplayer.checkout.service';
-import SubscriptionJWService from '#src/services/inplayer.subscription.service';
+import CleengService from '#src/services/integration/cleeng/CleengService';
+import AccountService from '#src/services/integration/AccountService';
+import CleengAccountService from '#src/services/integration/cleeng/CleengAccountService';
+import CheckoutService from '#src/services/integration/CheckoutService';
+import CleengCheckoutService from '#src/services/integration/cleeng/CleengCheckoutService';
+import SubscriptionService from '#src/services/integration/SubscriptionService';
+import CleengSubscriptionService from '#src/services/integration/cleeng/CleengSubscriptionService';
+import InPlayerAccountService from '#src/services/integration/inplayer/InPlayerAccountService';
+import InPlayerCheckoutService from '#src/services/integration/inplayer/InPlayerCheckoutService';
+import SubscriptionJWService from '#src/services/integration/inplayer/InPlayerSubscriptionService';
 import CheckoutController from '#src/stores/CheckoutController';
 import EpgService from '#src/services/epg.service';
 import EntitlementService from '#src/services/entitlement.service';
 import FavoritesService from '#src/services/FavoritesService';
 import EpgController from '#src/stores/EpgController';
 import EntitlementController from '#src/stores/EntitlementController';
-import { ProfileService } from '#src/services/profile.service';
-import InplayerProfileService from '#src/services/inplayer.profile.service';
+import ProfileService from '#src/services/integration/ProfileService';
+import InPlayerProfileService from '#src/services/integration/inplayer/InPlayerProfileService';
 import ProfileController from '#src/stores/ProfileController';
 
 export const initApp = async (configSource: string | undefined) => {
@@ -50,10 +50,10 @@ export const initApp = async (configSource: string | undefined) => {
   }
 
   if (integrationType === IntegrationType.JWP) {
-    container.bind(AccountService).to(InplayerAccountService);
-    container.bind(CheckoutService).to(InplayerCheckoutService);
+    container.bind(AccountService).to(InPlayerAccountService);
+    container.bind(CheckoutService).to(InPlayerCheckoutService);
     container.bind(SubscriptionService).to(SubscriptionJWService);
-    container.bind(ProfileService).to(InplayerProfileService);
+    container.bind(ProfileService).to(InPlayerProfileService);
     container.bind(ProfileController).toSelf();
   }
 

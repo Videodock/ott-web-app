@@ -1,8 +1,8 @@
 import jwtDecode from 'jwt-decode';
 import { injectable } from 'inversify';
 
-import AccountService from '#src/services/account.service';
-import CleengService from '#src/services/cleeng.service';
+import AccountService from '#src/services/integration/AccountService';
+import CleengService from '#src/services/integration/cleeng/CleengService';
 import type { Config } from '#types/Config';
 import { getOverrideIP } from '#src/utils/common';
 import type {

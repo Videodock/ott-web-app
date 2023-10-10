@@ -2,7 +2,7 @@ import InPlayer, { AccountData, Env, FavoritesData, UpdateAccountData, WatchHist
 import i18next from 'i18next';
 import { injectable } from 'inversify';
 
-import AccountService from '#src/services/account.service';
+import AccountService from '#src/services/integration/AccountService';
 import { getCommonResponseData } from '#src/utils/api';
 import type { Config } from '#types/Config';
 import type {
@@ -44,7 +44,7 @@ enum InPlayerEnv {
 }
 
 @injectable()
-export default class InplayerAccountService extends AccountService {
+export default class InPlayerAccountService extends AccountService {
   constructor() {
     super({
       canUpdateEmail: false,

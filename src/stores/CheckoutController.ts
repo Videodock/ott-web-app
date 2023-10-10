@@ -1,4 +1,4 @@
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 
 import AccountController from './AccountController';
 
@@ -22,9 +22,9 @@ import type {
   GetEntitlements,
 } from '#types/checkout';
 import { useCheckoutStore } from '#src/stores/CheckoutStore';
-import CheckoutService from '#src/services/checkout.service';
 import { useConfigStore } from '#src/stores/ConfigStore';
-import SubscriptionService from '#src/services/subscription.service';
+import type CheckoutService from '#src/services/integration/CheckoutService';
+import type SubscriptionService from '#src/services/integration/SubscriptionService';
 
 @injectable()
 export default class CheckoutController {
@@ -32,9 +32,17 @@ export default class CheckoutController {
   private readonly subscriptionService: SubscriptionService;
   private readonly accountController: AccountController;
 
-  constructor(checkoutService: CheckoutService, subscriptionService: SubscriptionService, accountController: AccountController) {
-    this.checkoutService = checkoutService;
-    this.subscriptionService = subscriptionService;
+  constructor(
+    @inject('Factory<CheckoutService>') checkoutServiceFactory: (integration: string) => CheckoutService,
+    @inject('Factory<SubscriptionService>') subscriptionServiceFactory: (integration: string) => SubscriptionService,
+    accountController: AccountController
+  ) {
+    const { getAuthProviderName } = useConfigStore.getState();
+
+    const authProvider = getAuthProviderName() || '';
+
+    this.checkoutService = checkoutServiceFactory(authProvider);
+    this.subscriptionService = subscriptionServiceFactory(authProvider);
     this.accountController = accountController;
   }
 

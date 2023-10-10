@@ -1,8 +1,8 @@
 import { injectable } from 'inversify';
 
 import type { ProfilePayload, EnterProfilePayload, ProfileDetailsPayload } from '#types/account';
-import { ProfileService } from '#src/services/profile.service';
 import { useConfigStore } from '#src/stores/ConfigStore';
+import type ProfileService from '#src/services/integration/ProfileService';
 
 @injectable()
 export default class ProfileController {

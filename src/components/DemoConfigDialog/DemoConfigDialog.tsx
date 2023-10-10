@@ -12,7 +12,6 @@ import Button from '#components/Button/Button';
 import { getConfigNavigateCallback } from '#src/utils/configOverride';
 import ConfirmationDialog from '#components/ConfirmationDialog/ConfirmationDialog';
 import LoadingOverlay from '#components/LoadingOverlay/LoadingOverlay';
-import type { Config } from '#types/Config';
 import DevStackTrace from '#components/DevStackTrace/DevStackTrace';
 import { addQueryParams } from '#src/utils/formatting';
 
@@ -21,7 +20,7 @@ const DEMO_CONFIG = '225tvq1i';
 
 interface Props {
   selectedConfigSource: string | undefined;
-  configQuery: UseQueryResult<Config>;
+  configQuery: UseQueryResult<unknown>;
 }
 
 interface State {

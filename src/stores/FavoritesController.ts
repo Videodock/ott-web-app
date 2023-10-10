@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { injectable, optional } from 'inversify';
+import { injectable, inject } from 'inversify';
 
 import { useAccountStore } from '#src/stores/AccountStore';
 import { useFavoritesStore } from '#src/stores/FavoritesStore';
@@ -7,17 +7,21 @@ import { useConfigStore } from '#src/stores/ConfigStore';
 import FavoritesService from '#src/services/FavoritesService';
 import type { PlaylistItem } from '#types/playlist';
 import type { Favorite, SerializedFavorite } from '#types/favorite';
-import AccountService from '#src/services/account.service';
 import type { Customer } from '#types/account';
+import type AccountService from '#src/services/integration/AccountService';
+import type { AccountServiceFactory } from '#src/services/integration/AccountService';
+import { AccountServiceFactoryId } from '#src/services/integration/AccountService';
 
 @injectable()
 export default class FavoritesController {
   private readonly favoritesService: FavoritesService;
   private readonly accountService?: AccountService;
 
-  constructor(favoritesService: FavoritesService, @optional() accountService?: AccountService) {
+  constructor(favoritesService: FavoritesService, @inject(AccountServiceFactoryId) accountServiceFactory: AccountServiceFactory) {
+    const { getAuthProviderName } = useConfigStore.getState();
+
     this.favoritesService = favoritesService;
-    this.accountService = accountService;
+    this.accountService = accountServiceFactory(getAuthProviderName() || '');
   }
 
   async restoreFavorites() {
@@ -55,7 +59,10 @@ export default class FavoritesController {
   private updateUserFavorites(favorites: Favorite[]) {
     useAccountStore.setState((state) => ({
       ...state,
-      user: { ...(state.user as Customer), externalData: { ...state.user?.externalData, favorites: this.serializeFavorites(favorites) } },
+      user: {
+        ...(state.user as Customer),
+        externalData: { ...state.user?.externalData, favorites: this.serializeFavorites(favorites) },
+      },
     }));
   }
 
