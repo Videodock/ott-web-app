@@ -159,8 +159,11 @@ const Player: React.FC<Props> = ({
 
       playerRef.current = window.jwplayer(playerElementRef.current) as JWPlayer;
 
+      const version = window.jwplayer.version.split('+')[0] as string;
+
       // Player options are untyped
       const playerOptions: { [key: string]: unknown } = {
+        base: `https://ssl.p.jwpcdn.com/player/v/${version}`,
         advertising: adScheduleData,
         aspectratio: false,
         controls: true,
