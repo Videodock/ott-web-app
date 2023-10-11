@@ -9,7 +9,7 @@ import IconButton from '#components/IconButton/IconButton';
 import ArrowLeft from '#src/icons/ArrowLeft';
 import PlayerContainer from '#src/containers/PlayerContainer/PlayerContainer';
 
-type Props = {
+export type Props = {
   open: boolean;
   item: PlaylistItem;
   seriesItem?: PlaylistItem;

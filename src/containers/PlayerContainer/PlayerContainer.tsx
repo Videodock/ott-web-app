@@ -37,6 +37,7 @@ const PlayerContainer: React.FC<Props> = ({
   onUserActive,
   onUserInActive,
   onNext,
+  onClose,
   liveEndDateTime,
   liveFromBeginning,
   liveStartDateTime,
@@ -86,6 +87,7 @@ const PlayerContainer: React.FC<Props> = ({
       onUserActive={onUserActive}
       onUserInActive={onUserInActive}
       onNext={onNext}
+      onClose={onClose}
       onPlaylistItemCallback={handlePlaylistItemCallback}
       startTime={startTime}
       autostart={autostart}

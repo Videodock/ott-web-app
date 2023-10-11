@@ -30,6 +30,7 @@ export type Props = {
   onNext?: () => void;
   onPlaylistItem?: () => void;
   onPlaylistItemCallback?: (item: PlaylistItem) => Promise<undefined | PlaylistItem>;
+  onClose?: () => void;
 };
 
 const Player: React.FC<Props> = ({

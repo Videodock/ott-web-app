@@ -18,11 +18,16 @@ async function initPlayer (item: PlaylistItem) {
 
 const Player: React.FC<Props> = ({
   item,
+  onClose,
 }: Props) => {
   useEffect(() => {
     initPlayer(item);
 
+    // @ts-ignore -- not typed
+    const listener = CapacitorVideoPlayer.addListener('jeepCapVideoPlayerExit', onClose);
+
     return () => {
+      listener.remove();
       CapacitorVideoPlayer.exitPlayer();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
