@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 
 import { defineConfig } from 'vite';
+import type { Plugin } from 'vite';
 import type { ConfigEnv, UserConfigExport } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import eslintPlugin from 'vite-plugin-eslint';
@@ -9,6 +10,35 @@ import StylelintPlugin from 'vite-plugin-stylelint';
 import { VitePWA } from 'vite-plugin-pwa';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { Target, viteStaticCopy } from 'vite-plugin-static-copy';
+
+function CapacitorPlugin(): Plugin {
+  return {
+    name: 'capacitor-plugin',
+    enforce: 'pre',
+    resolveId: async function(specifier, importer) {
+      const srcPath = path.join(__dirname, 'src');
+      const capacitorId = specifier + '.capacitor';
+      const extensions = ['ts', 'tsx'];
+
+      // we're loading a file from the ./src folder
+      if (specifier.startsWith(srcPath) && importer !== capacitorId) {
+
+        // check if a .capacitor.{ts,tsx} variant exists
+        const result = await Promise.allSettled(extensions.map(async (ext) => {
+          await fs.promises.access(`${capacitorId}.${ext}`);
+
+          return `${capacitorId}.${ext}`
+        }));
+
+        const foundFile = result.find(settledResult => settledResult.status === 'fulfilled');
+
+        if (foundFile?.status === 'fulfilled') {
+          return foundFile.value;
+        }
+      }
+    },
+  };
+}
 
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {
   // Shorten default mode names to dev / prod
@@ -51,6 +81,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
 
   return defineConfig({
     plugins: [
+      CapacitorPlugin(),
       react(),
       eslintPlugin({ emitError: mode === 'production' || mode === 'demo' || mode === 'preview' }), // Move linting to pre-build to match dashboard
       StylelintPlugin(),
