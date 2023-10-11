@@ -1049,6 +1049,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-5.4.2.tgz#83947c7807b0441166d130a38511cf9a6d4621b1"
   integrity sha512-KsICm57H7rUOcQ+V7IOIPe87VOiXGWFrsCqAYxDWAS++hxTR7sn8Z0pcq7Ir2xS6as0ct1eZva9BokykpYaUXQ==
 
+"@capacitor/share@^5.0.6":
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/@capacitor/share/-/share-5.0.6.tgz#76d2f6f13d1596999c49a0d99d21e7a63b8ecfef"
+  integrity sha512-/dVOW7kcuuD7hWB9Z1drArIpEk+5JCoMnMrAs2c7CLp3q5PeaXNJjTkGr6RJ1OtMhsHyXc6DAFwQ4frFkmZsgw==
+
 "@capacitor/status-bar@^5.0.6":
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/@capacitor/status-bar/-/status-bar-5.0.6.tgz#281568a7f7aeacf80777702cb9947c29dc32685c"

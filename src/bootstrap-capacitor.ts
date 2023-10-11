@@ -1,6 +1,18 @@
 import { StatusBar, Style} from '@capacitor/status-bar';
+import { Share} from '@capacitor/share';
 import './styles/main-capacitor.scss';
 
-StatusBar.setStyle({ style: Style.Dark });
+async function bootstrap() {
+  console.log('Bootstrap capacitor app');
 
-console.log('Bootstrap capacitor app');
+  await StatusBar.setStyle({ style: Style.Dark });
+
+  const canShare = await Share.canShare();
+
+  // proxy share method
+  // @ts-ignore
+  navigator.share = canShare ? Share.share : undefined;
+}
+
+
+bootstrap();
