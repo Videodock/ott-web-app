@@ -11,7 +11,7 @@ import useOttAnalytics from '#src/hooks/useOttAnalytics';
 import { logDev, testId } from '#src/utils/common';
 import { useConfigStore } from '#src/stores/ConfigStore';
 
-type Props = {
+export type Props = {
   playerId: string;
   playerLicenseKey: string | undefined;
   feedId?: string;

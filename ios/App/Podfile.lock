@@ -4,11 +4,29 @@ PODS:
   - CapacitorCordova (5.4.2)
   - CapacitorStatusBar (5.0.6):
     - Capacitor
+  - google-cast-sdk (4.8.0):
+    - google-cast-sdk/Core (= 4.8.0)
+    - Protobuf (~> 3.13)
+  - google-cast-sdk/Core (4.8.0):
+    - Protobuf (~> 3.13)
+  - JwplayerCapacitor (5.0.0):
+    - Capacitor
+    - google-cast-sdk
+    - JWPlayerKit (~> 4.12.0)
+  - JWPlayerKit (4.12.1)
+  - Protobuf (3.24.3)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
+  - JwplayerCapacitor (from `../../node_modules/jwplayer-capacitor`)
+
+SPEC REPOS:
+  trunk:
+    - google-cast-sdk
+    - JWPlayerKit
+    - Protobuf
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -17,12 +35,18 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorStatusBar:
     :path: "../../node_modules/@capacitor/status-bar"
+  JwplayerCapacitor:
+    :path: "../../node_modules/jwplayer-capacitor"
 
 SPEC CHECKSUMS:
   Capacitor: 8a9db42d105f55843cd8ed2a3cb54e2b78e7f102
   CapacitorCordova: cfcc06b698481da655415985eeb2b8da363f8451
   CapacitorStatusBar: 565c0a1ebd79bb40d797606a8992b4a105885309
+  google-cast-sdk: afeb1aac0744b1bc4f70bc3db8468e33fabbff38
+  JwplayerCapacitor: cee2d74804ad94a4951d4ad349d4cbb73209d816
+  JWPlayerKit: 9059ce9802e87c1131307090b01a2f29e600fe51
+  Protobuf: 970f7ee93a3a08e3cf64859b8efd95ee32b4f87f
 
-PODFILE CHECKSUM: 816cca1e0996e5a4f8a6d3f70aad051f862b11c2
+PODFILE CHECKSUM: 7c18a7a924c78b25fe04c3ddd99c28071b9351bd
 
 COCOAPODS: 1.12.1

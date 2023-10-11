@@ -54,6 +54,7 @@
     "i18next-browser-languagedetector": "^6.1.1",
     "i18next-http-backend": "^2.2.0",
     "ini": "^3.0.1",
+    "jwplayer-capacitor": "^5.0.0",
     "jwt-decode": "^3.1.2",
     "lodash.merge": "^4.6.2",
     "marked": "^4.1.1",
