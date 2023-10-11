@@ -3112,6 +3112,11 @@ caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001517:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001519.tgz#3e7b8b8a7077e78b0eb054d69e6edf5c7df35601"
   integrity sha512-0QHgqR+Jv4bxHMp8kZ1Kn8CH55OikjKJ6JmKkZYP1F3D7w+lnFXF70nG5eNfsZS89jadi5Ywy5UCSKLAglIRkg==
 
+capacitor-video-player@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/capacitor-video-player/-/capacitor-video-player-5.0.2.tgz#d90cdd936af6144c62fc1e29abe0be626934efe7"
+  integrity sha512-N262e64m9of4SAfhwUVwXJ8LZSFACAZ9127+lLpdlxhWf//QFksTTSaUTVT1ygZkypjVWF06bAZZZl9klBB/pA==
+
 chai-deep-match@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/chai-deep-match/-/chai-deep-match-1.2.1.tgz#b0e578d55f6daef289106443eec3ec253184b800"
@@ -5320,6 +5325,11 @@ help-me@^3.0.0:
   dependencies:
     glob "^7.1.6"
     readable-stream "^3.6.0"
+
+hls.js@^1.4.12:
+  version "1.4.12"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.4.12.tgz#2022daa29d10c662387d80a5297f8330f8ef5ee2"
+  integrity sha512-1RBpx2VihibzE3WE9kGoVCtrhhDWTzydzElk/kyRbEOLnb1WIE+3ZabM/L8BqKFTCL3pUy4QzhXgD1Q6Igr1JA==
 
 hoist-non-react-statics@^3.3.1:
   version "3.3.2"
