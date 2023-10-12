@@ -15,25 +15,42 @@ function CapacitorPlugin(): Plugin {
   return {
     name: 'capacitor-plugin',
     enforce: 'pre',
-    resolveId: async function(specifier, importer) {
+    resolveId: async function (specifier, importer) {
       const srcPath = path.join(__dirname, 'src');
       const capacitorId = specifier + '.capacitor';
       const extensions = ['ts', 'tsx'];
+      const cleanSpecifier = specifier.split('?')[0]; // remove the params
+      const scssExtension = '.scss';
+      const scssCapacitorPath = specifier.includes('.module.scss')
+        ? cleanSpecifier.replace('.module.scss', '.capacitor.module.scss')
+        : cleanSpecifier.replace('.scss', '.capacitor.scss');
+
+      // replace SCSS variants
+      if (cleanSpecifier.endsWith(scssExtension) && importer) {
+        const scssAbsolutePath = scssCapacitorPath.startsWith(srcPath)
+          ? scssCapacitorPath // already an absolute path
+          : path.join(path.dirname(importer), scssCapacitorPath); // relative path -> absolute path
+
+        try {
+          await fs.promises.access(scssAbsolutePath);
+          // the variant exists
+          return scssAbsolutePath;
+        } catch (error: unknown) {
+          // the file doesn't exist
+          return null;
+        }
+      }
 
       // we're loading a file from the ./src folder
       if (specifier.startsWith(srcPath) && importer !== capacitorId) {
+        for (const extensionsKey of extensions) {
+          try {
+            await fs.promises.access(`${capacitorId}.${extensionsKey}`);
 
-        // check if a .capacitor.{ts,tsx} variant exists
-        const result = await Promise.allSettled(extensions.map(async (ext) => {
-          await fs.promises.access(`${capacitorId}.${ext}`);
-
-          return `${capacitorId}.${ext}`
-        }));
-
-        const foundFile = result.find(settledResult => settledResult.status === 'fulfilled');
-
-        if (foundFile?.status === 'fulfilled') {
-          return foundFile.value;
+            return `${capacitorId}.${extensionsKey}`;
+          } catch (error: unknown) {
+            // not found
+          }
         }
       }
     },

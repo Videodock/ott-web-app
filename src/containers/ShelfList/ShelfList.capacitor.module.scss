@@ -1,0 +1,34 @@
+@use 'src/styles/variables';
+@use 'src/styles/theme';
+@use 'src/styles/mixins/responsive';
+
+@import 'ShelfList.module';
+
+@mixin safePadding($left, $right: $left) {
+  padding-right: max(env(safe-area-inset-right),  $right);
+  padding-left: max(env(safe-area-inset-left), $left);
+}
+
+.shelfContainer {
+  @include safePadding(56px);
+
+  &.featured {
+    @include safePadding(20%);
+  }
+
+  @include responsive.mobile-only() {
+    @include safePadding(variables.$base-spacing, 60px);
+
+    &.featured {
+      @include safePadding(variables.$base-spacing);
+    }
+  }
+
+  @include responsive.tablet-only() {
+    @include safePadding(variables.$base-spacing * 2);
+
+    &.featured {
+      @include safePadding(10%);
+    }
+  }
+}

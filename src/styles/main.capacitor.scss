@@ -1,0 +1,14 @@
+@import 'main';
+
+html {
+  padding-top: env(safe-area-inset-top, 0);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+
+  overscroll-behavior-y: none;
+  -webkit-text-size-adjust: none;
+
+  text-size-adjust: none;
+
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}

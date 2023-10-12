@@ -1,6 +1,5 @@
 import { StatusBar, Style} from '@capacitor/status-bar';
 import { Share} from '@capacitor/share';
-import './styles/main-capacitor.scss';
 
 async function bootstrap() {
   console.log('Bootstrap capacitor app');
