@@ -5,8 +5,8 @@
 @import 'ShelfList.module';
 
 @mixin safePadding($left, $right: $left) {
-  padding-right: max(env(safe-area-inset-right),  $right);
-  padding-left: max(env(safe-area-inset-left), $left);
+  padding-right: max(var(--my-safe-area-right),  $right);
+  padding-left: max(var(--my-safe-area-left), $left);
 }
 
 .shelfContainer {
