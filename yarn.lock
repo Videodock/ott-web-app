@@ -1014,6 +1014,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@capacitor/android@^5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-5.5.0.tgz#42a5d205fdb5b88109ff9326136fc44ae9a9e621"
+  integrity sha512-ipJijb3M0FA6DvotS9zrbJ8p/mTEVg9EVtBmvUexogm8g5se1mc7i1gvOr3MQ/iTZ3PnNrRC/P7kHxa2R55iqg==
+
 "@capacitor/cli@^5.4.2":
   version "5.4.2"
   resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-5.4.2.tgz#673ef8ff19b87e896467bac57b8272b223273051"
@@ -3116,6 +3121,11 @@ caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001517:
   version "1.0.30001519"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001519.tgz#3e7b8b8a7077e78b0eb054d69e6edf5c7df35601"
   integrity sha512-0QHgqR+Jv4bxHMp8kZ1Kn8CH55OikjKJ6JmKkZYP1F3D7w+lnFXF70nG5eNfsZS89jadi5Ywy5UCSKLAglIRkg==
+
+capacitor-plugin-safe-area@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/capacitor-plugin-safe-area/-/capacitor-plugin-safe-area-2.0.5.tgz#a2b77f0585e3ef8e95915e26338670c8935d01a4"
+  integrity sha512-Lg3P+/aW2/+C3gz2/xZFdfjgkOJ/ZSFTmZSxLaSY6lIudOTjwVpjoxhAyKUz1tc13Carjqdlq01yRrr++XOzAg==
 
 capacitor-video-player@^5.0.2:
   version "5.0.2"
