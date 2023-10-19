@@ -4,9 +4,9 @@ exports[`<Payment> > renders and matches snapshot 1`] = `
 <div>
   <div>
     <div>
-      <h3>
+      <h2>
         user:payment.payment_method
-      </h3>
+      </h2>
     </div>
     <div>
       <div
@@ -63,9 +63,9 @@ exports[`<Payment> > renders and matches snapshot 1`] = `
   </div>
   <div>
     <div>
-      <h3>
+      <h2>
         user:payment.billing_history
-      </h3>
+      </h2>
     </div>
     <div
       class="_infoBox_c57ff5"
