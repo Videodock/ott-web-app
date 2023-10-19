@@ -1,3 +1,5 @@
+@use 'variables';
+
 // This mixin applies focus-visible styling, taking Safari in consideration where focus-visible doesn't work
 // Instead, we apply styles to the focus state first, which solves the purpose, but unwantedly also for the active state
 // We fix this for non-Safari browsers afterwards by resetting to default and then re-applying using focus-visible
@@ -35,3 +37,6 @@
 .linkUnderline {
   text-decoration: underline;
 }
+
+$focus-box-shadow: 0 0 1px 5px var(--highlight-color, variables.$white),
+  0 0 12px 6px rgb(0 0 0 / 80%);

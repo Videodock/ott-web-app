@@ -189,7 +189,9 @@ const Layout = () => {
           <hr className={styles.divider} />
           {renderUserActions()}
         </Sidebar>
-        <Outlet />
+        <div id="content">
+          <Outlet />
+        </div>
       </div>
       {!!footerText && (
         <MarkdownComponent
