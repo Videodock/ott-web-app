@@ -8,13 +8,18 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     <div
       class="header-class"
     >
-      <h3>
+      <h2>
         account.about_you
-      </h3>
+      </h2>
     </div>
     <div
       class="_flexBox_1c1c63"
     >
+      <h1
+        class="_hideUntilFocus_c968f7"
+      >
+        nav.account
+      </h1>
       <div
         class="_textField_e16c1b"
       >
@@ -61,9 +66,9 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     <div
       class="header-class"
     >
-      <h3>
+      <h2>
         account.email
-      </h3>
+      </h2>
     </div>
     <div
       class="_flexBox_1c1c63"
@@ -101,9 +106,9 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     <div
       class="header-class"
     >
-      <h3>
+      <h2>
         account.security
-      </h3>
+      </h2>
     </div>
     <div
       class="_flexBox_1c1c63"
@@ -127,9 +132,9 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     <div
       class="header-class"
     >
-      <h3>
+      <h2>
         account.terms_and_tracking
-      </h3>
+      </h2>
     </div>
     <div
       class="_flexBox_1c1c63"

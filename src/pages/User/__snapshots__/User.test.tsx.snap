@@ -107,13 +107,18 @@ exports[`User Component tests > Account Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h3>
+          <h2>
             account.about_you
-          </h3>
+          </h2>
         </div>
         <div
           class="_flexBox_1c1c63"
         >
+          <h1
+            class="_hideUntilFocus_c968f7"
+          >
+            nav.account
+          </h1>
           <div
             class="_textField_e16c1b"
           >
@@ -160,9 +165,9 @@ exports[`User Component tests > Account Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h3>
+          <h2>
             account.email
-          </h3>
+          </h2>
         </div>
         <div
           class="_flexBox_1c1c63"
@@ -191,9 +196,9 @@ exports[`User Component tests > Account Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h3>
+          <h2>
             account.security
-          </h3>
+          </h2>
         </div>
         <div
           class="_flexBox_1c1c63"
@@ -217,9 +222,9 @@ exports[`User Component tests > Account Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h3>
+          <h2>
             account.terms_and_tracking
-          </h3>
+          </h2>
         </div>
         <div
           class="_flexBox_1c1c63"
@@ -365,9 +370,9 @@ exports[`User Component tests > Favorites Page 1`] = `
         <div
           class="_header_546956"
         >
-          <h3>
+          <h1>
             favorites.title
-          </h3>
+          </h1>
           <button
             class="_button_f8f296 _default_f8f296 _outlined_f8f296"
           >
@@ -622,9 +627,9 @@ exports[`User Component tests > Payments Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h3>
+          <h2>
             user:payment.subscription_details
-          </h3>
+          </h2>
         </div>
         <div
           class="_infoBox_c57ff5"
@@ -665,9 +670,9 @@ exports[`User Component tests > Payments Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h3>
+          <h2>
             user:payment.payment_method
-          </h3>
+          </h2>
         </div>
         <div>
           <div
@@ -728,9 +733,9 @@ exports[`User Component tests > Payments Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h3>
+          <h2>
             user:payment.billing_history
-          </h3>
+          </h2>
         </div>
         <div
           class="_infoBox_c57ff5"

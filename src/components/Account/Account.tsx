@@ -168,6 +168,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             onSubmit: (values) => updateUser({ firstName: values.firstName || '', lastName: values.lastName || '' }),
             content: (section) => (
               <>
+                <h1 className={styles.hideUntilFocus}>{t('nav.account')}</h1>
                 <TextField
                   name="firstName"
                   label={t('account.firstname')}
