@@ -272,7 +272,6 @@ const Payment = ({
       )}
       <div className={panelClassName}>
         <div className={panelHeaderClassName}>
-          <h1 className="hideUntilFocus">{t('nav.payments')}</h1>
           <h2>{t('user:payment.payment_method')}</h2>
         </div>
         {activePaymentDetail ? (

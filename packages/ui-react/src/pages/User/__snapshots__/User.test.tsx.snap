@@ -116,7 +116,7 @@ exports[`User Component tests > Account Page 1`] = `
           novalidate=""
         >
           <h1
-            class="hideUntilFocus"
+            class="_hideUntilFocus_c968f7"
           >
             nav.account
           </h1>
@@ -674,11 +674,6 @@ exports[`User Component tests > Payments Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h1
-            class="hideUntilFocus"
-          >
-            nav.payments
-          </h1>
           <h2>
             user:payment.payment_method
           </h2>

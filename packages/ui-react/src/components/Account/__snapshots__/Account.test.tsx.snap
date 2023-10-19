@@ -17,7 +17,7 @@ exports[`<Account> > renders and matches snapshot 1`] = `
       novalidate=""
     >
       <h1
-        class="hideUntilFocus"
+        class="_hideUntilFocus_c968f7"
       >
         nav.account
       </h1>
