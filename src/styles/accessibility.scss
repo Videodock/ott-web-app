@@ -8,7 +8,7 @@
         @content ($value);
       }
       &:focus:not(:focus-visible) {
-        @content ($default_value);
+        @content ($default-value);
       }
       &:focus-visible {
         @content ($value);

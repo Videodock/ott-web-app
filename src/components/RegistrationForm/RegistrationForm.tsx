@@ -117,7 +117,7 @@ const RegistrationForm: React.FC<Props> = ({
         <Checkbox
           key={index}
           name={consent.name}
-          value={''}
+          value={consent.value || ''}
           error={consentErrors?.includes(consent.name)}
           helperText={consentErrors?.includes(consent.name) ? t('registration.consent_required') : undefined}
           required={consent.required}
