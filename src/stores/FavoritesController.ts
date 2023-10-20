@@ -8,20 +8,16 @@ import FavoritesService from '#src/services/FavoritesService';
 import type { PlaylistItem } from '#types/playlist';
 import type { Favorite, SerializedFavorite } from '#types/favorite';
 import type { Customer } from '#types/account';
-import type AccountService from '#src/services/integration/AccountService';
-import type { AccountServiceFactory } from '#src/services/integration/AccountService';
-import { AccountServiceFactoryId } from '#src/services/integration/AccountService';
+import AccountService from '#src/services/integration/AccountService';
 
 @injectable()
 export default class FavoritesController {
   private readonly favoritesService: FavoritesService;
   private readonly accountService?: AccountService;
 
-  constructor(favoritesService: FavoritesService, @inject(AccountServiceFactoryId) accountServiceFactory: AccountServiceFactory) {
-    const { getAuthProviderName } = useConfigStore.getState();
-
+  constructor(favoritesService: FavoritesService, @inject(AccountService) accountService: AccountService) {
     this.favoritesService = favoritesService;
-    this.accountService = accountServiceFactory(getAuthProviderName() || '');
+    this.accountService = accountService;
   }
 
   async restoreFavorites() {

@@ -15,9 +15,9 @@ type Props = {
   item: PlaylistItem;
 };
 
-const favoritesController = getModule(FavoritesController);
 
 const FavoriteButton: React.VFC<Props> = ({ item }) => {
+  const favoritesController = getModule(FavoritesController);
   const { t } = useTranslation();
   const breakpoint = useBreakpoint();
 

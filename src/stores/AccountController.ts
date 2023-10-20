@@ -28,16 +28,10 @@ import { addQueryParams } from '#src/utils/formatting';
 import { simultaneousLoginWarningKey } from '#components/LoginForm/LoginForm';
 import { ACCESS_MODEL } from '#src/config';
 import { container } from '#src/modules/container';
-import type CheckoutService from '#src/services/integration/CheckoutService';
-import type { CheckoutServiceFactory } from '#src/services/integration/CheckoutService';
-import type SubscriptionService from '#src/services/integration/SubscriptionService';
-import type { SubscriptionServiceFactory } from '#src/services/integration/SubscriptionService';
-import type AccountService from '#src/services/integration/AccountService';
+import CheckoutService from '#src/services/integration/CheckoutService';
+import SubscriptionService from '#src/services/integration/SubscriptionService';
+import AccountService from '#src/services/integration/AccountService';
 import ProfileService from '#src/services/integration/ProfileService';
-import type { AccountServiceFactory } from '#src/services/integration/AccountService';
-import { AccountServiceFactoryId } from '#src/services/integration/AccountService';
-import { CheckoutServiceFactoryId } from '#src/services/integration/CheckoutService';
-import { SubscriptionServiceFactoryId } from '#src/services/integration/SubscriptionService';
 
 const PERSIST_PROFILE = 'profile';
 
@@ -60,24 +54,18 @@ export default class AccountController {
   private readonly watchHistoryController?: WatchHistoryController;
 
   constructor(
-    @inject(CheckoutServiceFactoryId) checkoutServiceFactory: CheckoutServiceFactory,
-    @inject(AccountServiceFactoryId) accountServiceFactory: AccountServiceFactory,
-    @inject(SubscriptionServiceFactoryId) subscriptionServiceFactory: SubscriptionServiceFactory,
+    @inject(CheckoutService) checkoutService: CheckoutService,
+    @inject(AccountService) accountService: AccountService,
+    @inject(SubscriptionService) subscriptionService: SubscriptionService,
     @optional() favoritesController?: FavoritesController,
     @optional() watchHistoryController?: WatchHistoryController,
   ) {
-    const { getAuthProviderName } = useConfigStore.getState();
-
-    this.checkoutService = checkoutServiceFactory(getAuthProviderName());
-    this.accountService = accountServiceFactory(getAuthProviderName());
-    this.subscriptionService = subscriptionServiceFactory(getAuthProviderName());
+    this.checkoutService = checkoutService;
+    this.accountService = accountService;
+    this.subscriptionService = subscriptionService
 
     this.favoritesController = favoritesController;
     this.watchHistoryController = watchHistoryController;
-
-    if (this.accountService) {
-      this.initializeAccount();
-    }
   }
 
   async initializeAccount() {

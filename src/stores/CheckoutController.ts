@@ -23,8 +23,8 @@ import type {
 } from '#types/checkout';
 import { useCheckoutStore } from '#src/stores/CheckoutStore';
 import { useConfigStore } from '#src/stores/ConfigStore';
-import type CheckoutService from '#src/services/integration/CheckoutService';
-import type SubscriptionService from '#src/services/integration/SubscriptionService';
+import CheckoutService from '#src/services/integration/CheckoutService';
+import SubscriptionService from '#src/services/integration/SubscriptionService';
 
 @injectable()
 export default class CheckoutController {
@@ -33,16 +33,12 @@ export default class CheckoutController {
   private readonly accountController: AccountController;
 
   constructor(
-    @inject('Factory<CheckoutService>') checkoutServiceFactory: (integration: string) => CheckoutService,
-    @inject('Factory<SubscriptionService>') subscriptionServiceFactory: (integration: string) => SubscriptionService,
-    accountController: AccountController
+    @inject(CheckoutService) checkoutService: CheckoutService,
+    @inject(SubscriptionService) subscriptionService: SubscriptionService,
+    accountController: AccountController,
   ) {
-    const { getAuthProviderName } = useConfigStore.getState();
-
-    const authProvider = getAuthProviderName() || '';
-
-    this.checkoutService = checkoutServiceFactory(authProvider);
-    this.subscriptionService = subscriptionServiceFactory(authProvider);
+    this.checkoutService = checkoutService;
+    this.subscriptionService = subscriptionService;
     this.accountController = accountController;
   }
 
@@ -324,7 +320,12 @@ export default class CheckoutController {
 
     if (!subscription) return;
 
-    const SwitchSubscriptionPayload = { toOfferId, customerId: customerId, offerId: subscription.offerId, switchDirection: switchDirection };
+    const SwitchSubscriptionPayload = {
+      toOfferId,
+      customerId: customerId,
+      offerId: subscription.offerId,
+      switchDirection: switchDirection,
+    };
 
     await this.checkoutService.switchSubscription(SwitchSubscriptionPayload, sandbox);
 
@@ -342,7 +343,13 @@ export default class CheckoutController {
 
     if (!this.subscriptionService || !('changeSubscription' in this.subscriptionService)) throw new Error('subscription service is not configured');
 
-    const { responseData } = await this.subscriptionService.changeSubscription({ accessFeeId, subscriptionId }, sandbox);
+    const { responseData } = await this.subscriptionService.changeSubscription(
+      {
+        accessFeeId,
+        subscriptionId,
+      },
+      sandbox,
+    );
 
     return responseData;
   };
@@ -412,7 +419,14 @@ export default class CheckoutController {
     if (!this.checkoutService) throw new Error('checkout service is not available');
     if (!('initialAdyenPayment' in this.checkoutService)) throw new Error('finalizeAddedAdyenPaymentDetails is not available in checkout service');
 
-    const response = await this.checkoutService.finalizeAdyenPaymentDetails({ paymentMethodId, details, paymentData }, sandbox);
+    const response = await this.checkoutService.finalizeAdyenPaymentDetails(
+      {
+        paymentMethodId,
+        details,
+        paymentData,
+      },
+      sandbox,
+    );
 
     if (response.errors.length > 0) throw new Error(response.errors[0]);
 

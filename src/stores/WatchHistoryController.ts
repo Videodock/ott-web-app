@@ -1,4 +1,4 @@
-import { injectable, optional } from 'inversify';
+import { inject, injectable, optional } from 'inversify';
 
 import { useAccountStore } from '#src/stores/AccountStore';
 import { useConfigStore } from '#src/stores/ConfigStore';
@@ -14,7 +14,9 @@ export default class WatchHistoryController {
   private readonly watchHistoryService: WatchHistoryService;
   private readonly accountService?: AccountService;
 
-  constructor(watchHistoryService: WatchHistoryService, @optional() accountService?: AccountService) {
+  constructor(
+    @inject(WatchHistoryService) watchHistoryService: WatchHistoryService,
+    @inject(WatchHistoryService) @optional() accountService?: AccountService) {
     this.watchHistoryService = watchHistoryService;
     this.accountService = accountService;
   }
@@ -23,10 +25,17 @@ export default class WatchHistoryController {
     return this.watchHistoryService.serializeWatchHistory(watchHistory);
   };
 
+  async initializeWatchHistory() {
+    await this.restoreWatchHistory();
+  }
+
   private updateUserWatchHistory(watchHistory: WatchHistoryItem[]) {
     useAccountStore.setState((state) => ({
       ...state,
-      user: { ...(state.user as Customer), externalData: { ...state.user?.externalData, history: this.serializeWatchHistory(watchHistory) } },
+      user: {
+        ...(state.user as Customer),
+        externalData: { ...state.user?.externalData, history: this.serializeWatchHistory(watchHistory) },
+      },
     }));
   }
 
