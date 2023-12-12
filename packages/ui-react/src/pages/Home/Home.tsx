@@ -4,7 +4,7 @@ import type { Content } from '@jwp/ott-common/types/config';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 import { useTranslation } from 'react-i18next';
 
-import '../../styles/accessibility.scss';
+import styles from './Home.module.scss';
 
 import ShelfList from '../../containers/ShelfList/ShelfList';
 
@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <>
-      <h1 className="hideUntilFocus">{t('home')}</h1>
+      <h1 className={styles.hideUntilFocus}>{t('home')}</h1>
       <ShelfList rows={content} />
     </>
   );
