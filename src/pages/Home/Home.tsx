@@ -2,7 +2,7 @@ import React from 'react';
 import shallow from 'zustand/shallow';
 import { useTranslation } from 'react-i18next';
 
-import '../../styles/accessibility.scss';
+import styles from './Home.module.scss';
 
 import { useConfigStore } from '#src/stores/ConfigStore';
 import type { Content } from '#types/Config';
@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <>
-      <h1 className="hideUntilFocus">{t('home')}</h1>
+      <h1 className={styles.hideUntilFocus}>{t('home')}</h1>
       <ShelfList rows={content} />
     </>
   );
