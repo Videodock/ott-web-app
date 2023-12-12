@@ -4,6 +4,11 @@ exports[`<Payment> > renders and matches snapshot 1`] = `
 <div>
   <div>
     <div>
+      <h1
+        class="_hideUntilFocus_c57ff5"
+      >
+        nav.payments
+      </h1>
       <h2>
         user:payment.payment_method
       </h2>

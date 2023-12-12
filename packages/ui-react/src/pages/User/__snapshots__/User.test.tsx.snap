@@ -672,6 +672,11 @@ exports[`User Component tests > Payments Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
+          <h1
+            class="_hideUntilFocus_c57ff5"
+          >
+            nav.payments
+          </h1>
           <h2>
             user:payment.payment_method
           </h2>
