@@ -100,18 +100,3 @@
 .changePlanCancelButton {
   margin-left: auto;
 }
-
-.hideUntilFocus {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-
-  &:focus {
-    position: static;
-    height: auto;
-    overflow: visible;
-    clip: auto;
-  }
-}

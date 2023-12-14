@@ -7,6 +7,7 @@ import ExternalLink from '../../icons/ExternalLink';
 import IconButton from '../IconButton/IconButton';
 
 import styles from './Payment.module.scss';
+import '../../styles/accessibility.scss';
 
 import Alert from '#components/Alert/Alert';
 import Button from '#components/Button/Button';
@@ -272,7 +273,7 @@ const Payment = ({
       )}
       <div className={panelClassName}>
         <div className={panelHeaderClassName}>
-          <h1 className={styles.hideUntilFocus}>{t('nav.payments')}</h1>
+          <h1 className="hideUntilFocus">{t('nav.payments')}</h1>
           <h2>{t('user:payment.payment_method')}</h2>
         </div>
         {activePaymentDetail ? (

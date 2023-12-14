@@ -6,6 +6,7 @@ import DOMPurify from 'dompurify';
 import { useMutation } from 'react-query';
 
 import styles from './Account.module.scss';
+import '../../styles/accessibility.scss';
 
 import { isTruthyCustomParamValue, isTruthy, logDev, testId } from '#src/utils/common';
 import type { FormSectionContentArgs, FormSectionProps } from '#components/Form/FormSection';
@@ -213,7 +214,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             },
             content: (section) => (
               <>
-                <h1 className={styles.hideUntilFocus}>{t('nav.account')}</h1>
+                <h1 className="hideUntilFocus">{t('nav.account')}</h1>
                 <TextField
                   name="firstName"
                   label={t('account.firstname')}
