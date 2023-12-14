@@ -20,6 +20,7 @@ import OfferSwitch from '../OfferSwitch/OfferSwitch';
 import TextField from '../TextField/TextField';
 
 import styles from './Payment.module.scss';
+import '../../styles/accessibility.scss';
 
 const VISIBLE_TRANSACTIONS = 4;
 
@@ -271,7 +272,7 @@ const Payment = ({
       )}
       <div className={panelClassName}>
         <div className={panelHeaderClassName}>
-          <h1 className={styles.hideUntilFocus}>{t('nav.payments')}</h1>
+          <h1 className="hideUntilFocus">{t('nav.payments')}</h1>
           <h2>{t('user:payment.payment_method')}</h2>
         </div>
         {activePaymentDetail ? (

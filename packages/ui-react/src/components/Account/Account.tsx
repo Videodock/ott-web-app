@@ -26,6 +26,7 @@ import HelperText from '../HelperText/HelperText';
 import CustomRegisterField from '../CustomRegisterField/CustomRegisterField';
 
 import styles from './Account.module.scss';
+import '../../styles/accessibility.scss';
 
 type Props = {
   panelClassName?: string;
@@ -213,7 +214,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             },
             content: (section) => (
               <>
-                <h1 className={styles.hideUntilFocus}>{t('nav.account')}</h1>
+                <h1 className="hideUntilFocus">{t('nav.account')}</h1>
                 <TextField
                   name="firstName"
                   label={t('account.firstname')}
