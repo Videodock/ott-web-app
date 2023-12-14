@@ -121,7 +121,9 @@ exports[`<Layout /> > renders layout 1`] = `
         </nav>
       </div>
       <div
+        class="_content_c71437"
         id="content"
+        tabindex="-1"
       />
     </div>
   </div>

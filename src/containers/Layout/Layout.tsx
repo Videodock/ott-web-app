@@ -169,7 +169,7 @@ const Layout = () => {
           <hr className={styles.divider} />
           {renderUserActions()}
         </Sidebar>
-        <div id="content">
+        <div id="content" className={styles.content} tabIndex={-1}>
           <Outlet />
         </div>
       </div>
