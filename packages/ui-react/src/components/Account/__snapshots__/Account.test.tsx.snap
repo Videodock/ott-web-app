@@ -153,9 +153,9 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     <div
       class="header-class"
     >
-      <h3>
+      <h2>
         account.other_registration_details
-      </h3>
+      </h2>
     </div>
     <form
       class="_flexBox_1c1c63"
@@ -193,4 +193,3 @@ exports[`<Account> > renders and matches snapshot 1`] = `
   </div>
 </div>
 `;
-
