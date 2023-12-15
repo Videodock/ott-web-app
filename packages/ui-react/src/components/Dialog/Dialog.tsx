@@ -12,11 +12,12 @@ type Props = {
   onClose: () => void;
   size?: 'small' | 'large';
   children: React.ReactNode;
+  role?: string;
 };
 
-const Dialog: React.FC<Props> = ({ open, onClose, size = 'small', children }: Props) => {
+const Dialog: React.FC<Props> = ({ open, onClose, size = 'small', children, role }: Props) => {
   return (
-    <Modal open={open} onClose={onClose} AnimationComponent={Slide}>
+    <Modal open={open} onClose={onClose} AnimationComponent={Slide} role={role}>
       <div className={classNames(styles.dialog, styles[size])}>
         <ModalCloseButton onClick={onClose} />
         {children}
