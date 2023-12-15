@@ -111,11 +111,12 @@ exports[`User Component tests > Account Page 1`] = `
             account.about_you
           </h2>
         </div>
-        <div
+        <form
           class="_flexBox_1c1c63"
+          novalidate=""
         >
           <h1
-            class="_hideUntilFocus_c968f7"
+            class="hideUntilFocus"
           >
             nav.account
           </h1>
@@ -145,7 +146,7 @@ exports[`User Component tests > Account Page 1`] = `
               Person
             </p>
           </div>
-        </div>
+        </form>
         <div
           class="_controls_1c1c63"
         >
@@ -169,8 +170,9 @@ exports[`User Component tests > Account Page 1`] = `
             account.email
           </h2>
         </div>
-        <div
+        <form
           class="_flexBox_1c1c63"
+          novalidate=""
         >
           <div
             class="_textField_e16c1b"
@@ -185,7 +187,7 @@ exports[`User Component tests > Account Page 1`] = `
               user@jwplayer.com
             </p>
           </div>
-        </div>
+        </form>
         <div
           class="_controls_1c1c63"
         />
@@ -200,8 +202,9 @@ exports[`User Component tests > Account Page 1`] = `
             account.security
           </h2>
         </div>
-        <div
+        <form
           class="_flexBox_1c1c63"
+          novalidate=""
         />
         <div
           class="_controls_1c1c63"
@@ -226,8 +229,9 @@ exports[`User Component tests > Account Page 1`] = `
             account.terms_and_tracking
           </h2>
         </div>
-        <div
+        <form
           class="_flexBox_1c1c63"
+          novalidate=""
         />
         <div
           class="_controls_1c1c63"
@@ -670,6 +674,11 @@ exports[`User Component tests > Payments Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
+          <h1
+            class="hideUntilFocus"
+          >
+            nav.payments
+          </h1>
           <h2>
             user:payment.payment_method
           </h2>

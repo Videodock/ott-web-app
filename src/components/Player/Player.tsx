@@ -10,14 +10,14 @@ import useEventCallback from '#src/hooks/useEventCallback';
 import useOttAnalytics from '#src/hooks/useOttAnalytics';
 import { logDev, testId } from '#src/utils/common';
 import { useConfigStore } from '#src/stores/ConfigStore';
+import type { AdSchedule } from '#types/ad-schedule';
 
 type Props = {
-  playerId: string;
-  playerLicenseKey: string | undefined;
   feedId?: string;
   item: PlaylistItem;
   startTime?: number;
   autostart?: boolean;
+  adsData?: AdSchedule;
   onReady?: (player?: JWPlayer) => void;
   onPlay?: () => void;
   onPause?: () => void;
@@ -33,9 +33,8 @@ type Props = {
 };
 
 const Player: React.FC<Props> = ({
-  playerId,
-  playerLicenseKey,
   item,
+  adsData,
   onReady,
   onPlay,
   onPause,
@@ -59,7 +58,10 @@ const Player: React.FC<Props> = ({
   const startTimeRef = useRef(startTime);
   const setPlayer = useOttAnalytics(item, feedId);
 
-  const { adScheduleData } = useConfigStore((s) => s);
+  const { settings } = useConfigStore((s) => s);
+
+  const playerId = settings.playerId;
+  const playerLicenseKey = settings.playerLicenseKey;
 
   const handleBeforePlay = useEventCallback(onBeforePlay);
   const handlePlay = useEventCallback(onPlay);
@@ -161,7 +163,14 @@ const Player: React.FC<Props> = ({
 
       // Player options are untyped
       const playerOptions: { [key: string]: unknown } = {
-        advertising: adScheduleData,
+        advertising: {
+          ...adsData,
+          // Beta feature
+          showCountdown: true,
+        },
+        timeSlider: {
+          showAdMarkers: false,
+        },
         aspectratio: false,
         controls: true,
         displaytitle: false,
@@ -204,7 +213,7 @@ const Player: React.FC<Props> = ({
     if (libLoaded) {
       initializePlayer();
     }
-  }, [libLoaded, item, detachEvents, attachEvents, playerId, setPlayer, autostart, adScheduleData, playerLicenseKey, feedId]);
+  }, [libLoaded, item, detachEvents, attachEvents, playerId, setPlayer, autostart, adsData, playerLicenseKey, feedId]);
 
   useEffect(() => {
     return () => {

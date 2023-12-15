@@ -11,7 +11,6 @@ import { useAccountStore } from '#src/stores/AccountStore';
 import { useUIStore } from '#src/stores/UIStore';
 import { useConfigStore } from '#src/stores/ConfigStore';
 import useSearchQueryUpdater from '#src/hooks/useSearchQueryUpdater';
-import useClientIntegration from '#src/hooks/useClientIntegration';
 import Button from '#components/Button/Button';
 import MarkdownComponent from '#components/MarkdownComponent/MarkdownComponent';
 import Header from '#components/Header/Header';
@@ -20,28 +19,37 @@ import MenuButton from '#components/MenuButton/MenuButton';
 import UserMenu from '#components/UserMenu/UserMenu';
 import { addQueryParam } from '#src/utils/location';
 import { getSupportedLanguages } from '#src/i18n/config';
+import { ACCESS_MODEL } from '#src/config';
 import { useProfileStore } from '#src/stores/ProfileStore';
-import { unpersistProfile, useProfiles } from '#src/hooks/useProfiles';
+import { useProfiles, useSelectProfile } from '#src/hooks/useProfiles';
 import { IS_DEVELOPMENT_BUILD } from '#src/utils/common';
+import ProfileController from '#src/stores/ProfileController';
+import { getModule } from '#src/modules/container';
 
 const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation('common');
-  const { config, accessModel } = useConfigStore(({ config, accessModel }) => ({ config, accessModel }), shallow);
+
+  const { config, accessModel, clientId } = useConfigStore(({ config, accessModel, clientId }) => ({ config, accessModel, clientId }), shallow);
+  const isLoggedIn = !!useAccountStore(({ user }) => user);
+  const favoritesEnabled = !!config.features?.favoritesList;
   const { menu, assets, siteName, description, styling, features } = config;
   const metaDescription = description || t('default_description');
-  const { clientId } = useClientIntegration();
+
+  const profileController = getModule(ProfileController, false);
+
   const { searchPlaylist } = features || {};
   const { footerText } = styling || {};
   const supportedLanguages = useMemo(() => getSupportedLanguages(), []);
   const currentLanguage = useMemo(() => supportedLanguages.find(({ code }) => code === i18n.language), [i18n.language, supportedLanguages]);
 
-  const { data: { responseData: { collection: profiles = [] } = {} } = {}, profilesEnabled } = useProfiles();
+  const {
+    query: { data: { responseData: { collection: profiles = [] } = {} } = {} },
+    profilesEnabled,
+  } = useProfiles();
 
-  if (profilesEnabled && !profiles?.length) {
-    unpersistProfile();
-  }
+  const selectProfile = useSelectProfile();
 
   const { searchQuery, searchActive, userMenuOpen, languageMenuOpen } = useUIStore(
     ({ searchQuery, searchActive, userMenuOpen, languageMenuOpen }) => ({
@@ -54,12 +62,19 @@ const Layout = () => {
   );
   const { updateSearchQuery, resetSearchQuery } = useSearchQueryUpdater();
   const { profile } = useProfileStore();
-  const isLoggedIn = !!useAccountStore(({ user }) => user);
 
   const searchInputRef = useRef<HTMLInputElement>(null) as React.MutableRefObject<HTMLInputElement>;
 
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const banner = assets.banner;
+
+  useEffect(() => {
+    if (isLoggedIn && profilesEnabled && !profiles?.length) {
+      profileController?.unpersistProfile();
+    }
+    // Trigger once on the initial page load
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (searchActive && searchInputRef.current) {
@@ -104,7 +119,7 @@ const Layout = () => {
     if (!clientId) return null;
 
     return isLoggedIn ? (
-      <UserMenu showPaymentsItem={accessModel !== 'AVOD'} />
+      <UserMenu showPaymentsItem={accessModel !== ACCESS_MODEL.AVOD} favoritesEnabled={favoritesEnabled} />
     ) : (
       <div className={styles.buttonContainer}>
         <Button fullWidth onClick={loginButtonClickHandler} label={t('sign_in')} />
@@ -150,11 +165,15 @@ const Layout = () => {
           openLanguageMenu={openLanguageMenu}
           closeLanguageMenu={closeLanguageMenu}
           canLogin={!!clientId}
-          showPaymentsMenuItem={accessModel !== 'AVOD'}
-          currentProfile={profile ?? undefined}
-          profiles={profiles}
-          profilesEnabled={profilesEnabled}
-          accessModel={accessModel}
+          showPaymentsMenuItem={accessModel !== ACCESS_MODEL.AVOD}
+          favoritesEnabled={favoritesEnabled}
+          profilesData={{
+            currentProfile: profile,
+            profiles,
+            profilesEnabled,
+            selectProfile: ({ avatarUrl, id }) => selectProfile.mutate({ id, avatarUrl }),
+            isSelectingProfile: !!selectProfile.isLoading,
+          }}
         >
           <Button label={t('home')} to="/" variant="text" />
           {menu.map((item) => (

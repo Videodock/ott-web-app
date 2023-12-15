@@ -14,9 +14,10 @@ import LoadingOverlay from '#src/components/LoadingOverlay/LoadingOverlay';
 import type { UseFormOnSubmitHandler } from '#src/hooks/useForm';
 import Button from '#src/components/Button/Button';
 import { addQueryParam } from '#src/utils/location';
-import { useUpdateProfile } from '#src/hooks/useProfiles';
+import { useProfileErrorHandler, useUpdateProfile } from '#src/hooks/useProfiles';
 import useBreakpoint, { Breakpoint } from '#src/hooks/useBreakpoint';
-import { getProfileDetails } from '#src/stores/ProfileController';
+import ProfileController from '#src/stores/ProfileController';
+import { getModule } from '#src/modules/container';
 
 type EditProfileProps = {
   contained?: boolean;
@@ -29,10 +30,12 @@ const EditProfile = ({ contained = false }: EditProfileProps) => {
   const navigate = useNavigate();
   const { t } = useTranslation('user');
 
+  const profileController = getModule(ProfileController);
+
   const breakpoint: Breakpoint = useBreakpoint();
   const isMobile = breakpoint === Breakpoint.xs;
 
-  const { data, isLoading, isFetching } = useQuery(['getProfileDetails'], () => getProfileDetails({ id: id || '' }), {
+  const { data, isLoading, isFetching } = useQuery(['getProfileDetails'], () => profileController.getProfileDetails({ id: id || '' }), {
     staleTime: 0,
   });
 
@@ -60,6 +63,8 @@ const EditProfile = ({ contained = false }: EditProfileProps) => {
 
   const updateProfile = useUpdateProfile();
 
+  const handleErrors = useProfileErrorHandler();
+
   const updateProfileHandler: UseFormOnSubmitHandler<ProfileFormValues> = async (formData, { setErrors, setSubmitting }) =>
     updateProfile.mutate(
       {
@@ -69,16 +74,14 @@ const EditProfile = ({ contained = false }: EditProfileProps) => {
         avatar_url: formData.avatar_url || profileDetails?.avatar_url,
       },
       {
+        onError: (e: unknown) => handleErrors(e, setErrors),
         onSettled: () => {
           setSubmitting(false);
-        },
-        onError: () => {
-          setErrors({ form: t('profile.form_error') });
         },
       },
     );
 
-  if (isLoading || isFetching) return <LoadingOverlay inline />;
+  if (isLoading || isFetching) return <LoadingOverlay />;
 
   return (
     <div className={classNames(styles.user, contained && profileStyles.contained)}>

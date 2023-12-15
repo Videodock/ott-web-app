@@ -2,11 +2,10 @@ import React from 'react';
 import shallow from 'zustand/shallow';
 import { useTranslation } from 'react-i18next';
 
-import '../../styles/accessibility.scss';
-
 import { useConfigStore } from '#src/stores/ConfigStore';
 import type { Content } from '#types/Config';
 import ShelfList from '#src/containers/ShelfList/ShelfList';
+import '../../styles/accessibility.scss';
 
 const Home = () => {
   const { config } = useConfigStore(({ config, accessModel }) => ({ config, accessModel }), shallow);

@@ -6,8 +6,11 @@ import DOMPurify from 'dompurify';
 import { useMutation } from 'react-query';
 
 import styles from './Account.module.scss';
+import '../../styles/accessibility.scss';
 
+import { isTruthyCustomParamValue, isTruthy, logDev, testId } from '#src/utils/common';
 import type { FormSectionContentArgs, FormSectionProps } from '#components/Form/FormSection';
+import type { Consent } from '#types/account';
 import Alert from '#components/Alert/Alert';
 import Visibility from '#src/icons/Visibility';
 import VisibilityOff from '#src/icons/VisibilityOff';
@@ -17,12 +20,13 @@ import IconButton from '#components/IconButton/IconButton';
 import TextField from '#components/TextField/TextField';
 import Checkbox from '#components/Checkbox/Checkbox';
 import HelperText from '#components/HelperText/HelperText';
+import CustomRegisterField from '#components/CustomRegisterField/CustomRegisterField';
 import useToggle from '#src/hooks/useToggle';
-import { formatConsentsFromValues, formatConsentValues } from '#src/utils/collection';
+import { formatConsentsFromValues, formatConsents, formatConsentValues, formatConsentsToRegisterFields } from '#src/utils/collection';
 import { addQueryParam } from '#src/utils/location';
 import { useAccountStore } from '#src/stores/AccountStore';
-import { isTruthy, logDev } from '#src/utils/common';
-import { exportAccountData, updateConsents, updateUser } from '#src/stores/AccountController';
+import AccountController from '#src/stores/AccountController';
+import { getModule } from '#src/modules/container';
 
 type Props = {
   panelClassName?: string;
@@ -39,11 +43,13 @@ interface FormErrors {
 }
 
 const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }: Props): JSX.Element => {
+  const accountController = getModule(AccountController);
+
   const { t } = useTranslation('user');
   const navigate = useNavigate();
   const location = useLocation();
   const [viewPassword, toggleViewPassword] = useToggle();
-  const exportData = useMutation(exportAccountData);
+  const exportData = useMutation(accountController.exportAccountData);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const exportDataMessage = exportData.isSuccess ? t('account.export_data_success') : t('account.export_data_error');
 
@@ -53,27 +59,48 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
     }
   }, [exportData.isSuccess, exportData.isError]);
 
-  const { customer, customerConsents, publisherConsents, canChangePasswordWithOldPassword, canExportAccountData, canDeleteAccount } = useAccountStore(
-    ({ user, customerConsents, publisherConsents, canChangePasswordWithOldPassword, canExportAccountData, canDeleteAccount }) => ({
+  const { customer, customerConsents, publisherConsents } = useAccountStore(
+    ({ user, customerConsents, publisherConsents }) => ({
       customer: user,
       customerConsents,
       publisherConsents,
-      canChangePasswordWithOldPassword,
-      canExportAccountData,
-      canDeleteAccount,
     }),
     shallow,
   );
 
-  const consentValues = useMemo(() => formatConsentValues(publisherConsents, customerConsents), [publisherConsents, customerConsents]);
+  const { canChangePasswordWithOldPassword, canExportAccountData, canDeleteAccount } = accountController.getFeatures();
+  // users authenticated with social (register_source: facebook, google, twitter) do not have password by default
+  const registerSource = customer?.metadata?.register_source;
+  const isSocialLogin = (registerSource && registerSource !== 'inplayer') || false;
+  const shouldAddPassword = (isSocialLogin && !customer?.metadata?.has_password) || false;
+
+  const [termsConsents, nonTermsConsents] = useMemo(() => {
+    const terms: Consent[] = [];
+    const nonTerms: Consent[] = [];
+
+    publisherConsents?.forEach((consent) => {
+      if (consent?.type === 'checkbox') {
+        terms.push(consent);
+      } else {
+        nonTerms.push(consent);
+      }
+    });
+
+    return [terms, nonTerms];
+  }, [publisherConsents]);
+
+  const consents = useMemo(() => formatConsents(publisherConsents, customerConsents), [publisherConsents, customerConsents]);
+
+  const consentsValues = useMemo(() => formatConsentValues(publisherConsents, customerConsents), [publisherConsents, customerConsents]);
 
   const initialValues = useMemo(
     () => ({
       ...customer,
-      consents: consentValues,
+      consents,
+      consentsValues,
       confirmationPassword: '',
     }),
-    [customer, consentValues],
+    [customer, consents, consentsValues],
   );
 
   const formatConsentLabel = (label: string): string | JSX.Element => {
@@ -153,7 +180,14 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
     };
   }
 
-  const editPasswordClickHandler = () => {
+  const editPasswordClickHandler = async () => {
+    if (!customer) {
+      return;
+    }
+    if (isSocialLogin && shouldAddPassword) {
+      await accountController.resetPassword(customer.email, '');
+      return navigate(addQueryParam(location, 'u', 'add-password'));
+    }
     const modal = canChangePasswordWithOldPassword ? 'edit-password' : 'reset-password';
     navigate(addQueryParam(location, 'u', modal));
   };
@@ -165,10 +199,22 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
           formSection({
             label: t('account.about_you'),
             editButton: t('account.edit_information'),
-            onSubmit: (values) => updateUser({ firstName: values.firstName || '', lastName: values.lastName || '' }),
+            onSubmit: (values) => {
+              const consents = formatConsentsFromValues(publisherConsents, { ...values.metadata, ...values.consentsValues });
+
+              return accountController.updateUser({
+                firstName: values.firstName || '',
+                lastName: values.lastName || '',
+                metadata: {
+                  ...values.metadata,
+                  ...formatConsentsToRegisterFields(consents),
+                  consents: JSON.stringify(consents),
+                },
+              });
+            },
             content: (section) => (
               <>
-                <h1 className={styles.hideUntilFocus}>{t('nav.account')}</h1>
+                <h1 className="hideUntilFocus">{t('nav.account')}</h1>
                 <TextField
                   name="firstName"
                   label={t('account.firstname')}
@@ -195,7 +241,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
           formSection({
             label: t('account.email'),
             onSubmit: (values) =>
-              updateUser({
+              accountController.updateUser({
                 email: values.email || '',
                 confirmationPassword: values.confirmationPassword,
               }),
@@ -238,20 +284,25 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
           }),
           formSection({
             label: t('account.security'),
-            editButton: <Button label={t('account.edit_password')} type="button" onClick={() => (customer ? editPasswordClickHandler() : null)} />,
+            editButton: (
+              <Button
+                label={shouldAddPassword ? t('account.add_password') : t('account.edit_password')}
+                type="button"
+                onClick={() => (customer ? editPasswordClickHandler() : null)}
+              />
+            ),
           }),
           formSection({
             label: t('account.terms_and_tracking'),
             saveButton: t('account.update_consents'),
-            onSubmit: (values) => updateConsents(formatConsentsFromValues(publisherConsents, values)),
+            onSubmit: (values) => accountController.updateConsents(formatConsentsFromValues(publisherConsents, values.consentsValues)),
             content: (section) => (
               <>
-                {publisherConsents?.map((consent, index) => (
+                {termsConsents?.map((consent, index) => (
                   <Checkbox
                     key={index}
-                    name={`consents.${consent.name}`}
-                    value={consent.value || ''}
-                    checked={(section.values.consents?.[consent.name] as boolean) || false}
+                    name={`consentsValues.${consent.name}`}
+                    checked={isTruthyCustomParamValue(section.values.consentsValues?.[consent.name])}
                     onChange={section.onChange}
                     label={formatConsentLabel(consent.label)}
                     disabled={consent.required || section.isBusy}
@@ -260,6 +311,30 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
               </>
             ),
           }),
+          nonTermsConsents?.length &&
+            formSection({
+              label: t('account.other_registration_details'),
+              saveButton: t('account.update_consents'),
+              onSubmit: (values) => accountController.updateConsents(formatConsentsFromValues(publisherConsents, values.consentsValues)),
+              content: (section) => (
+                <div className={styles.customFields} data-testid={testId('custom-reg-fields')}>
+                  {nonTermsConsents.map((consent) => (
+                    <CustomRegisterField
+                      key={consent.name}
+                      type={consent.type}
+                      name={`consentsValues.${consent.name}`}
+                      options={consent.options}
+                      label={formatConsentLabel(consent.label)}
+                      placeholder={consent.placeholder}
+                      value={section.values.consentsValues[consent.name]}
+                      disabled={(consent.type === 'checkbox' && consent.required) || section.isBusy}
+                      onChange={section.onChange}
+                      required={consent.required}
+                    />
+                  ))}
+                </div>
+              ),
+            }),
           canExportAccountData &&
             formSection({
               label: t('account.export_data_title'),
@@ -293,7 +368,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
                       type="button"
                       variant="danger"
                       onClick={() => {
-                        navigate(addQueryParam(location, 'u', 'delete-account'));
+                        navigate(addQueryParam(location, 'u', shouldAddPassword ? 'warning-account-deletion' : 'delete-account'));
                       }}
                     />
                   </div>

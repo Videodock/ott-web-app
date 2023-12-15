@@ -22,7 +22,7 @@ Scenario('I can see series without seasons', async ({ I }) => {
   I.see(constants.startWatchingButton);
   I.see('Favorite');
   I.see('Share');
-  I.seeTextEquals('Episodes', 'h3');
+  I.seeTextEquals('Episodes', 'h2');
 
   I.click('a[aria-label="Blocking"]');
   I.scrollTo('text="Episodes"');
@@ -50,7 +50,7 @@ Scenario('I can see series with seasons', async ({ I }) => {
   I.see(constants.startWatchingButton);
   I.see('Favorite');
   I.see('Share');
-  I.seeTextEquals('Episodes', 'h3');
+  I.seeTextEquals('Episodes', 'h2');
 
   I.click('a[aria-label="Welcome"]');
   I.scrollTo('text="Episodes"');

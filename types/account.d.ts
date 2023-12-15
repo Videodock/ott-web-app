@@ -20,10 +20,14 @@ export type PayloadWithIPOverride = {
   customerIP?: string;
 };
 
-export type AuthArgs = {
+export type LoginArgs = {
   config: Config;
   email: string;
   password: string;
+};
+
+export type RegistrationArgs = LoginArgs & {
+  consents: CustomerConsent[];
 };
 
 export type AuthResponse = {
@@ -143,7 +147,7 @@ export type GetCustomerConsentsResponse = {
 export type ResetPasswordPayload = {
   customerEmail: string;
   offerId?: string;
-  publisherId?: string;
+  publisherId: string | null;
   resetUrl?: string;
 };
 
@@ -156,7 +160,7 @@ export type ChangePasswordPayload = {
 
 export type ChangePasswordWithTokenPayload = {
   customerEmail?: string;
-  publisherId?: string;
+  publisherId: string | null;
   resetPasswordToken: string;
   newPassword: string;
   newPasswordConfirmation: string;
@@ -218,15 +222,21 @@ export type UpdateCustomerArgs = {
   fullName?: string;
 };
 
-export type Consent = {
-  broadcasterId: number;
+export type CustomRegisterFieldVariant = 'input' | 'select' | 'country' | 'us_state' | 'radio' | 'checkbox' | 'datepicker';
+
+export interface Consent {
+  type?: CustomRegisterFieldVariant;
+  isCustomRegisterField?: boolean;
+  enabledByDefault?: boolean;
+  defaultValue?: string;
   name: string;
-  version: string;
-  value: string;
   label: string;
-  enabledByDefault: boolean;
+  placeholder: string;
   required: boolean;
-};
+  options: Record<string, string>;
+  version: string;
+}
+
 export type CustomerConsent = {
   customerId?: string;
   date?: number;
@@ -236,7 +246,7 @@ export type CustomerConsent = {
   newestVersion?: string;
   required?: boolean;
   state: 'accepted' | 'declined';
-  value?: string;
+  value?: string | boolean;
   version: string;
 };
 
@@ -304,8 +314,8 @@ export type UpdateCaptureAnswersPayload = {
 export type UpdatePersonalShelvesArgs = {
   id: string;
   externalData: {
-    history: SerializedWatchHistoryItem[];
-    favorites: SerializedFavorite[];
+    history?: SerializedWatchHistoryItem[];
+    favorites?: SerializedFavorite[];
   };
 };
 
@@ -336,7 +346,7 @@ export type ListProfilesResponse = {
 export type FirstLastNameInput = {
   firstName: string;
   lastName: string;
-  metadata?: Record<string, string>;
+  metadata?: Record<string, string | boolean>;
 };
 
 export type EmailConfirmPasswordInput = {
@@ -354,8 +364,21 @@ export type DeleteAccountPayload = {
   password: string;
 };
 
+export type SubscribeToNotificationsPayload = {
+  uuid: string;
+  onMessage: (payload: string) => void;
+};
+
+export type SocialURLs = {
+  facebook: string;
+  twitter: string;
+  google: string;
+};
+
 type Login = PromiseRequest<AuthArgs, AuthResponse>;
 type Register = PromiseRequest<AuthArgs, AuthResponse>;
+type Login = PromiseRequest<LoginArgs, AuthResponse>;
+type Register = PromiseRequest<RegistrationArgs, AuthResponse>;
 type GetCustomer = EnvironmentServiceRequest<GetCustomerPayload, Customer>;
 type UpdateCustomer = EnvironmentServiceRequest<UpdateCustomerArgs, Customer>;
 type GetPublisherConsents = PromiseRequest<Config, GetPublisherConsentsResponse>;
@@ -369,6 +392,8 @@ type ChangePasswordWithOldPassword = EnvironmentServiceRequest<ChangePasswordWit
 type UpdatePersonalShelves = EnvironmentServiceRequest<UpdatePersonalShelvesArgs, Customer | Record<string>>;
 type GetLocales = EmptyServiceRequest<LocalesData>;
 type ExportAccountData = EnvironmentServiceRequest<undefined, CommonAccountResponse>;
+type SocialURLSData = PromiseRequest<Config, SocialURLs[]>;
+type NotificationsData = PromiseRequest<SubscribeToNotificationsPayload, boolean>;
 type DeleteAccount = EnvironmentServiceRequest<DeleteAccountPayload, CommonAccountResponse>;
 type ListProfiles = EnvironmentServiceRequest<undefined, ListProfilesResponse>;
 type CreateProfile = EnvironmentServiceRequest<ProfilePayload, ProfilesData>;

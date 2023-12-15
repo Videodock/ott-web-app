@@ -7,6 +7,7 @@ import ExternalLink from '../../icons/ExternalLink';
 import IconButton from '../IconButton/IconButton';
 
 import styles from './Payment.module.scss';
+import '../../styles/accessibility.scss';
 
 import Alert from '#components/Alert/Alert';
 import Button from '#components/Button/Button';
@@ -20,6 +21,7 @@ import type { AccessModel } from '#types/Config';
 import type { Customer } from '#types/account';
 import type { Offer } from '#types/checkout';
 import type { PaymentDetail, Subscription, Transaction } from '#types/subscription';
+import { ACCESS_MODEL } from '#src/config';
 
 const VISIBLE_TRANSACTIONS = 4;
 
@@ -166,7 +168,7 @@ const Payment = ({
           setIsChangingOffer(false);
         }}
       />
-      {accessModel === 'SVOD' && (
+      {accessModel === ACCESS_MODEL.SVOD && (
         <div className={panelClassName}>
           <div className={panelHeaderClassName}>
             <h2>{isChangingOffer ? t('user:payment.change_plan') : t('user:payment.subscription_details')}</h2>
@@ -271,6 +273,7 @@ const Payment = ({
       )}
       <div className={panelClassName}>
         <div className={panelHeaderClassName}>
+          <h1 className="hideUntilFocus">{t('nav.payments')}</h1>
           <h2>{t('user:payment.payment_method')}</h2>
         </div>
         {activePaymentDetail ? (
@@ -327,7 +330,12 @@ const Payment = ({
                       })}
                   </div>
                   {canShowReceipts && (
-                    <IconButton aria-label={t('user:payment.show_receipt')} onClick={() => !isLoading && onShowReceiptClick(transaction.transactionId)}>
+                    <IconButton
+                      aria-label={t('user:payment.show_receipt')}
+                      // JW integration specific: uses `trxToken` as the unique identifier for each transaction
+                      // Note: `transactionId` is shared with rebills and is not guaranteed to be unique
+                      onClick={() => !isLoading && onShowReceiptClick(transaction?.trxToken ?? transaction.transactionId)}
+                    >
                       <ExternalLink />
                     </IconButton>
                   )}
