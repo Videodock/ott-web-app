@@ -36,8 +36,11 @@ $focus-box-shadow: 0 0 1px 5px var(--highlight-color, variables.$white),
     clip: auto;
   }
 }
+<<<<<<< HEAD:packages/ui-react/src/styles/accessibility.scss
 
 .linkUnderline {
   text-decoration: underline;
 }
 
+=======
+>>>>>>> 4ee91a83 (feat(a11y): add an underline to links at all times):src/styles/accessibility.scss
