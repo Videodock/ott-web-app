@@ -26,7 +26,6 @@ import HelperText from '../HelperText/HelperText';
 import CustomRegisterField from '../CustomRegisterField/CustomRegisterField';
 
 import styles from './Account.module.scss';
-import '../../styles/accessibility.scss';
 
 type Props = {
   panelClassName?: string;
