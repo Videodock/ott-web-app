@@ -40,6 +40,10 @@ export const testConfigs = {
     id: 'ozylzc5m',
     label: 'Cleeng SVOD',
   },
+  profiles: {
+    id: '4dacztho',
+    label: 'Inplayer Authvod + Profiles',
+  },
 };
 
 export const jwDevEnvConfigs = {
