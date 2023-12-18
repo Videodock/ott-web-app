@@ -7,8 +7,7 @@ import { useCheckoutStore } from '@jwp/ott-common/src/stores/CheckoutStore';
 import AccountController from '@jwp/ott-common/src/stores/AccountController';
 import CheckoutController from '@jwp/ott-common/src/stores/CheckoutController';
 import { isSVODOffer } from '@jwp/ott-common/src/utils/subscription';
-import { addQueryParam, removeQueryParam } from '@jwp/ott-ui-react/src/utils/location';
-import { addQueryParams } from '@jwp/ott-common/src/utils/formatting';
+import { modalURL } from '@jwp/ott-ui-react/src/utils/location';
 import useForm from '@jwp/ott-hooks-react/src/useForm';
 
 import CheckoutForm from '../../../components/CheckoutForm/CheckoutForm';
@@ -44,7 +43,7 @@ const Checkout = () => {
   const offerType = offer && !isSVODOffer(offer) ? 'tvod' : 'svod';
 
   const paymentSuccessUrl = useMemo(() => {
-    return offerType === 'svod' ? addQueryParam(location, 'u', 'welcome') : removeQueryParam(location, 'u');
+    return modalURL(location, offerType === 'svod' ? 'welcome' : null);
   }, [location, offerType]);
 
   const couponCodeForm = useForm({ couponCode: '' }, async (values, { setSubmitting, setErrors }) => {
@@ -58,7 +57,7 @@ const Checkout = () => {
       } catch (error: unknown) {
         if (error instanceof Error) {
           if (error.message.includes(`Order with id ${order.id} not found`)) {
-            navigate(addQueryParam(location, 'u', 'choose-offer'), { replace: true });
+            navigate(modalURL(location, 'choose-offer'), { replace: true });
           } else {
             setErrors({ couponCode: t('checkout.coupon_not_valid') });
           }
@@ -82,7 +81,7 @@ const Checkout = () => {
       } catch (error: unknown) {
         if (error instanceof Error) {
           if (error.message.includes(`Order with id ${order.id} not found`)) {
-            navigate(addQueryParam(location, 'u', 'choose-offer'), { replace: true });
+            navigate(modalURL(location, 'choose-offer'), { replace: true });
           } else {
             couponCodeForm.setErrors({ couponCode: t('checkout.coupon_not_valid') });
           }
@@ -110,7 +109,7 @@ const Checkout = () => {
     }
 
     if (!offer) {
-      return navigate(addQueryParam(location, 'u', 'choose-offer'), { replace: true });
+      return navigate(modalURL(location, 'choose-offer'), { replace: true });
     }
 
     // noinspection JSIgnoredPromiseFromCall
@@ -123,7 +122,7 @@ const Checkout = () => {
   }, [setOrder]);
 
   const backButtonClickHandler = () => {
-    navigate(addQueryParam(location, 'u', 'choose-offer'));
+    navigate(modalURL(location, 'choose-offer'));
   };
 
   const handlePaymentMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,7 +138,7 @@ const Checkout = () => {
         .updateOrder(order, toPaymentMethodId, couponCodeForm.values.couponCode)
         .catch((error: Error) => {
           if (error.message.includes(`Order with id ${order.id}} not found`)) {
-            navigate(addQueryParam(location, 'u', 'choose-offer'));
+            navigate(modalURL(location, 'choose-offer'));
           }
         })
         .finally(() => setUpdatingOrder(false));
@@ -166,9 +165,9 @@ const Checkout = () => {
     try {
       setPaymentError(undefined);
       setUpdatingOrder(true);
-      const cancelUrl = addQueryParams(window.location.href, { u: 'payment-cancelled' });
-      const waitingUrl = addQueryParams(window.location.href, { u: 'waiting-for-payment' });
-      const errorUrl = addQueryParams(window.location.href, { u: 'payment-error' });
+      const cancelUrl = modalURL(location, 'payment-cancelled');
+      const waitingUrl = modalURL(location, 'waiting-for-payment');
+      const errorUrl = modalURL(location, 'payment-error');
       const successUrl = `${window.location.origin}${paymentSuccessUrl}`;
 
       const response = await checkoutController.paypalPayment(successUrl, waitingUrl, cancelUrl, errorUrl, couponCodeForm.values.couponCode);
