@@ -8,7 +8,7 @@ describe('<Dialog>', () => {
     const { baseElement } = render(
       <>
         <span>Some content</span>
-        <Dialog onClose={vi.fn()} open={true}>
+        <Dialog onClose={vi.fn()} open={true} role="">
           Dialog contents
         </Dialog>
         <span>Some other content</span>

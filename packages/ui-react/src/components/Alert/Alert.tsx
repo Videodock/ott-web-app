@@ -19,8 +19,10 @@ const Alert: React.FC<Props> = ({ open, message, onClose, isSuccess, actionsOver
   const { t } = useTranslation('common');
 
   return (
-    <Dialog open={open} onClose={onClose} role="alert" aria-live="polite">
-      <h2 className={styles.title}>{titleOverride ?? (isSuccess ? t('alert.success') : t('alert.title'))}</h2>
+    <Dialog open={open} onClose={onClose} role="alert" aria-labelledby="alert-heading">
+      <h2 id="alert-heading" className={styles.title}>
+        {titleOverride ?? (isSuccess ? t('alert.success') : t('alert.title'))}
+      </h2>
       <p className={styles.body}>{message}</p>
       {actionsOverride ?? <Button label={t('alert.close')} variant="outlined" onClick={onClose} fullWidth />}
     </Dialog>
