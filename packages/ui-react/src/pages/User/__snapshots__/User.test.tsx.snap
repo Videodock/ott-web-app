@@ -625,17 +625,17 @@ exports[`User Component tests > Payments Page 1`] = `
     <div
       class="_mainColumn_e9c5ca"
     >
+      <h1
+        class="hideUntilFocus"
+      >
+        nav.payments
+      </h1>
       <div
         class="_panel_e9c5ca"
       >
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h1
-            class="hideUntilFocus"
-          >
-            nav.payments
-          </h1>
           <h2>
             user:payment.subscription_details
           </h2>
@@ -679,11 +679,6 @@ exports[`User Component tests > Payments Page 1`] = `
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h1
-            class="hideUntilFocus"
-          >
-            nav.payments
-          </h1>
           <h2>
             user:payment.payment_method
           </h2>
