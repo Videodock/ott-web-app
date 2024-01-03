@@ -24,7 +24,7 @@ import type {
   NotificationsData,
   Register,
   ResetPassword,
-  SocialURLSData,
+  GetSocialURLs,
   UpdateCaptureAnswers,
   UpdateCustomer,
   UpdateCustomerArgs,
@@ -36,17 +36,21 @@ import type { InPlayerAuthData } from '../../../../types/inplayer';
 import type { Favorite } from '../../../../types/favorite';
 import type { WatchHistoryItem } from '../../../../types/watchHistory';
 import AccountService from '../AccountService';
+import StorageService from '../../StorageService';
 
 enum InPlayerEnv {
   Development = 'development',
   Production = 'production',
   Daily = 'daily',
 }
+
 const JW_TERMS_URL = 'https://inplayer.com/legal/terms';
 
 @injectable()
 export default class JWPAccountService extends AccountService {
-  constructor() {
+  private readonly storageService;
+
+  constructor(storageService: StorageService) {
     super({
       canUpdateEmail: false,
       canSupportEmptyFullName: false,
@@ -60,6 +64,8 @@ export default class JWPAccountService extends AccountService {
       hasProfiles: true,
       hasSocialURLs: true,
     });
+
+    this.storageService = storageService;
   }
 
   private getCustomerExternalData = async (): Promise<ExternalData> => {
@@ -523,11 +529,11 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  getSocialUrls: SocialURLSData = async (config: Config) => {
-    const socialState = window.btoa(
+  getSocialUrls: GetSocialURLs = async ({ config, redirectUrl }) => {
+    const socialState = this.storageService.base64Encode(
       JSON.stringify({
         client_id: config.integrations.jwp?.clientId || '',
-        redirect: window.location.href.split('u=')[0],
+        redirect: redirectUrl,
       }),
     );
 

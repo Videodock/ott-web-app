@@ -14,7 +14,7 @@ import type {
   NotificationsData,
   Register,
   ResetPassword,
-  SocialURLSData,
+  GetSocialURLs,
   UpdateCaptureAnswers,
   UpdateCustomer,
   UpdateCustomerConsents,
@@ -76,7 +76,7 @@ export default abstract class AccountService {
 
   abstract subscribeToNotifications: NotificationsData;
 
-  abstract getSocialUrls?: SocialURLSData;
+  abstract getSocialUrls?: GetSocialURLs;
 
   abstract exportAccountData?: ExportAccountData;
 

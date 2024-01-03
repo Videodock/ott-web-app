@@ -38,4 +38,14 @@ export class LocalStorageService extends StorageService {
       console.error(error);
     }
   }
+
+  // helper functions for encoding and decoding Base64 strings
+  // this might end up in a different service
+  base64Encode(input: string): string {
+    return window.btoa(input);
+  }
+
+  base64Decode(input: string): string {
+    return window.atob(input);
+  }
 }

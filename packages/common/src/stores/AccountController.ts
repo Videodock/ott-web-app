@@ -508,14 +508,14 @@ export default class AccountController {
     return this.accountService?.exportAccountData(undefined, true);
   };
 
-  getSocialLoginUrls = () => {
+  getSocialLoginUrls = (redirectUrl: string) => {
     const { config } = useConfigStore.getState();
     const { hasSocialURLs } = this.getFeatures();
 
     assertModuleMethod(this.accountService.getSocialUrls, 'getSocialUrls is not available in account service');
     assertFeature(hasSocialURLs, 'Social logins');
 
-    return this.accountService.getSocialUrls(config);
+    return this.accountService.getSocialUrls({ config, redirectUrl });
   };
 
   deleteAccountData = async (password: string) => {

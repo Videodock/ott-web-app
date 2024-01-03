@@ -7,9 +7,10 @@ import SocialButton, { SocialButtonVariant } from '../SocialButton/SocialButton'
 import styles from './SocialButtonsList.module.scss';
 
 const SocialButtonsList = () => {
+  // TODO remove controller and useQuery from component
   const accountController = getModule(AccountController);
 
-  const urls = useQuery('socialUrls', accountController.getSocialLoginUrls);
+  const urls = useQuery('socialUrls', () => accountController.getSocialLoginUrls(window.location.href.split('?')[0]));
 
   if (urls.error || !urls.data) {
     return null;
