@@ -45,6 +45,8 @@ function Card({
     t,
     i18n: { language },
   } = useTranslation(['common', 'video']);
+  // t('play_item')
+
   const [imageLoaded, setImageLoaded] = useState(false);
   const cardClassName = classNames(styles.card, {
     [styles.featured]: featured,
