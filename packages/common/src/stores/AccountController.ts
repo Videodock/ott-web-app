@@ -4,7 +4,6 @@ import { inject, injectable } from 'inversify';
 import { queryClient } from '../queryClient';
 import { ACCESS_MODEL, DEFAULT_FEATURES } from '../constants';
 import { logDev } from '../utils/common';
-import * as persist from '../utils/persist';
 import type { IntegrationType } from '../../types/config';
 import CheckoutService from '../services/integrations/CheckoutService';
 import AccountService, { type AccountServiceFeatures } from '../services/integrations/AccountService';
@@ -31,8 +30,6 @@ import { useProfileStore } from './ProfileStore';
 import ProfileController from './ProfileController';
 import WatchHistoryController from './WatchHistoryController';
 import FavoritesController from './FavoritesController';
-
-const PERSIST_PROFILE = 'profile';
 
 @injectable()
 export default class AccountController {
@@ -217,8 +214,7 @@ export default class AccountController {
     await this.favoritesController?.restoreFavorites();
     await this.watchHistoryController?.restoreWatchHistory();
     await this.accountService?.logout();
-
-    persist.removeItem(PERSIST_PROFILE);
+    await this.profileController?.unpersistProfile();
 
     // this invalidates all entitlements caches which makes the useEntitlement hook to verify the entitlements.
     await queryClient.invalidateQueries('entitlements');

@@ -1,8 +1,10 @@
-import { Container, interfaces } from 'inversify';
+import { Container, interfaces, injectable, inject } from 'inversify';
 
 import type { IntegrationType } from '../../types/config';
 
 export const container = new Container({ defaultScope: 'Singleton', skipBaseClassChecks: true });
+
+export { injectable, inject };
 
 export function getModule<T>(constructorFunction: interfaces.ServiceIdentifier<T>, required: false): T | undefined;
 export function getModule<T>(constructorFunction: interfaces.ServiceIdentifier<T>, required: true): T;

@@ -6,6 +6,7 @@ import SettingsService from '../services/SettingsService';
 import ConfigService from '../services/ConfigService';
 import type { IntegrationType } from '../../types/config';
 import { getModule } from '../modules/container';
+import StorageService from '../services/StorageService';
 
 import AccountController from './AccountController';
 import WatchHistoryController from './WatchHistoryController';
@@ -16,10 +17,16 @@ import { useConfigStore } from './ConfigStore';
 export default class AppController {
   private readonly configService: ConfigService;
   private readonly settingsService: SettingsService;
+  private readonly storageService: StorageService;
 
-  constructor(@inject(ConfigService) configService: ConfigService, @inject(SettingsService) settingsService: SettingsService) {
+  constructor(
+    @inject(ConfigService) configService: ConfigService,
+    @inject(SettingsService) settingsService: SettingsService,
+    @inject(StorageService) storageService: StorageService,
+  ) {
     this.configService = configService;
     this.settingsService = settingsService;
+    this.storageService = storageService;
   }
 
   loadAndValidateConfig = async (configSource: string | undefined) => {
@@ -64,8 +71,11 @@ export default class AppController {
 
   initializeApp = async () => {
     const settings = await this.settingsService.initialize();
-    const configSource = this.settingsService.getConfigSource(settings);
+    const configSource = await this.settingsService.getConfigSource(settings);
     const config = await this.loadAndValidateConfig(configSource);
+
+    // we can add the configSource to the storage prefix, but this will cause a breaking change for end users
+    this.storageService.initialize('jwapp');
 
     // update settings in the config store
     useConfigStore.setState({ settings });
