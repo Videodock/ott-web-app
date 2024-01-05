@@ -24,21 +24,29 @@ describe('<LanguageMenu>', () => {
     expect(container).toMatchSnapshot();
   });
 
-  test('shows all languages in the menu', () => {
-    const currentLanguage = languages[1];
-    const { queryByText } = renderWithRouter(<LanguageMenu languages={languages} currentLanguage={currentLanguage} onClick={() => undefined} />);
-
-    expect(queryByText('English')).toBeInTheDocument();
-    expect(queryByText('español')).toBeInTheDocument();
-  });
-
-  test('renders languages and calls the onClick callback with the correct language code', () => {
+  test('shows all languages in the menu when button is clicked and calls the onClick callback with the correct language code', () => {
     const currentLanguage = languages[1];
     const callback = vi.fn();
-    const { getByText } = renderWithRouter(<LanguageMenu languages={languages} currentLanguage={currentLanguage} onClick={callback} />);
 
-    fireEvent.click(getByText('English'));
+    const { getByRole, container } = renderWithRouter(<LanguageMenu languages={languages} currentLanguage={currentLanguage} onClick={callback} />);
+    const languageMenuButton = getByRole('button');
 
-    expect(callback).toBeCalledWith('en');
+    // Simulate button click for accessiblity
+    fireEvent.click(languageMenuButton);
+    const languagePanel = container.querySelector('#language-panel');
+    expect(languagePanel).toBeInTheDocument();
+
+    const languageMenuItems = languagePanel?.querySelectorAll('li');
+    expect(languageMenuItems).toHaveLength(languages.length);
+
+    // check if all languages are displayed correctly
+    languages.forEach((lang, index) => {
+      expect(languageMenuItems?.[index]).toHaveTextContent(lang.displayName);
+    });
+
+    // ignore line since the value is hardcoded above.
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    fireEvent.click(languageMenuItems![0]);
+    expect(callback).toHaveBeenCalledWith(languages[0].code);
   });
 });

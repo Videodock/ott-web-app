@@ -8,7 +8,6 @@ import type { LanguageDefinition } from '@jwp/ott-common/types/i18n';
 import Menu from '../../icons/Menu';
 import SearchIcon from '../../icons/Search';
 import CloseIcon from '../../icons/Close';
-import Language from '../../icons/Language';
 import ProfileCircle from '../../icons/ProfileCircle';
 import AccountCircle from '../../icons/AccountCircle';
 import SearchBar, { Props as SearchBarProps } from '../SearchBar/SearchBar';
@@ -37,12 +36,9 @@ type Props = {
   onSignUpButtonClick?: () => void;
   openUserMenu: () => void;
   closeUserMenu: () => void;
-  openLanguageMenu: () => void;
-  closeLanguageMenu: () => void;
   children?: ReactFragment;
   isLoggedIn: boolean;
   userMenuOpen: boolean;
-  languageMenuOpen: boolean;
   canLogin: boolean;
   showPaymentsMenuItem: boolean;
   supportedLanguages: LanguageDefinition[];
@@ -74,11 +70,8 @@ const Header: React.FC<Props> = ({
   onSignUpButtonClick,
   isLoggedIn,
   userMenuOpen,
-  languageMenuOpen,
   openUserMenu,
   closeUserMenu,
-  openLanguageMenu,
-  closeLanguageMenu,
   canLogin = false,
   showPaymentsMenuItem,
   supportedLanguages,
@@ -171,21 +164,13 @@ const Header: React.FC<Props> = ({
 
     return (
       <React.Fragment>
-        <IconButton className={classNames(styles.iconButton, styles.actionButton)} aria-label={t('select_language')} onClick={openLanguageMenu}>
-          <Language />
-        </IconButton>
-        <Popover isOpen={languageMenuOpen} onClose={closeLanguageMenu}>
-          <Panel>
-            <LanguageMenu
-              onClick={(code) => {
-                onLanguageClick(code);
-                closeLanguageMenu();
-              }}
-              languages={supportedLanguages}
-              currentLanguage={currentLanguage}
-            />
-          </Panel>
-        </Popover>
+        <LanguageMenu
+          onClick={(code) => {
+            onLanguageClick(code);
+          }}
+          languages={supportedLanguages}
+          currentLanguage={currentLanguage}
+        />
       </React.Fragment>
     );
   };

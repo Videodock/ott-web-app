@@ -16,12 +16,12 @@ import { ACCESS_MODEL } from '@jwp/ott-common/src/constants';
 import useSearchQueryUpdater from '@jwp/ott-hooks-react/src/useSearchQueryUpdater';
 import { useProfiles, useSelectProfile } from '@jwp/ott-hooks-react/src/useProfiles';
 
-import Button from '../../components/Button/Button';
 import MarkdownComponent from '../../components/MarkdownComponent/MarkdownComponent';
 import Header from '../../components/Header/Header';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import MenuButton from '../../components/MenuButton/MenuButton';
 import UserMenu from '../../components/UserMenu/UserMenu';
+import Button from '../../components/Button/Button';
 
 import styles from './Layout.module.scss';
 
@@ -52,9 +52,8 @@ const Layout = () => {
 
   const selectProfile = useSelectProfile();
 
-  const { searchQuery, searchActive, userMenuOpen, languageMenuOpen } = useUIStore(
-    ({ searchQuery, searchActive, userMenuOpen, languageMenuOpen }) => ({
-      languageMenuOpen,
+  const { searchQuery, searchActive, userMenuOpen } = useUIStore(
+    ({ searchQuery, searchActive, userMenuOpen }) => ({
       searchQuery,
       searchActive,
       userMenuOpen,
@@ -113,8 +112,6 @@ const Layout = () => {
   // useCallbacks are used here to fix a bug in the Popover when using a Reactive onClose callback
   const openUserMenu = useCallback(() => useUIStore.setState({ userMenuOpen: true }), []);
   const closeUserMenu = useCallback(() => useUIStore.setState({ userMenuOpen: false }), []);
-  const openLanguageMenu = useCallback(() => useUIStore.setState({ languageMenuOpen: true }), []);
-  const closeLanguageMenu = useCallback(() => useUIStore.setState({ languageMenuOpen: false }), []);
 
   const renderUserActions = () => {
     if (!clientId) return null;
@@ -160,11 +157,8 @@ const Layout = () => {
           currentLanguage={currentLanguage}
           isLoggedIn={isLoggedIn}
           userMenuOpen={userMenuOpen}
-          languageMenuOpen={languageMenuOpen}
           openUserMenu={openUserMenu}
           closeUserMenu={closeUserMenu}
-          openLanguageMenu={openLanguageMenu}
-          closeLanguageMenu={closeLanguageMenu}
           canLogin={!!clientId}
           showPaymentsMenuItem={accessModel !== ACCESS_MODEL.AVOD}
           favoritesEnabled={favoritesEnabled}
