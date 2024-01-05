@@ -1,6 +1,5 @@
 import { inject, injectable } from 'inversify';
 
-import { getOverrideIP } from '../utils/common';
 import type {
   AddAdyenPaymentDetailsResponse,
   AdyenPaymentSession,
@@ -22,6 +21,8 @@ import CheckoutService from '../services/integrations/CheckoutService';
 import SubscriptionService from '../services/integrations/SubscriptionService';
 import type { IntegrationType } from '../../types/config';
 import { assertModuleMethod, getNamedModule } from '../modules/container';
+import { GET_CUSTOMER_IP, INTEGRATION_TYPE } from '../modules/types';
+import type { GetCustomerIP } from '../../types/get-customer-ip';
 
 import { useConfigStore } from './ConfigStore';
 import { useCheckoutStore } from './CheckoutStore';
@@ -31,8 +32,10 @@ import { useAccountStore } from './AccountStore';
 export default class CheckoutController {
   private readonly checkoutService: CheckoutService;
   private readonly subscriptionService: SubscriptionService;
+  private readonly getCustomerIP: GetCustomerIP;
 
-  constructor(@inject('INTEGRATION_TYPE') integrationType: IntegrationType) {
+  constructor(@inject(INTEGRATION_TYPE) integrationType: IntegrationType, @inject(GET_CUSTOMER_IP) getCustomerIP: GetCustomerIP) {
+    this.getCustomerIP = getCustomerIP;
     this.checkoutService = getNamedModule(CheckoutService, integrationType);
     this.subscriptionService = getNamedModule(SubscriptionService, integrationType);
   }
@@ -170,7 +173,7 @@ export default class CheckoutController {
         returnUrl: returnUrl,
         paymentMethod,
         attemptAuthentication: isSandbox ? 'always' : undefined,
-        customerIP: getOverrideIP(),
+        customerIP: await this.getCustomerIP(),
       },
       isSandbox,
     );
@@ -342,7 +345,7 @@ export default class CheckoutController {
         returnUrl,
         paymentMethod,
         attemptAuthentication: isSandbox ? 'always' : undefined,
-        customerIP: getOverrideIP(),
+        customerIP: await this.getCustomerIP(),
       },
       isSandbox,
     );

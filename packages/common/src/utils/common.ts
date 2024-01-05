@@ -1,5 +1,3 @@
-import { overrideIPCookieKey } from '../constants';
-
 export function debounce<T extends (...args: any[]) => void>(callback: T, wait = 200) {
   let timeout: NodeJS.Timeout | null;
   return (...args: unknown[]) => {
@@ -72,18 +70,6 @@ export function logDev(message: unknown, ...optionalParams: unknown[]) {
       console.info(message);
     }
   }
-}
-
-export function getOverrideIP() {
-  if (!IS_TEST_MODE && !IS_DEVELOPMENT_BUILD && !IS_PREVIEW_MODE) {
-    return undefined;
-  }
-
-  return document.cookie
-    .split(';')
-    .find((s) => s.trim().startsWith(`${overrideIPCookieKey}=`))
-    ?.split('=')[1]
-    .trim();
 }
 
 export const isTruthyCustomParamValue = (value: unknown): boolean => ['true', '1', 'yes', 'on'].includes(String(value)?.toLowerCase());

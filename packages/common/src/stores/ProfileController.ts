@@ -7,6 +7,7 @@ import ProfileService from '../services/ProfileService';
 import type { IntegrationType } from '../../types/config';
 import { assertModuleMethod, getNamedModule } from '../modules/container';
 import StorageService from '../services/StorageService';
+import { INTEGRATION_TYPE } from '../modules/types';
 
 import { useProfileStore } from './ProfileStore';
 import { useConfigStore } from './ConfigStore';
@@ -29,7 +30,7 @@ export default class ProfileController {
   private readonly profileService?: ProfileService;
   private readonly storageService: StorageService;
 
-  constructor(@inject('INTEGRATION_TYPE') integrationType: IntegrationType, storageService: StorageService) {
+  constructor(@inject(INTEGRATION_TYPE) integrationType: IntegrationType, storageService: StorageService) {
     this.profileService = getNamedModule(ProfileService, integrationType, false);
     this.storageService = storageService;
   }

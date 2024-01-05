@@ -21,6 +21,7 @@ import type {
   SubscribeToNotificationsPayload,
 } from '../../types/account';
 import { assertFeature, assertModuleMethod, getNamedModule } from '../modules/container';
+import { INTEGRATION_TYPE } from '../modules/types';
 
 import { useWatchHistoryStore } from './WatchHistoryStore';
 import { useFavoritesStore } from './FavoritesStore';
@@ -42,7 +43,7 @@ export default class AccountController {
   private readonly features: AccountServiceFeatures;
 
   constructor(
-    @inject('INTEGRATION_TYPE') integrationType: IntegrationType,
+    @inject(INTEGRATION_TYPE) integrationType: IntegrationType,
     favoritesController: FavoritesController,
     watchHistoryController: WatchHistoryController,
     profileController?: ProfileController,

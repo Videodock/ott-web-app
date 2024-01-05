@@ -1,7 +1,6 @@
 import jwtDecode from 'jwt-decode';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 
-import { getOverrideIP } from '../../../utils/common';
 import type { Config } from '../../../../types/config';
 import type {
   AuthData,
@@ -31,14 +30,17 @@ import type {
   UpdatePersonalShelves,
 } from '../../../../types/account';
 import AccountService from '../AccountService';
+import { GET_CUSTOMER_IP } from '../../../modules/types';
+import type { GetCustomerIP } from '../../../../types/get-customer-ip';
 
 import CleengService from './CleengService';
 
 @injectable()
 export default class CleengAccountService extends AccountService {
-  private readonly cleengService: CleengService;
+  private readonly cleengService;
+  private readonly getCustomerIP;
 
-  constructor(cleengService: CleengService) {
+  constructor(cleengService: CleengService, @inject(GET_CUSTOMER_IP) getCustomerIP: GetCustomerIP) {
     super({
       canUpdateEmail: true,
       canSupportEmptyFullName: true,
@@ -54,6 +56,7 @@ export default class CleengAccountService extends AccountService {
     });
 
     this.cleengService = cleengService;
+    this.getCustomerIP = getCustomerIP;
   }
 
   private handleErrors = (errors: ApiResponse['errors']) => {
@@ -126,7 +129,7 @@ export default class CleengAccountService extends AccountService {
       email,
       password,
       publisherId: config.integrations.cleeng?.id || '',
-      customerIP: getOverrideIP(),
+      customerIP: await this.getCustomerIP(),
     };
 
     const { responseData: auth, errors }: ServiceResponse<AuthData> = await this.cleengService.post(
@@ -159,7 +162,7 @@ export default class CleengAccountService extends AccountService {
       country: localesResponse.responseData.country,
       currency: localesResponse.responseData.currency,
       publisherId: config.integrations.cleeng?.id || '',
-      customerIP: getOverrideIP(),
+      customerIP: await this.getCustomerIP(),
     };
 
     const { responseData: auth, errors }: ServiceResponse<AuthData> = await this.cleengService.post(
@@ -275,7 +278,10 @@ export default class CleengAccountService extends AccountService {
       ...rest,
     };
     // enable keepalive to ensure data is persisted when closing the browser/tab
-    return this.cleengService.patch(sandbox, `/customers/${id}`, JSON.stringify(params), { authenticate: true, keepalive: true });
+    return this.cleengService.patch(sandbox, `/customers/${id}`, JSON.stringify(params), {
+      authenticate: true,
+      keepalive: true,
+    });
   };
 
   updatePersonalShelves: UpdatePersonalShelves = async (payload, sandbox) => {

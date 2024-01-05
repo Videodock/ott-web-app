@@ -3,6 +3,7 @@
 import 'reflect-metadata'; // include once in the app for inversify (see: https://github.com/inversify/InversifyJS/blob/master/README.md#-installation)
 import { INTEGRATION } from '../constants';
 import { container } from './container';
+import { GET_CUSTOMER_IP, INTEGRATION_TYPE } from './types';
 
 import ApiService from '../services/ApiService';
 import WatchHistoryService from '../services/WatchHistoryService';
@@ -37,6 +38,7 @@ import JWPAccountService from '../services/integrations/jwp/JWPAccountService';
 import JWPCheckoutService from '../services/integrations/jwp/JWPCheckoutService';
 import JWPSubscriptionService from '../services/integrations/jwp/JWPSubscriptionService';
 import JWPProfileService from '../services/integrations/jwp/JWPProfileService';
+import type { GetCustomerIP } from '../../types/get-customer-ip';
 
 // Common services
 container.bind(ConfigService).toSelf();
@@ -57,7 +59,10 @@ container.bind(AccountController).toSelf();
 container.bind(CheckoutController).toSelf();
 container.bind(ProfileController).toSelf();
 
-container.bind('INTEGRATION_TYPE').toDynamicValue((context) => {
+// This function can be overridden in the platform to obtain the customer ip
+container.bind<GetCustomerIP>(GET_CUSTOMER_IP).toConstantValue(async () => undefined);
+
+container.bind(INTEGRATION_TYPE).toDynamicValue((context) => {
   return context.container.get(AppController).getIntegrationType();
 });
 

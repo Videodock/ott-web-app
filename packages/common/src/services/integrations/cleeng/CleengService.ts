@@ -1,12 +1,14 @@
 import jwtDecode from 'jwt-decode';
 import { object, string } from 'yup';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 
 import { Broadcaster } from '../../../utils/broadcaster';
-import { getOverrideIP, IS_DEVELOPMENT_BUILD, logDev } from '../../../utils/common';
+import { IS_DEVELOPMENT_BUILD, logDev } from '../../../utils/common';
 import { PromiseQueue } from '../../../utils/promiseQueue';
 import type { GetLocales } from '../../../../types/account';
 import StorageService from '../../StorageService';
+import { GET_CUSTOMER_IP } from '../../../modules/types';
+import type { GetCustomerIP } from '../../../../types/get-customer-ip';
 
 const AUTH_PERSIST_KEY = 'auth';
 
@@ -75,6 +77,7 @@ const getTokenExpiration = (token: string) => {
 @injectable()
 export default class CleengService {
   private readonly storageService;
+  private readonly getCustomerIP;
   private readonly channel: Broadcaster<MessageData>;
   private readonly queue = new PromiseQueue();
   private isRefreshing = false;
@@ -82,8 +85,9 @@ export default class CleengService {
   private sandbox = false;
   tokens: Tokens | null = null;
 
-  constructor(storageService: StorageService) {
+  constructor(storageService: StorageService, @inject(GET_CUSTOMER_IP) getCustomerIP: GetCustomerIP) {
     this.storageService = storageService;
+    this.getCustomerIP = getCustomerIP;
 
     this.channel = new Broadcaster<MessageData>('jwp-refresh-token-channel');
     this.channel.addMessageListener(this.handleBroadcastMessage);
@@ -352,7 +356,9 @@ export default class CleengService {
   };
 
   getLocales: GetLocales = async (sandbox) => {
-    return this.get(sandbox, `/locales${getOverrideIP() ? '?customerIP=' + getOverrideIP() : ''}`);
+    const customerIP = await this.getCustomerIP();
+
+    return this.get(sandbox, `/locales${customerIP ? '?customerIP=' + customerIP : ''}`);
   };
 
   get = (sandbox: boolean, path: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'GET', undefined, options);
