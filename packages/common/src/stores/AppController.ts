@@ -54,8 +54,6 @@ export default class AppController {
       s.config.assets.banner = banner;
     });
 
-    this.configService.setCssVariables(config.styling || {});
-
     config = await this.configService.validateConfig(config);
     config = merge({}, defaultConfig, config);
 
@@ -63,8 +61,6 @@ export default class AppController {
     const { integrationType, clientId, isSandbox, offers } = this.configService.calculateIntegrationData(config);
 
     useConfigStore.setState({ config, accessModel, integrationType, clientId, isSandbox, offers, loaded: true });
-
-    this.configService.maybeInjectAnalyticsLibrary(config);
 
     return config;
   };

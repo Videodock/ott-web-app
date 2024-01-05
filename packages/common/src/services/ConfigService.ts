@@ -4,10 +4,8 @@ import { getI18n } from 'react-i18next';
 
 import { ACCESS_MODEL, INTEGRATION } from '../constants';
 import { configSchema } from '../utils/configSchema';
-import { calculateContrastColor } from '../utils/common';
-import { addScript } from '../utils/dom';
 import { AppError } from '../utils/error';
-import type { AccessModel, Config, Styling } from '../../types/config';
+import type { AccessModel, Config } from '../../types/config';
 import env from '../env';
 
 import ApiService from './ApiService';
@@ -109,30 +107,6 @@ export default class ConfigService {
     }
 
     return this.enrichConfig(data);
-  };
-
-  setCssVariables = ({ backgroundColor, highlightColor, headerBackground }: Styling) => {
-    const root = document.querySelector(':root') as HTMLElement;
-
-    if (root && backgroundColor) {
-      root.style.setProperty('--body-background-color', backgroundColor);
-      root.style.setProperty('--background-contrast-color', calculateContrastColor(backgroundColor));
-    }
-
-    if (root && highlightColor) {
-      root.style.setProperty('--highlight-color', highlightColor);
-      root.style.setProperty('--highlight-contrast-color', calculateContrastColor(highlightColor));
-    }
-    if (root && headerBackground) {
-      root.style.setProperty('--header-background', headerBackground);
-      root.style.setProperty('--header-contrast-color', calculateContrastColor(headerBackground));
-    }
-  };
-
-  maybeInjectAnalyticsLibrary = (config: Config) => {
-    if (!config.analyticsToken) return;
-
-    return addScript('/jwpltx.js');
   };
 
   calculateAccessModel = (config: Config): AccessModel => {
