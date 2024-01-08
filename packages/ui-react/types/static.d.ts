@@ -24,11 +24,11 @@ declare module '*.module.styl' {
 }
 
 /* CSS */
-// declare module '*.css';
-// declare module '*.scss';
-// declare module '*.sass';
-// declare module '*.less';
-// declare module '*.styl';
+declare module '*.css';
+declare module '*.scss';
+declare module '*.sass';
+declare module '*.less';
+declare module '*.styl';
 
 /* IMAGES */
 declare module '*.svg' {

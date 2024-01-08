@@ -11,8 +11,6 @@ import App from './App';
 
 // Collect env vars
 configureEnv({
-  MODE: import.meta.env.MODE,
-  DEV: import.meta.env.DEV,
   APP_VERSION: import.meta.env.APP_VERSION,
 
   APP_API_BASE_URL: import.meta.env.APP_API_BASE_URL,
