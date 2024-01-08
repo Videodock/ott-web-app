@@ -35,10 +35,13 @@ describe('<Header />', () => {
         userMenuOpen={false}
         openUserMenu={vi.fn()}
         closeUserMenu={vi.fn()}
+        openLanguageMenu={vi.fn()}
+        closeLanguageMenu={vi.fn()}
         isLoggedIn={false}
         canLogin={true}
         showPaymentsMenuItem={true}
         supportedLanguages={[]}
+        languageMenuOpen={false}
         currentLanguage={undefined}
         onLanguageClick={vi.fn()}
       >

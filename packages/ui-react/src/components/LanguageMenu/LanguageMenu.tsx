@@ -1,7 +1,7 @@
 import type { LanguageDefinition } from '@jwp/ott-common/types/i18n';
 import classNames from 'classnames';
-import { t } from 'i18next';
-import { Fragment, useState, type MouseEvent } from 'react';
+import { Fragment, type MouseEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Language from '../../icons/Language';
 import IconButton from '../IconButton/IconButton';
@@ -12,24 +12,30 @@ import Popover from '../Popover/Popover';
 import styles from './LanguageMenu.module.scss';
 
 type Props = {
-  onClick?: (code: string) => void;
+  onClick: (code: string) => void | null;
   languages: LanguageDefinition[];
   currentLanguage: LanguageDefinition | undefined;
+  languageMenuOpen: boolean;
+  openLanguageMenu: () => void;
+  closeLanguageMenu: () => void;
 };
 
-const LanguageMenu = ({ onClick, languages, currentLanguage }: Props) => {
-  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
+const LanguageMenu = ({ onClick, languages, currentLanguage, languageMenuOpen, closeLanguageMenu, openLanguageMenu }: Props) => {
+  const { t } = useTranslation('menu');
 
-  const handleOnBlur = () => setLanguageMenuOpen(false);
-  const handleOnFocus = () => setLanguageMenuOpen(true);
-  const handleMenuToggle = () => setLanguageMenuOpen(!languageMenuOpen);
   const handleLanguageSelect = (event: MouseEvent<HTMLElement>, code: string) => {
     event.preventDefault();
-    if (onClick) {
-      onClick(code);
-    }
+    onClick && onClick(code);
 
-    setLanguageMenuOpen(false);
+    closeLanguageMenu();
+  };
+
+  const handleMenuToggle = () => {
+    if (languageMenuOpen) {
+      closeLanguageMenu();
+    } else {
+      openLanguageMenu();
+    }
   };
 
   return (
@@ -38,27 +44,24 @@ const LanguageMenu = ({ onClick, languages, currentLanguage }: Props) => {
         aria-controls="language-panel"
         aria-expanded={languageMenuOpen}
         className={classNames(styles.iconButton, styles.actionButton)}
-        aria-label={t('select_language')}
+        aria-label={t('language_menu')}
         onClick={handleMenuToggle}
+        onBlur={closeLanguageMenu}
       >
         <Language />
       </IconButton>
 
-      <Popover isOpen={languageMenuOpen} onClose={() => setLanguageMenuOpen(false)} aria-expanded={languageMenuOpen}>
+      <Popover isOpen={languageMenuOpen} onClose={closeLanguageMenu} aria-expanded={languageMenuOpen}>
         <Panel id="language-panel">
           <ul className={styles.menuItems}>
             {languages.map(({ code, displayName }) => {
               const menuItemClassname = classNames(styles.menuItem, { [styles.menuItemActive]: currentLanguage?.code === code });
 
               return (
-                <li
-                  key={code}
-                  className={menuItemClassname}
-                  onFocus={handleOnFocus}
-                  onBlur={handleOnBlur}
-                  onClick={(event) => handleLanguageSelect(event, code)}
-                >
-                  <Link href="#">{displayName}</Link>
+                <li key={code} className={menuItemClassname} onClick={(event) => handleLanguageSelect(event, code)}>
+                  <Link onFocus={openLanguageMenu} onBlur={closeLanguageMenu} href="#">
+                    {displayName}
+                  </Link>
                 </li>
               );
             })}

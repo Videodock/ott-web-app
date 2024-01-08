@@ -36,9 +36,12 @@ type Props = {
   onSignUpButtonClick?: () => void;
   openUserMenu: () => void;
   closeUserMenu: () => void;
+  openLanguageMenu: () => void;
+  closeLanguageMenu: () => void;
   children?: ReactFragment;
   isLoggedIn: boolean;
   userMenuOpen: boolean;
+  languageMenuOpen: boolean;
   canLogin: boolean;
   showPaymentsMenuItem: boolean;
   supportedLanguages: LanguageDefinition[];
@@ -70,8 +73,11 @@ const Header: React.FC<Props> = ({
   onSignUpButtonClick,
   isLoggedIn,
   userMenuOpen,
+  languageMenuOpen,
   openUserMenu,
   closeUserMenu,
+  openLanguageMenu,
+  closeLanguageMenu,
   canLogin = false,
   showPaymentsMenuItem,
   supportedLanguages,
@@ -163,15 +169,16 @@ const Header: React.FC<Props> = ({
     if (!showLanguageSwitcher) return null;
 
     return (
-      <React.Fragment>
-        <LanguageMenu
-          onClick={(code) => {
-            onLanguageClick(code);
-          }}
-          languages={supportedLanguages}
-          currentLanguage={currentLanguage}
-        />
-      </React.Fragment>
+      <LanguageMenu
+        openLanguageMenu={openLanguageMenu}
+        closeLanguageMenu={closeLanguageMenu}
+        languageMenuOpen={languageMenuOpen}
+        onClick={(code) => {
+          onLanguageClick(code);
+        }}
+        languages={supportedLanguages}
+        currentLanguage={currentLanguage}
+      />
     );
   };
 

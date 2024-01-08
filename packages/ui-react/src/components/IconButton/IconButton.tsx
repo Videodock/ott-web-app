@@ -5,10 +5,11 @@ import styles from './IconButton.module.scss';
 
 type Props = {
   onClick?: () => void;
+  onBlur?: () => void;
   children: JSX.Element;
   tabIndex?: number;
   className?: string;
-  'aria-label'?: AriaAttributes['aria-label'];
+  'aria-label': AriaAttributes['aria-label'];
   'aria-controls'?: AriaAttributes['aria-controls'];
 };
 
