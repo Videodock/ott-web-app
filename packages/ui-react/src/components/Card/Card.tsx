@@ -86,22 +86,29 @@ function Card({
 
   return (
     <Link
+      role="button"
       to={url}
       className={cardClassName}
       onClick={disabled ? (e) => e.preventDefault() : undefined}
       onMouseEnter={onHover}
       tabIndex={disabled ? -1 : 0}
-      aria-label={title}
     >
+      {!featured && !disabled && (
+        <div className={styles.titleContainer}>
+          <h3 className={classNames(styles.title, { [styles.loading]: loading })}>{title}</h3>
+          {!!scheduledStart && (
+            <div className={classNames(styles.scheduledStart, { [styles.loading]: loading })}>{formatLocalizedDateTime(scheduledStart, language)}</div>
+          )}
+        </div>
+      )}
       <div className={posterClassNames}>
-        <Image className={posterImageClassNames} image={image} width={featured ? 640 : 320} onLoad={() => setImageLoaded(true)} alt={title} />
-        {isCurrent && <div className={styles.currentLabel}>{currentLabel}</div>}
+        <Image className={posterImageClassNames} image={image} width={featured ? 640 : 320} onLoad={() => setImageLoaded(true)} alt="" />
         {!loading && (
           <div className={styles.meta}>
-            {featured && !disabled && <div className={classNames(styles.title, { [styles.loading]: loading })}>{title}</div>}
+            {featured && !disabled && <h3 className={classNames(styles.title, { [styles.loading]: loading })}>{title}</h3>}
             <div className={styles.tags}>
               {isLocked && (
-                <div className={classNames(styles.tag, styles.lock)} aria-label={t('card_lock')} role="status">
+                <div className={classNames(styles.tag, styles.lock)} aria-label={t('card_lock')}>
                   <Lock />
                 </div>
               )}
@@ -109,20 +116,13 @@ function Card({
             </div>
           </div>
         )}
+        {isCurrent && <div className={styles.currentLabel}>{currentLabel}</div>}
         {progress ? (
           <div className={styles.progressContainer}>
             <div className={styles.progressBar} style={{ width: `${Math.round(progress * 100)}%` }} />
           </div>
         ) : null}
       </div>
-      {!featured && !disabled && (
-        <div className={styles.titleContainer}>
-          {!!scheduledStart && (
-            <div className={classNames(styles.scheduledStart, { [styles.loading]: loading })}>{formatLocalizedDateTime(scheduledStart, language)}</div>
-          )}
-          <div className={classNames(styles.title, { [styles.loading]: loading })}>{title}</div>
-        </div>
-      )}
     </Link>
   );
 }
