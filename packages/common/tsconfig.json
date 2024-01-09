@@ -16,8 +16,7 @@
     "types": [
       "reflect-metadata",
       "vi-fetch/matchers",
-      "vitest/globals",
-      "node"
+      "vitest/globals"
     ]
   }
 }
