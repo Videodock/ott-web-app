@@ -1,8 +1,8 @@
 import jwtDecode from 'jwt-decode';
 import { object, string } from 'yup';
 import { inject, injectable } from 'inversify';
+import { BroadcastChannel } from 'broadcast-channel';
 
-import { Broadcaster } from '../../../utils/broadcaster';
 import { IS_DEVELOPMENT_BUILD, logDev } from '../../../utils/common';
 import { PromiseQueue } from '../../../utils/promiseQueue';
 import type { AuthData, GetLocales } from '../../../../types/account';
@@ -78,7 +78,7 @@ const getTokenExpiration = (token: string) => {
 export default class CleengService {
   private readonly storageService;
   private readonly getCustomerIP;
-  private readonly channel: Broadcaster<MessageData>;
+  private readonly channel: BroadcastChannel<MessageData>;
   private readonly queue = new PromiseQueue();
   private isRefreshing = false;
   private expiration = -1;
@@ -89,8 +89,8 @@ export default class CleengService {
     this.storageService = storageService;
     this.getCustomerIP = getCustomerIP;
 
-    this.channel = new Broadcaster<MessageData>('jwp-refresh-token-channel');
-    this.channel.addMessageListener(this.handleBroadcastMessage);
+    this.channel = new BroadcastChannel<MessageData>('jwp-refresh-token-channel');
+    this.channel.addEventListener('message', this.handleBroadcastMessage);
   }
 
   /**
@@ -170,7 +170,7 @@ export default class CleengService {
       tokens,
     };
 
-    this.channel.broadcastMessage(message);
+    this.channel.postMessage(message);
   };
 
   private getBaseUrl = (sandbox: boolean) => (sandbox ? 'https://mediastore-sandbox.cleeng.com' : 'https://mediastore.cleeng.com');
