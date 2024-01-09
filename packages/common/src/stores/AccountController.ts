@@ -80,14 +80,14 @@ export default class AccountController {
     }
   };
 
-  initialize = async () => {
+  initialize = async (url: string) => {
     useAccountStore.setState({
       loading: true,
     });
     const config = useConfigStore.getState().config;
 
     await this.profileController?.loadPersistedProfile();
-    await this.accountService.initialize(config, this.logout);
+    await this.accountService.initialize(config, url, this.logout);
     await this.loadUserData();
 
     useAccountStore.setState({ loading: false });
@@ -182,12 +182,12 @@ export default class AccountController {
     }
   };
 
-  login = async (email: string, password: string) => {
+  login = async (email: string, password: string, referrer: string) => {
     const { config, accessModel } = useConfigStore.getState();
 
     useAccountStore.setState({ loading: true });
 
-    const response = await this.accountService.login({ config, email, password });
+    const response = await this.accountService.login({ config, email, password, referrer });
     if (response) {
       await this.afterLogin(response.user, response.customerConsents, accessModel);
 
@@ -226,11 +226,11 @@ export default class AccountController {
     }
   };
 
-  register = async (email: string, password: string, consents: CustomerConsent[]) => {
+  register = async (email: string, password: string, referrer: string, consents: CustomerConsent[]) => {
     const { config, accessModel } = useConfigStore.getState();
 
     useAccountStore.setState({ loading: true });
-    const response = await this.accountService.register({ config, email, password, consents });
+    const response = await this.accountService.register({ config, email, password, consents, referrer });
 
     if (response) {
       const { user, customerConsents } = response;
@@ -459,7 +459,7 @@ export default class AccountController {
     // so here's a delay mechanism to give it time to process
     if (delay > 0) {
       return new Promise((resolve: (value?: unknown) => void) => {
-        window.setTimeout(() => {
+        setTimeout(() => {
           this.reloadActiveSubscription().finally(resolve);
         }, delay);
       });

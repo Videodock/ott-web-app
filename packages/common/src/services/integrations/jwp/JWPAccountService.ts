@@ -1,4 +1,5 @@
-import InPlayer, { AccountData, Env, FavoritesData, type RegisterField, UpdateAccountData, WatchHistory } from '@inplayer-org/inplayer.js';
+import InPlayer, { Env } from '@inplayer-org/inplayer.js';
+import type { AccountData, FavoritesData, RegisterField, UpdateAccountData, WatchHistory } from '@inplayer-org/inplayer.js';
 import i18next from 'i18next';
 import { injectable } from 'inversify';
 
@@ -135,16 +136,19 @@ export default class JWPAccountService extends AccountService {
     };
   }
 
-  initialize = async (config: Config, _logoutFn: () => Promise<void>) => {
+  initialize = async (config: Config, url: string, _logoutFn: () => Promise<void>) => {
     const env: string = config.integrations?.jwp?.useSandbox ? InPlayerEnv.Development : InPlayerEnv.Production;
     InPlayer.setConfig(env as Env);
-    const queryParams = new URLSearchParams(window.location.href.split('#')[1]);
+
+    const queryParams = new URLSearchParams(url.split('#')[1]);
     const token = queryParams.get('token');
     const refreshToken = queryParams.get('refresh_token');
     const expires = queryParams.get('expires');
+
     if (!token || !refreshToken || !expires) {
       return;
     }
+
     InPlayer.Account.setToken(token, refreshToken, parseInt(expires));
   };
 
@@ -281,13 +285,13 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  login: Login = async ({ config, email, password }) => {
+  login: Login = async ({ config, email, password, referrer }) => {
     try {
       const { data } = await InPlayer.Account.signInV2({
         email,
         password,
+        referrer,
         clientId: config.integrations.jwp?.clientId || '',
-        referrer: window.location.href,
       });
 
       const user = this.formatAccount(data.account);
@@ -303,11 +307,12 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  register: Register = async ({ config, email, password, consents }) => {
+  register: Register = async ({ config, email, password, referrer, consents }) => {
     try {
       const { data } = await InPlayer.Account.signUpV2({
         email,
         password,
+        referrer,
         passwordConfirmation: password,
         fullName: email,
         metadata: {
@@ -318,7 +323,6 @@ export default class JWPAccountService extends AccountService {
         },
         type: 'consumer',
         clientId: config.integrations.jwp?.clientId || '',
-        referrer: window.location.href,
       });
 
       const user = this.formatAccount(data.account);

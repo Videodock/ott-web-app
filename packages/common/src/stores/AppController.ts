@@ -65,9 +65,9 @@ export default class AppController {
     return config;
   };
 
-  initializeApp = async () => {
+  initializeApp = async (url: string) => {
     const settings = await this.settingsService.initialize();
-    const configSource = await this.settingsService.getConfigSource(settings);
+    const configSource = await this.settingsService.getConfigSource(settings, url);
     const config = await this.loadAndValidateConfig(configSource);
 
     // we can add the configSource to the storage prefix, but this will cause a breaking change for end users
@@ -85,7 +85,7 @@ export default class AppController {
     }
 
     if (this.getIntegrationType()) {
-      await getModule(AccountController).initialize();
+      await getModule(AccountController).initialize(url);
     }
 
     return { config, settings, configSource };

@@ -1,6 +1,6 @@
-import React, { ChangeEventHandler, MouseEventHandler, useEffect, useState } from 'react';
+import React, { type ChangeEventHandler, type MouseEventHandler, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavigateFunction, useNavigate } from 'react-router';
+import { type NavigateFunction, useNavigate } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { addQueryParams } from '@jwp/ott-common/src/utils/formatting';
 import { CONFIG_QUERY_KEY } from '@jwp/ott-common/src/constants';

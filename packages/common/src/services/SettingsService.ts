@@ -18,12 +18,12 @@ export default class SettingsService {
     this.storageService = storageService;
   }
 
-  async getConfigSource(settings: Settings | undefined) {
+  async getConfigSource(settings: Settings | undefined, url: string) {
     if (!settings) {
       return '';
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(url.split('?')[1]);
     const configKey = urlParams.get(CONFIG_QUERY_KEY);
 
     // Skip all the fancy logic below if there aren't any other options besides the default anyhow

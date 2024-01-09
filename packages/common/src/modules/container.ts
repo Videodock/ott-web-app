@@ -1,4 +1,4 @@
-import { Container, interfaces, injectable, inject } from 'inversify';
+import { Container, injectable, type interfaces, inject } from 'inversify';
 
 import type { IntegrationType } from '../../types/config';
 

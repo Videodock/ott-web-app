@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState, type FC } from 'react';
 import { IS_DEMO_MODE, IS_DEVELOPMENT_BUILD, IS_PREVIEW_MODE, IS_PROD_MODE } from '@jwp/ott-common/src/utils/common';
 import ErrorPage from '@jwp/ott-ui-react/src/components/ErrorPage/ErrorPage';
 import AccountModal from '@jwp/ott-ui-react/src/containers/AccountModal/AccountModal';

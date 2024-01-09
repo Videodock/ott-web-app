@@ -42,7 +42,7 @@ export default abstract class AccountService {
     this.features = features;
   }
 
-  abstract initialize: (config: Config, logoutCallback: () => Promise<void>) => Promise<void>;
+  abstract initialize: (config: Config, url: string, logoutCallback: () => Promise<void>) => Promise<void>;
 
   abstract getAuthData: () => Promise<AuthData | null>;
 

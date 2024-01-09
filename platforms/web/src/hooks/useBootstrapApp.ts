@@ -21,25 +21,29 @@ type Resources = {
 
 export const useBootstrapApp = (onReady: () => void) => {
   const analyticsLoadedRef = useRef(false);
-  const { data, isLoading, error, isSuccess, refetch } = useQuery<Resources, AppError>('config-init', applicationController.initializeApp, {
-    refetchInterval: false,
-    retry: 1,
-    onSettled: async (data) => {
-      // because theming and analytics are specific to web, we configure it from here
-      // alternatively, we can use an events or specific callbacks or extend the AppController for each platform
-      if (data?.config) {
-        setThemingVariables(data?.config);
-      }
+  const { data, isLoading, error, isSuccess, refetch } = useQuery<Resources, AppError>(
+    'config-init',
+    () => applicationController.initializeApp(window.location.href),
+    {
+      refetchInterval: false,
+      retry: 1,
+      onSettled: async (data) => {
+        // because theming and analytics are specific to web, we configure it from here
+        // alternatively, we can use an events or specific callbacks or extend the AppController for each platform
+        if (data?.config) {
+          setThemingVariables(data?.config);
+        }
 
-      if (data?.config.analyticsToken && !analyticsLoadedRef.current) {
-        await addScript('/jwpltx.js');
-        analyticsLoadedRef.current = true;
-      }
+        if (data?.config.analyticsToken && !analyticsLoadedRef.current) {
+          await addScript('/jwpltx.js');
+          analyticsLoadedRef.current = true;
+        }
+      },
+      onSuccess: onReady,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
     },
-    onSuccess: onReady,
-    cacheTime: CACHE_TIME,
-    staleTime: STALE_TIME,
-  });
+  );
 
   // Modify query string to add / remove app-config id
   useTrackConfigKeyChange(data?.settings, data?.configSource);

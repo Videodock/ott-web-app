@@ -1,3 +1,5 @@
+import { BroadcastChannel } from 'broadcast-channel';
+
 import { logDev } from './common';
 
 type BroadcastEventHandler<T> = (event: T) => void;
@@ -15,7 +17,7 @@ export class Broadcaster<T> {
   /**
    * This function is called when the BroadcastChannel receives a message event
    */
-  private handleBroadcastChannelMessage = (event: MessageEvent<string>) => {
+  private handleBroadcastChannelMessage = (event: { data: string }) => {
     let message: T | null = null;
 
     try {
@@ -54,13 +56,9 @@ export class Broadcaster<T> {
       throw new Error('Broadcaster is already enabled');
     }
 
-    if ('BroadcastChannel' in window) {
-      this.channel = new BroadcastChannel(this.channelName);
-      this.channel.addEventListener('message', this.handleBroadcastChannelMessage);
-      this.opened = true;
-    } else {
-      logDev('BroadcastChannel not supported');
-    }
+    this.channel = new BroadcastChannel(this.channelName);
+    this.channel.addEventListener('message', this.handleBroadcastChannelMessage);
+    this.opened = true;
   }
 
   /**

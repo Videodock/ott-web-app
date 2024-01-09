@@ -124,14 +124,14 @@ export default class CheckoutController {
     return response.responseData;
   };
 
-  directPostCardPayment = async (cardPaymentPayload: CardPaymentData): Promise<unknown> => {
+  directPostCardPayment = async (cardPaymentPayload: CardPaymentData, referrer: string, returnUrl: string): Promise<unknown> => {
     const { clientId: authProviderId } = useConfigStore.getState();
     const { order } = useCheckoutStore.getState();
 
     if (!order) throw new Error('No order created');
     if (!authProviderId) throw new Error('auth provider is not configured');
 
-    return await this.checkoutService.directPostCardPayment(cardPaymentPayload, order);
+    return await this.checkoutService.directPostCardPayment(cardPaymentPayload, order, referrer, returnUrl);
   };
 
   createAdyenPaymentSession = async (returnUrl: string, isInitialPayment: boolean = true): Promise<AdyenPaymentSession> => {
@@ -205,7 +205,13 @@ export default class CheckoutController {
     return response.responseData;
   };
 
-  paypalPayment = async (successUrl: string, cancelUrl: string, errorUrl: string, couponCode: string = ''): Promise<PaymentWithPayPalResponse> => {
+  paypalPayment = async (
+    successUrl: string,
+    waitingUrl: string,
+    cancelUrl: string,
+    errorUrl: string,
+    couponCode: string = '',
+  ): Promise<PaymentWithPayPalResponse> => {
     const { isSandbox, clientId: authProviderId } = useConfigStore.getState();
     const { order } = useCheckoutStore.getState();
 
@@ -216,6 +222,7 @@ export default class CheckoutController {
       {
         order: order,
         successUrl,
+        waitingUrl,
         cancelUrl,
         errorUrl,
         couponCode,
@@ -305,7 +312,14 @@ export default class CheckoutController {
     return responseData;
   };
 
-  updatePayPalPaymentMethod = async (successUrl: string, cancelUrl: string, errorUrl: string, paymentMethodId: number, currentPaymentId?: number) => {
+  updatePayPalPaymentMethod = async (
+    successUrl: string,
+    waitingUrl: string,
+    cancelUrl: string,
+    errorUrl: string,
+    paymentMethodId: number,
+    currentPaymentId?: number,
+  ) => {
     const { isSandbox, clientId: authProviderId } = useConfigStore.getState();
 
     if (!authProviderId) throw new Error('auth provider is not configured');
@@ -317,6 +331,7 @@ export default class CheckoutController {
       {
         paymentMethodId,
         successUrl,
+        waitingUrl,
         cancelUrl,
         errorUrl,
       },

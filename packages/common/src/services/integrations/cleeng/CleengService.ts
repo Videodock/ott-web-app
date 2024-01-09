@@ -5,7 +5,7 @@ import { inject, injectable } from 'inversify';
 import { Broadcaster } from '../../../utils/broadcaster';
 import { IS_DEVELOPMENT_BUILD, logDev } from '../../../utils/common';
 import { PromiseQueue } from '../../../utils/promiseQueue';
-import type { GetLocales } from '../../../../types/account';
+import type { AuthData, GetLocales } from '../../../../types/account';
 import StorageService from '../../StorageService';
 import { GET_CUSTOMER_IP } from '../../../modules/types';
 import type { GetCustomerIP } from '../../../../types/get-customer-ip';
@@ -118,7 +118,11 @@ export default class CleengService {
    */
   private getNewTokens: (tokens: Tokens) => Promise<Tokens | null> = async ({ refreshToken }) => {
     try {
-      const { responseData: newTokens } = await this.post(this.sandbox, '/auths/refresh_token', JSON.stringify({ refreshToken }));
+      const { responseData: newTokens } = await this.post<Promise<ServiceResponse<AuthData>>>(
+        this.sandbox,
+        '/auths/refresh_token',
+        JSON.stringify({ refreshToken }),
+      );
 
       return {
         accessToken: newTokens.jwt,
@@ -361,13 +365,13 @@ export default class CleengService {
     return this.get(sandbox, `/locales${customerIP ? '?customerIP=' + customerIP : ''}`);
   };
 
-  get = (sandbox: boolean, path: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'GET', undefined, options);
+  get = <T>(sandbox: boolean, path: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'GET', undefined, options) as T;
 
-  patch = (sandbox: boolean, path: string, body?: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'PATCH', body, options);
+  patch = <T>(sandbox: boolean, path: string, body?: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'PATCH', body, options) as T;
 
-  put = (sandbox: boolean, path: string, body?: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'PUT', body, options);
+  put = <T>(sandbox: boolean, path: string, body?: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'PUT', body, options) as T;
 
-  post = (sandbox: boolean, path: string, body?: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'POST', body, options);
+  post = <T>(sandbox: boolean, path: string, body?: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'POST', body, options) as T;
 
-  remove = (sandbox: boolean, path: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'DELETE', undefined, options);
+  remove = <T>(sandbox: boolean, path: string, options?: RequestOptions) => this.performRequest(sandbox, path, 'DELETE', undefined, options) as T;
 }

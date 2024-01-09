@@ -14,6 +14,7 @@ import type {
   GetCustomerConsentsResponse,
   GetLocales,
   GetPublisherConsents,
+  GetPublisherConsentsResponse,
   JwtDetails,
   Login,
   LoginPayload,
@@ -78,7 +79,7 @@ export default class CleengAccountService extends AccountService {
     return this.cleengService.getLocales(sandbox);
   };
 
-  initialize = async (config: Config, logoutCallback: () => Promise<void>) => {
+  initialize = async (config: Config, _url: string, logoutCallback: () => Promise<void>) => {
     await this.cleengService.initialize(!!config.integrations.cleeng?.useSandbox, logoutCallback);
   };
 
@@ -217,7 +218,7 @@ export default class CleengAccountService extends AccountService {
 
   getPublisherConsents: GetPublisherConsents = async (config) => {
     const { cleeng } = config.integrations;
-    const response = await this.cleengService.get(!!cleeng?.useSandbox, `/publishers/${cleeng?.id}/consents`);
+    const response: ServiceResponse<GetPublisherConsentsResponse> = await this.cleengService.get(!!cleeng?.useSandbox, `/publishers/${cleeng?.id}/consents`);
 
     this.handleErrors(response.errors);
 

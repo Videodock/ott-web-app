@@ -23,6 +23,7 @@ export type LoginArgs = {
   config: Config;
   email: string;
   password: string;
+  referrer: string;
 };
 
 export type RegistrationArgs = LoginArgs & {

@@ -100,7 +100,7 @@ export default class ConfigService {
       throw new AppError('Failed to load the config', errorPayload);
     }
 
-    const data = await response.json();
+    const data = (await response.json()) as Config;
 
     if (!data) {
       throw new Error('No config found');
