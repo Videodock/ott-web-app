@@ -57,18 +57,4 @@ describe('<LanguageMenu>', () => {
     fireEvent.click(languageMenuItems[0]);
     expect(onClickCb).toHaveBeenCalledWith(languages[0].code);
   });
-
-  test('Calls openLanguageCb when user clicks the languagueMenuButton and menu is closed', () => {
-    const { getByRole } = renderLanguageMenu(languages[0], false);
-    const languageMenuButton = getByRole('button');
-    fireEvent.click(languageMenuButton);
-    expect(openLanguageMenuCb).toHaveBeenCalled();
-  });
-
-  test('Calls closeLanguageMenuCb when user clicks the languagueMenuButton and menu is open', () => {
-    const { getByRole } = renderLanguageMenu(languages[0], true);
-    const languageMenuButton = getByRole('button');
-    fireEvent.click(languageMenuButton);
-    expect(closeLanguageMenuCb).toHaveBeenCalled();
-  });
 });

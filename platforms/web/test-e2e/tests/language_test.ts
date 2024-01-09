@@ -41,7 +41,7 @@ Scenario('Validate that the language menu is closed by default', async ({ I }) =
 
 Scenario('Validate that the language menu is opened by clicking the language menu button', async ({ I }) => {
   I.useConfig(testConfigs.basicNoAuth);
-  toggleMenu(I);
+  I.click(locators.languageMenuButton);
 
   I.seeElement({ id: locators.languageMenuPanel });
 });
@@ -101,14 +101,9 @@ Scenario('The language is restored from localStorage`', async ({ I }) => {
   await assertActiveLanguage(I, 'es');
 });
 
-// toggle menu open or close.
-async function toggleMenu(I: CodeceptJS.I) {
-  I.click(locators.languageMenuButton);
-}
-
 // assert that the active language is bolded in the menu (selected).
 async function assertActiveLanguage(I: CodeceptJS.I, activeLanguage: keyof typeof languageText) {
-  toggleMenu(I);
+  I.click(locators.languageMenuButton);
 
   await checkStyle(I, locate('a').withText(languageText.en.language), {
     'font-weight': activeLanguage === 'en' ? 'bold' : 'normal',
@@ -120,7 +115,7 @@ async function assertActiveLanguage(I: CodeceptJS.I, activeLanguage: keyof typeo
 
 // switch the language using the menu.
 async function switchLanguage(I: CodeceptJS.I, language: keyof typeof languageText) {
-  toggleMenu(I);
+  I.click(locators.languageMenuButton);
   I.click(locate('a').withText(languageText[language].language));
 }
 
