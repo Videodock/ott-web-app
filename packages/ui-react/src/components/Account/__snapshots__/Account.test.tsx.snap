@@ -2,13 +2,16 @@
 
 exports[`<Account> > renders and matches snapshot 1`] = `
 <div>
-  <div
+  <section
+    aria-labelledby="account.about_you_1235"
     class="panel-class"
   >
     <div
       class="header-class"
     >
-      <h2>
+      <h2
+        id="account.about_you_1235"
+      >
         account.about_you
       </h2>
     </div>
@@ -60,14 +63,17 @@ exports[`<Account> > renders and matches snapshot 1`] = `
         </span>
       </button>
     </div>
-  </div>
-  <div
+  </section>
+  <section
+    aria-labelledby="account.email_1235"
     class="panel-class"
   >
     <div
       class="header-class"
     >
-      <h2>
+      <h2
+        id="account.email_1235"
+      >
         account.email
       </h2>
     </div>
@@ -101,14 +107,17 @@ exports[`<Account> > renders and matches snapshot 1`] = `
         </span>
       </button>
     </div>
-  </div>
-  <div
+  </section>
+  <section
+    aria-labelledby="account.security_1235"
     class="panel-class"
   >
     <div
       class="header-class"
     >
-      <h2>
+      <h2
+        id="account.security_1235"
+      >
         account.security
       </h2>
     </div>
@@ -128,14 +137,17 @@ exports[`<Account> > renders and matches snapshot 1`] = `
         </span>
       </button>
     </div>
-  </div>
-  <div
+  </section>
+  <section
+    aria-labelledby="account.terms_and_tracking_1235"
     class="panel-class"
   >
     <div
       class="header-class"
     >
-      <h2>
+      <h2
+        id="account.terms_and_tracking_1235"
+      >
         account.terms_and_tracking
       </h2>
     </div>
@@ -146,14 +158,17 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     <div
       class="_controls_1c1c63"
     />
-  </div>
-  <div
+  </section>
+  <section
+    aria-labelledby="account.other_registration_details_1235"
     class="panel-class"
   >
     <div
       class="header-class"
     >
-      <h2>
+      <h2
+        id="account.other_registration_details_1235"
+      >
         account.other_registration_details
       </h2>
     </div>
@@ -190,6 +205,6 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     <div
       class="_controls_1c1c63"
     />
-  </div>
+  </section>
 </div>
 `;

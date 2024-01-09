@@ -101,13 +101,16 @@ exports[`User Component tests > Account Page 1`] = `
     <div
       class="_mainColumn_e9c5ca"
     >
-      <div
+      <section
+        aria-labelledby="account.about_you_1235"
         class="_panel_e9c5ca"
       >
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h2>
+          <h2
+            id="account.about_you_1235"
+          >
             account.about_you
           </h2>
         </div>
@@ -159,14 +162,17 @@ exports[`User Component tests > Account Page 1`] = `
             </span>
           </button>
         </div>
-      </div>
-      <div
+      </section>
+      <section
+        aria-labelledby="account.email_1235"
         class="_panel_e9c5ca"
       >
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h2>
+          <h2
+            id="account.email_1235"
+          >
             account.email
           </h2>
         </div>
@@ -191,14 +197,17 @@ exports[`User Component tests > Account Page 1`] = `
         <div
           class="_controls_1c1c63"
         />
-      </div>
-      <div
+      </section>
+      <section
+        aria-labelledby="account.security_1235"
         class="_panel_e9c5ca"
       >
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h2>
+          <h2
+            id="account.security_1235"
+          >
             account.security
           </h2>
         </div>
@@ -218,14 +227,17 @@ exports[`User Component tests > Account Page 1`] = `
             </span>
           </button>
         </div>
-      </div>
-      <div
+      </section>
+      <section
+        aria-labelledby="account.terms_and_tracking_1235"
         class="_panel_e9c5ca"
       >
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h2>
+          <h2
+            id="account.terms_and_tracking_1235"
+          >
             account.terms_and_tracking
           </h2>
         </div>
@@ -236,7 +248,7 @@ exports[`User Component tests > Account Page 1`] = `
         <div
           class="_controls_1c1c63"
         />
-      </div>
+      </section>
     </div>
   </div>
 </div>
