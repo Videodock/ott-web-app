@@ -16,12 +16,12 @@ type Props = {
 const IconButton: React.FC<Props> = ({ children, onClick, tabIndex = 0, className, ...rest }: Props) => {
   return (
     <div
-      {...rest}
       className={classNames(styles.iconButton, className)}
       onClick={onClick}
       role="button"
       tabIndex={tabIndex}
       onKeyDown={(event: React.KeyboardEvent) => (event.key === 'Enter' || event.key === ' ') && tabIndex >= 0 && onClick && onClick()}
+      {...rest}
     >
       {children}
     </div>

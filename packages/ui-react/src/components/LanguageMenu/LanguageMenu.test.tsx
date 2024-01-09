@@ -1,7 +1,5 @@
-import { cleanup, fireEvent } from '@testing-library/react';
-import type { LanguageDefinition } from 'packages/common/types/i18n';
-
-import { renderWithRouter } from '../../../test/utils';
+import { cleanup, fireEvent, render } from '@testing-library/react';
+import type { LanguageDefinition } from '@jwp/ott-common/types/i18n';
 
 import LanguageMenu from './LanguageMenu';
 
@@ -23,7 +21,7 @@ describe('<LanguageMenu>', () => {
   });
 
   const renderLanguageMenu = (currentLanguage: LanguageDefinition, languageMenuOpen: boolean) => {
-    return renderWithRouter(
+    return render(
       <LanguageMenu
         languages={languages}
         currentLanguage={currentLanguage}
@@ -60,14 +58,14 @@ describe('<LanguageMenu>', () => {
     expect(onClickCb).toHaveBeenCalledWith(languages[0].code);
   });
 
-  test('Calls openLanguageCb when onClick is called and menu is closed', () => {
+  test('Calls openLanguageCb when user clicks the languagueMenuButton and menu is closed', () => {
     const { getByRole } = renderLanguageMenu(languages[0], false);
     const languageMenuButton = getByRole('button');
     fireEvent.click(languageMenuButton);
     expect(openLanguageMenuCb).toHaveBeenCalled();
   });
 
-  test('Calls closeLanguageMenuCb when onClick is called and menu is open', () => {
+  test('Calls closeLanguageMenuCb when user clicks the languagueMenuButton and menu is open', () => {
     const { getByRole } = renderLanguageMenu(languages[0], true);
     const languageMenuButton = getByRole('button');
     fireEvent.click(languageMenuButton);

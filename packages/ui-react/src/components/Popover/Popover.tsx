@@ -6,16 +6,15 @@ import Slide from '../Animation/Slide/Slide';
 
 import styles from './Popover.module.scss';
 
-type Props = {
+type Props = AriaAttributes & {
   children: ReactNode;
   isOpen: boolean;
   onClose: () => void;
-  'aria-expanded'?: AriaAttributes['aria-expanded'];
 };
 
-const Popover: React.FC<Props> = ({ children, isOpen, onClose, ...rest }: Props) => {
+const Popover: React.FC<Props> = ({ children, isOpen, onClose, ...ariaAttributes }: Props) => {
   return (
-    <Slide open={isOpen} duration={250} direction="right" style={{ position: 'relative' }} {...rest}>
+    <Slide open={isOpen} duration={250} direction="right" style={{ position: 'relative' }} {...ariaAttributes}>
       <DetectOutsideClick callback={onClose}>
         <div className={classNames(styles.popover)}>{children}</div>
       </DetectOutsideClick>
