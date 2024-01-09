@@ -2,6 +2,7 @@ import type { LanguageDefinition } from '@jwp/ott-common/types/i18n';
 import classNames from 'classnames';
 import { Fragment, type MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { testId } from '@jwp/ott-common/src/utils/common';
 
 import Language from '../../icons/Language';
 import IconButton from '../IconButton/IconButton';
@@ -41,6 +42,7 @@ const LanguageMenu = ({ onClick, languages, currentLanguage, languageMenuOpen, c
   return (
     <Fragment>
       <IconButton
+        data-testid={testId('language-menu-button')}
         aria-controls="language-panel"
         aria-expanded={languageMenuOpen}
         className={classNames(styles.iconButton, styles.actionButton)}
