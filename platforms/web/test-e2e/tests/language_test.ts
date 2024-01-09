@@ -13,11 +13,6 @@ const languageText = {
     selectLanguage: 'Seleccionar idioma',
     language: 'Español',
   },
-  // We don't have a Dutch translation yet or dutch locale in the app.
-  // nl: {
-  //   selectLanguage: 'Selecteer taal',
-  //   language: 'Nederlands',
-  // },
 };
 
 // Prefix locators with `$` to indicate that they are test-id attributes
@@ -31,6 +26,13 @@ const locators = {
 const localStorageKey = 'jwapp.language';
 
 Feature('languages').retry(Number(process.env.TEST_RETRY_COUNT) || 0);
+
+Scenario('English language is selected when the locale is `nl-NL`', async ({ I }) => {
+  I.restartBrowser({ locale: 'nl-NL' });
+  I.useConfig(testConfigs.basicNoAuth);
+
+  await assertActiveLanguage(I, 'en');
+});
 
 Scenario('Validate that the language menu is closed by default', async ({ I }) => {
   I.useConfig(testConfigs.basicNoAuth);
@@ -55,13 +57,6 @@ Scenario('English language is selected when the locale is `en-GB`', async ({ I }
   I.useConfig(testConfigs.basicNoAuth);
   await assertActiveLanguage(I, 'en');
 });
-
-// Scenario('Dutch language is selected when the locale is `nl-NL`', async ({ I }) => {
-//   I.restartBrowser({ locale: 'nl-NL' });
-//   I.useConfig(testConfigs.basicNoAuth);
-
-//   await assertActiveLanguage(I, 'nl');
-// });
 
 Scenario('Spanish language is selected when the locale is `es-ES`', async ({ I }) => {
   I.restartBrowser({ locale: 'es-ES' });
