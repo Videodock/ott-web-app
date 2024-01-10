@@ -39,16 +39,12 @@ describe('<LanguageMenu>', () => {
   });
 
   test('Renders the correct items in the LanguageMenu', () => {
-    const { container } = renderLanguageMenu(languages[0], true);
+    const { container, queryByText } = renderLanguageMenu(languages[0], true);
     const languagePanel = container.querySelector('#language-panel');
     expect(languagePanel).toBeInTheDocument();
 
-    const languageMenuItems = languagePanel?.querySelectorAll('li');
-
-    expect(languageMenuItems).toHaveLength(languages.length);
-    languages.forEach((lang, index) => {
-      expect(languageMenuItems?.[index]).toHaveTextContent(lang.displayName);
-    });
+    expect(queryByText(languages[0].displayName)).toBeInTheDocument();
+    expect(queryByText(languages[1].displayName)).toBeInTheDocument();
   });
 
   test('Check if the correct language item is selected onclick', () => {

@@ -3,17 +3,15 @@ import React, { AriaAttributes } from 'react';
 
 import styles from './IconButton.module.scss';
 
-type Props = {
+type Props = AriaAttributes & {
   onClick?: () => void;
   onBlur?: () => void;
   children: JSX.Element;
   tabIndex?: number;
   className?: string;
-  'aria-label': AriaAttributes['aria-label'];
-  'aria-controls'?: AriaAttributes['aria-controls'];
 };
 
-const IconButton: React.FC<Props> = ({ children, onClick, tabIndex = 0, className, ...rest }: Props) => {
+const IconButton: React.FC<Props> = ({ children, onClick, tabIndex = 0, className, ...ariaProps }: Props) => {
   return (
     <div
       className={classNames(styles.iconButton, className)}
@@ -21,7 +19,7 @@ const IconButton: React.FC<Props> = ({ children, onClick, tabIndex = 0, classNam
       role="button"
       tabIndex={tabIndex}
       onKeyDown={(event: React.KeyboardEvent) => (event.key === 'Enter' || event.key === ' ') && tabIndex >= 0 && onClick && onClick()}
-      {...rest}
+      {...ariaProps}
     >
       {children}
     </div>
