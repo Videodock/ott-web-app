@@ -3,14 +3,14 @@
 exports[`<Account> > renders and matches snapshot 1`] = `
 <div>
   <section
-    aria-labelledby="account.about_you_1235"
+    aria-labelledby="account_about_you_1235"
     class="panel-class"
   >
     <div
       class="header-class"
     >
       <h2
-        id="account.about_you_1235"
+        id="account_about_you_1235"
       >
         account.about_you
       </h2>
@@ -29,7 +29,7 @@ exports[`<Account> > renders and matches snapshot 1`] = `
       >
         <label
           class="_label_e16c1b"
-          for="text-field_1235_firstName"
+          for="text-field_1235_firstname"
         >
           account.firstname
         </label>
@@ -42,7 +42,7 @@ exports[`<Account> > renders and matches snapshot 1`] = `
       >
         <label
           class="_label_e16c1b"
-          for="text-field_1235_lastName"
+          for="text-field_1235_lastname"
         >
           account.lastname
         </label>
@@ -65,14 +65,14 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     </div>
   </section>
   <section
-    aria-labelledby="account.email_1235"
+    aria-labelledby="account_email_1235"
     class="panel-class"
   >
     <div
       class="header-class"
     >
       <h2
-        id="account.email_1235"
+        id="account_email_1235"
       >
         account.email
       </h2>
@@ -109,14 +109,14 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     </div>
   </section>
   <section
-    aria-labelledby="account.security_1235"
+    aria-labelledby="account_security_1235"
     class="panel-class"
   >
     <div
       class="header-class"
     >
       <h2
-        id="account.security_1235"
+        id="account_security_1235"
       >
         account.security
       </h2>
@@ -139,14 +139,14 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     </div>
   </section>
   <section
-    aria-labelledby="account.terms_and_tracking_1235"
+    aria-labelledby="account_terms_and_tracking_1235"
     class="panel-class"
   >
     <div
       class="header-class"
     >
       <h2
-        id="account.terms_and_tracking_1235"
+        id="account_terms_and_tracking_1235"
       >
         account.terms_and_tracking
       </h2>
@@ -160,14 +160,14 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     />
   </section>
   <section
-    aria-labelledby="account.other_registration_details_1235"
+    aria-labelledby="account_other_registration_details_1235"
     class="panel-class"
   >
     <div
       class="header-class"
     >
       <h2
-        id="account.other_registration_details_1235"
+        id="account_other_registration_details_1235"
       >
         account.other_registration_details
       </h2>
@@ -188,13 +188,13 @@ exports[`<Account> > renders and matches snapshot 1`] = `
             class="_row_531f07"
           >
             <input
-              id="check-box_1235_consentsValues.marketing"
+              id="check-box_1235_consentsvalues_marketing"
               name="consentsValues.marketing"
               type="checkbox"
               value=""
             />
             <label
-              for="check-box_1235_consentsValues.marketing"
+              for="check-box_1235_consentsvalues_marketing"
             >
               Receive Marketing Emails
             </label>
