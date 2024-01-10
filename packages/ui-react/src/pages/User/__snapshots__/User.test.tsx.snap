@@ -642,13 +642,16 @@ exports[`User Component tests > Payments Page 1`] = `
       >
         nav.payments
       </h1>
-      <div
+      <section
+        aria-labelledby="subscription-details_1235"
         class="_panel_e9c5ca"
       >
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h2>
+          <h2
+            id="subscription-details_1235"
+          >
             user:payment.subscription_details
           </h2>
         </div>
@@ -684,14 +687,17 @@ exports[`User Component tests > Payments Page 1`] = `
             user:payment.change_subscription
           </span>
         </button>
-      </div>
-      <div
+      </section>
+      <section
+        aria-labelledby="payment-method_1235"
         class="_panel_e9c5ca"
       >
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h2>
+          <h2
+            id="payment-method_1235"
+          >
             user:payment.payment_method
           </h2>
         </div>
@@ -747,14 +753,17 @@ exports[`User Component tests > Payments Page 1`] = `
             </span>
           </button>
         </div>
-      </div>
-      <div
+      </section>
+      <section
+        aria-labelledby="billing-history_1235"
         class="_panel_e9c5ca"
       >
         <div
           class="_panelHeader_e9c5ca"
         >
-          <h2>
+          <h2
+            id="billing-history_1235"
+          >
             user:payment.billing_history
           </h2>
         </div>
@@ -810,7 +819,7 @@ exports[`User Component tests > Payments Page 1`] = `
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   </div>
 </div>
