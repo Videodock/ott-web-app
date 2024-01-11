@@ -10,10 +10,9 @@ import Button from '@jwp/ott-ui-react/src/components/Button/Button';
 import ConfirmationDialog from '@jwp/ott-ui-react/src/components/ConfirmationDialog/ConfirmationDialog';
 import LoadingOverlay from '@jwp/ott-ui-react/src/components/LoadingOverlay/LoadingOverlay';
 import DevStackTrace from '@jwp/ott-ui-react/src/components/DevStackTrace/DevStackTrace';
+import type { BootstrapData } from '@jwp/ott-hooks-react/src/useBootstrapApp';
 
 import styles from './DemoConfigDialog.module.scss';
-
-import type { BootstrapData } from '#src/hooks/useBootstrapApp';
 
 const regex = /^[a-z,\d]{0,8}$/g;
 const DEMO_CONFIG = '225tvq1i';
