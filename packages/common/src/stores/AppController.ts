@@ -70,7 +70,8 @@ export default class AppController {
     const configSource = await this.settingsService.getConfigSource(settings, url);
     const config = await this.loadAndValidateConfig(configSource);
 
-    // we can add the configSource to the storage prefix, but this will cause a breaking change for end users
+    // we could add the configSource to the storage prefix, but this would cause a breaking change for end users
+    // (since 'window.configId' isn't used anymore, all platforms currently use the same prefix)
     this.storageService.initialize('jwapp');
 
     // update settings in the config store
