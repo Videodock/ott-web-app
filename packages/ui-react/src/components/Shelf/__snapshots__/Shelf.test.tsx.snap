@@ -42,6 +42,7 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
           >
             <a
               class="_card_d75732 _featured_d75732 _disabled_d75732"
+              data-testid="Third movie"
               href="/m/12332123/third-movie"
               role="button"
               tabindex="-1"
@@ -65,6 +66,7 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
           >
             <a
               class="_card_d75732 _featured_d75732 _disabled_d75732"
+              data-testid="Last playlist item"
               href="/m/ddeeddee/last-playlist-item"
               role="button"
               tabindex="-1"
@@ -88,6 +90,7 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
           >
             <a
               class="_card_d75732 _featured_d75732"
+              data-testid="Movie 1"
               href="/m/1234abcd/movie-1"
               role="button"
               tabindex="0"
@@ -122,6 +125,7 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
           >
             <a
               class="_card_d75732 _featured_d75732 _disabled_d75732"
+              data-testid="Movie 2"
               href="/m/aaaaaaaa/movie-2"
               role="button"
               tabindex="-1"
@@ -145,6 +149,7 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
           >
             <a
               class="_card_d75732 _featured_d75732 _disabled_d75732"
+              data-testid="Third movie"
               href="/m/12332123/third-movie"
               role="button"
               tabindex="-1"
@@ -232,6 +237,7 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
           >
             <a
               class="_card_d75732"
+              data-testid="Movie 1"
               href="/m/1234abcd/movie-1"
               role="button"
               tabindex="0"
@@ -270,6 +276,7 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
           >
             <a
               class="_card_d75732"
+              data-testid="Movie 2"
               href="/m/aaaaaaaa/movie-2"
               role="button"
               tabindex="0"
@@ -308,6 +315,7 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
           >
             <a
               class="_card_d75732"
+              data-testid="Third movie"
               href="/m/12332123/third-movie"
               role="button"
               tabindex="0"
@@ -346,6 +354,7 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
           >
             <a
               class="_card_d75732"
+              data-testid="Last playlist item"
               href="/m/ddeeddee/last-playlist-item"
               role="button"
               tabindex="0"

@@ -6,6 +6,7 @@ import type { PlaylistItem } from '@jwp/ott-common/types/playlist';
 import { formatDurationTag, formatLocalizedDateTime, formatSeriesMetaString } from '@jwp/ott-common/src/utils/formatting';
 import { isLiveChannel, isSeries } from '@jwp/ott-common/src/utils/media';
 import { MediaStatus } from '@jwp/ott-common/src/utils/liveEvent';
+import { testId } from '@jwp/ott-common/src/utils/common';
 
 import Lock from '../../icons/Lock';
 import Today from '../../icons/Today';
@@ -92,6 +93,7 @@ function Card({
       onClick={disabled ? (e) => e.preventDefault() : undefined}
       onMouseEnter={onHover}
       tabIndex={disabled ? -1 : 0}
+      data-testid={testId(title)}
     >
       {!featured && !disabled && (
         <div className={styles.titleContainer}>

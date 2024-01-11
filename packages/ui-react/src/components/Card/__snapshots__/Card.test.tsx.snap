@@ -4,6 +4,7 @@ exports[`<Card> > should render anchor tag 1`] = `
 <div>
   <a
     class="_card_d75732"
+    data-testid="This is a movie"
     href="https://test.dummy.jwplayer.com"
     role="button"
     tabindex="0"

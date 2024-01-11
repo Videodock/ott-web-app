@@ -41,6 +41,7 @@ exports[`Home Component tests > Home test 1`] = `
                   >
                     <a
                       class="_card_d75732"
+                      data-testid="My video"
                       href="/m/abcddabc/my-video"
                       role="button"
                       tabindex="0"
@@ -96,6 +97,7 @@ exports[`Home Component tests > Home test 1`] = `
                   >
                     <a
                       class="_card_d75732"
+                      data-testid="Other Vids"
                       href="/m/zzzaaazz/other-vids"
                       role="button"
                       tabindex="0"
@@ -180,6 +182,7 @@ exports[`Home Component tests > Home test 1`] = `
                   >
                     <a
                       class="_card_d75732"
+                      data-testid="My video"
                       href="/m/abcddabc/my-video"
                       role="button"
                       tabindex="0"
@@ -235,6 +238,7 @@ exports[`Home Component tests > Home test 1`] = `
                   >
                     <a
                       class="_card_d75732"
+                      data-testid="Other Vids"
                       href="/m/zzzaaazz/other-vids"
                       role="button"
                       tabindex="0"
