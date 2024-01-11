@@ -9,6 +9,7 @@ import { formatLocalizedDate, formatPrice } from '@jwp/ott-common/src/utils/form
 import { addQueryParam } from '@jwp/ott-common/src/utils/location';
 import { ACCESS_MODEL } from '@jwp/ott-common/src/constants';
 import useBreakpoint, { Breakpoint } from '@jwp/ott-hooks-react/src/useBreakpoint';
+import useOpaqueId from '@jwp/ott-hooks-react/src/useOpaqueId';
 
 import ExternalLink from '../../icons/ExternalLink';
 import PayPal from '../../icons/PayPal';
@@ -83,6 +84,9 @@ const Payment = ({
   isUpgradeOffer,
   setIsUpgradeOffer,
 }: Props): JSX.Element => {
+  const subscriptionDetailsId = useOpaqueId('subscription-details');
+  const paymentMethodId = useOpaqueId('payment-method');
+  const billingHistoryId = useOpaqueId('billing-history');
   const { t, i18n } = useTranslation(['user', 'account']);
   const hiddenTransactionsCount = transactions ? transactions?.length - VISIBLE_TRANSACTIONS : 0;
   const hasMoreTransactions = hiddenTransactionsCount > 0;
@@ -168,9 +172,9 @@ const Payment = ({
       />
       <h1 className="hideUntilFocus">{t('nav.payments')}</h1>
       {accessModel === ACCESS_MODEL.SVOD && (
-        <div className={panelClassName}>
+        <section aria-labelledby={subscriptionDetailsId} className={panelClassName}>
           <div className={panelHeaderClassName}>
-            <h2>{isChangingOffer ? t('user:payment.change_plan') : t('user:payment.subscription_details')}</h2>
+            <h2 id={subscriptionDetailsId}>{isChangingOffer ? t('user:payment.change_plan') : t('user:payment.subscription_details')}</h2>
           </div>
           {activeSubscription ? (
             <React.Fragment>
@@ -268,11 +272,11 @@ const Payment = ({
               </div>
             </div>
           )}
-        </div>
+        </section>
       )}
-      <div className={panelClassName}>
+      <section aria-labelledby={paymentMethodId} className={panelClassName}>
         <div className={panelHeaderClassName}>
-          <h2>{t('user:payment.payment_method')}</h2>
+          <h2 id={paymentMethodId}>{t('user:payment.payment_method')}</h2>
         </div>
         {activePaymentDetail ? (
           activePaymentDetail.paymentMethod === 'paypal' ? (
@@ -305,10 +309,10 @@ const Payment = ({
         {canUpdatePaymentMethod && (
           <Button label={t('user:payment.update_payment_details')} type="button" onClick={() => navigate(addQueryParam(location, 'u', 'payment-method'))} />
         )}
-      </div>
-      <div className={panelClassName}>
+      </section>
+      <section aria-labelledby={billingHistoryId} className={panelClassName}>
         <div className={panelHeaderClassName}>
-          <h2>{t('user:payment.billing_history')}</h2>
+          <h2 id={billingHistoryId}>{t('user:payment.billing_history')}</h2>
         </div>
         {transactions?.length ? (
           <React.Fragment>
@@ -352,7 +356,7 @@ const Payment = ({
             <p>{!isLoading && t('user:payment.no_transactions')}</p>
           </div>
         )}
-      </div>
+      </section>
       {isLoading && <LoadingOverlay inline />}
     </>
   );
