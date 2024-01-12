@@ -9,7 +9,7 @@ export type Props = {
 };
 
 const Icon: FC<Props> = ({ icon: IconComponent, className }) => {
-  return <IconComponent className={classNames(styles.icon, className)} />;
+  return <IconComponent className={classNames(styles.icon, className)} aria-hidden="true" />;
 };
 
 export default Icon;
