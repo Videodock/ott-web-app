@@ -14,6 +14,9 @@ configureEnv({
 
   APP_API_BASE_URL: import.meta.env.APP_API_BASE_URL,
   APP_PLAYER_ID: import.meta.env.APP_PLAYER_ID,
+
+  APP_DEFAULT_CONFIG_SOURCE: import.meta.env.APP_DEFAULT_CONFIG_SOURCE,
+  APP_PLAYER_LICENSE_KEY: import.meta.env.APP_PLAYER_LICENSE_KEY,
 });
 
 const rootElement = document.getElementById('root');
