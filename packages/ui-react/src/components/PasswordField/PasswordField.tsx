@@ -41,7 +41,7 @@ const PasswordField: React.FC<Props> = ({ value, showToggleView = true, showHelp
       rightControl={
         showToggleView ? (
           <IconButton aria-label={viewPassword ? t('reset.hide_password') : t('reset.view_password')} onClick={() => toggleViewPassword()}>
-            {viewPassword ? <Icon icon={Visibility} /> : <Icon icon={VisibilityOff} />}
+            <Icon icon={viewPassword ? Visibility : VisibilityOff} />
           </IconButton>
         ) : null
       }

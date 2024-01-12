@@ -117,7 +117,7 @@ const RegistrationForm: React.FC<Props> = ({
         type={viewPassword ? 'text' : 'password'}
         rightControl={
           <IconButton aria-label={viewPassword ? t('registration.hide_password') : t('registration.view_password')} onClick={() => toggleViewPassword()}>
-            {viewPassword ? <Icon icon={Visibility} /> : <Icon icon={VisibilityOff} />}
+            <Icon icon={viewPassword ? Visibility : VisibilityOff} />
           </IconButton>
         }
         required

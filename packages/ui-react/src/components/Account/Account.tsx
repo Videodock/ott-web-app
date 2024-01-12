@@ -272,7 +272,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
                     disabled={section.isBusy}
                     rightControl={
                       <IconButton aria-label={viewPassword ? t('account.hide_password') : t('account.view_password')} onClick={() => toggleViewPassword()}>
-                        {viewPassword ? <Icon icon={Visibility} /> : <Icon icon={VisibilityOff} />}
+                        <Icon icon={viewPassword ? Visibility : VisibilityOff} />
                       </IconButton>
                     }
                     required

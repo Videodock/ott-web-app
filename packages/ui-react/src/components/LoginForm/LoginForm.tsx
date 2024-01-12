@@ -79,7 +79,7 @@ const LoginForm: React.FC<Props> = ({ onSubmit, onChange, values, errors, submit
         type={viewPassword ? 'text' : 'password'}
         rightControl={
           <IconButton aria-label={viewPassword ? t('login.hide_password') : t('login.view_password')} onClick={() => toggleViewPassword()}>
-            {viewPassword ? <Icon icon={Visibility} /> : <Icon icon={VisibilityOff} />}
+            <Icon icon={viewPassword ? Visibility : VisibilityOff} />
           </IconButton>
         }
         required
