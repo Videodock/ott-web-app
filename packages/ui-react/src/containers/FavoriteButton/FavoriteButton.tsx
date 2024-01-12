@@ -5,11 +5,12 @@ import { getModule } from '@jwp/ott-common/src/modules/container';
 import { useFavoritesStore } from '@jwp/ott-common/src/stores/FavoritesStore';
 import FavoritesController from '@jwp/ott-common/src/stores/FavoritesController';
 import useBreakpoint, { Breakpoint } from '@jwp/ott-hooks-react/src/useBreakpoint';
+import Favorite from '@jwp/ott-theme/assets/icons/favorite.svg?react';
+import FavoriteBorder from '@jwp/ott-theme/assets/icons/favorite_border.svg?react';
 
-import Favorite from '../../icons/Favorite';
-import FavoriteBorder from '../../icons/FavoriteBorder';
 import Button from '../../components/Button/Button';
 import Alert from '../../components/Alert/Alert';
+import Icon from '../../components/Icon/Icon';
 
 type Props = {
   item: PlaylistItem;
@@ -40,7 +41,7 @@ const FavoriteButton: React.VFC<Props> = ({ item }) => {
       <Button
         label={t('video:favorite')}
         aria-label={isFavorite ? t('video:remove_from_favorites') : t('video:add_to_favorites')}
-        startIcon={isFavorite ? <Favorite /> : <FavoriteBorder />}
+        startIcon={isFavorite ? <Icon icon={Favorite} /> : <Icon icon={FavoriteBorder} />}
         onClick={onFavoriteButtonClick}
         color={isFavorite ? 'primary' : 'default'}
         fullWidth={breakpoint < Breakpoint.md}

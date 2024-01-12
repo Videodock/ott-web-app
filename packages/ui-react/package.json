@@ -41,6 +41,7 @@
     "@vitejs/plugin-react": "^4.0.4",
     "sass": "^1.49.10",
     "vi-fetch": "^0.8.0",
+    "vite-plugin-svgr": "4.2.0",
     "vitest": "^0.34.6"
   },
   "peerDependencies": {
