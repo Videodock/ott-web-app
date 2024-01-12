@@ -13,6 +13,6 @@ type UIState = {
 export const useUIStore = createStore<UIState>('UIStore', () => ({
   searchQuery: '',
   searchActive: false,
-  languageMenuOpen: false,
   userMenuOpen: false,
+  languageMenuOpen: false,
 }));

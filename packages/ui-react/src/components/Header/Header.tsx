@@ -8,7 +8,6 @@ import type { LanguageDefinition } from '@jwp/ott-common/types/i18n';
 import Menu from '../../icons/Menu';
 import SearchIcon from '../../icons/Search';
 import CloseIcon from '../../icons/Close';
-import Language from '../../icons/Language';
 import ProfileCircle from '../../icons/ProfileCircle';
 import AccountCircle from '../../icons/AccountCircle';
 import SearchBar, { Props as SearchBarProps } from '../SearchBar/SearchBar';
@@ -170,23 +169,16 @@ const Header: React.FC<Props> = ({
     if (!showLanguageSwitcher) return null;
 
     return (
-      <React.Fragment>
-        <IconButton className={classNames(styles.iconButton, styles.actionButton)} aria-label={t('select_language')} onClick={openLanguageMenu}>
-          <Language />
-        </IconButton>
-        <Popover isOpen={languageMenuOpen} onClose={closeLanguageMenu}>
-          <Panel>
-            <LanguageMenu
-              onClick={(code) => {
-                onLanguageClick(code);
-                closeLanguageMenu();
-              }}
-              languages={supportedLanguages}
-              currentLanguage={currentLanguage}
-            />
-          </Panel>
-        </Popover>
-      </React.Fragment>
+      <LanguageMenu
+        openLanguageMenu={openLanguageMenu}
+        closeLanguageMenu={closeLanguageMenu}
+        languageMenuOpen={languageMenuOpen}
+        onClick={(code) => {
+          onLanguageClick(code);
+        }}
+        languages={supportedLanguages}
+        currentLanguage={currentLanguage}
+      />
     );
   };
 
