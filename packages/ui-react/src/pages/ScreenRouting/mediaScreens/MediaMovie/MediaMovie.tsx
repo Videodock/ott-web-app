@@ -12,7 +12,7 @@ import { generateMovieJSONLD } from '@jwp/ott-common/src/utils/structuredData';
 import useMedia from '@jwp/ott-hooks-react/src/useMedia';
 import usePlaylist from '@jwp/ott-hooks-react/src/usePlaylist';
 import useEntitlement from '@jwp/ott-hooks-react/src/useEntitlement';
-import useBreakpoint, { Breakpoint } from '@jwp/ott-hooks-react/src/useBreakpoint';
+import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 import useQueryParam from '@jwp/ott-hooks-react/src/useQueryParam';
 import PlayTrailer from '@jwp/ott-theme/assets/icons/play_trailer.svg?react';
 
@@ -122,7 +122,7 @@ const MediaMovie: ScreenComponent<PlaylistItem> = ({ data, isLoading }) => {
         {data.tags?.split(',').map((tag) => (
           <meta property="og:video:tag" content={tag} key={tag} />
         ))}
-        {data ? <script type="application/ld+json">{generateMovieJSONLD(data)}</script> : null}
+        {data ? <script type="application/ld+json">{generateMovieJSONLD(data, window.location.origin)}</script> : null}
       </Helmet>
       <VideoLayout
         item={data}

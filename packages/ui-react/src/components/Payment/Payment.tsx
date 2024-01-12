@@ -6,11 +6,11 @@ import type { Customer } from '@jwp/ott-common/types/account';
 import type { Offer } from '@jwp/ott-common/types/checkout';
 import type { PaymentDetail, Subscription, Transaction } from '@jwp/ott-common/types/subscription';
 import { formatLocalizedDate, formatPrice } from '@jwp/ott-common/src/utils/formatting';
-import { addQueryParam } from '@jwp/ott-common/src/utils/location';
+import { addQueryParam } from '@jwp/ott-ui-react/src/utils/location';
 import { ACCESS_MODEL } from '@jwp/ott-common/src/constants';
-import useBreakpoint, { Breakpoint } from '@jwp/ott-hooks-react/src/useBreakpoint';
 import ExternalLink from '@jwp/ott-theme/assets/icons/external_link.svg?react';
 import PayPal from '@jwp/ott-theme/assets/icons/paypal.svg?react';
+import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
 import IconButton from '../IconButton/IconButton';
 import Alert from '../Alert/Alert';

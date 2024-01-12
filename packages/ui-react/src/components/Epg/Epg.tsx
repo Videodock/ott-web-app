@@ -5,9 +5,9 @@ import { isBefore, subHours } from 'date-fns';
 import type { EpgChannel, EpgProgram } from '@jwp/ott-common/types/epg';
 import type { Config } from '@jwp/ott-common/types/config';
 import usePlanByEpg from '@jwp/ott-hooks-react/src/usePlanByEpg';
-import useBreakpoint, { Breakpoint } from '@jwp/ott-hooks-react/src/useBreakpoint';
 import ChevronRight from '@jwp/ott-theme/assets/icons/chevron_right.svg?react';
 import ChevronLeft from '@jwp/ott-theme/assets/icons/chevron_left.svg?react';
+import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
 import IconButton from '../IconButton/IconButton';
 import Button from '../Button/Button';

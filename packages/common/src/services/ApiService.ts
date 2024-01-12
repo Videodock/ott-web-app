@@ -1,4 +1,4 @@
-import { parseISO, isValid } from 'date-fns';
+import { isValid, parseISO } from 'date-fns';
 import { injectable } from 'inversify';
 
 import { getMediaStatusFromEventState } from '../utils/liveEvent';
@@ -9,6 +9,7 @@ import { useConfigStore as ConfigStore } from '../stores/ConfigStore';
 import type { GetPlaylistParams, Playlist, PlaylistItem } from '../../types/playlist';
 import type { AdSchedule } from '../../types/ad-schedule';
 import type { EpisodeInSeries, EpisodesRes, EpisodesWithPagination, GetSeriesParams, Series } from '../../types/series';
+import env from '../env';
 
 // change the values below to change the property used to look up the alternate image
 enum ImageProperty {
@@ -27,7 +28,7 @@ export default class ApiService {
    */
   private generateAlternateImageURL = ({ item, label, playlistLabel }: { item: PlaylistItem; label: string; playlistLabel?: string }) => {
     const pathname = `/v2/media/${item.mediaid}/images/${playlistLabel || label}.webp`;
-    const url = addQueryParams(`${import.meta.env.APP_API_BASE_URL}${pathname}`, { poster_fallback: 1, fallback: playlistLabel ? label : null });
+    const url = addQueryParams(`${env.APP_API_BASE_URL}${pathname}`, { poster_fallback: 1, fallback: playlistLabel ? label : null });
 
     return url;
   };
@@ -70,9 +71,6 @@ export default class ApiService {
 
   /**
    * Transform incoming playlists
-   *
-   * @param playlist
-   * @param relatedMediaId
    */
   private transformPlaylist = (playlist: Playlist, relatedMediaId?: string) => {
     playlist.playlist = playlist.playlist.map((item) => this.transformMediaItem(item, playlist));
@@ -101,9 +99,6 @@ export default class ApiService {
 
   /**
    * Get playlist by id
-   * @param {string} id
-   * @param params
-   * @param {string} [drmPolicyId]
    */
   getPlaylistById = async (id?: string, params: GetPlaylistParams = {}): Promise<Playlist | undefined> => {
     if (!id) {
@@ -111,17 +106,15 @@ export default class ApiService {
     }
 
     const pathname = `/v2/playlists/${id}`;
-    const url = addQueryParams(`${import.meta.env.APP_API_BASE_URL}${pathname}`, params);
+    const url = addQueryParams(`${env.APP_API_BASE_URL}${pathname}`, params);
     const response = await fetch(url);
-    const data = await getDataOrThrow(response);
+    const data = (await getDataOrThrow(response)) as Playlist;
 
     return this.transformPlaylist(data, params.related_media_id);
   };
 
   /**
    * Get watchlist by playlistId
-   * @param {string} playlistId
-   * @param {string} [token]
    */
   getMediaByWatchlist = async (playlistId: string, mediaIds: string[], token?: string): Promise<PlaylistItem[] | undefined> => {
     if (!mediaIds?.length) {
@@ -129,7 +122,7 @@ export default class ApiService {
     }
 
     const pathname = `/apps/watchlists/${playlistId}`;
-    const url = addQueryParams(`${import.meta.env.APP_API_BASE_URL}${pathname}`, { token, media_ids: mediaIds });
+    const url = addQueryParams(`${env.APP_API_BASE_URL}${pathname}`, { token, media_ids: mediaIds });
     const response = await fetch(url);
     const data = (await getDataOrThrow(response)) as Playlist;
 
@@ -146,12 +139,13 @@ export default class ApiService {
    */
   getMediaById = async (id: string, token?: string, drmPolicyId?: string): Promise<PlaylistItem | undefined> => {
     const pathname = drmPolicyId ? `/v2/media/${id}/drm/${drmPolicyId}` : `/v2/media/${id}`;
-    const url = addQueryParams(`${import.meta.env.APP_API_BASE_URL}${pathname}`, { token });
+    const url = addQueryParams(`${env.APP_API_BASE_URL}${pathname}`, { token });
     const response = await fetch(url);
     const data = (await getDataOrThrow(response)) as Playlist;
     const mediaItem = data.playlist[0];
 
     if (!mediaItem) throw new Error('MediaItem not found');
+
     return this.transformMediaItem(mediaItem);
   };
 
@@ -166,27 +160,25 @@ export default class ApiService {
     }
 
     const pathname = `/apps/series/${id}`;
-    const url = addQueryParams(`${import.meta.env.APP_API_BASE_URL}${pathname}`, params);
+    const url = addQueryParams(`${env.APP_API_BASE_URL}${pathname}`, params);
     const response = await fetch(url);
-    const data = await getDataOrThrow(response);
 
-    return data;
+    return (await getDataOrThrow(response)) as Series;
   };
 
   /**
    * Get all series for the given media_ids
-   * @param {string[]} mediaIds
    */
-  getSeriesByMediaIds = async (mediaIds: string[]): Promise<{ [mediaId: string]: EpisodeInSeries[] | undefined } | undefined> => {
+  getSeriesByMediaIds = async (mediaIds: string[]): Promise<Record<string, EpisodeInSeries[]> | undefined> => {
     const pathname = `/apps/series`;
-    const url = `${import.meta.env.APP_API_BASE_URL}${pathname}?media_ids=${mediaIds.join(',')}`;
+    const url = `${env.APP_API_BASE_URL}${pathname}?media_ids=${mediaIds.join(',')}`;
     const response = await fetch(url);
-    return await getDataOrThrow(response);
+
+    return (await getDataOrThrow(response)) as Record<string, EpisodeInSeries[]>;
   };
 
   /**
    * Get all episodes of the selected series (when no particular season is selected or when episodes are attached to series)
-   * @param {string} seriesId
    */
   getEpisodes = async ({
     seriesId,
@@ -204,21 +196,20 @@ export default class ApiService {
     }
 
     const pathname = `/apps/series/${seriesId}/episodes`;
-    const url = addQueryParams(`${import.meta.env.APP_API_BASE_URL}${pathname}`, {
+    const url = addQueryParams(`${env.APP_API_BASE_URL}${pathname}`, {
       page_offset: pageOffset,
       page_limit: pageLimit,
       after_id: afterId,
     });
 
     const response = await fetch(url);
-    const episodesRes: EpisodesRes = await getDataOrThrow(response);
+    const episodesResponse = (await getDataOrThrow(response)) as EpisodesRes;
 
-    return this.transformEpisodes(episodesRes);
+    return this.transformEpisodes(episodesResponse);
   };
 
   /**
    * Get season of the selected series
-   * @param {string} seriesId
    */
   getSeasonWithEpisodes = async ({
     seriesId,
@@ -236,10 +227,10 @@ export default class ApiService {
     }
 
     const pathname = `/apps/series/${seriesId}/seasons/${seasonNumber}/episodes`;
-    const url = addQueryParams(`${import.meta.env.APP_API_BASE_URL}${pathname}`, { page_offset: pageOffset, page_limit: pageLimit });
+    const url = addQueryParams(`${env.APP_API_BASE_URL}${pathname}`, { page_offset: pageOffset, page_limit: pageLimit });
 
     const response = await fetch(url);
-    const episodesRes: EpisodesRes = await getDataOrThrow(response);
+    const episodesRes = (await getDataOrThrow(response)) as EpisodesRes;
 
     return this.transformEpisodes(episodesRes, seasonNumber);
   };
@@ -249,11 +240,10 @@ export default class ApiService {
       throw new Error('Ad Schedule ID is required');
     }
 
-    const url = import.meta.env.APP_API_BASE_URL + `/v2/advertising/schedules/${id}.json`;
+    const url = env.APP_API_BASE_URL + `/v2/advertising/schedules/${id}.json`;
     const response = await fetch(url, { credentials: 'omit' });
-    const data = await getDataOrThrow(response);
 
-    return data;
+    return (await getDataOrThrow(response)) as AdSchedule;
   };
 
   getMediaAds = async (url: string, mediaId: string): Promise<AdSchedule | undefined> => {
@@ -263,8 +253,6 @@ export default class ApiService {
 
     const response = await fetch(urlWithQuery, { credentials: 'omit' });
 
-    const data = (await getDataOrThrow(response)) as AdSchedule;
-
-    return data;
+    return (await getDataOrThrow(response)) as AdSchedule;
   };
 }

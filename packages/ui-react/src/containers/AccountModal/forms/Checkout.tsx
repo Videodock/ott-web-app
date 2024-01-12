@@ -7,7 +7,7 @@ import { useCheckoutStore } from '@jwp/ott-common/src/stores/CheckoutStore';
 import AccountController from '@jwp/ott-common/src/stores/AccountController';
 import CheckoutController from '@jwp/ott-common/src/stores/CheckoutController';
 import { isSVODOffer } from '@jwp/ott-common/src/utils/subscription';
-import { addQueryParam, removeQueryParam } from '@jwp/ott-common/src/utils/location';
+import { addQueryParam, removeQueryParam } from '@jwp/ott-ui-react/src/utils/location';
 import { addQueryParams } from '@jwp/ott-common/src/utils/formatting';
 import useForm from '@jwp/ott-hooks-react/src/useForm';
 
@@ -167,10 +167,11 @@ const Checkout = () => {
       setPaymentError(undefined);
       setUpdatingOrder(true);
       const cancelUrl = addQueryParams(window.location.href, { u: 'payment-cancelled' });
+      const waitingUrl = addQueryParams(window.location.href, { u: 'waiting-for-payment' });
       const errorUrl = addQueryParams(window.location.href, { u: 'payment-error' });
       const successUrl = `${window.location.origin}${paymentSuccessUrl}`;
 
-      const response = await checkoutController.paypalPayment(successUrl, cancelUrl, errorUrl, couponCodeForm.values.couponCode);
+      const response = await checkoutController.paypalPayment(successUrl, waitingUrl, cancelUrl, errorUrl, couponCodeForm.values.couponCode);
 
       if (response.redirectUrl) {
         window.location.href = response.redirectUrl;

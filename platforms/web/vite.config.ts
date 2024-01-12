@@ -7,8 +7,8 @@ import eslintPlugin from 'vite-plugin-eslint';
 import StylelintPlugin from 'vite-plugin-stylelint';
 import { VitePWA } from 'vite-plugin-pwa';
 import { createHtmlPlugin } from 'vite-plugin-html';
-import { Target, viteStaticCopy } from 'vite-plugin-static-copy';
 import svgr from 'vite-plugin-svgr';
+import { viteStaticCopy, type Target } from 'vite-plugin-static-copy';
 
 import { initSettings } from './scripts/build-tools/settings';
 
@@ -82,6 +82,8 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
     ],
     define: {
       'import.meta.env.APP_VERSION': JSON.stringify(process.env.npm_package_version),
+      __mode__: JSON.stringify(mode),
+      __dev__: process.env.NODE_ENV !== 'production',
     },
     publicDir: './public',
     envPrefix: 'APP_',

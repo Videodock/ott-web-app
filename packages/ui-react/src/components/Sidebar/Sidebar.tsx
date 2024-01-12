@@ -1,4 +1,4 @@
-import React, { Fragment, ReactFragment } from 'react';
+import React, { Fragment, type ReactNode } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import Close from '@jwp/ott-theme/assets/icons/close.svg?react';
@@ -11,7 +11,7 @@ import styles from './Sidebar.module.scss';
 type SidebarProps = {
   isOpen: boolean;
   onClose: () => void;
-  children?: ReactFragment;
+  children?: ReactNode;
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, children }) => {

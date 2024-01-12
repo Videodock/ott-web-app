@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { copyToClipboard } from '@jwp/ott-common/src/utils/dom';
-import useBreakpoint, { Breakpoint } from '@jwp/ott-hooks-react/src/useBreakpoint';
 import Check from '@jwp/ott-theme/assets/icons/check.svg?react';
 import Share from '@jwp/ott-theme/assets/icons/share.svg?react';
+import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
+import { copyToClipboard } from '../../utils/clipboard';
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
 

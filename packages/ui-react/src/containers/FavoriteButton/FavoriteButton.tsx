@@ -4,9 +4,9 @@ import type { PlaylistItem } from '@jwp/ott-common/types/playlist';
 import { getModule } from '@jwp/ott-common/src/modules/container';
 import { useFavoritesStore } from '@jwp/ott-common/src/stores/FavoritesStore';
 import FavoritesController from '@jwp/ott-common/src/stores/FavoritesController';
-import useBreakpoint, { Breakpoint } from '@jwp/ott-hooks-react/src/useBreakpoint';
 import Favorite from '@jwp/ott-theme/assets/icons/favorite.svg?react';
 import FavoriteBorder from '@jwp/ott-theme/assets/icons/favorite_border.svg?react';
+import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
 import Button from '../../components/Button/Button';
 import Alert from '../../components/Alert/Alert';

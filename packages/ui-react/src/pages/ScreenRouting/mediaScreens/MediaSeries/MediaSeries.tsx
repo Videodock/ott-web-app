@@ -12,7 +12,7 @@ import { generateEpisodeJSONLD } from '@jwp/ott-common/src/utils/structuredData'
 import { isLocked } from '@jwp/ott-common/src/utils/entitlements';
 import { getEpisodesInSeason, getFiltersFromSeries } from '@jwp/ott-common/src/utils/series';
 import { buildLegacySeriesUrlFromMediaItem, formatSeriesMetaString, formatVideoMetaString, mediaURL } from '@jwp/ott-common/src/utils/formatting';
-import { addQueryParam } from '@jwp/ott-common/src/utils/location';
+import { addQueryParam } from '@jwp/ott-ui-react/src/utils/location';
 import { VideoProgressMinMax } from '@jwp/ott-common/src/constants';
 import useEntitlement from '@jwp/ott-hooks-react/src/useEntitlement';
 import useMedia from '@jwp/ott-hooks-react/src/useMedia';
@@ -20,8 +20,8 @@ import { useSeries } from '@jwp/ott-hooks-react/src/series/useSeries';
 import { useEpisodes } from '@jwp/ott-hooks-react/src/series/useEpisodes';
 import { useSeriesLookup } from '@jwp/ott-hooks-react/src/series/useSeriesLookup';
 import { useNextEpisode } from '@jwp/ott-hooks-react/src/series/useNextEpisode';
-import useBreakpoint, { Breakpoint } from '@jwp/ott-hooks-react/src/useBreakpoint';
 import PlayTrailer from '@jwp/ott-theme/assets/icons/play_trailer.svg?react';
+import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
 import type { ScreenComponent } from '../../../../../types/screens';
 import ErrorPage from '../../../../components/ErrorPage/ErrorPage';
@@ -235,7 +235,9 @@ const MediaSeries: ScreenComponent<PlaylistItem> = ({ data: seriesMedia }) => {
         {selectedItem.tags?.split(',').map((tag: string) => (
           <meta property="og:video:tag" content={tag} key={tag} />
         ))}
-        {selectedItem ? <script type="application/ld+json">{generateEpisodeJSONLD(series, seriesMedia, episode, episodeMetadata)}</script> : null}
+        {selectedItem ? (
+          <script type="application/ld+json">{generateEpisodeJSONLD(series, seriesMedia, window.location.origin, episode, episodeMetadata)}</script>
+        ) : null}
       </Helmet>
       <VideoLayout
         item={selectedItem}

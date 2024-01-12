@@ -14,7 +14,7 @@ import useMedia from '@jwp/ott-hooks-react/src/useMedia';
 import { useLiveEvent } from '@jwp/ott-hooks-react/src/useLiveEvent';
 import usePlaylist from '@jwp/ott-hooks-react/src/usePlaylist';
 import useEntitlement from '@jwp/ott-hooks-react/src/useEntitlement';
-import useBreakpoint, { Breakpoint } from '@jwp/ott-hooks-react/src/useBreakpoint';
+import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 import useQueryParam from '@jwp/ott-hooks-react/src/useQueryParam';
 import PlayTrailer from '@jwp/ott-theme/assets/icons/play_trailer.svg?react';
 
@@ -138,7 +138,7 @@ const MediaEvent: ScreenComponent<PlaylistItem> = ({ data: media, isLoading }) =
         {media.tags?.split(',').map((tag) => (
           <meta property="og:video:tag" content={tag} key={tag} />
         ))}
-        {media ? <script type="application/ld+json">{generateMovieJSONLD(media)}</script> : null}
+        {media ? <script type="application/ld+json">{generateMovieJSONLD(media, window.location.origin)}</script> : null}
       </Helmet>
       <VideoLayout
         item={media}

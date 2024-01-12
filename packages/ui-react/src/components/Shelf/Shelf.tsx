@@ -6,9 +6,9 @@ import type { AccessModel, ContentType } from '@jwp/ott-common/types/config';
 import { isLocked } from '@jwp/ott-common/src/utils/entitlements';
 import { mediaURL } from '@jwp/ott-common/src/utils/formatting';
 import { PersonalShelf } from '@jwp/ott-common/src/constants';
-import useBreakpoint, { Breakpoint, Breakpoints } from '@jwp/ott-hooks-react/src/useBreakpoint';
 import ChevronLeft from '@jwp/ott-theme/assets/icons/chevron_left.svg?react';
 import ChevronRight from '@jwp/ott-theme/assets/icons/chevron_right.svg?react';
+import useBreakpoint, { Breakpoint, type Breakpoints } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
 import TileDock from '../TileDock/TileDock';
 import Card from '../Card/Card';

@@ -10,4 +10,8 @@ export default defineConfig({
     setupFiles: ['vitest.setup.ts'],
     css: true,
   },
+  define: {
+    __mode__: '"test"',
+    __dev__: true,
+  },
 });

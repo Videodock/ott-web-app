@@ -45,8 +45,8 @@ export default function useNotifications(uuid: string = '') {
               );
               break;
             case NotificationsTypes.CARD_SUCCESS:
-              await queryClient.invalidateQueries('entitlements');
-              navigate(removeQueryParamFromUrl('u'));
+              await queryClient.invalidateQueries(['entitlements']);
+              navigate(removeQueryParamFromUrl(window.location.href, 'u'));
               break;
             case NotificationsTypes.SUBSCRIBE_SUCCESS:
               await accountController.reloadActiveSubscription();
