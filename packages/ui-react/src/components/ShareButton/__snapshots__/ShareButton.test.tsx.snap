@@ -9,6 +9,7 @@ exports[`<ShareButton> > renders and matches snapshot 1`] = `
       class="_startIcon_f8f296"
     >
       <svg
+        aria-hidden="true"
         class="_icon_585b29"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"

@@ -28,6 +28,7 @@ exports[`<Card> > should render anchor tag 1`] = `
             role="status"
           >
             <svg
+              aria-hidden="true"
               class="_icon_585b29"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"

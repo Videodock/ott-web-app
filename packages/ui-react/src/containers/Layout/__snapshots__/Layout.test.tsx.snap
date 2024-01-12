@@ -24,6 +24,7 @@ exports[`<Layout /> > renders layout 1`] = `
               tabindex="0"
             >
               <svg
+                aria-hidden="true"
                 class="_icon_585b29"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,6 +74,7 @@ exports[`<Layout /> > renders layout 1`] = `
             tabindex="-1"
           >
             <svg
+              aria-hidden="true"
               class="_icon_585b29"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
