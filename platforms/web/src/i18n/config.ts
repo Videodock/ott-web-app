@@ -32,9 +32,6 @@ const initI18n = async () => {
 
   if (!supportedLanguages.some(({ code }) => code === defaultLanguage)) {
     throw new Error(`The default language is not enabled: ${defaultLanguage}`);
-  } else {
-    // Set the default language on the HTML element
-    document.documentElement.lang = defaultLanguage;
   }
 
   await i18next
@@ -42,7 +39,6 @@ const initI18n = async () => {
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
-      // lng: htmlLang,
       supportedLngs: supportedLanguages.map(({ code }) => code),
       fallbackLng: defaultLanguage,
       // this option ensures that empty strings in translations will fall back to the default language

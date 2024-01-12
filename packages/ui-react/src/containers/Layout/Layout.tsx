@@ -77,16 +77,9 @@ const Layout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onLanguageChanged = useCallback((language: string) => {
-    if (document.documentElement.lang !== language) {
-      document.documentElement.lang = language;
-    }
-  }, []);
-
   useEffect(() => {
-    i18n.on('languageChanged', onLanguageChanged);
-    return () => i18n.off('languageChanged', onLanguageChanged);
-  }, [onLanguageChanged, i18n]);
+    document.documentElement.setAttribute('lang', i18n.language);
+  }, [i18n.language]);
 
   useEffect(() => {
     if (searchActive && searchInputRef.current) {
