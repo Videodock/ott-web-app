@@ -9,19 +9,19 @@ export default function useProtectedMedia(item: PlaylistItem) {
   const apiService = getModule(ApiService);
 
   const [isGeoBlocked, setIsGeoBlocked] = useState(false);
-  const queryResult = useContentProtection('media', item.mediaid, (token, drmPolicyId) => apiService.getMediaById(item.mediaid, token, drmPolicyId));
+  const contentProtectionQuery = useContentProtection('media', item.mediaid, (token, drmPolicyId) => apiService.getMediaById(item.mediaid, token, drmPolicyId));
 
   useEffect(() => {
-    const m3u8 = queryResult.data?.sources.find((source) => source.file.indexOf('.m3u8') !== -1);
+    const m3u8 = contentProtectionQuery.data?.sources.find((source) => source.file.indexOf('.m3u8') !== -1);
     if (m3u8) {
       fetch(m3u8.file, { method: 'HEAD' }).then((response) => {
         response.status === 403 && setIsGeoBlocked(true);
       });
     }
-  }, [queryResult.data]);
+  }, [contentProtectionQuery.data]);
 
   return {
-    ...queryResult,
+    ...contentProtectionQuery,
     isGeoBlocked,
   };
 }
