@@ -20,6 +20,8 @@ type Props = {
   small?: boolean;
   showPaymentsItem: boolean;
   onClick?: () => void;
+  openUserMenu?: () => void;
+  closeUserMenu?: () => void;
   currentProfile?: Profile | null;
   profilesEnabled?: boolean;
   profiles?: Profile[];
@@ -32,6 +34,8 @@ const UserMenu = ({
   showPaymentsItem,
   small = false,
   onClick,
+  openUserMenu,
+  closeUserMenu,
   currentProfile,
   profilesEnabled,
   profiles,
@@ -79,24 +83,48 @@ const UserMenu = ({
         </li>
       )}
       <li>
-        <MenuButton small={small} onClick={onClick} to="/u/my-account" label={t('nav.account')} startIcon={<AccountCircle />} />
+        <MenuButton
+          onFocus={openUserMenu}
+          onBlur={closeUserMenu}
+          small={small}
+          onClick={onClick}
+          to="/u/my-account"
+          label={t('nav.account')}
+          startIcon={<AccountCircle />}
+        />
       </li>
 
       {favoritesEnabled && (
         <li>
-          <MenuButton small={small} onClick={onClick} to="/u/favorites" label={t('nav.favorites')} startIcon={<Favorite />} />
+          <MenuButton
+            onFocus={openUserMenu}
+            onBlur={closeUserMenu}
+            small={small}
+            onClick={onClick}
+            to="/u/favorites"
+            label={t('nav.favorites')}
+            startIcon={<Favorite />}
+          />
         </li>
       )}
       {showPaymentsItem && (
         <li>
-          <MenuButton small={small} onClick={onClick} to="/u/payments" label={t('nav.payments')} startIcon={<BalanceWallet />} />
+          <MenuButton
+            onFocus={openUserMenu}
+            onBlur={closeUserMenu}
+            small={small}
+            onClick={onClick}
+            to="/u/payments"
+            label={t('nav.payments')}
+            startIcon={<BalanceWallet />}
+          />
         </li>
       )}
       <li>
         <hr className={classNames(styles.divider, { [styles.small]: small })} />
       </li>
       <li>
-        <MenuButton small={small} onClick={onLogout} label={t('nav.logout')} startIcon={<Exit />} />
+        <MenuButton onFocus={openUserMenu} onBlur={closeUserMenu} small={small} onClick={onLogout} label={t('nav.logout')} startIcon={<Exit />} />
       </li>
     </ul>
   );
