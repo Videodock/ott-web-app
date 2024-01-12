@@ -9,6 +9,7 @@ import CheckoutController from '@jwp/ott-common/src/stores/CheckoutController';
 import { isSVODOffer } from '@jwp/ott-common/src/utils/subscription';
 import { modalURL } from '@jwp/ott-ui-react/src/utils/location';
 import useForm from '@jwp/ott-hooks-react/src/useForm';
+import { createURL } from '@jwp/ott-common/src/utils/urlFormatting';
 
 import CheckoutForm from '../../../components/CheckoutForm/CheckoutForm';
 import LoadingOverlay from '../../../components/LoadingOverlay/LoadingOverlay';
@@ -165,9 +166,9 @@ const Checkout = () => {
     try {
       setPaymentError(undefined);
       setUpdatingOrder(true);
-      const cancelUrl = modalURL(location, 'payment-cancelled');
-      const waitingUrl = modalURL(location, 'waiting-for-payment');
-      const errorUrl = modalURL(location, 'payment-error');
+      const cancelUrl = createURL(window.location.href, { u: 'payment-cancelled' });
+      const waitingUrl = createURL(window.location.href, { u: 'waiting-for-payment' });
+      const errorUrl = createURL(window.location.href, { u: 'payment-error' });
       const successUrl = `${window.location.origin}${paymentSuccessUrl}`;
 
       const response = await checkoutController.paypalPayment(successUrl, waitingUrl, cancelUrl, errorUrl, couponCodeForm.values.couponCode);
