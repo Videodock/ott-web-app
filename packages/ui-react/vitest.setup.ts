@@ -45,8 +45,6 @@ vi.mock('react-i18next', () => ({
     return {
       t: (str: string) => str,
       i18n: {
-        on: (_event: string, callback: () => void) => callback(),
-        off: (_event: string, callback: () => void) => callback(),
         changeLanguage: () =>
           new Promise(() => {
             /* */
