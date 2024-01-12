@@ -7,7 +7,7 @@ import { getLegacySeriesPlaylistIdFromEpisodeTags, getSeriesPlaylistIdFromCustom
 // createURL(window.location.pathname, { foo: 'bar' }, window.location.search);
 export const createURL = (url: string, queryParams: { [key: string]: string | number | string[] | undefined | null }, search: string | null = '') => {
   const [baseUrl, urlQueryString = ''] = url.split('?');
-  const searchStringCombined = `${urlQueryString}${search ? `&` : ''}${search}`;
+  const searchStringCombined = `${urlQueryString}${urlQueryString && search ? `&` : ''}${search}`;
 
   const urlSearchParams = new URLSearchParams(searchStringCombined);
 
