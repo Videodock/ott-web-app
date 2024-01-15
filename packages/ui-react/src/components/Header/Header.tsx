@@ -151,17 +151,18 @@ const Header: React.FC<Props> = ({
         <Popover isOpen={userMenuOpen} onClose={closeUserMenu}>
           <Panel id="user_menu_panel">
             <UserMenu
+              focusable={userMenuOpen}
               onClick={closeUserMenu}
-              openUserMenu={openUserMenu}
-              closeUserMenu={closeUserMenu}
+              onFocus={openUserMenu}
+              onBlur={closeUserMenu}
               showPaymentsItem={showPaymentsMenuItem}
-              small
               currentProfile={currentProfile}
               profilesEnabled={profilesEnabled}
               profiles={profiles}
               selectProfile={selectProfile}
               isSelectingProfile={!!isSelectingProfile}
               favoritesEnabled={favoritesEnabled}
+              small
             />
           </Panel>
         </Popover>

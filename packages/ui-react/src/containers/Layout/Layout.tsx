@@ -116,15 +116,15 @@ const Layout = () => {
   const openLanguageMenu = useCallback(() => useUIStore.setState({ languageMenuOpen: true }), []);
   const closeLanguageMenu = useCallback(() => useUIStore.setState({ languageMenuOpen: false }), []);
 
-  const renderUserActions = () => {
+  const renderUserActions = (sideBarOpen: boolean) => {
     if (!clientId) return null;
 
     return isLoggedIn ? (
-      <UserMenu showPaymentsItem={accessModel !== ACCESS_MODEL.AVOD} favoritesEnabled={favoritesEnabled} />
+      <UserMenu focusable={sideBarOpen} showPaymentsItem={accessModel !== ACCESS_MODEL.AVOD} favoritesEnabled={favoritesEnabled} />
     ) : (
       <div className={styles.buttonContainer}>
-        <Button fullWidth onClick={loginButtonClickHandler} label={t('sign_in')} />
-        <Button variant="contained" color="primary" onClick={signUpButtonClickHandler} label={t('sign_up')} fullWidth />
+        <Button tabIndex={sideBarOpen ? 0 : -1} onClick={loginButtonClickHandler} label={t('sign_in')} fullWidth />
+        <Button tabIndex={sideBarOpen ? 0 : -1} variant="contained" color="primary" onClick={signUpButtonClickHandler} label={t('sign_up')} fullWidth />
       </div>
     );
   };
@@ -187,7 +187,7 @@ const Layout = () => {
             <MenuButton key={item.contentId} label={item.label} to={`/p/${item.contentId}`} tabIndex={sideBarOpen ? 0 : -1} />
           ))}
           <hr className={styles.divider} />
-          {renderUserActions()}
+          {renderUserActions(sideBarOpen)}
         </Sidebar>
         <div id="content" className={styles.content} tabIndex={-1}>
           <Outlet />

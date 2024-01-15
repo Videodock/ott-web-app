@@ -18,10 +18,11 @@ import styles from './UserMenu.module.scss';
 
 type Props = {
   small?: boolean;
+  focusable: boolean;
   showPaymentsItem: boolean;
   onClick?: () => void;
-  openUserMenu?: () => void;
-  closeUserMenu?: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   currentProfile?: Profile | null;
   profilesEnabled?: boolean;
   profiles?: Profile[];
@@ -34,18 +35,20 @@ const UserMenu = ({
   showPaymentsItem,
   small = false,
   onClick,
-  openUserMenu,
-  closeUserMenu,
+  onFocus,
+  onBlur,
   currentProfile,
   profilesEnabled,
   profiles,
   isSelectingProfile,
   selectProfile,
   favoritesEnabled,
+  focusable,
 }: Props) => {
   const { t } = useTranslation('user');
   const navigate = useNavigate();
   const accountController = getModule(AccountController);
+  const tabIndex = focusable ? 0 : -1;
 
   const onLogout = useCallback(async () => {
     if (onClick) {
@@ -57,7 +60,7 @@ const UserMenu = ({
   }, [onClick, navigate, accountController]);
 
   return (
-    <ul className={styles.menuItems}>
+    <ul onFocus={onFocus} onBlur={onBlur} className={styles.menuItems}>
       {profilesEnabled && selectProfile && (
         <ProfilesMenu
           profiles={profiles ?? []}
@@ -78,53 +81,30 @@ const UserMenu = ({
             onClick={onClick}
             to={`/u/my-profile/${currentProfile?.id ?? ''}`}
             label={t('nav.profile')}
+            tabIndex={tabIndex}
             startIcon={<ProfileCircle src={currentProfile?.avatar_url} alt={currentProfile?.name ?? ''} />}
           />
         </li>
       )}
       <li>
-        <MenuButton
-          onFocus={openUserMenu}
-          onBlur={closeUserMenu}
-          small={small}
-          onClick={onClick}
-          to="/u/my-account"
-          label={t('nav.account')}
-          startIcon={<AccountCircle />}
-        />
+        <MenuButton small={small} onClick={onClick} to="/u/my-account" label={t('nav.account')} startIcon={<AccountCircle />} tabIndex={tabIndex} />
       </li>
 
       {favoritesEnabled && (
         <li>
-          <MenuButton
-            onFocus={openUserMenu}
-            onBlur={closeUserMenu}
-            small={small}
-            onClick={onClick}
-            to="/u/favorites"
-            label={t('nav.favorites')}
-            startIcon={<Favorite />}
-          />
+          <MenuButton small={small} onClick={onClick} to="/u/favorites" label={t('nav.favorites')} startIcon={<Favorite />} tabIndex={tabIndex} />
         </li>
       )}
       {showPaymentsItem && (
         <li>
-          <MenuButton
-            onFocus={openUserMenu}
-            onBlur={closeUserMenu}
-            small={small}
-            onClick={onClick}
-            to="/u/payments"
-            label={t('nav.payments')}
-            startIcon={<BalanceWallet />}
-          />
+          <MenuButton small={small} onClick={onClick} to="/u/payments" label={t('nav.payments')} startIcon={<BalanceWallet />} tabIndex={tabIndex} />
         </li>
       )}
       <li>
         <hr className={classNames(styles.divider, { [styles.small]: small })} />
       </li>
       <li>
-        <MenuButton onFocus={openUserMenu} onBlur={closeUserMenu} small={small} onClick={onLogout} label={t('nav.logout')} startIcon={<Exit />} />
+        <MenuButton small={small} onClick={onLogout} label={t('nav.logout')} startIcon={<Exit />} tabIndex={tabIndex} />
       </li>
     </ul>
   );
