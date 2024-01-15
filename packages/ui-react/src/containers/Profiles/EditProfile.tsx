@@ -9,11 +9,12 @@ import type { UseFormOnSubmitHandler } from '@jwp/ott-hooks-react/src/useForm';
 import { useProfileErrorHandler, useUpdateProfile } from '@jwp/ott-hooks-react/src/useProfiles';
 import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 import type { ProfileFormValues } from '@jwp/ott-common/types/profiles';
-import { createURL } from '@jwp/ott-common/src/utils/urlFormatting';
+import { PATH_USER_PROFILES } from '@jwp/ott-common/src/paths';
 
 import styles from '../../pages/User/User.module.scss';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import Button from '../../components/Button/Button';
+import { createURLFromLocation } from '../../utils/location';
 
 import DeleteProfile from './DeleteProfile';
 import Form from './Form';
@@ -58,10 +59,10 @@ const EditProfile = ({ contained = false }: EditProfileProps) => {
   }, [profileDetails?.avatar_url]);
 
   if (!id || (!isFetching && !isLoading && !profileDetails)) {
-    navigate('/u/profiles');
+    navigate(PATH_USER_PROFILES);
   }
 
-  const updateProfile = useUpdateProfile({ onSuccess: () => navigate('/u/profiles') });
+  const updateProfile = useUpdateProfile({ onSuccess: () => navigate(PATH_USER_PROFILES) });
 
   const handleErrors = useProfileErrorHandler();
 
@@ -103,7 +104,7 @@ const EditProfile = ({ contained = false }: EditProfileProps) => {
           <div className={profileStyles.profileInfo}>{t(profileDetails?.default ? 'profile.delete_main' : 'profile.delete_description')}</div>
           {!profileDetails?.default && (
             <Button
-              onClick={() => navigate(createURL(location.pathname, { action: 'delete-profile' }, location.search))}
+              onClick={() => navigate(createURLFromLocation(location, { action: 'delete-profile' }))}
               label={t('profile.delete')}
               variant="contained"
               color="delete"

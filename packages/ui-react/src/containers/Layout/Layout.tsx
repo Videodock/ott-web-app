@@ -10,11 +10,13 @@ import { useUIStore } from '@jwp/ott-common/src/stores/UIStore';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 import { useProfileStore } from '@jwp/ott-common/src/stores/ProfileStore';
 import ProfileController from '@jwp/ott-common/src/stores/ProfileController';
-import { modalURL } from '@jwp/ott-ui-react/src/utils/location';
+import { modalURLFromLocation } from '@jwp/ott-ui-react/src/utils/location';
 import { IS_DEVELOPMENT_BUILD } from '@jwp/ott-common/src/utils/common';
 import { ACCESS_MODEL } from '@jwp/ott-common/src/constants';
 import useSearchQueryUpdater from '@jwp/ott-ui-react/src/hooks/useSearchQueryUpdater';
 import { useProfiles, useSelectProfile } from '@jwp/ott-hooks-react/src/useProfiles';
+import { PATH_HOME, PATH_USER_PROFILES } from '@jwp/ott-common/src/paths';
+import { playlistURL } from '@jwp/ott-common/src/utils/urlFormatting';
 
 import Button from '../../components/Button/Button';
 import MarkdownComponent from '../../components/MarkdownComponent/MarkdownComponent';
@@ -51,8 +53,8 @@ const Layout = () => {
   } = useProfiles();
 
   const selectProfile = useSelectProfile({
-    onSuccess: () => navigate('/'),
-    onError: () => navigate('/u/profiles'),
+    onSuccess: () => navigate(PATH_HOME),
+    onError: () => navigate(PATH_USER_PROFILES),
   });
 
   const { searchQuery, searchActive, userMenuOpen, languageMenuOpen } = useUIStore(
@@ -103,11 +105,11 @@ const Layout = () => {
   };
 
   const loginButtonClickHandler = () => {
-    navigate(modalURL(location, 'login'));
+    navigate(modalURLFromLocation(location, 'login'));
   };
 
   const signUpButtonClickHandler = () => {
-    navigate(modalURL(location, 'create-account'));
+    navigate(modalURLFromLocation(location, 'create-account'));
   };
 
   const languageClickHandler = async (code: string) => {
@@ -182,13 +184,13 @@ const Layout = () => {
         >
           <Button label={t('home')} to="/" variant="text" />
           {menu.map((item) => (
-            <Button key={item.contentId} label={item.label} to={`/p/${item.contentId}`} variant="text" />
+            <Button key={item.contentId} label={item.label} to={playlistURL(item.contentId)} variant="text" />
           ))}
         </Header>
         <Sidebar isOpen={sideBarOpen} onClose={() => setSideBarOpen(false)}>
           <MenuButton label={t('home')} to="/" tabIndex={sideBarOpen ? 0 : -1} />
           {menu.map((item) => (
-            <MenuButton key={item.contentId} label={item.label} to={`/p/${item.contentId}`} tabIndex={sideBarOpen ? 0 : -1} />
+            <MenuButton key={item.contentId} label={item.label} to={playlistURL(item.contentId)} tabIndex={sideBarOpen ? 0 : -1} />
           ))}
           <hr className={styles.divider} />
           {renderUserActions()}

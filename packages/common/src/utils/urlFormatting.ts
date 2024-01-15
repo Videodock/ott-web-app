@@ -1,15 +1,15 @@
 import type { PlaylistItem } from '../../types/playlist';
+import { NESTED_PATH_USER_MY_PROFILE, PATH_MEDIA, PATH_PLAYLIST, PATH_USER_MY_PROFILE } from '../paths';
 
 import { getLegacySeriesPlaylistIdFromEpisodeTags, getSeriesPlaylistIdFromCustomParams } from './media';
 
-// Creates a new URL from a url string, search string and an object to add and remove query params
-// For example:
-// createURL(window.location.pathname, { foo: 'bar' }, window.location.search);
-export const createURL = (url: string, queryParams: { [key: string]: string | number | string[] | undefined | null }, search: string | null = '') => {
-  const [baseUrl, urlQueryString = ''] = url.split('?');
-  const searchStringCombined = `${urlQueryString}${urlQueryString && search ? `&` : ''}${search}`;
+export type QueryParamsArg = { [key: string]: string | number | string[] | undefined | null };
 
-  const urlSearchParams = new URLSearchParams(searchStringCombined);
+// Creates a new URL from a url string (could include search params) and an object to add and remove query params
+// For example: createURL(window.location.pathname, { foo: 'bar' });
+export const createURL = (url: string, queryParams: QueryParamsArg) => {
+  const [baseUrl, urlQueryString = ''] = url.split('?');
+  const urlSearchParams = new URLSearchParams(urlQueryString);
 
   Object.entries(queryParams).forEach(([key, value]) => {
     if (value === null || value === undefined) {
@@ -24,6 +24,48 @@ export const createURL = (url: string, queryParams: { [key: string]: string | nu
   const queryString = urlSearchParams.toString();
 
   return `${baseUrl}${queryString ? `?${queryString}` : ''}`;
+};
+
+type ExtractRouteParams<T extends string> = T extends `${infer _Start}:${infer Param}/${infer Rest}`
+  ? { [K in Param | keyof ExtractRouteParams<Rest>]: string }
+  : T extends `${infer _Start}:${infer Param}`
+  ? { [K in Param]: string }
+  : object;
+
+type PathParams<T extends string> = T extends `${infer _Start}*` ? ExtractRouteParams<T> & Record<string, string | undefined> : ExtractRouteParams<T>;
+
+// Creates a route path from a path string and params object
+export const createPath = <Path extends string>(originalPath: Path, pathParams?: PathParams<Path>, queryParams?: QueryParamsArg): string => {
+  const path = originalPath
+    .split('/')
+    .map((segment) => {
+      if (segment === '*') {
+        // Wild card for optional segments
+        if (!pathParams) return segment;
+
+        return Object.entries(pathParams)
+          .filter(([key]) => !originalPath.includes(key))
+          .map(([_, value]) => value)
+          .join('/');
+      }
+      if (!segment.startsWith(':') || !pathParams) return segment;
+
+      const isOptional = segment.endsWith('?');
+      const paramName = segment.replace(':', '').replace('?', '');
+      const paramValue = pathParams[paramName as keyof typeof pathParams];
+
+      if (!paramValue) {
+        if (!isOptional) console.warn('Missing param in path creation.', { path: originalPath, paramName });
+
+        return '';
+      }
+
+      return paramValue;
+    })
+    .join('/');
+
+  // Optionally add the query params
+  return queryParams ? createURL(path, queryParams) : path;
 };
 
 export const slugify = (text: string, whitespaceChar: string = '-') =>
@@ -48,16 +90,31 @@ export const mediaURL = ({
   play?: boolean;
   episodeId?: string;
 }) => {
-  return createURL(`/m/${media.mediaid}/${slugify(media.title)}`, { r: playlistId, play: play ? '1' : null, e: episodeId });
+  return createPath(PATH_MEDIA, { id: media.mediaid, title: slugify(media.title) }, { r: playlistId, play: play ? '1' : null, e: episodeId });
+};
+
+export const playlistURL = (id: string, title?: string) => {
+  return createPath(PATH_PLAYLIST, { id, title: title ? slugify(title) : undefined });
 };
 
 export const liveChannelsURL = (playlistId: string, channelId?: string, play = false) => {
-  return createURL(`/p/${playlistId}`, {
-    channel: channelId,
-    play: play ? '1' : null,
-  });
+  return createPath(
+    PATH_PLAYLIST,
+    { id: playlistId },
+    {
+      channel: channelId,
+      play: play ? '1' : null,
+    },
+  );
 };
 
+export const userProfileURL = (profileId: string, nested = false) => {
+  const path = nested ? NESTED_PATH_USER_MY_PROFILE : PATH_USER_MY_PROFILE;
+
+  return createPath(path, { id: profileId });
+};
+
+// Legacy URLs
 export const legacySeriesURL = ({
   seriesId,
   episodeId,
