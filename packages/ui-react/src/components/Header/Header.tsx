@@ -8,16 +8,16 @@ import type { LanguageDefinition } from '@jwp/ott-common/types/i18n';
 import Menu from '../../icons/Menu';
 import SearchIcon from '../../icons/Search';
 import CloseIcon from '../../icons/Close';
-import ProfileCircle from '../../icons/ProfileCircle';
-import AccountCircle from '../../icons/AccountCircle';
 import SearchBar, { Props as SearchBarProps } from '../SearchBar/SearchBar';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
-import Popover from '../Popover/Popover';
 import UserMenu from '../UserMenu/UserMenu';
 import IconButton from '../IconButton/IconButton';
 import LanguageMenu from '../LanguageMenu/LanguageMenu';
+import AccountCircle from '../../icons/AccountCircle';
+import ProfileCircle from '../../icons/ProfileCircle';
 import Panel from '../Panel/Panel';
+import Popover from '../Popover/Popover';
 
 import styles from './Header.module.scss';
 
@@ -134,7 +134,14 @@ const Header: React.FC<Props> = ({
 
     return isLoggedIn ? (
       <React.Fragment>
-        <IconButton className={classNames(styles.iconButton, styles.actionButton)} aria-label={t('open_user_menu')} onClick={openUserMenu}>
+        <IconButton
+          className={classNames(styles.iconButton, styles.actionButton)}
+          aria-label={t('open_user_menu')}
+          aria-controls="user_menu_panel"
+          aria-expanded={userMenuOpen}
+          onClick={openUserMenu}
+          onBlur={closeUserMenu}
+        >
           {profilesEnabled && currentProfile ? (
             <ProfileCircle src={currentProfile.avatar_url} alt={currentProfile.name || t('profile_icon')} />
           ) : (
@@ -142,17 +149,20 @@ const Header: React.FC<Props> = ({
           )}
         </IconButton>
         <Popover isOpen={userMenuOpen} onClose={closeUserMenu}>
-          <Panel>
+          <Panel id="user_menu_panel">
             <UserMenu
+              focusable={userMenuOpen}
               onClick={closeUserMenu}
+              onFocus={openUserMenu}
+              onBlur={closeUserMenu}
               showPaymentsItem={showPaymentsMenuItem}
-              small
               currentProfile={currentProfile}
               profilesEnabled={profilesEnabled}
               profiles={profiles}
               selectProfile={selectProfile}
               isSelectingProfile={!!isSelectingProfile}
               favoritesEnabled={favoritesEnabled}
+              small
             />
           </Panel>
         </Popover>
