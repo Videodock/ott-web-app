@@ -10,10 +10,14 @@ import { slugify } from '@jwp/ott-common/src/utils/urlFormatting';
 import { parseAspectRatio, parseTilesDelta } from '@jwp/ott-common/src/utils/collection';
 import { testId } from '@jwp/ott-common/src/utils/common';
 import { PersonalShelf } from '@jwp/ott-common/src/constants';
+import { useQueryClient } from 'react-query';
+import type { Playlist } from '@jwp/ott-common/types/playlist';
+import type { ApiError } from '@jwp/ott-common/src/utils/api';
 
 import ShelfComponent from '../../components/Shelf/Shelf';
 import InfiniteScrollLoader from '../../components/InfiniteScrollLoader/InfiniteScrollLoader';
 import PlaylistContainer from '../PlaylistContainer/PlaylistContainer';
+import ErrorPage from '../../components/ErrorPage/ErrorPage';
 
 import styles from './ShelfList.module.scss';
 
@@ -22,6 +26,27 @@ const LOAD_ROWS_COUNT = 4;
 
 type Props = {
   rows: Content[];
+};
+
+const useEmptyPlaylistsReporter = (rows: Content[]) => {
+  const queryClient = useQueryClient();
+  const [isEmpty, setEmpty] = useState(false);
+
+  queryClient.getQueryCache().subscribe(() => {
+    // TODO: filter events on relevant updates, for example, `event.query.queryKey[0] === 'playlist'`
+    const playlistQueries = rows
+      .map((row) => queryClient.getQueryState<Playlist | undefined, ApiError>(['playlist', row.contentId], { exact: false }))
+      .filter(Boolean);
+
+    const playlistsLoading = playlistQueries.some((query) => query?.status === 'loading');
+    const playlistsTotals = playlistQueries.reduce((previousValue, currentValue) => {
+      return previousValue + (currentValue?.data?.playlist.length ?? 0);
+    }, 0);
+
+    setEmpty(!playlistsLoading && playlistsTotals === 0);
+  });
+
+  return isEmpty;
 };
 
 const ShelfList = ({ rows }: Props) => {
@@ -37,6 +62,16 @@ const ShelfList = ({ rows }: Props) => {
     // reset row count when the page changes
     return () => setRowCount(INITIAL_ROW_COUNT);
   }, [rows]);
+
+  // Empty shelves
+  const emptyShelves = useEmptyPlaylistsReporter(rows);
+
+  if (emptyShelves) {
+    return (
+      // TODO: translate
+      <ErrorPage title="No content found" message="No videos are found. This could be a misconfiguration or the content is not available for your country." />
+    );
+  }
 
   return (
     <div className={styles.home}>
@@ -87,5 +122,4 @@ const ShelfList = ({ rows }: Props) => {
     </div>
   );
 };
-
 export default ShelfList;
