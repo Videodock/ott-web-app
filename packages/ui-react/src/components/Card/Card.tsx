@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -28,6 +28,8 @@ type CardProps = {
   currentLabel?: string;
   url: string;
   headingLevel?: number;
+  tabIndex?: number;
+  focused?: boolean;
 };
 
 function Card({
@@ -43,6 +45,8 @@ function Card({
   currentLabel,
   headingLevel = 3,
   url,
+  tabIndex = 0,
+  focused,
 }: CardProps): JSX.Element {
   const { title, duration, episodeNumber, seasonNumber, cardImage: image, mediaStatus, scheduledStart } = item;
   const {
@@ -88,14 +92,23 @@ function Card({
     }
   };
 
+  const ref = useRef<HTMLAnchorElement>();
+
+  useEffect(() => {
+    if (focused) {
+      ref.current?.focus();
+    }
+  }, [focused]);
+
   return (
     <Link
+      ref={ref}
       role="button"
       to={url}
       className={cardClassName}
       onClick={disabled ? (e) => e.preventDefault() : undefined}
       onMouseEnter={onHover}
-      tabIndex={disabled ? -1 : 0}
+      tabIndex={disabled ? -1 : tabIndex}
       data-testid={testId(title)}
     >
       {!featured && !disabled && (

@@ -9,6 +9,7 @@ import useBreakpoint, { Breakpoint, type Breakpoints } from '@jwp/ott-ui-react/s
 
 import Card from '../Card/Card';
 import InfiniteScrollLoader from '../InfiniteScrollLoader/InfiniteScrollLoader';
+import LayoutGrid from '../LayoutGrid/LayoutGrid';
 
 import styles from './CardGrid.module.scss';
 
@@ -69,36 +70,35 @@ function CardGrid({
     setRowCount(INITIAL_ROW_COUNT);
   }, [playlist.feedid]);
 
-  const renderTile = (playlistItem: PlaylistItem) => {
+  const renderTile = (playlistItem: PlaylistItem, tabIndex: number, focused: boolean) => {
     const { mediaid } = playlistItem;
 
     return (
-      <div className={styles.cell} key={mediaid} role="row">
-        <div role="cell">
-          <Card
-            progress={watchHistory ? watchHistory[mediaid] : undefined}
-            url={getUrl(playlistItem)}
-            onHover={typeof onCardHover === 'function' ? () => onCardHover(playlistItem) : undefined}
-            loading={isLoading}
-            isCurrent={currentCardItem && currentCardItem.mediaid === mediaid}
-            currentLabel={currentCardLabel}
-            isLocked={isLocked(accessModel, isLoggedIn, hasSubscription, playlistItem)}
-            posterAspect={posterAspect}
-            item={playlistItem}
-            headingLevel={headingLevel}
-          />
-        </div>
-      </div>
+      <Card
+        focused={focused}
+        tabIndex={tabIndex}
+        progress={watchHistory ? watchHistory[mediaid] : undefined}
+        url={getUrl(playlistItem)}
+        onHover={typeof onCardHover === 'function' ? () => onCardHover(playlistItem) : undefined}
+        loading={isLoading}
+        isCurrent={currentCardItem && currentCardItem.mediaid === mediaid}
+        currentLabel={currentCardLabel}
+        isLocked={isLocked(accessModel, isLoggedIn, hasSubscription, playlistItem)}
+        posterAspect={posterAspect}
+        item={playlistItem}
+        headingLevel={headingLevel}
+      />
     );
   };
 
   return (
     <InfiniteScroll pageStart={0} loadMore={loadMore ?? defaultLoadMore} hasMore={hasMore ?? defaultHasMore} loader={<InfiniteScrollLoader key="loader" />}>
-      <div className={classNames(styles.container, styles[`cols-${visibleTiles}`])} role="grid">
-        {/* When loadMore is present -> we get accumulated data (playlist.playlist) from the outside (we do it for series)
-            When not -> we hide some cards visually to save some computing resources spent on rendering */}
-        {(loadMore ? playlist.playlist : playlist.playlist.slice(0, rowCount * visibleTiles)).map(renderTile)}
-      </div>
+      <LayoutGrid
+        className={classNames(styles.container, styles[`cols-${visibleTiles}`])}
+        data={loadMore ? playlist.playlist : playlist.playlist.slice(0, rowCount * visibleTiles)}
+        columnCount={visibleTiles}
+        renderCell={renderTile}
+      />
     </InfiniteScroll>
   );
 }
