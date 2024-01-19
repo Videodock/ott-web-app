@@ -43,8 +43,9 @@ const PlayerContainer: React.FC<Props> = ({
   autostart,
 }: Props) => {
   // data
-  const { data: adsData, isLoading: isAdsLoading } = useAds({ mediaId: item?.mediaid });
+  const { data: adsData, isLoading: isAdsLoading } = useAds({ item });
   const { data: playableItem, isLoading, isGeoBlocked } = useProtectedMedia(item);
+
   // state
   const [playerInstance, setPlayerInstance] = useState<JWPlayer>();
 

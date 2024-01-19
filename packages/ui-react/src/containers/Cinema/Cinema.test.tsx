@@ -6,6 +6,7 @@ import ApiService from '@jwp/ott-common/src/services/ApiService';
 import GenericEntitlementService from '@jwp/ott-common/src/services/GenericEntitlementService';
 import JWPEntitlementService from '@jwp/ott-common/src/services/JWPEntitlementService';
 import WatchHistoryController from '@jwp/ott-common/src/stores/WatchHistoryController';
+import CheckoutController from '@jwp/ott-common/src/stores/CheckoutController';
 
 import { renderWithRouter } from '../../../test/utils';
 
@@ -14,6 +15,7 @@ import Cinema from './Cinema';
 describe('<Cinema>', () => {
   beforeEach(() => {
     mockService(ApiService, {});
+    mockService(CheckoutController, {});
     mockService(GenericEntitlementService, {});
     mockService(JWPEntitlementService, {});
     mockService(WatchHistoryController, {});
