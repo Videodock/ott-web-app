@@ -32,19 +32,30 @@ const useEmptyPlaylistsReporter = (rows: Content[]) => {
   const queryClient = useQueryClient();
   const [isEmpty, setEmpty] = useState(false);
 
-  queryClient.getQueryCache().subscribe(() => {
-    // TODO: filter events on relevant updates, for example, `event.query.queryKey[0] === 'playlist'`
-    const playlistQueries = rows
-      .map((row) => queryClient.getQueryState<Playlist | undefined, ApiError>(['playlist', row.contentId], { exact: false }))
-      .filter(Boolean);
+  useEffect(() => {
+    const playlistIds = rows.map((row) => row.contentId);
 
-    const playlistsLoading = playlistQueries.some((query) => query?.status === 'loading');
-    const playlistsTotals = playlistQueries.reduce((previousValue, currentValue) => {
-      return previousValue + (currentValue?.data?.playlist.length ?? 0);
-    }, 0);
+    return queryClient.getQueryCache().subscribe((event) => {
+      const isUpdateEvent = event?.type === 'queryUpdated';
+      const isRelatedQuery = event?.query.queryKey[0] === 'playlist' && playlistIds.includes(event?.query.queryKey[1]);
 
-    setEmpty(!playlistsLoading && playlistsTotals === 0);
-  });
+      // only continue when it's an update event for playlists
+      if (!isUpdateEvent || !isRelatedQuery) {
+        return;
+      }
+
+      const playlistQueries = rows
+        .map((row) => queryClient.getQueryState<Playlist | undefined, ApiError>(['playlist', row.contentId], { exact: false }))
+        .filter(Boolean);
+
+      const playlistsLoading = playlistQueries.some((query) => query?.status === 'loading');
+      const playlistsTotals = playlistQueries.reduce((previousValue, currentValue) => {
+        return previousValue + (currentValue?.data?.playlist.length ?? 0);
+      }, 0);
+
+      setEmpty(!playlistsLoading && playlistsTotals === 0);
+    });
+  }, [queryClient, rows]);
 
   return isEmpty;
 };
