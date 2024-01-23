@@ -1,16 +1,13 @@
-import React, { type ReactNode } from 'react';
+import React from 'react';
 import classNames from 'classnames';
+
+import type { TagProps } from '../../../types/components';
+import { TAG_COMPONENT } from '../../modules/types';
+import InjectableComponent from '../../modules/InjectableComponent';
 
 import styles from './Tag.module.scss';
 
-type Props = {
-  className?: string;
-  isLive?: boolean;
-  children?: ReactNode;
-  size?: 'normal' | 'large';
-};
-
-const Tag: React.FC<Props> = ({ children, className, isLive = false, size = 'normal' }) => {
+const DefaultTag: React.FC<TagProps> = ({ children, className, isLive = false, size = 'normal' }: TagProps) => {
   return (
     <div
       className={classNames(className, styles.tag, styles[size], {
@@ -21,5 +18,7 @@ const Tag: React.FC<Props> = ({ children, className, isLive = false, size = 'nor
     </div>
   );
 };
+
+const Tag = (props: TagProps) => InjectableComponent(TAG_COMPONENT, props, DefaultTag);
 
 export default Tag;

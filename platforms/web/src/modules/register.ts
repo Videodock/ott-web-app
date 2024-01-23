@@ -1,8 +1,12 @@
 import '@jwp/ott-common/src/modules/register';
+import { container as uiComponentContainer } from '@jwp/ott-ui-react/src/modules/container';
 import { container } from '@jwp/ott-common/src/modules/container';
 import StorageService from '@jwp/ott-common/src/services/StorageService';
 import { GET_CUSTOMER_IP } from '@jwp/ott-common/src/modules/types';
 import type { GetCustomerIP } from '@jwp/ott-common/types/get-customer-ip';
+import { TAG_COMPONENT } from '@jwp/ott-ui-react/src/modules/types';
+
+import Tag from '../components/Tag/Tag';
 
 import { LocalStorageService } from '#src/services/LocalStorageService';
 import { getOverrideIP } from '#src/utils/ip';
@@ -48,4 +52,5 @@ container.bind<GetCustomerIP>(GET_CUSTOMER_IP).toConstantValue(async () => getOv
  * ```
  */
 
-// uiComponentContainer.bind(TAG_COMPONENT).toConstantValue(Tag);
+// Override ui-react component
+uiComponentContainer.bind(TAG_COMPONENT).toConstantValue(Tag);
