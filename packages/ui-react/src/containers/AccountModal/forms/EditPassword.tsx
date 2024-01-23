@@ -71,7 +71,7 @@ const ResetPassword = ({ type }: { type?: 'add' }) => {
       oldPassword: string(),
       password: string()
         .matches(/^(?=.*[a-z])(?=.*[0-9]).{8,}$/, t('registration.invalid_password'))
-        .required(t('login.field_required')),
+        .required(t('login.field_required', { field: t('login.password') })),
       passwordConfirmation: string(),
     }),
     true,

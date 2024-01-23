@@ -29,13 +29,21 @@ const Login: React.FC<Props> = ({ messageKey }: Props) => {
 
   const queryClient = useQueryClient();
 
+  // temporary state to show success message
+  const [successState, setSuccessState] = React.useState(false);
+
   const loginSubmitHandler: UseFormOnSubmitHandler<LoginFormData> = async (formData, { setErrors, setSubmitting, setValue }) => {
     try {
+      setSubmitting(true);
       await accountController.login(formData.email, formData.password, window.location.href);
       await queryClient.invalidateQueries(['listProfiles']);
 
-      // close modal
-      navigate(modalURLFromLocation(location, null));
+      // close the modal after successful login
+      setSuccessState(true);
+      setTimeout(() => {
+        navigate(modalURLFromLocation(location, null));
+        setSuccessState(false);
+      }, 1000);
     } catch (error: unknown) {
       if (error instanceof Error) {
         if (error.message.toLowerCase().includes('invalid param email')) {
@@ -45,20 +53,23 @@ const Login: React.FC<Props> = ({ messageKey }: Props) => {
         }
         setValue('password', '');
       }
+    } finally {
+      setSubmitting(false);
     }
-
-    setSubmitting(false);
   };
 
   const validationSchema: SchemaOf<LoginFormData> = object().shape({
-    email: string().email(t('login.field_is_not_valid_email')).required(t('login.field_required')),
-    password: string().required(t('login.field_required')),
+    email: string()
+      .email(t('login.field_is_not_valid_email'))
+      .required(t('login.field_required', { field: t('login.email') })),
+    password: string().required(t('login.field_required', { field: t('login.password') })),
   });
   const initialValues: LoginFormData = { email: '', password: '' };
   const { handleSubmit, handleChange, values, errors, submitting } = useForm(initialValues, loginSubmitHandler, validationSchema);
 
   return (
     <LoginForm
+      success={successState}
       messageKey={messageKey}
       onSubmit={handleSubmit}
       onChange={handleChange}

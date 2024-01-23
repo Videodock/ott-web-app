@@ -70,7 +70,7 @@
     "title": "Favorites"
   },
   "login": {
-    "field_required": "This field is required"
+    "field_required": "This field is required, please fill in a valid {{field}}."
   },
   "name": "Name",
   "nav": {

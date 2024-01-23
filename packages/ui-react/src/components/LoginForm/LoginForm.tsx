@@ -23,6 +23,7 @@ import { modalURLFromLocation } from '../../utils/location';
 import styles from './LoginForm.module.scss';
 
 type Props = {
+  success?: boolean;
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   error?: string;
@@ -34,7 +35,7 @@ type Props = {
   messageKey: string | null;
 };
 
-const LoginForm: React.FC<Props> = ({ onSubmit, onChange, socialLoginURLs, values, errors, submitting, siteName, messageKey }: Props) => {
+const LoginForm: React.FC<Props> = ({ onSubmit, onChange, socialLoginURLs, values, errors, submitting, siteName, messageKey, success }: Props) => {
   const [viewPassword, toggleViewPassword] = useToggle();
   const { t } = useTranslation('account');
   const location = useLocation();
@@ -58,6 +59,11 @@ const LoginForm: React.FC<Props> = ({ onSubmit, onChange, socialLoginURLs, value
       <SocialButtonsList socialLoginURLs={socialLoginURLs} />
       <h2 className={styles.title}>{t('login.sign_in')}</h2>
       {errors.form ? <FormFeedback variant="error">{errors.form}</FormFeedback> : null}
+      {success ? (
+        <FormFeedback visible={false} variant="success">
+          {t('login.sign_in_success')}
+        </FormFeedback>
+      ) : null}
       <TextField
         value={values.email}
         onChange={onChange}

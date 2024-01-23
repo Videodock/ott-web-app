@@ -83,10 +83,12 @@ const Registration = () => {
   };
 
   const validationSchema: SchemaOf<RegistrationFormData> = object().shape({
-    email: string().email(t('registration.field_is_not_valid_email')).required(t('registration.field_required')),
+    email: string()
+      .email(t('registration.field_is_not_valid_email'))
+      .required(t('registration.field_required', { field: t('registration.email') })),
     password: string()
       .matches(/^(?=.*[a-z])(?=.*[0-9]).{8,}$/, t('registration.invalid_password'))
-      .required(t('registration.field_required')),
+      .required(t('registration.field_required', { field: t('registration.password') })),
   });
 
   const initialRegistrationValues: RegistrationFormData = { email: '', password: '' };
