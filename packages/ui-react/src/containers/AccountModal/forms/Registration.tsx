@@ -50,8 +50,12 @@ const Registration = () => {
     }
   }, [publisherConsents]);
 
+  // temp success state
+  const [success, setSuccess] = useState(false);
+
   const registrationSubmitHandler: UseFormOnSubmitHandler<RegistrationFormData> = async ({ email, password }, { setErrors, setSubmitting, setValue }) => {
     try {
+      setSubmitting(true);
       const { consentsErrors, customerConsents } = checkConsentsFromValues(publisherConsents, consentValues);
 
       if (consentsErrors.length) {
@@ -63,7 +67,11 @@ const Registration = () => {
       await accountController.register(email, password, window.location.href, customerConsents);
       await queryClient.invalidateQueries(['listProfiles']);
 
-      navigate(modalURLFromLocation(location, 'personal-details'));
+      // temp success state
+      setSuccess(true);
+      setTimeout(() => {
+        navigate(modalURLFromLocation(location, 'personal-details'));
+      }, 1000);
     } catch (error: unknown) {
       if (error instanceof Error) {
         const errorMessage = error.message.toLowerCase();
@@ -77,9 +85,9 @@ const Registration = () => {
         }
         setValue('password', '');
       }
+    } finally {
+      setSubmitting(false);
     }
-
-    setSubmitting(false);
   };
 
   const validationSchema: SchemaOf<RegistrationFormData> = object().shape({
@@ -101,6 +109,7 @@ const Registration = () => {
 
   return (
     <RegistrationForm
+      success={success}
       onSubmit={handleSubmit}
       onChange={handleChange}
       onBlur={handleBlur}

@@ -9,6 +9,7 @@ import styles from './Form.module.scss';
 import { FormContext } from './Form';
 
 export interface FormSectionContentArgs<T extends GenericFormValues, TErrors> {
+  success: boolean;
   values: T;
   isEditing: boolean;
   isBusy: boolean;
@@ -49,6 +50,9 @@ export function FormSection<TData extends GenericFormValues>({
     isLoading,
     onCancel,
   } = useContext(FormContext) as FormContext<TData>;
+
+  // temp success state
+  const [successState, setSuccessState] = React.useState(false);
 
   const isEditing = sectionId === activeSectionId;
 
@@ -106,6 +110,7 @@ export function FormSection<TData extends GenericFormValues>({
 
         // Don't leave edit mode if there are errors
         if (response?.errors?.length) {
+          setSuccessState(false);
           setFormState((s) => {
             return {
               ...s,
@@ -118,6 +123,7 @@ export function FormSection<TData extends GenericFormValues>({
         }
       }
 
+      setSuccessState(true);
       setFormState((s) => {
         return {
           ...s,
@@ -134,7 +140,7 @@ export function FormSection<TData extends GenericFormValues>({
     function onEdit() {
       if (!isEditing) {
         onCancel();
-
+        setSuccessState(false);
         setFormState((s) => {
           return {
             ...s,
@@ -155,6 +161,7 @@ export function FormSection<TData extends GenericFormValues>({
       {content && (
         <form className={styles.flexBox} noValidate onSubmit={(event) => event.preventDefault()}>
           {content({
+            success: successState,
             values,
             isEditing,
             isBusy,

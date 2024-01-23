@@ -25,6 +25,7 @@ import HelperText from '../HelperText/HelperText';
 import CustomRegisterField from '../CustomRegisterField/CustomRegisterField';
 import Icon from '../Icon/Icon';
 import { modalURLFromLocation } from '../../utils/location';
+import FormFeedback from '../FormFeedback/FormFeedback';
 
 import styles from './Account.module.scss';
 
@@ -172,6 +173,13 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
         // Render the section content, but also add a warning text if there's a form level error
         return (
           <>
+            {formErrors?.form && <FormFeedback variant="error">{formErrors.form}</FormFeedback>}
+            {args.success && (
+              <FormFeedback visible={false} variant="success">
+                {t('account.update_success', { section: props.label.toLowerCase() })}
+              </FormFeedback>
+            )}
+
             {props.content?.({ ...args, errors: formErrors })}
             <HelperText error={!!formErrors?.form}>{formErrors?.form}</HelperText>
           </>

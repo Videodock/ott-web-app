@@ -31,6 +31,7 @@
     "edit_information": "Editar información",
     "edit_password": "Editar contraseña",
     "email": "Correo electrónico",
+    "update_success": "Tu {{section}} ha sido actualizado con éxito.",
     "errors": {
       "email_exists": "¡El correo electrónico ya existe!",
       "email_update_not_supported": "No se admite la actualización del correo electrónico",
