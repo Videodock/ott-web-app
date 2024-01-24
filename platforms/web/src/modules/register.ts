@@ -1,12 +1,8 @@
 import '@jwp/ott-common/src/modules/register';
-import { container as uiComponentContainer } from '@jwp/ott-ui-react/src/modules/container';
 import { container } from '@jwp/ott-common/src/modules/container';
 import StorageService from '@jwp/ott-common/src/services/StorageService';
 import { GET_CUSTOMER_IP } from '@jwp/ott-common/src/modules/types';
 import type { GetCustomerIP } from '@jwp/ott-common/types/get-customer-ip';
-import { TAG_COMPONENT } from '@jwp/ott-ui-react/src/modules/types';
-
-import Tag from '../components/Tag/Tag';
 
 import { LocalStorageService } from '#src/services/LocalStorageService';
 import { getOverrideIP } from '#src/utils/ip';
@@ -41,16 +37,16 @@ container.bind<GetCustomerIP>(GET_CUSTOMER_IP).toConstantValue(async () => getOv
  * @example
  * ```ts
  * // Define in types.ts (from `ui-react` for example)
- * const TAG_COMPONENT = 'TAG_COMPONENT';
+ * const TAG_IDENTIFIER = 'TAG_IDENTIFIER';
  *
  * // Bind custom component
- * container.bind(TAG_COMPONENT).toConstantValue(CustomTag);
+ * container.bind(TAG_IDENTIFIER).toConstantValue(CustomTag);
  *
  * // Then wrap the component in a HOC, from the component file itself
- * const Tag = (props: TagProps) => InjectableComponent(TAG_COMPONENT, props, DefaultTag);
+ * export default createInjectableComponent(TAG_IDENTIFIER, DefaultTag);
  *
  * ```
  */
 
 // Override ui-react component
-uiComponentContainer.bind(TAG_COMPONENT).toConstantValue(Tag);
+// uiComponentContainer.bind<React.FC<TagProps>>(TAG_IDENTIFIER).toConstantValue(Tag);

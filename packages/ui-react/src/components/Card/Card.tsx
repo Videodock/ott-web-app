@@ -12,7 +12,6 @@ import { testId } from '@jwp/ott-common/src/utils/common';
 
 import Image from '../Image/Image';
 import Icon from '../Icon/Icon';
-import Tag from '../Tag/Tag';
 
 import styles from './Card.module.scss';
 
@@ -44,8 +43,6 @@ function Card({
   url,
 }: CardProps): JSX.Element {
   const { title, duration, episodeNumber, seasonNumber, cardImage: image, mediaStatus, scheduledStart } = item;
-  // const Tag = container.get<React.FC<TagProps>>(TAG_COMPONENT);
-
   const {
     t,
     i18n: { language },
@@ -118,7 +115,7 @@ function Card({
                   <Icon icon={Lock} />
                 </div>
               )}
-              <Tag>{'TEST'}</Tag>
+              {renderTag()}
             </div>
           </div>
         )}
