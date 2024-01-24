@@ -24,12 +24,12 @@ type Props = {
 };
 
 const PlaylistContainer = ({ playlistId, type, onPlaylistUpdate, style, children, showEmpty = false }: Props): JSX.Element | null => {
-  const isAlternativeShelf = PersonalShelves.some((shelfType) => shelfType === type);
+  const isPersonalShelf = PersonalShelves.some((shelfType) => shelfType === type);
   const {
     isLoading,
     error,
     data: fetchedPlaylist = { title: '', playlist: [] },
-  } = usePlaylist(playlistId, { page_limit: PLAYLIST_LIMIT.toString() }, !isAlternativeShelf, true);
+  } = usePlaylist(playlistId, { page_limit: PLAYLIST_LIMIT.toString() }, !isPersonalShelf, true);
 
   let playlist = fetchedPlaylist;
 
