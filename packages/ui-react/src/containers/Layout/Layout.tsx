@@ -11,12 +11,13 @@ import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 import { useProfileStore } from '@jwp/ott-common/src/stores/ProfileStore';
 import ProfileController from '@jwp/ott-common/src/stores/ProfileController';
 import { modalURLFromLocation } from '@jwp/ott-ui-react/src/utils/location';
-import { IS_DEVELOPMENT_BUILD } from '@jwp/ott-common/src/utils/common';
+import { IS_DEVELOPMENT_BUILD, unicodeToChar } from '@jwp/ott-common/src/utils/common';
 import { ACCESS_MODEL } from '@jwp/ott-common/src/constants';
 import useSearchQueryUpdater from '@jwp/ott-ui-react/src/hooks/useSearchQueryUpdater';
 import { useProfiles, useSelectProfile } from '@jwp/ott-hooks-react/src/useProfiles';
 import { PATH_HOME, PATH_USER_PROFILES } from '@jwp/ott-common/src/paths';
 import { playlistURL } from '@jwp/ott-common/src/utils/urlFormatting';
+import env from '@jwp/ott-common/src/env';
 
 import MarkdownComponent from '../../components/MarkdownComponent/MarkdownComponent';
 import Header from '../../components/Header/Header';
@@ -38,13 +39,13 @@ const Layout = () => {
   );
   const isLoggedIn = !!useAccountStore(({ user }) => user);
   const favoritesEnabled = !!config.features?.favoritesList;
-  const { menu, assets, siteName, description, styling, features } = config;
+  const { menu, assets, siteName, description, features } = config;
   const metaDescription = description || t('default_description');
 
   const profileController = getModule(ProfileController, false);
 
   const { searchPlaylist } = features || {};
-  const { footerText } = styling || {};
+  const footerText = useMemo(() => unicodeToChar(env.APP_FOOTER_TEXT), []);
   const currentLanguage = useMemo(() => supportedLanguages.find(({ code }) => code === i18n.language), [i18n.language, supportedLanguages]);
 
   const {
