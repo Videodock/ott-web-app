@@ -48,7 +48,7 @@ const ShelfList = ({ rows }: Props) => {
   const allPlaylistsEmpty = playlists.every(({ data, isSuccess }) => isSuccess && !data?.playlist?.length);
 
   if (allPlaylistsEmpty) {
-    return <ErrorPage title={t('geo_blocked_heading')} message={t('geo_blocked_description')} />;
+    return <ErrorPage title={t('empty_shelves_heading')} message={t('empty_shelves_description')} />;
   }
 
   return (

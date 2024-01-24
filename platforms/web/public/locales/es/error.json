@@ -10,6 +10,6 @@
   "playlist_not_found": "Lista de reproducción no encontrada",
   "settings_invalid": "Ajustes inválidos o faltantes",
   "video_not_found": "Video no encontrado",
-  "geo_blocked_heading": "No hay contenido disponible",
-  "geo_blocked_description": "Nos disculpamos, pero no hay contenido disponible en su región."
+  "empty_shelves_heading": "No hay contenido disponible",
+  "empty_shelves_description": "Nos disculpamos, pero no hay contenido disponible en su región."
 }
