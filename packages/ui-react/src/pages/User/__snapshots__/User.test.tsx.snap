@@ -398,11 +398,11 @@ exports[`User Component tests > Favorites Page 1`] = `
                   <div
                     class="_titleContainer_d75732"
                   >
-                    <h3
+                    <h2
                       class="_title_d75732"
                     >
                       Fav 1
-                    </h3>
+                    </h2>
                   </div>
                   <div
                     class="_poster_d75732 _aspect169_d75732"
@@ -441,11 +441,11 @@ exports[`User Component tests > Favorites Page 1`] = `
                   <div
                     class="_titleContainer_d75732"
                   >
-                    <h3
+                    <h2
                       class="_title_d75732"
                     >
                       Big Buck Bunny
-                    </h3>
+                    </h2>
                   </div>
                   <div
                     class="_poster_d75732 _aspect169_d75732"
@@ -484,11 +484,11 @@ exports[`User Component tests > Favorites Page 1`] = `
                   <div
                     class="_titleContainer_d75732"
                   >
-                    <h3
+                    <h2
                       class="_title_d75732"
                     >
                       My last favorite
-                    </h3>
+                    </h2>
                   </div>
                   <div
                     class="_poster_d75732 _aspect169_d75732"

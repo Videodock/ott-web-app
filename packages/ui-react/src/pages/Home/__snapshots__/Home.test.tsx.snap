@@ -49,11 +49,11 @@ exports[`Home Component tests > Home test 1`] = `
                       <div
                         class="_titleContainer_d75732"
                       >
-                        <h3
+                        <h2
                           class="_title_d75732"
                         >
                           My video
-                        </h3>
+                        </h2>
                       </div>
                       <div
                         class="_poster_d75732 _aspect169_d75732"
@@ -88,11 +88,11 @@ exports[`Home Component tests > Home test 1`] = `
                       <div
                         class="_titleContainer_d75732"
                       >
-                        <h3
+                        <h2
                           class="_title_d75732"
                         >
                           Other Vids
-                        </h3>
+                        </h2>
                       </div>
                       <div
                         class="_poster_d75732 _aspect169_d75732"
@@ -156,11 +156,11 @@ exports[`Home Component tests > Home test 1`] = `
                       <div
                         class="_titleContainer_d75732"
                       >
-                        <h3
+                        <h2
                           class="_title_d75732"
                         >
                           My video
-                        </h3>
+                        </h2>
                       </div>
                       <div
                         class="_poster_d75732 _aspect169_d75732"
@@ -195,11 +195,11 @@ exports[`Home Component tests > Home test 1`] = `
                       <div
                         class="_titleContainer_d75732"
                       >
-                        <h3
+                        <h2
                           class="_title_d75732"
                         >
                           Other Vids
-                        </h3>
+                        </h2>
                       </div>
                       <div
                         class="_poster_d75732 _aspect169_d75732"

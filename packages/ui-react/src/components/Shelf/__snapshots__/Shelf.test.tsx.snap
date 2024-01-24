@@ -98,11 +98,11 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
                 <div
                   class="_meta_d75732"
                 >
-                  <h3
+                  <h2
                     class="_title_d75732"
                   >
                     Movie 1
-                  </h3>
+                  </h2>
                   <div
                     class="_tags_d75732"
                   >
@@ -239,11 +239,11 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
               <div
                 class="_titleContainer_d75732"
               >
-                <h3
+                <h2
                   class="_title_d75732"
                 >
                   Movie 1
-                </h3>
+                </h2>
               </div>
               <div
                 class="_poster_d75732 _aspect169_d75732"
@@ -278,11 +278,11 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
               <div
                 class="_titleContainer_d75732"
               >
-                <h3
+                <h2
                   class="_title_d75732"
                 >
                   Movie 2
-                </h3>
+                </h2>
               </div>
               <div
                 class="_poster_d75732 _aspect169_d75732"
@@ -317,11 +317,11 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
               <div
                 class="_titleContainer_d75732"
               >
-                <h3
+                <h2
                   class="_title_d75732"
                 >
                   Third movie
-                </h3>
+                </h2>
               </div>
               <div
                 class="_poster_d75732 _aspect169_d75732"
@@ -356,11 +356,11 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
               <div
                 class="_titleContainer_d75732"
               >
-                <h3
+                <h2
                   class="_title_d75732"
                 >
                   Last playlist item
-                </h3>
+                </h2>
               </div>
               <div
                 class="_poster_d75732 _aspect169_d75732"
