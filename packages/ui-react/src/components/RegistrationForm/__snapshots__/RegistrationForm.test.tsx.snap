@@ -25,6 +25,7 @@ exports[`<RegistrationForm> > renders and matches snapshot 1`] = `
         class="_container_e16c1b"
       >
         <input
+          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_email"
           name="email"
@@ -48,6 +49,7 @@ exports[`<RegistrationForm> > renders and matches snapshot 1`] = `
         class="_container_e16c1b"
       >
         <input
+          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_password"
           name="password"
