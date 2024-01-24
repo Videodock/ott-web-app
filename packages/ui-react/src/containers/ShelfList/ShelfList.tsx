@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { shallow } from '@jwp/ott-common/src/utils/compare';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useQueries, useQueryClient } from 'react-query';
@@ -19,6 +20,7 @@ import { isScheduledOrLiveMedia } from '@jwp/ott-common/src/utils/liveEvent';
 
 import ShelfComponent from '../../components/Shelf/Shelf';
 import InfiniteScrollLoader from '../../components/InfiniteScrollLoader/InfiniteScrollLoader';
+import ErrorPage from '../../components/ErrorPage/ErrorPage';
 
 import styles from './ShelfList.module.scss';
 
@@ -34,12 +36,14 @@ const placeholderData = generatePlaylistPlaceholder(30);
 const ShelfList = ({ rows }: Props) => {
   const { accessModel } = useConfigStore(({ accessModel }) => ({ accessModel }), shallow);
   const [rowsLoaded, setRowsLoaded] = useState(INITIAL_ROWS_LOADED);
+  const { t } = useTranslation('error');
 
   const watchHistoryDictionary = useWatchHistoryStore((state) => state.getDictionaryWithSeries());
 
   // User
   const { user, subscription } = useAccountStore(({ user, subscription }) => ({ user, subscription }), shallow);
 
+  // Todo: move to more common package?
   const page_limit = PLAYLIST_LIMIT.toString();
   const queryClient = useQueryClient();
   const apiService = getModule(ApiService);
@@ -77,6 +81,13 @@ const ShelfList = ({ rows }: Props) => {
     return () => setRowsLoaded(INITIAL_ROWS_LOADED);
   }, [rows]);
 
+  // If all playlists are empty, due to geo restrictions, we show a geo block error page
+  const allPlaylistsEmpty = playlists.every(({ data, isSuccess }) => isSuccess && !data?.playlist?.length);
+
+  if (allPlaylistsEmpty) {
+    return <ErrorPage title={t('geo_blocked_heading')} message={t('geo_blocked_description')} />;
+  }
+
   return (
     <div className={styles.shelfList}>
       <InfiniteScroll
@@ -86,7 +97,7 @@ const ShelfList = ({ rows }: Props) => {
         role="grid"
         loader={<InfiniteScrollLoader key="loader" />}
       >
-        {rows.slice(0, rowsLoaded).map(({ type, featured, title }, index) => {
+        {rows.slice(0, rowsLoaded - 1).map(({ type, featured, title }, index) => {
           const { data: playlist, isLoading, error } = playlists[index];
 
           if (!playlist?.playlist?.length) return null;
