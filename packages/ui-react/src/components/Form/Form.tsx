@@ -44,6 +44,7 @@ function Form<TData extends GenericFormNestedValues>({ isLoading, initialValues,
           values: initialValues,
           isDirty: false,
           activeSectionId: undefined,
+          success: false,
           errors: undefined,
         };
       });

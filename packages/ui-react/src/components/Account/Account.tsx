@@ -11,6 +11,8 @@ import AccountController from '@jwp/ott-common/src/controllers/AccountController
 import useToggle from '@jwp/ott-hooks-react/src/useToggle';
 import Visibility from '@jwp/ott-theme/assets/icons/visibility.svg?react';
 import VisibilityOff from '@jwp/ott-theme/assets/icons/visibility_off.svg?react';
+import { formatConsentsValues } from '@jwp/ott-common/src/utils/collection';
+import env from '@jwp/ott-common/src/env';
 
 import type { FormSectionContentArgs, FormSectionProps } from '../Form/FormSection';
 import Alert from '../Alert/Alert';
@@ -23,9 +25,9 @@ import HelperText from '../HelperText/HelperText';
 import CustomRegisterField from '../CustomRegisterField/CustomRegisterField';
 import Icon from '../Icon/Icon';
 import { modalURLFromLocation } from '../../utils/location';
+import { useAriaAnnouncer } from '../../containers/AnnouncementProvider/AnnoucementProvider';
 
 import styles from './Account.module.scss';
-import { formatConsentsValues } from '@jwp/ott-common/src/utils/collection';
 
 type Props = {
   panelClassName?: string;
@@ -36,7 +38,8 @@ type Props = {
 const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }: Props): JSX.Element => {
   const accountController = getModule(AccountController);
 
-  const { t } = useTranslation('user');
+  const { t, i18n } = useTranslation('user');
+  const announce = useAriaAnnouncer();
   const navigate = useNavigate();
   const location = useLocation();
   const [viewPassword, toggleViewPassword] = useToggle();
@@ -45,6 +48,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
     onSettled: () => setIsAlertVisible(true),
   });
   const exportDataMessage = exportData.isSuccess ? t('account.export_data_success') : t('account.export_data_error');
+  const htmlLang = i18n.language !== env.APP_DEFAULT_LANGUAGE ? env.APP_DEFAULT_LANGUAGE : undefined;
 
   useQuery(['consents'], accountController.getConsents);
   useQuery(['consentsValues'], accountController.getConsentsValues);
@@ -171,21 +175,23 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
 
   return (
     <>
+      <h1 className={styles.hideUntilFocus}>{t('nav.account')}</h1>
+
       <Form initialValues={initialValues}>
         {[
           formSection({
             label: t('account.about_you'),
             editButton: t('account.edit_information'),
             onSubmit: async (values) => {
-              if (registrationFields) {
-                await accountController.updateRegistrationFieldsValues(registrationFields, values.registrationFields);
-                return;
+              if (!registrationFields) {
+                throw new Error('Registration fields are not loaded');
               }
-              throw new Error('Registration fields are not loaded');
+              await accountController.updateRegistrationFieldsValues(registrationFields, values.registrationFields);
+
+              announce(t('account.update_success', { section: t('account.about_you') }), 'success');
             },
             content: (section) => (
               <>
-                <h1 className={styles.hideUntilFocus}>{t('nav.account')}</h1>
                 {registrationFields?.map((field) => (
                   <CustomRegisterField
                     key={field.name}
@@ -198,6 +204,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
                     label={field.label}
                     required={field.required}
                     options={field.options}
+                    lang={htmlLang}
                   />
                 ))}
               </>
@@ -210,6 +217,8 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
                 email: values.updateEmail.email || '',
                 confirmationPassword: values.updateEmail.confirmationPassword,
               });
+
+              announce(t('account.update_success', { section: t('account.email') }), 'success');
             },
             canSave: (values) => !!(values.updateEmail.email && values.updateEmail.confirmationPassword),
             editButton: t('account.edit_account'),
@@ -264,6 +273,8 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             saveButton: t('account.update_consents'),
             onSubmit: async (values) => {
               await accountController.updateConsents(values.consents);
+
+              announce(t('account.update_success', { section: t('account.terms_and_tracking') }), 'success');
             },
             content: (section) => (
               <>
@@ -275,6 +286,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
                     onChange={section.onChange}
                     label={formatConsentLabel(consent.label)}
                     disabled={consent.required || section.isBusy}
+                    lang={htmlLang}
                   />
                 ))}
               </>

@@ -134,7 +134,6 @@ export function FormSection<TData extends GenericFormNestedValues>({
     function onEdit() {
       if (!isEditing) {
         onCancel();
-
         setFormState((s) => {
           return {
             ...s,

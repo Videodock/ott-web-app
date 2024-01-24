@@ -2,6 +2,11 @@
 
 exports[`<Account> > renders and matches snapshot 1`] = `
 <div>
+  <h1
+    class="_hideUntilFocus_c968f7"
+  >
+    nav.account
+  </h1>
   <section
     aria-labelledby="account_about_you_1235"
     class="panel-class"
@@ -18,13 +23,7 @@ exports[`<Account> > renders and matches snapshot 1`] = `
     <form
       class="_flexBox_1c1c63"
       novalidate=""
-    >
-      <h1
-        class="_hideUntilFocus_c968f7"
-      >
-        nav.account
-      </h1>
-    </form>
+    />
     <div
       class="_controls_1c1c63"
     >
@@ -64,9 +63,18 @@ exports[`<Account> > renders and matches snapshot 1`] = `
         >
           account.email
         </label>
-        <p>
-          email@domain.com
-        </p>
+        <input
+          aria-describedby="helper_text_1235_updateemail_email"
+          aria-invalid="false"
+          aria-required="true"
+          class="_input_e16c1b"
+          id="text-field_1235_updateemail_email"
+          name="updateEmail.email"
+          readonly=""
+          required=""
+          type="text"
+          value="email@domain.com"
+        />
       </div>
     </form>
     <div
@@ -136,6 +144,7 @@ exports[`<Account> > renders and matches snapshot 1`] = `
           class="_row_531f07"
         >
           <input
+            aria-describedby="helper_text_1235_consents_marketing"
             disabled=""
             id="check-box_1235_consents_marketing"
             name="consents.marketing"
@@ -144,6 +153,7 @@ exports[`<Account> > renders and matches snapshot 1`] = `
           />
           <label
             for="check-box_1235_consents_marketing"
+            lang="en"
           >
             Receive Marketing Emails
           </label>
