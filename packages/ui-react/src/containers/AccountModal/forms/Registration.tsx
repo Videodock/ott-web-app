@@ -12,6 +12,7 @@ import useForm, { type UseFormOnSubmitHandler } from '@jwp/ott-hooks-react/src/u
 import { modalURLFromLocation } from '@jwp/ott-ui-react/src/utils/location';
 
 import RegistrationForm from '../../../components/RegistrationForm/RegistrationForm';
+import { useAriaAnnouncer } from '../../AnnouncementProvider/AnnoucementProvider';
 
 const Registration = () => {
   const accountController = getModule(AccountController);
@@ -19,6 +20,7 @@ const Registration = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation('account');
+  const announcer = useAriaAnnouncer();
   const [consentValues, setConsentValues] = useState<Record<string, string | boolean>>({});
   const [consentErrors, setConsentErrors] = useState<string[]>([]);
 
@@ -50,12 +52,8 @@ const Registration = () => {
     }
   }, [publisherConsents]);
 
-  // temp success state
-  const [success, setSuccess] = useState(false);
-
   const registrationSubmitHandler: UseFormOnSubmitHandler<RegistrationFormData> = async ({ email, password }, { setErrors, setSubmitting, setValue }) => {
     try {
-      setSubmitting(true);
       const { consentsErrors, customerConsents } = checkConsentsFromValues(publisherConsents, consentValues);
 
       if (consentsErrors.length) {
@@ -67,11 +65,8 @@ const Registration = () => {
       await accountController.register(email, password, window.location.href, customerConsents);
       await queryClient.invalidateQueries(['listProfiles']);
 
-      // temp success state
-      setSuccess(true);
-      setTimeout(() => {
-        navigate(modalURLFromLocation(location, 'personal-details'));
-      }, 1000);
+      announcer(t('registration.success'), 'success');
+      navigate(modalURLFromLocation(location, 'personal-details'));
     } catch (error: unknown) {
       if (error instanceof Error) {
         const errorMessage = error.message.toLowerCase();
@@ -109,7 +104,6 @@ const Registration = () => {
 
   return (
     <RegistrationForm
-      success={success}
       onSubmit={handleSubmit}
       onChange={handleChange}
       onBlur={handleBlur}

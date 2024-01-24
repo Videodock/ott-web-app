@@ -10,17 +10,20 @@ import { modalURLFromLocation } from '@jwp/ott-ui-react/src/utils/location';
 import CancelSubscriptionForm from '../../../components/CancelSubscriptionForm/CancelSubscriptionForm';
 import LoadingOverlay from '../../../components/LoadingOverlay/LoadingOverlay';
 import SubscriptionCancelled from '../../../components/SubscriptionCancelled/SubscriptionCancelled';
+import { useAriaAnnouncer } from '../../AnnouncementProvider/AnnoucementProvider';
 
 const CancelSubscription = () => {
   const accountController = getModule(AccountController);
 
   const { t, i18n } = useTranslation('account');
+  const announcer = useAriaAnnouncer();
   const navigate = useNavigate();
   const location = useLocation();
   const subscription = useAccountStore((s) => s.subscription);
   const [cancelled, setCancelled] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const expirationDate = subscription?.expiresAt ? new Date(subscription.expiresAt * 1000) : null;
 
   const cancelSubscriptionConfirmHandler = async () => {
     setSubmitting(true);
@@ -28,6 +31,7 @@ const CancelSubscription = () => {
 
     try {
       await accountController.updateSubscription('cancelled');
+      expirationDate && announcer(t('subscription_cancelled.message', { date: formatLocalizedDate(expirationDate, i18n.language) }), 'success');
       setCancelled(true);
     } catch (error: unknown) {
       setError(t('cancel_subscription.unknown_error_occurred'));
@@ -45,7 +49,7 @@ const CancelSubscription = () => {
   return (
     <React.Fragment>
       {cancelled ? (
-        <SubscriptionCancelled expiresDate={formatLocalizedDate(new Date(subscription.expiresAt * 1000), i18n.language)} onClose={closeHandler} />
+        <SubscriptionCancelled expiresDate={expirationDate ? formatLocalizedDate(expirationDate, i18n.language) : ''} onClose={closeHandler} />
       ) : (
         <CancelSubscriptionForm onConfirm={cancelSubscriptionConfirmHandler} onCancel={closeHandler} submitting={submitting} error={error} />
       )}

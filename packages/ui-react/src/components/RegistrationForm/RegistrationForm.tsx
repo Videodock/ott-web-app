@@ -23,7 +23,6 @@ import { modalURLFromLocation } from '../../utils/location';
 import styles from './RegistrationForm.module.scss';
 
 type Props = {
-  success?: boolean;
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onBlur: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -39,7 +38,6 @@ type Props = {
 };
 
 const RegistrationForm: React.FC<Props> = ({
-  success,
   onSubmit,
   onChange,
   onBlur,
@@ -89,14 +87,7 @@ const RegistrationForm: React.FC<Props> = ({
   return (
     <form onSubmit={onSubmit} data-testid={testId('registration-form')} noValidate>
       <h2 className={styles.title}>{t('registration.sign_up')}</h2>
-      <div ref={ref}>
-        {errors.form ? <FormFeedback variant="error">{errors.form}</FormFeedback> : null}
-        {success ? (
-          <FormFeedback visible={false} variant="success">
-            {t('registration.success')}
-          </FormFeedback>
-        ) : null}
-      </div>
+      <div ref={ref}>{errors.form ? <FormFeedback variant="error">{errors.form}</FormFeedback> : null}</div>
       <TextField
         value={values.email}
         onChange={onChange}

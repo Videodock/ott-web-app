@@ -25,7 +25,7 @@ import HelperText from '../HelperText/HelperText';
 import CustomRegisterField from '../CustomRegisterField/CustomRegisterField';
 import Icon from '../Icon/Icon';
 import { modalURLFromLocation } from '../../utils/location';
-import FormFeedback from '../FormFeedback/FormFeedback';
+import { useAriaAnnouncer } from '../../containers/AnnouncementProvider/AnnoucementProvider';
 
 import styles from './Account.module.scss';
 
@@ -47,6 +47,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
   const accountController = getModule(AccountController);
 
   const { t } = useTranslation('user');
+  const announce = useAriaAnnouncer();
   const navigate = useNavigate();
   const location = useLocation();
   const [viewPassword, toggleViewPassword] = useToggle();
@@ -173,13 +174,6 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
         // Render the section content, but also add a warning text if there's a form level error
         return (
           <>
-            {formErrors?.form && <FormFeedback variant="error">{formErrors.form}</FormFeedback>}
-            {args.success && (
-              <FormFeedback visible={false} variant="success">
-                {t('account.update_success', { section: props.label.toLowerCase() })}
-              </FormFeedback>
-            )}
-
             {props.content?.({ ...args, errors: formErrors })}
             <HelperText error={!!formErrors?.form}>{formErrors?.form}</HelperText>
           </>
@@ -210,15 +204,24 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             onSubmit: (values) => {
               const consents = formatConsentsFromValues(publisherConsents, { ...values.metadata, ...values.consentsValues });
 
-              return accountController.updateUser({
-                firstName: values.firstName || '',
-                lastName: values.lastName || '',
-                metadata: {
-                  ...values.metadata,
-                  ...formatConsentsToRegisterFields(consents),
-                  consents: JSON.stringify(consents),
-                },
-              });
+              return accountController
+                .updateUser({
+                  firstName: values.firstName || '',
+                  lastName: values.lastName || '',
+                  metadata: {
+                    ...values.metadata,
+                    ...formatConsentsToRegisterFields(consents),
+                    consents: JSON.stringify(consents),
+                  },
+                })
+                .finally(() =>
+                  announce(
+                    t('account.update_success', {
+                      section: t('account.about_you'),
+                    }),
+                    'success',
+                  ),
+                );
             },
             content: (section) => (
               <>
@@ -249,10 +252,12 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
           formSection({
             label: t('account.email'),
             onSubmit: (values) =>
-              accountController.updateUser({
-                email: values.email || '',
-                confirmationPassword: values.confirmationPassword,
-              }),
+              accountController
+                .updateUser({
+                  email: values.email || '',
+                  confirmationPassword: values.confirmationPassword,
+                })
+                .finally(() => announce(t('account.update_success', { section: t('account.email') }), 'success')),
             canSave: (values) => !!(values.email && values.confirmationPassword),
             editButton: t('account.edit_account'),
             readOnly: !canUpdateEmail,
@@ -303,7 +308,10 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
           formSection({
             label: t('account.terms_and_tracking'),
             saveButton: t('account.update_consents'),
-            onSubmit: (values) => accountController.updateConsents(formatConsentsFromValues(publisherConsents, values.consentsValues)),
+            onSubmit: (values) =>
+              accountController
+                .updateConsents(formatConsentsFromValues(publisherConsents, values.consentsValues))
+                .finally(() => announce(t('account.update_success', { section: t('account.terms_and_tracking') }), 'success')),
             content: (section) => (
               <>
                 {termsConsents?.map((consent, index) => (
@@ -323,7 +331,10 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             formSection({
               label: t('account.other_registration_details'),
               saveButton: t('account.update_consents'),
-              onSubmit: (values) => accountController.updateConsents(formatConsentsFromValues(publisherConsents, values.consentsValues)),
+              onSubmit: (values) =>
+                accountController
+                  .updateConsents(formatConsentsFromValues(publisherConsents, values.consentsValues))
+                  .finally(() => announce(t('account.update_success', { section: t('account.other_registration_details') }), 'success')),
               content: (section) => (
                 <div className={styles.customFields} data-testid={testId('custom-reg-fields')}>
                   {nonTermsConsents.map((consent) => (

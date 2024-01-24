@@ -12,6 +12,7 @@ import { modalURLFromLocation } from '@jwp/ott-ui-react/src/utils/location';
 import useSocialLoginUrls from '@jwp/ott-hooks-react/src/useSocialLoginUrls';
 
 import LoginForm from '../../../components/LoginForm/LoginForm';
+import { useAriaAnnouncer } from '../../AnnouncementProvider/AnnoucementProvider';
 
 type Props = {
   messageKey: string | null;
@@ -26,24 +27,16 @@ const Login: React.FC<Props> = ({ messageKey }: Props) => {
   const { t } = useTranslation('account');
 
   const socialLoginURLs = useSocialLoginUrls(window.location.href.split('?')[0]);
-
   const queryClient = useQueryClient();
-
-  // temporary state to show success message
-  const [successState, setSuccessState] = React.useState(false);
+  const announce = useAriaAnnouncer();
 
   const loginSubmitHandler: UseFormOnSubmitHandler<LoginFormData> = async (formData, { setErrors, setSubmitting, setValue }) => {
     try {
-      setSubmitting(true);
       await accountController.login(formData.email, formData.password, window.location.href);
       await queryClient.invalidateQueries(['listProfiles']);
 
-      // close the modal after successful login
-      setSuccessState(true);
-      setTimeout(() => {
-        navigate(modalURLFromLocation(location, null));
-        setSuccessState(false);
-      }, 1000);
+      announce(t('login.sign_in_success'), 'success');
+      navigate(modalURLFromLocation(location, null));
     } catch (error: unknown) {
       if (error instanceof Error) {
         if (error.message.toLowerCase().includes('invalid param email')) {
@@ -69,7 +62,6 @@ const Login: React.FC<Props> = ({ messageKey }: Props) => {
 
   return (
     <LoginForm
-      success={successState}
       messageKey={messageKey}
       onSubmit={handleSubmit}
       onChange={handleChange}

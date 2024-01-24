@@ -12,6 +12,7 @@ import PasswordField from '../PasswordField/PasswordField';
 import Button from '../Button/Button';
 import Alert from '../Alert/Alert';
 import { modalURLFromLocation } from '../../utils/location';
+import { useAriaAnnouncer } from '../../containers/AnnouncementProvider/AnnoucementProvider';
 
 import styles from './DeleteAccountModal.module.scss';
 
@@ -19,11 +20,13 @@ const DeleteAccountModal = () => {
   const accountController = getModule(AccountController);
 
   const { t } = useTranslation('user');
+  const announcer = useAriaAnnouncer();
 
   const [enteredPassword, setEnteredPassword] = useState<string>('');
 
   const deleteAccount = useMutation(accountController.deleteAccountData, {
     onSuccess: async () => {
+      announcer(t('account.delete_account_success'), 'success');
       await accountController.logout();
       navigate('/');
     },
