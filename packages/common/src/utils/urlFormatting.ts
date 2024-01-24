@@ -40,7 +40,7 @@ export const createPath = <Path extends string>(originalPath: Path, pathParams?:
     .split('/')
     .map((segment) => {
       if (segment === '*') {
-        // Wild card for optional segments
+        // Wild card for optional segments: add all params that are not already in the path
         if (!pathParams) return segment;
 
         return Object.entries(pathParams)
@@ -50,6 +50,8 @@ export const createPath = <Path extends string>(originalPath: Path, pathParams?:
       }
       if (!segment.startsWith(':') || !pathParams) return segment;
 
+      // Check if param is optional, and show a warning if it's not optional and missing
+      // Then remove all special characters to get the actual param name
       const isOptional = segment.endsWith('?');
       const paramName = segment.replace(':', '').replace('?', '');
       const paramValue = pathParams[paramName as keyof typeof pathParams];

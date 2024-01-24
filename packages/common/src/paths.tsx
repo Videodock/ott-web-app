@@ -17,7 +17,7 @@ export const PATH_USER_PROFILES_CREATE = '/u/profiles/create';
 export const PATH_USER_PROFILES_EDIT = '/u/profiles/edit';
 export const PATH_USER_PROFILES_EDIT_PROFILE = '/u/profiles/edit/:id';
 
-// Get a nsted path without parent prefix (for nested routes)
+// Get a nested path without the parent prefix (for nested routes)
 // I.E.: getNestedPath('/u/*', '/u/my-account') => 'my-account'
 const getNestedPath = (parentPath: string, fullPath: string) => fullPath.replace(parentPath.replace('*', ''), '');
 
