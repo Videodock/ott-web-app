@@ -7,11 +7,11 @@
   flex-direction: column;
 }
 
-.main {
+.container {
   flex: 1;
 }
 
-div.footer {
+.footer {
   padding: 20px 40px;
   line-height: 18px;
   letter-spacing: 0.15px;
@@ -47,6 +47,6 @@ div.testFixMargin {
   }
 }
 
-.content {
+.main {
   height: 100%;
 }
