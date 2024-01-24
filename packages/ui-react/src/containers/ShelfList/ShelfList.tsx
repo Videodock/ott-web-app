@@ -60,7 +60,7 @@ const ShelfList = ({ rows }: Props) => {
         role="grid"
         loader={<InfiniteScrollLoader key="loader" />}
       >
-        {rows.slice(0, rowsToLoad - 1).map(({ type, featured, title }, index) => {
+        {rows.slice(0, rowsToLoad).map(({ type, featured, title }, index) => {
           const { data: playlist, isLoading, error } = playlists[index];
 
           if (!playlist?.playlist?.length) return null;
