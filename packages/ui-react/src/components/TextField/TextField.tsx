@@ -44,6 +44,8 @@ const TextField: React.FC<Props> = ({
   ...inputProps
 }: Props) => {
   const id = useOpaqueId('text-field', name);
+  const helperId = useOpaqueId('helper_text', name);
+
   const { t } = useTranslation('common');
 
   const isInputOrTextArea = (item: unknown): item is InputOrTextAreaProps => !!item && typeof item === 'object';
@@ -61,10 +63,28 @@ const TextField: React.FC<Props> = ({
   );
 
   const renderInput = () => {
+    const { required, disabled, value, ...otherInputProps } = inputProps;
+
+    const ariaAttributes = {
+      'aria-required': !!required,
+      'aria-invalid': Boolean(required && error && value !== ''),
+      'aria-describedby': helperId,
+    } as const;
+
+    const commonProps = {
+      id,
+      name,
+      className: styles.input,
+      readOnly: !editing,
+      required: !!required,
+      ...ariaAttributes,
+      ...otherInputProps,
+    };
+
     return isTextArea(inputProps) ? (
-      <textarea id={id} className={styles.input} rows={3} readOnly={!editing} ref={textAreaRef} name={name} {...inputProps} />
+      <textarea {...(commonProps as TextAreaProps)} rows={3} ref={textAreaRef} />
     ) : (
-      <input id={id} className={styles.input} type={'text'} required={inputProps.required} readOnly={!editing} ref={inputRef} name={name} {...inputProps} />
+      <input {...(commonProps as InputProps)} type={'text'} ref={inputRef} />
     );
   };
 
@@ -83,7 +103,9 @@ const TextField: React.FC<Props> = ({
       ) : (
         renderInput()
       )}
-      <HelperText error={error}>{helperText}</HelperText>
+      <HelperText id={helperId} error={error}>
+        {helperText}
+      </HelperText>
     </div>
   );
 };

@@ -31,7 +31,7 @@ type Props = {
   values: RegistrationFormData;
   loading: boolean;
   consentValues: Record<string, string | boolean>;
-  consentErrors: string[];
+  consentErrors: { name: string; label: string }[];
   submitting: boolean;
   canSubmit: boolean;
   publisherConsents?: Consent[];
@@ -124,21 +124,25 @@ const RegistrationForm: React.FC<Props> = ({
       />
       {publisherConsents && (
         <div className={styles.customFields} data-testid="custom-reg-fields">
-          {publisherConsents.map((consent) => (
-            <CustomRegisterField
-              key={consent.name}
-              type={consent.type}
-              name={consent.name}
-              options={consent.options}
-              label={formatConsentLabel(consent.label)}
-              placeholder={consent.placeholder}
-              value={consentValues[consent.name] || ''}
-              required={consent.required}
-              error={consentErrors?.includes(consent.name)}
-              helperText={consentErrors?.includes(consent.name) ? t('registration.consent_required') : undefined}
-              onChange={onConsentChange}
-            />
-          ))}
+          {publisherConsents.map((consent) => {
+            const helperText = consentErrors.find((error) => error.name === consent.name)?.label;
+
+            return (
+              <CustomRegisterField
+                key={consent.name}
+                type={consent.type}
+                name={consent.name}
+                options={consent.options}
+                label={formatConsentLabel(consent.label)}
+                placeholder={consent.placeholder}
+                value={consentValues[consent.name] || ''}
+                required={consent.required}
+                error={!!helperText}
+                helperText={helperText ? t('registration.consent_required', { field: helperText }) : undefined}
+                onChange={onConsentChange}
+              />
+            );
+          })}
         </div>
       )}
       <Button

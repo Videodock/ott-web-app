@@ -7,11 +7,12 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   error?: boolean;
+  id?: string;
 };
 
-const HelperText: React.FC<Props> = ({ children, className, error }: Props) => {
+const HelperText: React.FC<Props> = ({ children, className, error, id }: Props) => {
   return children ? (
-    <div aria-live={error ? 'assertive' : 'polite'} className={classNames(styles.helperText, { [styles.error]: error }, className)}>
+    <div id={id} aria-live={error ? 'assertive' : 'polite'} className={classNames(styles.helperText, { [styles.error]: error }, className)}>
       {children}
     </div>
   ) : null;

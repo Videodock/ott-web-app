@@ -23,6 +23,7 @@ type Props = {
 const Checkbox: React.FC<Props> = ({ label, name, onChange, header, checked, value, helperText, disabled, error, required, ...rest }: Props) => {
   const { t } = useTranslation('common');
   const id = useOpaqueId('check-box', name);
+  const helperId = useOpaqueId('helper_text', name);
 
   return (
     <div className={classNames(styles.checkbox, { [styles.error]: error })} {...rest}>
@@ -33,13 +34,23 @@ const Checkbox: React.FC<Props> = ({ label, name, onChange, header, checked, val
         </div>
       ) : null}
       <div className={styles.row}>
-        <input name={name} type="checkbox" id={id} value={value} onChange={onChange} checked={checked} aria-required={required} disabled={disabled} />
+        <input
+          name={name}
+          type="checkbox"
+          id={id}
+          value={value}
+          onChange={onChange}
+          checked={checked}
+          disabled={disabled}
+          aria-required={required}
+          aria-describedby={helperId}
+        />
         <label htmlFor={id}>
           {required ? '* ' : ''}
           {label}
         </label>
       </div>
-      <HelperText error={error} className={error ? styles.helperTextError : undefined}>
+      <HelperText id={helperId} error={error} className={error ? styles.helperTextError : undefined}>
         {helperText}
       </HelperText>
     </div>

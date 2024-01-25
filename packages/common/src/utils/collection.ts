@@ -123,13 +123,18 @@ const formatConsentsFromValues = (publisherConsents: Consent[] | null, values?: 
 
 const checkConsentsFromValues = (publisherConsents: Consent[], consents: Record<string, string | boolean>) => {
   const customerConsents: CustomerConsent[] = [];
-  const consentsErrors: string[] = [];
+  const consentsErrors: { name: string; label: string }[] = [];
 
   if (!publisherConsents || !consents) return { customerConsents, consentsErrors };
 
   publisherConsents.forEach((consent) => {
-    if (consent.required && !consents[consent.name]) {
-      consentsErrors.push(consent.name);
+    if (!consent) return;
+
+    if (!consents[consent.name] && consent) {
+      // TODO: How do we handle consents without labels?
+      if (consent.label) {
+        consentsErrors.push({ name: consent.name, label: consent.label });
+      }
     }
 
     customerConsents.push({
