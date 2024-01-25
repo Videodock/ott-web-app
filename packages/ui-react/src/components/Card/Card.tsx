@@ -12,6 +12,7 @@ import { testId } from '@jwp/ott-common/src/utils/common';
 
 import Image from '../Image/Image';
 import Icon from '../Icon/Icon';
+import Heading from '../Heading/Heading';
 
 import styles from './Card.module.scss';
 
@@ -26,6 +27,7 @@ type CardProps = {
   isCurrent?: boolean;
   isLocked?: boolean;
   currentLabel?: string;
+  headingNumber?: number;
   url: string;
 };
 
@@ -39,6 +41,7 @@ function Card({
   loading = false,
   isCurrent = false,
   isLocked = true,
+  headingNumber = 2,
   currentLabel,
   url,
 }: CardProps): JSX.Element {
@@ -98,7 +101,9 @@ function Card({
     >
       {!featured && !disabled && (
         <div className={styles.titleContainer}>
-          <h2 className={classNames(styles.title, { [styles.loading]: loading })}>{title}</h2>
+          <Heading headingNumber={headingNumber} className={classNames(styles.title, { [styles.loading]: loading })}>
+            {title}
+          </Heading>
           {!!scheduledStart && (
             <div className={classNames(styles.scheduledStart, { [styles.loading]: loading })}>{formatLocalizedDateTime(scheduledStart, language)}</div>
           )}

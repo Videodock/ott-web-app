@@ -83,6 +83,7 @@ function CardGrid({
             isLocked={isLocked(accessModel, isLoggedIn, hasSubscription, playlistItem)}
             posterAspect={posterAspect}
             item={playlistItem}
+            headingNumber={3}
           />
         </div>
       </div>
