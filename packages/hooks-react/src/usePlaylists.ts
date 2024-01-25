@@ -1,6 +1,6 @@
 import { PersonalShelf, PLAYLIST_LIMIT } from '@jwp/ott-common/src/constants';
-import { getModule } from '@jwp/ott-common/src/modules/container';
 import ApiService from '@jwp/ott-common/src/services/ApiService';
+import { getModule } from '@jwp/ott-common/src/modules/container';
 import { useFavoritesStore as FavoritesStore } from '@jwp/ott-common/src/stores/FavoritesStore';
 import { useWatchHistoryStore as WatchHistoryStore } from '@jwp/ott-common/src/stores/WatchHistoryStore';
 import { generatePlaylistPlaceholder } from '@jwp/ott-common/src/utils/collection';
@@ -12,7 +12,7 @@ import { useQueries, useQueryClient } from 'react-query';
 
 const placeholderData = generatePlaylistPlaceholder(30);
 
-const usePlaylist = (content: Content[], rowsToLoad: number | undefined = undefined) => {
+const usePlaylists = (content: Content[], rowsToLoad: number | undefined = undefined) => {
   const page_limit = PLAYLIST_LIMIT.toString();
   const queryClient = useQueryClient();
   const apiService = getModule(ApiService);
@@ -47,4 +47,4 @@ const usePlaylist = (content: Content[], rowsToLoad: number | undefined = undefi
   );
 };
 
-export default usePlaylist;
+export default usePlaylists;
