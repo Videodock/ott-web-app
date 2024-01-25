@@ -24,11 +24,11 @@ exports[`<CardGrid> > renders and matches snapshot 1`] = `
             <div
               class="_titleContainer_d75732"
             >
-              <h2
-                class="_title_d75732"
+              <h3
+                class="_title_d75732 false"
               >
                 Agent 327
-              </h2>
+              </h3>
             </div>
             <div
               class="_poster_d75732 _aspect169_d75732"
@@ -67,11 +67,11 @@ exports[`<CardGrid> > renders and matches snapshot 1`] = `
             <div
               class="_titleContainer_d75732"
             >
-              <h2
-                class="_title_d75732"
+              <h3
+                class="_title_d75732 false"
               >
                 Big Buck Bunny
-              </h2>
+              </h3>
             </div>
             <div
               class="_poster_d75732 _aspect169_d75732"
@@ -110,11 +110,11 @@ exports[`<CardGrid> > renders and matches snapshot 1`] = `
             <div
               class="_titleContainer_d75732"
             >
-              <h2
-                class="_title_d75732"
+              <h3
+                class="_title_d75732 false"
               >
                 Elephants Dream
-              </h2>
+              </h3>
             </div>
             <div
               class="_poster_d75732 _aspect169_d75732"

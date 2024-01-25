@@ -41,7 +41,12 @@ const CollapsibleText: React.FC<Props> = ({ text, className, maxHeight = 'none' 
         {text}
       </p>
       {doesFlowOver && (
-        <IconButton aria-label={ariaLabel} className={classNames(styles.chevron, { [styles.expanded]: expanded })} onClick={() => setExpanded(!expanded)}>
+        <IconButton
+          aria-label={ariaLabel}
+          aria-expanded={expanded}
+          className={classNames(styles.chevron, { [styles.expanded]: expanded })}
+          onClick={() => setExpanded(!expanded)}
+        >
           <Icon icon={ChevronRight} />
         </IconButton>
       )}

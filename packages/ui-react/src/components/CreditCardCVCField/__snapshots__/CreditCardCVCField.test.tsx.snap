@@ -16,7 +16,6 @@ exports[`<CreditCardCVCField> > renders and matches snapshot 1`] = `
     >
       <input
         aria-label="payment.security_code"
-        aria-required="true"
         class="_input_e16c1b"
         id="text-field_1235_cardcvc"
         name="cardCVC"

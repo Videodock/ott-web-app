@@ -49,11 +49,11 @@ exports[`Home Component tests > Home test 1`] = `
                       <div
                         class="_titleContainer_d75732"
                       >
-                        <h2
-                          class="_title_d75732"
+                        <h3
+                          class="_title_d75732 false"
                         >
                           My video
-                        </h2>
+                        </h3>
                       </div>
                       <div
                         class="_poster_d75732 _aspect169_d75732"
@@ -88,11 +88,11 @@ exports[`Home Component tests > Home test 1`] = `
                       <div
                         class="_titleContainer_d75732"
                       >
-                        <h2
-                          class="_title_d75732"
+                        <h3
+                          class="_title_d75732 false"
                         >
                           Other Vids
-                        </h2>
+                        </h3>
                       </div>
                       <div
                         class="_poster_d75732 _aspect169_d75732"
@@ -156,11 +156,11 @@ exports[`Home Component tests > Home test 1`] = `
                       <div
                         class="_titleContainer_d75732"
                       >
-                        <h2
-                          class="_title_d75732"
+                        <h3
+                          class="_title_d75732 false"
                         >
                           My video
-                        </h2>
+                        </h3>
                       </div>
                       <div
                         class="_poster_d75732 _aspect169_d75732"
@@ -195,11 +195,11 @@ exports[`Home Component tests > Home test 1`] = `
                       <div
                         class="_titleContainer_d75732"
                       >
-                        <h2
-                          class="_title_d75732"
+                        <h3
+                          class="_title_d75732 false"
                         >
                           Other Vids
-                        </h2>
+                        </h3>
                       </div>
                       <div
                         class="_poster_d75732 _aspect169_d75732"

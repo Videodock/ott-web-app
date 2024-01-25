@@ -70,7 +70,7 @@ const TextField: React.FC<Props> = ({
           {isTextArea(inputProps) ? (
             <textarea id={id} className={styles.input} rows={3} ref={textAreaRef} {...inputProps} />
           ) : (
-            <input id={id} className={styles.input} type={'text'} aria-required={inputProps.required} ref={inputRef} {...inputProps} />
+            <input id={id} className={styles.input} type={'text'} required={inputProps.required} ref={inputRef} {...inputProps} />
           )}
           {rightControl ? <div className={styles.control}>{rightControl}</div> : null}
         </div>

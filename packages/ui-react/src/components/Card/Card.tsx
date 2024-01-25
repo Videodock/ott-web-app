@@ -27,6 +27,7 @@ type CardProps = {
   isLocked?: boolean;
   currentLabel?: string;
   url: string;
+  headingLevel?: number;
 };
 
 function Card({
@@ -40,6 +41,7 @@ function Card({
   isCurrent = false,
   isLocked = true,
   currentLabel,
+  headingLevel = 3,
   url,
 }: CardProps): JSX.Element {
   const { title, duration, episodeNumber, seasonNumber, cardImage: image, mediaStatus, scheduledStart } = item;
@@ -98,7 +100,7 @@ function Card({
     >
       {!featured && !disabled && (
         <div className={styles.titleContainer}>
-          <h2 className={classNames(styles.title, { [styles.loading]: loading })}>{title}</h2>
+          {React.createElement(`h${headingLevel}`, { className: `${styles.title} ${loading && styles.loading}` }, title)}
           {!!scheduledStart && (
             <div className={classNames(styles.scheduledStart, { [styles.loading]: loading })}>{formatLocalizedDateTime(scheduledStart, language)}</div>
           )}

@@ -29,7 +29,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_firstname"
           name="firstName"
@@ -58,7 +57,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_lastname"
           name="lastName"
@@ -90,7 +88,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="false"
           class="_input_e16c1b"
           id="text-field_1235_companyname"
           name="companyName"
@@ -118,7 +115,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_address"
           name="address"
@@ -177,7 +173,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_city"
           name="city"
@@ -206,7 +201,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_state"
           name="state"
@@ -235,7 +229,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_postcode"
           name="postCode"
@@ -264,7 +257,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_phonenumber"
           name="phoneNumber"
@@ -502,7 +494,6 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_firstname"
           name="firstName"
@@ -526,7 +517,6 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_lastname"
           name="lastName"
@@ -553,7 +543,6 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="false"
           class="_input_e16c1b"
           id="text-field_1235_companyname"
           name="companyName"
@@ -576,7 +565,6 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_address"
           name="address"
@@ -625,7 +613,6 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_city"
           name="city"
@@ -649,7 +636,6 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_state"
           name="state"
@@ -673,7 +659,6 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_postcode"
           name="postCode"
@@ -697,7 +682,6 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         class="_container_e16c1b"
       >
         <input
-          aria-required="true"
           class="_input_e16c1b"
           id="text-field_1235_phonenumber"
           name="phoneNumber"
