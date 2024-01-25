@@ -5,7 +5,7 @@ The instructions in this document will help you deploy your fork of the ott-web-
 ## Prerequisites
 
 1. [Fork this repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
-2. Follow the instructions in [docs/build-from-source.md](build-from-source.md).
+2. Follow the instructions in [./build-from-source.md](./build-from-source.md).
 
 ## Supported Platforms
 
@@ -19,7 +19,7 @@ Firebase has both [free and paid plans](https://firebase.google.com/pricing). Th
 
 #### Usage Instructions
 
-First, in your fork, you will need to update the project ID in [.firebaserc](.firebaserc).
+First, in your fork, you will need to update the project ID in [../.firebaserc](../.firebaserc).
 
 The easiest way to deploy is to use the [Firebase-Github integration](https://firebase.google.com/docs/hosting/github-integration). You can find the action [.yml specifications here](https://github.com/marketplace/actions/deploy-to-firebase-hosting) to deploy to a preview channel for each PR and to the live channel for each merge to your main branch. If you want to manually setup the work, you can find those instructions [here](https://github.com/FirebaseExtended/action-hosting-deploy/blob/main/docs/service-account.md).
 
