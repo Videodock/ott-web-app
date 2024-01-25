@@ -70,7 +70,7 @@ export const extractExternalFonts = (fontEnvVar: string = ''): ExternalFont[] =>
   });
 };
 
-export const getFontTags = (fonts: ExternalFont[]): HtmlTagDescriptor[] => {
+export const getGoogleFontTags = (fonts: ExternalFont[]): HtmlTagDescriptor[] => {
   if (fonts.length === 0) return [];
 
   // Currently only supporting google fonts

@@ -10,7 +10,7 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 import svgr from 'vite-plugin-svgr';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
-import { extractExternalFonts, getFileCopyTargets, getFontTags, getGoogleVerificationTag } from './scripts/build-tools/buildTools';
+import { extractExternalFonts, getFileCopyTargets, getGoogleFontTags, getGoogleVerificationTag } from './scripts/build-tools/buildTools';
 
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {
   const envPrefix = 'APP_';
@@ -30,7 +30,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
   const bodyFonts = extractExternalFonts(env.APP_BODY_FONT_FAMILY);
   const bodyAltFonts = extractExternalFonts(env.APP_BODY_ALT_FONT_FAMILY);
 
-  const fontTags = getFontTags([bodyFonts, bodyAltFonts].flat());
+  const fontTags = getGoogleFontTags([bodyFonts, bodyAltFonts].flat());
   const bodyFontsString = bodyFonts.map((font) => font.fontFamily).join(', ');
   const bodyAltFontsString = bodyAltFonts.map((font) => font.fontFamily).join(', ');
 
