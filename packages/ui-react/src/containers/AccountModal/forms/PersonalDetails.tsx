@@ -123,7 +123,6 @@ const PersonalDetails = () => {
       );
 
       await accountController.updateCaptureAnswers(removeEmpty({ ...formData, customAnswers }));
-      // TODO: Do we want to announce this as well? @Modal@
 
       nextStep();
     } catch (error: unknown) {

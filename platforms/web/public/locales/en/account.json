@@ -32,7 +32,7 @@
     "payment_cancelled": "Payment cancelled",
     "payment_cancelled_message": "You have cancelled the payment",
     "payment_error": "Payment failed",
-    "payment_success": "Payment was successful",
+    "payment_success": "Payment was successfully sent",
     "payment_method": "Payment method",
     "payment_method_fee": "Payment method fee",
     "paypal": "PayPal",

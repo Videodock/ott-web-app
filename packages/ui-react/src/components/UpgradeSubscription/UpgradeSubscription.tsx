@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Button from '../Button/Button';
@@ -25,18 +25,11 @@ const UpgradeSubscription: React.FC<Props> = ({ type, onCloseButtonClick }: Prop
   const title = t(`checkout.upgrade_${type}`);
   const message = t(`checkout.upgrade_${type}_message`);
 
-  const typeToAnnounce: Record<Props['type'], AriaAnnouncerVariant> = useMemo(
-    () => ({
-      error: 'error',
-      success: 'success',
-      pending: 'info',
-    }),
-    [],
-  );
-
   useEffect(() => {
-    announcer(message, typeToAnnounce[type]);
-  }, [announcer, message, type, typeToAnnounce]);
+    const typeToAnnounce = { error: 'error', success: 'succes', pending: 'info' }[type] as AriaAnnouncerVariant;
+
+    announcer(message, typeToAnnounce);
+  }, [announcer, message, type]);
 
   return (
     <div>

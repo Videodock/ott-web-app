@@ -76,8 +76,6 @@ export default function AdyenInitialPayment({ setUpdatingOrder, type, setPayment
         }
 
         await accountController.reloadActiveSubscription({ delay: 2000 });
-
-        // Todo: double check if this is the correct placement.
         announcer(t('checkout.payment_success'), 'success');
         navigate(paymentSuccessUrl, { replace: true });
       } catch (error: unknown) {
@@ -110,7 +108,6 @@ export default function AdyenInitialPayment({ setUpdatingOrder, type, setPayment
           const data = state.data.details as number | undefined;
           await checkoutController.finalizeAdyenPayment(orderId, data);
 
-          // Todo: double check if this is the correct placement.
           announcer(t('checkout.payment_success'), 'success');
           navigate(paymentSuccessUrl, { replace: true });
         } catch (error: unknown) {

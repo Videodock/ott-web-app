@@ -1,4 +1,5 @@
 import { PropsWithChildren, createContext, useCallback, useContext, useState } from 'react';
+import { secondsToMilliseconds } from 'date-fns';
 
 import FormFeedback from '../../components/FormFeedback/FormFeedback';
 
@@ -20,7 +21,7 @@ export const useAriaAnnouncer = () => {
 export const AriaAnnouncerProvider = ({ children }: PropsWithChildren) => {
   const [announcement, setAnnouncement] = useState<Announcement | null>(null);
 
-  const announce = useCallback((message: string, variant: AriaAnnouncerVariant, duration = 1000) => {
+  const announce = useCallback((message: string, variant: AriaAnnouncerVariant, duration = secondsToMilliseconds(10)) => {
     setAnnouncement({ message, variant });
 
     setTimeout(() => {
@@ -31,7 +32,7 @@ export const AriaAnnouncerProvider = ({ children }: PropsWithChildren) => {
   return (
     <AriaAnnouncerContext.Provider value={{ announce }}>
       {announcement && (
-        <FormFeedback variant={announcement.variant} visible={true}>
+        <FormFeedback variant={announcement.variant} visible={false}>
           {announcement.message}
         </FormFeedback>
       )}

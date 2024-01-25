@@ -34,7 +34,7 @@
     "payment_cancelled": "Pago cancelado",
     "payment_cancelled_message": "Has cancelado el pago",
     "payment_error": "Error en el pago",
-    "payment_success": "Pago exitoso",
+    "payment_success": "Pago fue enviado con éxito",
     "payment_method": "Método de pago",
     "payment_method_fee": "Tarifa del método de pago",
     "paypal": "PayPal",
