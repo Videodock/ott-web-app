@@ -51,7 +51,7 @@ const DateField: React.FC<Props> = ({
   });
 
   const id = useOpaqueId('text-field', name);
-  const helperId = useOpaqueId('helper_text', name);
+  const helperTextId = useOpaqueId('helper_text', name);
 
   const hiddenInputRef = useRef<HTMLInputElement>(null);
 
@@ -156,7 +156,7 @@ const DateField: React.FC<Props> = ({
           name={name}
           onChange={onChange}
           aria-invalid={error}
-          aria-describedby={helperId}
+          aria-describedby={helperTextId}
         />
         <input
           className={styles.input}
@@ -200,7 +200,7 @@ const DateField: React.FC<Props> = ({
           id={`${id}-year`}
         />
       </div>
-      <HelperText id={helperId} error={error}>
+      <HelperText id={helperTextId} error={error}>
         {helperText}
       </HelperText>
     </div>

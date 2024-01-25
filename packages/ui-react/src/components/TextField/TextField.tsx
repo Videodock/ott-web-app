@@ -44,7 +44,7 @@ const TextField: React.FC<Props> = ({
   ...inputProps
 }: Props) => {
   const id = useOpaqueId('text-field', name);
-  const helperId = useOpaqueId('helper_text', name);
+  const helperTextId = useOpaqueId('helper_text', name);
 
   const { t } = useTranslation('common');
 
@@ -68,7 +68,7 @@ const TextField: React.FC<Props> = ({
     const ariaAttributes = {
       'aria-required': !!required,
       'aria-invalid': Boolean(required && error && value !== ''),
-      'aria-describedby': helperId,
+      'aria-describedby': helperTextId,
     } as const;
 
     const commonProps = {
@@ -103,7 +103,7 @@ const TextField: React.FC<Props> = ({
       ) : (
         renderInput()
       )}
-      <HelperText id={helperId} error={error}>
+      <HelperText id={helperTextId} error={error}>
         {helperText}
       </HelperText>
     </div>

@@ -130,11 +130,9 @@ const checkConsentsFromValues = (publisherConsents: Consent[], consents: Record<
   publisherConsents.forEach((consent) => {
     if (!consent) return;
 
-    if (!consents[consent.name] && consent) {
-      // TODO: How do we handle consents without labels?
-      if (consent.label) {
-        consentsErrors.push({ name: consent.name, label: consent.label });
-      }
+    // TODO: How do we handle consents without label
+    if (!consents[consent.name] && consent.required && consent.label) {
+      consentsErrors.push({ name: consent.name, label: consent.label });
     }
 
     customerConsents.push({
