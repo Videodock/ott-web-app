@@ -30,7 +30,7 @@ export default function AdyenPaymentDetails({ setProcessing, type, setPaymentErr
 
   const isSandbox = accountController.getSandbox();
   const { t } = useTranslation('account');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
   const navigate = useNavigate();
   const location = useLocation();
   const [session, setSession] = useState<AdyenPaymentSession>();
@@ -48,7 +48,7 @@ export default function AdyenPaymentDetails({ setProcessing, type, setPaymentErr
 
       setProcessing(false);
 
-      announcer(t('checkout.payment_success'), 'success');
+      announce(t('checkout.payment_success'), 'success');
       navigate(paymentSuccessUrl);
     } catch (error: unknown) {
       setProcessing(false);

@@ -31,15 +31,15 @@ const PaymentMethodForm: React.FC<Props> = ({
   updateSuccess,
 }) => {
   const { t } = useTranslation('account');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
   // t('payment.longer_than_usual');
 
   const cardPaymentMethod = paymentMethods?.find((method) => method.methodName === 'card');
   const paypalPaymentMethod = paymentMethods?.find((method) => method.methodName === 'paypal');
 
   useEffect(() => {
-    updateSuccess && announcer(t('checkout.payment_success'), 'success');
-  }, [updateSuccess, announcer, t]);
+    updateSuccess && announce(t('checkout.payment_success'), 'success');
+  }, [updateSuccess, announce, t]);
 
   return (
     <>

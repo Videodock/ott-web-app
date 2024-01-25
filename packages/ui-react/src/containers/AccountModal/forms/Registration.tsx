@@ -20,7 +20,7 @@ const Registration = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation('account');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
   const [consentValues, setConsentValues] = useState<Record<string, string | boolean>>({});
   const [consentErrors, setConsentErrors] = useState<string[]>([]);
 
@@ -65,7 +65,7 @@ const Registration = () => {
       await accountController.register(email, password, window.location.href, customerConsents);
       await queryClient.invalidateQueries(['listProfiles']);
 
-      announcer(t('registration.success'), 'success');
+      announce(t('registration.success'), 'success');
       navigate(modalURLFromLocation(location, 'personal-details'));
     } catch (error: unknown) {
       if (error instanceof Error) {

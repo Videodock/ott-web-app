@@ -18,7 +18,7 @@ const RenewSubscription = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation('account');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
   const { subscription, user } = useAccountStore(({ subscription, user }) => ({ subscription, user }), shallow);
   const [renewed, setRenewed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -30,7 +30,7 @@ const RenewSubscription = () => {
 
     try {
       await accountController.updateSubscription('active');
-      announcer(t('renew_subscription.success'), 'success');
+      announce(t('renew_subscription.success'), 'success');
       setRenewed(true);
     } catch (error: unknown) {
       setError(t('renew_subscription.unknown_error_occurred'));

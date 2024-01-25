@@ -16,7 +16,7 @@ const CancelSubscription = () => {
   const accountController = getModule(AccountController);
 
   const { t, i18n } = useTranslation('account');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
   const navigate = useNavigate();
   const location = useLocation();
   const subscription = useAccountStore((s) => s.subscription);
@@ -34,7 +34,7 @@ const CancelSubscription = () => {
 
       if (expirationDate) {
         const formattedDate = format(expirationDate, 'P', { locale: { code: i18n.language } });
-        announcer(t('subscription_cancelled.message', { date: formattedDate }), 'success');
+        announce(t('subscription_cancelled.message', { date: formattedDate }), 'success');
       }
 
       setCancelled(true);

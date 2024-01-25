@@ -2,182 +2,47 @@
 
 exports[`<Account> > renders and matches snapshot 1`] = `
 <div>
-  <section
-    aria-labelledby="account_about_you_1235"
-    class="panel-class"
+  <h2>
+    Unexpected Application Error!
+  </h2>
+  <h3
+    style="font-style: italic;"
   >
-    <div
-      class="header-class"
-    >
-      <h2
-        id="account_about_you_1235"
-      >
-        account.about_you
-      </h2>
-    </div>
-    <form
-      class="_flexBox_1c1c63"
-      novalidate=""
-    >
-      <h1
-        class="_hideUntilFocus_c968f7"
-      >
-        nav.account
-      </h1>
-      <div
-        class="_textField_e16c1b"
-      >
-        <label
-          class="_label_e16c1b"
-          for="text-field_1235_firstname"
-        >
-          account.firstname
-        </label>
-        <p>
-          John
-        </p>
-      </div>
-      <div
-        class="_textField_e16c1b"
-      >
-        <label
-          class="_label_e16c1b"
-          for="text-field_1235_lastname"
-        >
-          account.lastname
-        </label>
-        <p>
-          Doe
-        </p>
-      </div>
-    </form>
-    <div
-      class="_controls_1c1c63"
-    >
-      <button
-        class="_button_f8f296 _default_f8f296 _outlined_f8f296"
-        type="button"
-      >
-        <span>
-          account.edit_information
-        </span>
-      </button>
-    </div>
-  </section>
-  <section
-    aria-labelledby="account_email_1235"
-    class="panel-class"
+    Announcer context is not defined
+  </h3>
+  <pre
+    style="padding: 0.5rem; background-color: rgba(200, 200, 200, 0.5);"
   >
-    <div
-      class="header-class"
+    Error: Announcer context is not defined
+    at Module.useAriaAnnouncer (/Users/r-videodock/work/VideoDock/ott-web-app/packages/ui-react/src/containers/AnnouncementProvider/AnnoucementProvider.tsx:16:24)
+    at Account (/Users/r-videodock/work/VideoDock/ott-web-app/packages/ui-react/src/components/Account/Account.tsx:50:20)
+    at renderWithHooks (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+    at mountIndeterminateComponent (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+    at beginWork (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+    at beginWork$1 (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+    at performUnitOfWork (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+    at workLoopSync (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+    at renderRootSync (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+    at recoverFromConcurrentError (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+  </pre>
+  <p>
+    💿 Hey developer 👋
+  </p>
+  <p>
+    You can provide a way better UX than this when your app throws errors by providing your own 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
     >
-      <h2
-        id="account_email_1235"
-      >
-        account.email
-      </h2>
-    </div>
-    <form
-      class="_flexBox_1c1c63"
-      novalidate=""
+      ErrorBoundary
+    </code>
+     or
+     
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
     >
-      <div
-        class="_textField_e16c1b"
-      >
-        <label
-          class="_label_e16c1b"
-          for="text-field_1235_email"
-        >
-          account.email
-        </label>
-        <p>
-          email@domain.com
-        </p>
-      </div>
-    </form>
-    <div
-      class="_controls_1c1c63"
-    >
-      <button
-        class="_button_f8f296 _default_f8f296 _outlined_f8f296"
-        type="button"
-      >
-        <span>
-          account.edit_account
-        </span>
-      </button>
-    </div>
-  </section>
-  <section
-    aria-labelledby="account_security_1235"
-    class="panel-class"
-  >
-    <div
-      class="header-class"
-    >
-      <h2
-        id="account_security_1235"
-      >
-        account.security
-      </h2>
-    </div>
-    <form
-      class="_flexBox_1c1c63"
-      novalidate=""
-    />
-    <div
-      class="_controls_1c1c63"
-    >
-      <button
-        class="_button_f8f296 _default_f8f296 _outlined_f8f296"
-        type="button"
-      >
-        <span>
-          account.edit_password
-        </span>
-      </button>
-    </div>
-  </section>
-  <section
-    aria-labelledby="account_terms_and_tracking_1235"
-    class="panel-class"
-  >
-    <div
-      class="header-class"
-    >
-      <h2
-        id="account_terms_and_tracking_1235"
-      >
-        account.terms_and_tracking
-      </h2>
-    </div>
-    <form
-      class="_flexBox_1c1c63"
-      novalidate=""
-    >
-      <div
-        class="_checkbox_531f07"
-      >
-        <div
-          class="_row_531f07"
-        >
-          <input
-            id="check-box_1235_consentsvalues_marketing"
-            name="consentsValues.marketing"
-            type="checkbox"
-            value=""
-          />
-          <label
-            for="check-box_1235_consentsvalues_marketing"
-          >
-            Receive Marketing Emails
-          </label>
-        </div>
-      </div>
-    </form>
-    <div
-      class="_controls_1c1c63"
-    />
-  </section>
+      errorElement
+    </code>
+     prop on your route.
+  </p>
 </div>
 `;

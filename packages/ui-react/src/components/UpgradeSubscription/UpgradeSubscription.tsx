@@ -13,7 +13,7 @@ type Props = {
 
 const UpgradeSubscription: React.FC<Props> = ({ type, onCloseButtonClick }: Props) => {
   const { t } = useTranslation('account');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
 
   // these comments exist for extracting dynamic i18n keys
   // t('account:checkout.upgrade_success');
@@ -28,8 +28,8 @@ const UpgradeSubscription: React.FC<Props> = ({ type, onCloseButtonClick }: Prop
   useEffect(() => {
     const typeToAnnounce = { error: 'error', success: 'succes', pending: 'info' }[type] as AriaAnnouncerVariant;
 
-    announcer(message, typeToAnnounce);
-  }, [announcer, message, type]);
+    announce(message, typeToAnnounce);
+  }, [announce, message, type]);
 
   return (
     <div>

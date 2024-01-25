@@ -2,246 +2,48 @@
 
 exports[`User Component tests > Account Page 1`] = `
 <div>
-  <div
-    class="_user_e9c5ca"
+  <h2>
+    Unexpected Application Error!
+  </h2>
+  <h3
+    style="font-style: italic;"
   >
-    <div
-      class="_leftColumn_e9c5ca"
+    Announcer context is not defined
+  </h3>
+  <pre
+    style="padding: 0.5rem; background-color: rgba(200, 200, 200, 0.5);"
+  >
+    Error: Announcer context is not defined
+    at Module.useAriaAnnouncer (/Users/r-videodock/work/VideoDock/ott-web-app/packages/ui-react/src/containers/AnnouncementProvider/AnnoucementProvider.tsx:16:24)
+    at Account (/Users/r-videodock/work/VideoDock/ott-web-app/packages/ui-react/src/components/Account/Account.tsx:50:20)
+    at renderWithHooks (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:16305:18)
+    at mountIndeterminateComponent (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:20074:13)
+    at beginWork (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:21587:16)
+    at beginWork$1 (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:27426:14)
+    at performUnitOfWork (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:26560:12)
+    at workLoopSync (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:26466:5)
+    at renderRootSync (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:26434:7)
+    at recoverFromConcurrentError (/Users/r-videodock/work/VideoDock/ott-web-app/node_modules/react-dom/cjs/react-dom.development.js:25850:20)
+  </pre>
+  <p>
+    💿 Hey developer 👋
+  </p>
+  <p>
+    You can provide a way better UX than this when your app throws errors by providing your own 
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
     >
-      <div
-        class="_panel_e9c5ca"
-      >
-        <ul>
-          <li>
-            <a
-              aria-current="page"
-              class="_button_f8f296 _button_e9c5ca _default_f8f296 _text_f8f296 _active_f8f296"
-              href="/u/my-account"
-            >
-              <div
-                class="_startIcon_f8f296"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="_icon_585b29"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"
-                  />
-                </svg>
-              </div>
-              <span>
-                nav.account
-              </span>
-            </a>
-          </li>
-          <li>
-            <a
-              class="_button_f8f296 _button_e9c5ca _default_f8f296 _text_f8f296"
-              href="/u/payments"
-            >
-              <div
-                class="_startIcon_f8f296"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="_icon_585b29"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M5,3C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V16.72C21.59,16.37 22,15.74 22,15V9C22,8.26 21.59,7.63 21,7.28V5A2,2 0 0,0 19,3H5M5,5H19V7H13A2,2 0 0,0 11,9V15A2,2 0 0,0 13,17H19V19H5V5M13,9H20V15H13V9M16,10.5A1.5,1.5 0 0,0 14.5,12A1.5,1.5 0 0,0 16,13.5A1.5,1.5 0 0,0 17.5,12A1.5,1.5 0 0,0 16,10.5Z"
-                  />
-                </svg>
-              </div>
-              <span>
-                nav.payments
-              </span>
-            </a>
-          </li>
-          <li
-            class="_logoutLi_e9c5ca"
-          >
-            <button
-              class="_button_f8f296 _button_e9c5ca _default_f8f296 _text_f8f296"
-            >
-              <div
-                class="_startIcon_f8f296"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="_icon_585b29"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19,3H5C3.89,3 3,3.89 3,5V9H5V5H19V19H5V15H3V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M10.08,15.58L11.5,17L16.5,12L11.5,7L10.08,8.41L12.67,11H3V13H12.67L10.08,15.58Z"
-                  />
-                </svg>
-              </div>
-              <span>
-                nav.logout
-              </span>
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div
-      class="_mainColumn_e9c5ca"
+      ErrorBoundary
+    </code>
+     or
+     
+    <code
+      style="padding: 2px 4px; background-color: rgba(200, 200, 200, 0.5);"
     >
-      <section
-        aria-labelledby="account_about_you_1235"
-        class="_panel_e9c5ca"
-      >
-        <div
-          class="_panelHeader_e9c5ca"
-        >
-          <h2
-            id="account_about_you_1235"
-          >
-            account.about_you
-          </h2>
-        </div>
-        <form
-          class="_flexBox_1c1c63"
-          novalidate=""
-        >
-          <h1
-            class="_hideUntilFocus_c968f7"
-          >
-            nav.account
-          </h1>
-          <div
-            class="_textField_e16c1b"
-          >
-            <label
-              class="_label_e16c1b"
-              for="text-field_1235_firstname"
-            >
-              account.firstname
-            </label>
-            <p>
-              User
-            </p>
-          </div>
-          <div
-            class="_textField_e16c1b"
-          >
-            <label
-              class="_label_e16c1b"
-              for="text-field_1235_lastname"
-            >
-              account.lastname
-            </label>
-            <p>
-              Person
-            </p>
-          </div>
-        </form>
-        <div
-          class="_controls_1c1c63"
-        >
-          <button
-            class="_button_f8f296 _default_f8f296 _outlined_f8f296"
-            type="button"
-          >
-            <span>
-              account.edit_information
-            </span>
-          </button>
-        </div>
-      </section>
-      <section
-        aria-labelledby="account_email_1235"
-        class="_panel_e9c5ca"
-      >
-        <div
-          class="_panelHeader_e9c5ca"
-        >
-          <h2
-            id="account_email_1235"
-          >
-            account.email
-          </h2>
-        </div>
-        <form
-          class="_flexBox_1c1c63"
-          novalidate=""
-        >
-          <div
-            class="_textField_e16c1b"
-          >
-            <label
-              class="_label_e16c1b"
-              for="text-field_1235_email"
-            >
-              account.email
-            </label>
-            <p>
-              user@jwplayer.com
-            </p>
-          </div>
-        </form>
-        <div
-          class="_controls_1c1c63"
-        />
-      </section>
-      <section
-        aria-labelledby="account_security_1235"
-        class="_panel_e9c5ca"
-      >
-        <div
-          class="_panelHeader_e9c5ca"
-        >
-          <h2
-            id="account_security_1235"
-          >
-            account.security
-          </h2>
-        </div>
-        <form
-          class="_flexBox_1c1c63"
-          novalidate=""
-        />
-        <div
-          class="_controls_1c1c63"
-        >
-          <button
-            class="_button_f8f296 _default_f8f296 _outlined_f8f296"
-            type="button"
-          >
-            <span>
-              account.edit_password
-            </span>
-          </button>
-        </div>
-      </section>
-      <section
-        aria-labelledby="account_terms_and_tracking_1235"
-        class="_panel_e9c5ca"
-      >
-        <div
-          class="_panelHeader_e9c5ca"
-        >
-          <h2
-            id="account_terms_and_tracking_1235"
-          >
-            account.terms_and_tracking
-          </h2>
-        </div>
-        <form
-          class="_flexBox_1c1c63"
-          novalidate=""
-        />
-        <div
-          class="_controls_1c1c63"
-        />
-      </section>
-    </div>
-  </div>
+      errorElement
+    </code>
+     prop on your route.
+  </p>
 </div>
 `;
 

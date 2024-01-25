@@ -17,7 +17,7 @@ const ResetPassword = ({ type }: { type?: 'add' }) => {
   const accountController = getModule(AccountController);
 
   const { t } = useTranslation('account');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
   const location = useLocation();
   const navigate = useNavigate();
   const resetPasswordTokenParam = useQueryParam('resetPasswordToken');
@@ -48,7 +48,7 @@ const ResetPassword = ({ type }: { type?: 'add' }) => {
         await accountController.changePasswordWithToken(emailParam || '', password, resetToken, passwordConfirmation);
       }
 
-      announcer(t('reset.reset_password_succesful'), 'success');
+      announce(t('reset.reset_password_succesful'), 'success');
       await accountController.logout();
       navigate(modalURLFromLocation(location, 'login'));
     } catch (error: unknown) {

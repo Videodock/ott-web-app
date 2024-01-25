@@ -11,11 +11,11 @@ type ContextValue = { announce: AnnounceFn };
 const AriaAnnouncerContext = createContext<ContextValue | undefined>(undefined);
 
 export const useAriaAnnouncer = () => {
-  const announcer = useContext(AriaAnnouncerContext);
+  const announce = useContext(AriaAnnouncerContext);
 
-  if (!announcer) throw new Error('Announcer context is not defined');
+  if (!announce) throw new Error('Announcer context is not defined');
 
-  return announcer.announce;
+  return announce.announce;
 };
 
 export const AriaAnnouncerProvider = ({ children }: PropsWithChildren) => {

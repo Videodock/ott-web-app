@@ -25,7 +25,7 @@ type Props = {
 
 const EditCardPaymentForm: React.FC<Props> = ({ onCancel, setUpdatingCardDetails }) => {
   const accountController = getModule(AccountController);
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
 
   const { t } = useTranslation('account');
   const { mutate: mutateCardDetails, isLoading } = useMutation(accountController.updateCardDetails);
@@ -46,7 +46,7 @@ const EditCardPaymentForm: React.FC<Props> = ({ onCancel, setUpdatingCardDetails
         {
           onSettled: () => onCancel(),
           onSuccess: () => {
-            announcer(t('checkout.card_details_updated'), 'success');
+            announce(t('checkout.card_details_updated'), 'success');
           },
         },
       );

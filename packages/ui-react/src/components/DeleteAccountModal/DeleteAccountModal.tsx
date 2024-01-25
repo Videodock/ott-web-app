@@ -20,13 +20,13 @@ const DeleteAccountModal = () => {
   const accountController = getModule(AccountController);
 
   const { t } = useTranslation('user');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
 
   const [enteredPassword, setEnteredPassword] = useState<string>('');
 
   const deleteAccount = useMutation(accountController.deleteAccountData, {
     onSuccess: async () => {
-      announcer(t('account.delete_account_success'), 'success');
+      announce(t('account.delete_account_success'), 'success');
       await accountController.logout();
       navigate('/');
     },

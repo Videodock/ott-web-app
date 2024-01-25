@@ -25,7 +25,7 @@ export default function AdyenInitialPayment({ setUpdatingOrder, type, setPayment
   const accountController = getModule(AccountController);
   const checkoutController = getModule(CheckoutController);
   const { t } = useTranslation('account');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
 
   const [session, setSession] = useState<AdyenPaymentSession>();
 
@@ -76,7 +76,7 @@ export default function AdyenInitialPayment({ setUpdatingOrder, type, setPayment
         }
 
         await accountController.reloadActiveSubscription({ delay: 2000 });
-        announcer(t('checkout.payment_success'), 'success');
+        announce(t('checkout.payment_success'), 'success');
         navigate(paymentSuccessUrl, { replace: true });
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -86,7 +86,7 @@ export default function AdyenInitialPayment({ setUpdatingOrder, type, setPayment
 
       setUpdatingOrder(false);
     },
-    [setUpdatingOrder, setPaymentError, orderId, checkoutController, accountController, announcer, t, navigate, paymentSuccessUrl],
+    [setUpdatingOrder, setPaymentError, orderId, checkoutController, accountController, announce, t, navigate, paymentSuccessUrl],
   );
 
   const adyenConfiguration: CoreOptions = useMemo(
@@ -108,7 +108,7 @@ export default function AdyenInitialPayment({ setUpdatingOrder, type, setPayment
           const data = state.data.details as number | undefined;
           await checkoutController.finalizeAdyenPayment(orderId, data);
 
-          announcer(t('checkout.payment_success'), 'success');
+          announce(t('checkout.payment_success'), 'success');
           navigate(paymentSuccessUrl, { replace: true });
         } catch (error: unknown) {
           if (error instanceof Error) {
@@ -120,7 +120,7 @@ export default function AdyenInitialPayment({ setUpdatingOrder, type, setPayment
       onSubmit: (state: AdyenEventData, component: DropinElement) => onSubmit(state, component.handleAction),
       onError: (error: Error) => setPaymentError(error.message),
     }),
-    [session, isSandbox, setUpdatingOrder, checkoutController, orderId, announcer, t, navigate, paymentSuccessUrl, setPaymentError, onSubmit],
+    [session, isSandbox, setUpdatingOrder, checkoutController, orderId, announce, t, navigate, paymentSuccessUrl, setPaymentError, onSubmit],
   );
 
   return <Adyen configuration={adyenConfiguration} type={type} />;

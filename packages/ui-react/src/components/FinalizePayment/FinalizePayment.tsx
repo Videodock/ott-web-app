@@ -21,7 +21,7 @@ const FinalizePayment = () => {
   const checkoutController = getModule(CheckoutController);
 
   const { t } = useTranslation('account');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -43,7 +43,7 @@ const FinalizePayment = () => {
       await checkoutController.finalizeAdyenPayment({ redirectResult: decodeURI(redirectResult) }, orderId);
       await accountController.reloadActiveSubscription({ delay: 2000 });
 
-      announcer(t('checkout.payment_success'), 'success');
+      announce(t('checkout.payment_success'), 'success');
       navigate(paymentSuccessUrl);
     } catch (error: unknown) {
       if (error instanceof Error) {

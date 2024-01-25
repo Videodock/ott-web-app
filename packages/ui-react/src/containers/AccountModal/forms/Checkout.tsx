@@ -25,7 +25,7 @@ const Checkout = () => {
 
   const location = useLocation();
   const { t } = useTranslation('account');
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
   const navigate = useNavigate();
   const [paymentError, setPaymentError] = useState<string | undefined>(undefined);
   const [updatingOrder, setUpdatingOrder] = useState(false);
@@ -56,7 +56,7 @@ const Checkout = () => {
     if (values.couponCode && order) {
       try {
         await checkoutController.updateOrder(order, paymentMethodId, values.couponCode);
-        announcer(t('checkout.coupon_applied'), 'success');
+        announce(t('checkout.coupon_applied'), 'success');
         setCouponCodeApplied(true);
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -156,7 +156,7 @@ const Checkout = () => {
       await checkoutController.paymentWithoutDetails();
       await accountController.reloadActiveSubscription({ delay: 1000 });
 
-      announcer(t('checkout.payment_success'), 'success');
+      announce(t('checkout.payment_success'), 'success');
       navigate(paymentSuccessUrl, { replace: true });
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -179,7 +179,7 @@ const Checkout = () => {
       const response = await checkoutController.paypalPayment(successUrl, waitingUrl, cancelUrl, errorUrl, couponCodeForm.values.couponCode);
 
       if (response.redirectUrl) {
-        announcer(t('checkout.redirecting_to_paypal'), 'info');
+        announce(t('checkout.redirecting_to_paypal'), 'info');
         window.location.href = response.redirectUrl;
       }
     } catch (error: unknown) {

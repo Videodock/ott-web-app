@@ -26,7 +26,7 @@ type Props = {
 
 const PaymentForm: React.FC<Props> = ({ couponCode, setUpdatingOrder }) => {
   const checkoutController = getModule(CheckoutController);
-  const announcer = useAriaAnnouncer();
+  const announce = useAriaAnnouncer();
 
   const { t } = useTranslation('account');
   const location = useLocation();
@@ -47,7 +47,7 @@ const PaymentForm: React.FC<Props> = ({ couponCode, setUpdatingOrder }) => {
         interval: 15000,
         callback: (hasAccess) => {
           if (hasAccess) {
-            announcer(t('checkout.payment_success'), 'success');
+            announce(t('checkout.payment_success'), 'success');
             navigate(modalURLFromLocation(location, 'welcome'));
           }
         },
