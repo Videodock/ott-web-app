@@ -28,6 +28,8 @@ import Button from '../../components/Button/Button';
 
 import styles from './Layout.module.scss';
 
+const footerText = unicodeToChar(env.APP_FOOTER_TEXT);
+
 const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -45,7 +47,6 @@ const Layout = () => {
   const profileController = getModule(ProfileController, false);
 
   const { searchPlaylist } = features || {};
-  const footerText = useMemo(() => unicodeToChar(env.APP_FOOTER_TEXT), []);
   const currentLanguage = useMemo(() => supportedLanguages.find(({ code }) => code === i18n.language), [i18n.language, supportedLanguages]);
 
   const {
