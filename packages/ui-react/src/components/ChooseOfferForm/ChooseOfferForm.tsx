@@ -79,6 +79,7 @@ const ChooseOfferForm: React.FC<Props> = ({
         value={offer.offerId}
         id={offer.offerId}
         checked={values.offerId === offer.offerId}
+        data-testid={testId(title)}
       />
       <label className={styles.label} htmlFor={offer.offerId}>
         <h2 className={styles.offerTitle}>{title}</h2>
