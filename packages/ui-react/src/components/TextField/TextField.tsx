@@ -8,8 +8,8 @@ import HelperText from '../HelperText/HelperText';
 
 import styles from './TextField.module.scss';
 
-type InputProps = Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, 'id' | 'ref' | 'className'>;
-type TextAreaProps = Omit<React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, 'id' | 'ref' | 'className'>;
+type InputProps = Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, 'id' | 'ref' | 'className' | 'name'>;
+type TextAreaProps = Omit<React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, 'id' | 'ref' | 'className' | 'name'>;
 
 type InputOrTextAreaProps =
   | ({ multiline?: never; inputRef?: RefObject<HTMLInputElement>; textAreaRef?: never } & InputProps)
@@ -29,6 +29,7 @@ type Props = {
 } & InputOrTextAreaProps;
 
 const TextField: React.FC<Props> = ({
+  name,
   className,
   label,
   error,
@@ -42,7 +43,7 @@ const TextField: React.FC<Props> = ({
   multiline,
   ...inputProps
 }: Props) => {
-  const id = useOpaqueId('text-field', inputProps.name);
+  const id = useOpaqueId('text-field', name);
   const { t } = useTranslation('common');
 
   const isInputOrTextArea = (item: unknown): item is InputOrTextAreaProps => !!item && typeof item === 'object';
@@ -61,9 +62,9 @@ const TextField: React.FC<Props> = ({
 
   const renderInput = () => {
     return isTextArea(inputProps) ? (
-      <textarea id={id} className={styles.input} rows={3} readOnly={!editing} ref={textAreaRef} {...inputProps} />
+      <textarea id={id} className={styles.input} rows={3} readOnly={!editing} ref={textAreaRef} name={name} {...inputProps} />
     ) : (
-      <input id={id} className={styles.input} type={'text'} readOnly={!editing} ref={inputRef} {...inputProps} />
+      <input id={id} className={styles.input} type={'text'} readOnly={!editing} ref={inputRef} name={name} {...inputProps} />
     );
   };
 
