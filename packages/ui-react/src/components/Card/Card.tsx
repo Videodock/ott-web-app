@@ -62,7 +62,7 @@ function Card({
     [styles.featured]: featured,
     [styles.disabled]: disabled,
   });
-  const aspectRatioClass = styles[`aspect${posterAspect.replace(':', '') as PosterAspectRatioClass}`];
+  const aspectRatioClass = posterAspect ? styles[`aspect${posterAspect.replace(':', '') as PosterAspectRatioClass}`] : undefined;
   const posterClassNames = classNames(styles.poster, aspectRatioClass, {
     [styles.current]: isCurrent,
   });
@@ -107,7 +107,7 @@ function Card({
     >
       {!featured && !disabled && (
         <div className={styles.titleContainer}>
-          {React.createElement(`h${headingLevel}`, { className: `${styles.title} ${loading && styles.loading}` }, title)}
+          {React.createElement(`h${headingLevel}`, { className: classNames(styles.title, { [styles.loading]: loading }) }, title)}
           {!!scheduledStart && (
             <div className={classNames(styles.scheduledStart, { [styles.loading]: loading })}>{formatLocalizedDateTime(scheduledStart, language)}</div>
           )}

@@ -240,7 +240,7 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
                 class="_titleContainer_d75732"
               >
                 <h3
-                  class="_title_d75732 false"
+                  class="_title_d75732"
                 >
                   Movie 1
                 </h3>
@@ -279,7 +279,7 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
                 class="_titleContainer_d75732"
               >
                 <h3
-                  class="_title_d75732 false"
+                  class="_title_d75732"
                 >
                   Movie 2
                 </h3>
@@ -318,7 +318,7 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
                 class="_titleContainer_d75732"
               >
                 <h3
-                  class="_title_d75732 false"
+                  class="_title_d75732"
                 >
                   Third movie
                 </h3>
@@ -357,7 +357,7 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
                 class="_titleContainer_d75732"
               >
                 <h3
-                  class="_title_d75732 false"
+                  class="_title_d75732"
                 >
                   Last playlist item
                 </h3>
