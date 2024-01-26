@@ -267,7 +267,7 @@ function TileDock<T>({
             return (
               <li
                 key={tile.key}
-                data-visible={isInView}
+                aria-hidden={!isInView}
                 className={classNames({ [styles.notInView]: !isInView })}
                 style={{
                   width: `${tileWidth}%`,
