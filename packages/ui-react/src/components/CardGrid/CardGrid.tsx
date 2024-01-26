@@ -64,7 +64,7 @@ function CardGrid({
   const visibleTiles: VisibleTiles = (cols[breakpoint] + parseTilesDelta(posterAspect)) as VisibleTiles;
   const [rowCount, setRowCount] = useState(INITIAL_ROW_COUNT);
 
-  const defaultLoadMore = () => setTimeout(() => setRowCount((current) => current + LOAD_ROWS_COUNT), 4000);
+  const defaultLoadMore = () => setRowCount((current) => current + LOAD_ROWS_COUNT);
   const defaultHasMore = rowCount * visibleTiles < playlist.playlist.length;
 
   useEffect(() => {
