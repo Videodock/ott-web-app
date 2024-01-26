@@ -84,7 +84,7 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
 
   const gridRef = useRef<HTMLDivElement>(null);
 
-  // Focus the button (or other focusable element) in the currently focused grid cell
+  // Set DOM focus to a focusable element within the currently focusable grid cell
   useLayoutEffect(() => {
     const gridCell = document.getElementById(`layout_grid_${currentRowIndex}-${currentColumnIndex}`) as HTMLDivElement | null;
     const focusableElement = gridCell?.querySelector('button, a, input, [tabindex]:not([tabindex="-1"])') as HTMLElement | null;
@@ -93,8 +93,8 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
     elementToFocus?.focus();
   }, [currentRowIndex, currentColumnIndex]);
 
+  // When the window size changes, correct indexes if necessary
   useEffect(() => {
-    // When the window size changes, correct indexes if necessary
     const maxRightBottom = (data.length % columnCount) - 1;
 
     if (currentColumnIndex > columnCount - 1) {
