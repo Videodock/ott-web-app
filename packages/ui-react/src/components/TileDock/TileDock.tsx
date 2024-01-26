@@ -236,7 +236,7 @@ function TileDock<T>({
       const length = pages;
 
       return (
-        <div className={styles.dots}>
+        <div role="presentation" className={styles.dots}>
           {Array.from({ length }, (_, pageIndex) => {
             return renderPaginationDots(index, pageIndex);
           })}
@@ -246,7 +246,7 @@ function TileDock<T>({
   };
 
   return (
-    <div>
+    <React.Fragment>
       <div className={styles.tileDock}>
         {showLeftControl && !!renderLeftControl && <div className={styles.leftControl}>{renderLeftControl(() => slide('left'))}</div>}
         <ul ref={frameRef} style={ulStyle} onTouchStart={handleTouchStart} onTransitionEnd={handleTransitionEnd}>
@@ -267,6 +267,7 @@ function TileDock<T>({
             return (
               <li
                 key={tile.key}
+                data-visible={isInView}
                 className={classNames({ [styles.notInView]: !isInView })}
                 style={{
                   width: `${tileWidth}%`,
@@ -295,7 +296,7 @@ function TileDock<T>({
         {showRightControl && !!renderRightControl && <div className={styles.rightControl}>{renderRightControl(() => slide('right'))}</div>}
       </div>
       {paginationDots()}
-    </div>
+    </React.Fragment>
   );
 }
 
