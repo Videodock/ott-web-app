@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -9,17 +9,21 @@ import { MediaStatus } from '@jwp/ott-common/src/utils/liveEvent';
 import Lock from '@jwp/ott-theme/assets/icons/lock.svg?react';
 import Today from '@jwp/ott-theme/assets/icons/today.svg?react';
 import { testId } from '@jwp/ott-common/src/utils/common';
+import type { PosterAspectRatio } from '@jwp/ott-common/src/utils/collection';
 
 import Image from '../Image/Image';
 import Icon from '../Icon/Icon';
 
 import styles from './Card.module.scss';
 
+type ReplaceColon<T> = T extends `${infer Left}:${infer Right}` ? `${Left}${Right}` : T;
+type PosterAspectRatioClass = ReplaceColon<PosterAspectRatio>;
+
 type CardProps = {
   item: PlaylistItem;
   onHover?: () => void;
   progress?: number;
-  posterAspect?: string;
+  posterAspect?: PosterAspectRatio;
   featured?: boolean;
   disabled?: boolean;
   loading?: boolean;
@@ -29,7 +33,6 @@ type CardProps = {
   url: string;
   headingLevel?: number;
   tabIndex?: number;
-  focused?: boolean;
 };
 
 function Card({
@@ -46,7 +49,6 @@ function Card({
   headingLevel = 3,
   url,
   tabIndex = 0,
-  focused,
 }: CardProps): JSX.Element {
   const { title, duration, episodeNumber, seasonNumber, cardImage: image, mediaStatus, scheduledStart } = item;
   const {
@@ -60,7 +62,8 @@ function Card({
     [styles.featured]: featured,
     [styles.disabled]: disabled,
   });
-  const posterClassNames = classNames(styles.poster, styles[`aspect${posterAspect.replace(':', '')}`], {
+  const aspectRatioClass = styles[`aspect${posterAspect.replace(':', '') as PosterAspectRatioClass}`];
+  const posterClassNames = classNames(styles.poster, aspectRatioClass, {
     [styles.current]: isCurrent,
   });
   const posterImageClassNames = classNames(styles.posterImage, {
@@ -75,7 +78,7 @@ function Card({
     if (loading || disabled || !title) return null;
 
     if (isSeriesItem) {
-      return <div className={styles.tag}>Series</div>;
+      return <div className={styles.tag}>{t('video:series')}</div>;
     } else if (episodeNumber) {
       return <div className={styles.tag}>{formatSeriesMetaString(seasonNumber, episodeNumber)}</div>;
     } else if (duration) {
@@ -92,17 +95,8 @@ function Card({
     }
   };
 
-  const ref = useRef<HTMLAnchorElement>();
-
-  useEffect(() => {
-    if (focused) {
-      ref.current?.focus();
-    }
-  }, [focused]);
-
   return (
     <Link
-      ref={ref}
       role="button"
       to={url}
       className={cardClassName}

@@ -16,6 +16,8 @@ import styles from './CardGrid.module.scss';
 const INITIAL_ROW_COUNT = 6;
 const LOAD_ROWS_COUNT = 4;
 
+type VisibleTiles = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+
 const defaultCols: Breakpoints = {
   [Breakpoint.xs]: 2,
   [Breakpoint.sm]: 2,
@@ -59,10 +61,10 @@ function CardGrid({
 }: CardGridProps) {
   const breakpoint: Breakpoint = useBreakpoint();
   const posterAspect = parseAspectRatio(playlist.cardImageAspectRatio || playlist.shelfImageAspectRatio);
-  const visibleTiles = cols[breakpoint] + parseTilesDelta(posterAspect);
+  const visibleTiles: VisibleTiles = (cols[breakpoint] + parseTilesDelta(posterAspect)) as VisibleTiles;
   const [rowCount, setRowCount] = useState(INITIAL_ROW_COUNT);
 
-  const defaultLoadMore = () => setRowCount((current) => current + LOAD_ROWS_COUNT);
+  const defaultLoadMore = () => setTimeout(() => setRowCount((current) => current + LOAD_ROWS_COUNT), 4000);
   const defaultHasMore = rowCount * visibleTiles < playlist.playlist.length;
 
   useEffect(() => {
@@ -70,34 +72,27 @@ function CardGrid({
     setRowCount(INITIAL_ROW_COUNT);
   }, [playlist.feedid]);
 
-  const renderTile = (playlistItem: PlaylistItem, tabIndex: number, focused: boolean) => {
-    const { mediaid } = playlistItem;
-
-    return (
-      <Card
-        focused={focused}
-        tabIndex={tabIndex}
-        progress={watchHistory ? watchHistory[mediaid] : undefined}
-        url={getUrl(playlistItem)}
-        onHover={typeof onCardHover === 'function' ? () => onCardHover(playlistItem) : undefined}
-        loading={isLoading}
-        isCurrent={currentCardItem && currentCardItem.mediaid === mediaid}
-        currentLabel={currentCardLabel}
-        isLocked={isLocked(accessModel, isLoggedIn, hasSubscription, playlistItem)}
-        posterAspect={posterAspect}
-        item={playlistItem}
-        headingLevel={headingLevel}
-      />
-    );
-  };
-
   return (
     <InfiniteScroll pageStart={0} loadMore={loadMore ?? defaultLoadMore} hasMore={hasMore ?? defaultHasMore} loader={<InfiniteScrollLoader key="loader" />}>
       <LayoutGrid
         className={classNames(styles.container, styles[`cols-${visibleTiles}`])}
         data={loadMore ? playlist.playlist : playlist.playlist.slice(0, rowCount * visibleTiles)}
         columnCount={visibleTiles}
-        renderCell={renderTile}
+        renderCell={(playlistItem: PlaylistItem, tabIndex: number) => (
+          <Card
+            tabIndex={tabIndex}
+            progress={watchHistory ? watchHistory[playlistItem.mediaid] : undefined}
+            url={getUrl(playlistItem)}
+            onHover={typeof onCardHover === 'function' ? () => onCardHover(playlistItem) : undefined}
+            loading={isLoading}
+            isCurrent={currentCardItem && currentCardItem.mediaid === playlistItem.mediaid}
+            currentLabel={currentCardLabel}
+            isLocked={isLocked(accessModel, isLoggedIn, hasSubscription, playlistItem)}
+            posterAspect={posterAspect}
+            item={playlistItem}
+            headingLevel={headingLevel}
+          />
+        )}
       />
     </InfiniteScroll>
   );
