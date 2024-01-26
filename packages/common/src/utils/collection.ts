@@ -123,16 +123,15 @@ const formatConsentsFromValues = (publisherConsents: Consent[] | null, values?: 
 
 const checkConsentsFromValues = (publisherConsents: Consent[], consents: Record<string, string | boolean>) => {
   const customerConsents: CustomerConsent[] = [];
-  const consentsErrors: { name: string; label: string }[] = [];
+  const consentsErrors: string[] = [];
 
   if (!publisherConsents || !consents) return { customerConsents, consentsErrors };
 
   publisherConsents.forEach((consent) => {
     if (!consent) return;
 
-    if (!consents[consent.name] && consent.required) {
-      const label = consent.label || (consent.type === 'checkbox' ? 'Check this box' : 'Select an option');
-      consentsErrors.push({ name: consent.name, label });
+    if (!consents[consent.name] && consent) {
+      consentsErrors.push(consent.name);
     }
 
     customerConsents.push({

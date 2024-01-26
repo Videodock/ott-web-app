@@ -31,7 +31,7 @@ type Props = {
   values: RegistrationFormData;
   loading: boolean;
   consentValues: Record<string, string | boolean>;
-  consentErrors: { name: string; label: string }[];
+  consentErrors: string[];
   submitting: boolean;
   canSubmit: boolean;
   publisherConsents?: Consent[];
@@ -125,7 +125,7 @@ const RegistrationForm: React.FC<Props> = ({
       {publisherConsents && (
         <div className={styles.customFields} data-testid="custom-reg-fields">
           {publisherConsents.map((consent) => {
-            const helperText = consentErrors.find((error) => error.name === consent.name)?.label;
+            const consentError = consentErrors.find((error) => error === consent.name);
 
             return (
               <CustomRegisterField
@@ -137,8 +137,8 @@ const RegistrationForm: React.FC<Props> = ({
                 placeholder={consent.placeholder}
                 value={consentValues[consent.name] || ''}
                 required={consent.required}
-                error={!!helperText}
-                helperText={helperText ? t('registration.consent_required', { field: helperText }) : undefined}
+                error={!!consentError}
+                helperText={consentError ? t(`registration.field_${consent.type}_required`) : undefined}
                 onChange={onConsentChange}
               />
             );

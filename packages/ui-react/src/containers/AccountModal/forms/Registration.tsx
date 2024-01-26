@@ -22,7 +22,7 @@ const Registration = () => {
   const { t } = useTranslation('account');
   const announce = useAriaAnnouncer();
   const [consentValues, setConsentValues] = useState<Record<string, string | boolean>>({});
-  const [consentErrors, setConsentErrors] = useState<{ name: string; label: string }[]>([]);
+  const [consentErrors, setConsentErrors] = useState<string[]>([]);
 
   const appConfigId = useConfigStore(({ config }) => config.id);
   const { data, isLoading: publisherConsentsLoading } = useQuery(['consents', appConfigId], accountController.getPublisherConsents);
@@ -43,7 +43,7 @@ const Registration = () => {
     }));
 
     // Clear the errors for any checkbox that's toggled
-    setConsentErrors((errors) => errors.filter((e) => e.name !== name));
+    setConsentErrors((errors) => errors.filter((e) => e !== name));
   };
 
   useEffect(() => {
