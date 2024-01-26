@@ -130,9 +130,9 @@ const checkConsentsFromValues = (publisherConsents: Consent[], consents: Record<
   publisherConsents.forEach((consent) => {
     if (!consent) return;
 
-    // TODO: How do we handle consents without label
-    if (!consents[consent.name] && consent.required && consent.label) {
-      consentsErrors.push({ name: consent.name, label: consent.label });
+    if (!consents[consent.name] && consent.required) {
+      const label = consent.label || (consent.type === 'checkbox' ? 'Check this box' : 'Select an option');
+      consentsErrors.push({ name: consent.name, label });
     }
 
     customerConsents.push({
