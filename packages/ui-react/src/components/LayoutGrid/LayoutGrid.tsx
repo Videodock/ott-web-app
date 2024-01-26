@@ -22,16 +22,16 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
   const handleKeyDown = useEventCallback(({ key, ctrlKey }: KeyboardEvent) => {
     if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(key)) return;
 
-    const isOnMostLeft = currentColumnIndex === 0;
-    const isOnMostRight = currentColumnIndex === columnCount - 1;
-    const isOnMostTop = currentRowIndex === 0;
-    const isOnMostBottom = currentRowIndex === rowCount - 1;
-    const maxRightBottom = (data.length % columnCount) - 1; // Never go beyond last item
-    const maxRight = isOnMostBottom ? maxRightBottom : columnCount - 1;
+    const isOnFirstColumn = currentColumnIndex === 0;
+    const isOnLastColumn = currentColumnIndex === columnCount - 1;
+    const isOnFirstRow = currentRowIndex === 0;
+    const isOnLastRow = currentRowIndex === rowCount - 1;
+    const maxRightLastRow = (data.length % columnCount || columnCount) - 1; // Never go beyond last item
+    const maxRight = isOnLastRow ? maxRightLastRow : columnCount - 1;
 
     switch (key) {
       case 'ArrowLeft':
-        if (isOnMostLeft && !isOnMostTop) {
+        if (isOnFirstColumn && !isOnFirstRow) {
           // Move to last of previous row
           setCurrentColumnIndex(columnCount - 1);
           setCurrentRowIndex((current) => Math.max(current - 1, 0));
@@ -40,7 +40,7 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
         }
         return setCurrentColumnIndex((current) => Math.max(current - 1, 0));
       case 'ArrowRight':
-        if (isOnMostRight && !isOnMostBottom) {
+        if (isOnLastColumn && !isOnLastRow) {
           // Move to first of next row
           setCurrentColumnIndex(0);
           setCurrentRowIndex((current) => Math.min(current + 1, rowCount - 1));
@@ -60,7 +60,7 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
       case 'End':
         if (ctrlKey) {
           setCurrentRowIndex(maxRight);
-          setCurrentColumnIndex(maxRightBottom);
+          setCurrentColumnIndex(maxRightLastRow);
 
           return;
         }
@@ -86,22 +86,24 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
 
   // Set DOM focus to a focusable element within the currently focusable grid cell
   useLayoutEffect(() => {
+    if (!focused) return;
+
     const gridCell = document.getElementById(`layout_grid_${currentRowIndex}-${currentColumnIndex}`) as HTMLDivElement | null;
     const focusableElement = gridCell?.querySelector('button, a, input, [tabindex]:not([tabindex="-1"])') as HTMLElement | null;
     const elementToFocus = focusableElement || gridCell;
 
     elementToFocus?.focus();
-  }, [currentRowIndex, currentColumnIndex]);
+  }, [focused, currentRowIndex, currentColumnIndex]);
 
   // When the window size changes, correct indexes if necessary
   useEffect(() => {
-    const maxRightBottom = (data.length % columnCount) - 1;
+    const maxRightLastRow = (data.length % columnCount || columnCount) - 1; // Never go beyond last item
 
     if (currentColumnIndex > columnCount - 1) {
       setCurrentColumnIndex(columnCount - 1);
     }
-    if (currentRowIndex === rowCount - 1 && currentColumnIndex > maxRightBottom) {
-      setCurrentColumnIndex(maxRightBottom);
+    if (currentRowIndex === rowCount - 1 && currentColumnIndex > maxRightLastRow) {
+      setCurrentColumnIndex(maxRightLastRow);
     }
   }, [currentColumnIndex, currentRowIndex, columnCount, rowCount, data.length]);
 
@@ -112,7 +114,7 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
           {data.slice(rowIndex * columnCount, rowIndex * columnCount + columnCount).map((item, columnIndex) => (
             <div
               role="gridcell"
-              onFocus={(event) => event.target.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+              onFocus={(event) => event.target.scrollIntoView?.({ behavior: 'smooth', block: 'center' })}
               id={`layout_grid_${rowIndex}-${columnIndex}`}
               key={columnIndex}
               aria-colindex={columnIndex}

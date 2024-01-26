@@ -418,7 +418,7 @@ exports[`User Component tests > Favorites Page 1`] = `
                   data-testid="Fav 1"
                   href="/m/aaabbbcc/fav-1?r=abcdffff"
                   role="button"
-                  tabindex="-1"
+                  tabindex="0"
                 >
                   <div
                     class="_titleContainer_d75732"

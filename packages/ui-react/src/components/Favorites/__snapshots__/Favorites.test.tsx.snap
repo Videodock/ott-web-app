@@ -41,7 +41,7 @@ exports[`<Favorites> > renders and matches snapshot 1`] = `
               data-testid="SVOD 002: Caminandes 1 llama drama"
               href="/m/1TJAvj2S/svod-002-caminandes-1-llama-drama?r=bdH6HTUi"
               role="button"
-              tabindex="-1"
+              tabindex="0"
             >
               <div
                 class="_titleContainer_d75732"
