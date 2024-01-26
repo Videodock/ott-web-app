@@ -1,5 +1,6 @@
-import { PropsWithChildren, createContext, useCallback, useContext, useState } from 'react';
 import { secondsToMilliseconds } from 'date-fns';
+import { PropsWithChildren, createContext, useCallback, useContext, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import FormFeedback from '../../components/FormFeedback/FormFeedback';
 
@@ -31,11 +32,13 @@ export const AriaAnnouncerProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <AriaAnnouncerContext.Provider value={{ announce }}>
-      {announcement && (
-        <FormFeedback variant={announcement.variant} visible={false}>
-          {announcement.message}
-        </FormFeedback>
-      )}
+      {announcement &&
+        createPortal(
+          <FormFeedback variant={announcement.variant} visible={false}>
+            {announcement.message}
+          </FormFeedback>,
+          document.body,
+        )}
       {children}
     </AriaAnnouncerContext.Provider>
   );
