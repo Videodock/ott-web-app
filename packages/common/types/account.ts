@@ -21,7 +21,6 @@ export type PayloadWithIPOverride = {
 };
 
 export type LoginArgs = {
-  config: Config;
   email: string;
   password: string;
   referrer: string;
@@ -190,17 +189,12 @@ export type UpdateCustomerConsentsPayload = {
 export type Customer = {
   id: string;
   email: string;
-  country: string;
-  regDate: string;
-  lastLoginDate?: string;
-  lastUserIp: string;
   firstName?: string;
-  metadata?: Record<string, unknown>;
+  country?: string;
+  metadata: Record<string, unknown>;
   lastName?: string;
   fullName?: string;
-  uuid?: string;
-  externalId?: string;
-  externalData?: ExternalData;
+  [key: string]: unknown;
 };
 
 export type UpdateCustomerArgs = {
@@ -243,13 +237,11 @@ export type CustomerConsent = {
 };
 
 export type CustomerConsentArgs = {
-  config: Config;
   customerId?: string;
   customer?: Customer;
 };
 
 export type UpdateCustomerConsentsArgs = {
-  config: Config;
   customer: Customer;
   consents: CustomerConsent[];
 };
@@ -362,7 +354,6 @@ export type SubscribeToNotificationsPayload = {
 };
 
 export type GetSocialURLsPayload = {
-  config: Config;
   redirectUrl: string;
 };
 

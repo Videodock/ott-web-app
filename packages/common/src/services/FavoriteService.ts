@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+import { object, array, string } from 'yup';
 
 import { MAX_WATCHLIST_ITEMS_COUNT } from '../constants';
 import type { Favorite, SerializedFavorite } from '../../types/favorite';
@@ -7,6 +8,12 @@ import type { Customer } from '../../types/account';
 
 import ApiService from './ApiService';
 import StorageService from './StorageService';
+
+const schema = array(
+  object().shape({
+    mediaid: string(),
+  }),
+);
 
 @injectable()
 export default class FavoriteService {
@@ -21,8 +28,16 @@ export default class FavoriteService {
     this.storageService = storageService;
   }
 
+  private validateFavorites(user: Customer) {
+    if (schema.validateSync(user.metadata?.favorites)) {
+      return user.metadata.favorites as SerializedFavorite[];
+    }
+
+    return [];
+  }
+
   getFavorites = async (user: Customer | null, favoritesList: string) => {
-    const savedItems = user ? user.externalData?.favorites : await this.storageService.getItem<Favorite[]>(this.PERSIST_KEY_FAVORITES, true);
+    const savedItems = user ? this.validateFavorites(user) : await this.storageService.getItem<Favorite[]>(this.PERSIST_KEY_FAVORITES, true);
 
     if (savedItems?.length) {
       const playlistItems = await this.apiService.getMediaByWatchlist(

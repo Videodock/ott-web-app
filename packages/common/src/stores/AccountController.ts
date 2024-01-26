@@ -189,11 +189,9 @@ export default class AccountController {
   };
 
   login = async (email: string, password: string, referrer: string) => {
-    const { config } = useConfigStore.getState();
-
     useAccountStore.setState({ loading: true });
 
-    const response = await this.accountService.login({ config, email, password, referrer });
+    const response = await this.accountService.login({ email, password, referrer });
 
     if (response) {
       await this.afterLogin(response.user, response.customerConsents);
@@ -214,10 +212,8 @@ export default class AccountController {
   };
 
   register = async (email: string, password: string, referrer: string, consents: CustomerConsent[]) => {
-    const { config } = useConfigStore.getState();
-
     useAccountStore.setState({ loading: true });
-    const response = await this.accountService.register({ config, email, password, consents, referrer });
+    const response = await this.accountService.register({ email, password, consents, referrer });
 
     if (response) {
       const { user, customerConsents } = response;
@@ -229,14 +225,12 @@ export default class AccountController {
 
   updateConsents = async (customerConsents: CustomerConsent[]): Promise<ServiceResponse<CustomerConsent[]>> => {
     const { getAccountInfo } = useAccountStore.getState();
-    const { config } = useConfigStore.getState();
     const { customer } = getAccountInfo();
 
     useAccountStore.setState({ loading: true });
 
     try {
       const response = await this.accountService?.updateCustomerConsents({
-        config,
         customer,
         consents: customerConsents,
       });
@@ -261,10 +255,9 @@ export default class AccountController {
   // noinspection JSUnusedGlobalSymbols
   getCustomerConsents = async (): Promise<GetCustomerConsentsResponse> => {
     const { getAccountInfo } = useAccountStore.getState();
-    const { config } = useConfigStore.getState();
     const { customer } = getAccountInfo();
 
-    const response = await this.accountService.getCustomerConsents({ config, customer });
+    const response = await this.accountService.getCustomerConsents({ customer });
 
     if (response?.consents) {
       useAccountStore.setState({ customerConsents: response.consents });
@@ -478,13 +471,12 @@ export default class AccountController {
   };
 
   getSocialLoginUrls = (redirectUrl: string) => {
-    const { config } = useConfigStore.getState();
     const { hasSocialURLs } = this.getFeatures();
 
     assertModuleMethod(this.accountService.getSocialUrls, 'getSocialUrls is not available in account service');
     assertFeature(hasSocialURLs, 'Social logins');
 
-    return this.accountService.getSocialUrls({ config, redirectUrl });
+    return this.accountService.getSocialUrls({ redirectUrl });
   };
 
   deleteAccountData = async (password: string) => {

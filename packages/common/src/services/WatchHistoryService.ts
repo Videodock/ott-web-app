@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+import { array, number, object, string } from 'yup';
 
 import type { PlaylistItem } from '../../types/playlist';
 import type { SerializedWatchHistoryItem, WatchHistoryItem } from '../../types/watchHistory';
@@ -6,6 +7,13 @@ import type { Customer } from '../../types/account';
 
 import ApiService from './ApiService';
 import StorageService from './StorageService';
+
+const schema = array(
+  object().shape({
+    mediaid: string(),
+    progress: number(),
+  }),
+);
 
 @injectable()
 export default class WatchHistoryService {
@@ -47,8 +55,16 @@ export default class WatchHistoryService {
     return seriesItemsDict;
   };
 
+  private validateWatchHistory(user: Customer) {
+    if (schema.validateSync(user.metadata?.history)) {
+      return user.metadata.history as SerializedWatchHistoryItem[];
+    }
+
+    return [];
+  }
+
   getWatchHistory = async (user: Customer | null, continueWatchingList: string) => {
-    const savedItems = user ? user.externalData?.history : await this.storageService.getItem<WatchHistoryItem[]>(this.PERSIST_KEY_WATCH_HISTORY, true);
+    const savedItems = user ? this.validateWatchHistory(user) : await this.storageService.getItem<WatchHistoryItem[]>(this.PERSIST_KEY_WATCH_HISTORY, true);
 
     if (savedItems?.length) {
       // When item is an episode of the new flow -> show the card as a series one, but keep episode to redirect in a right way

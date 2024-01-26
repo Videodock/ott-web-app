@@ -35,7 +35,7 @@ export default class WatchHistoryController {
         ...state,
         user: {
           ...(state.user as Customer),
-          externalData: { ...state.user?.externalData, history: this.serializeWatchHistory(watchHistory) },
+          metadata: { ...state.user?.metadata, history: this.serializeWatchHistory(watchHistory) },
         },
       }));
     }

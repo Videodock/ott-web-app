@@ -135,6 +135,11 @@ export default class JWPAccountService extends AccountService {
     };
   };
 
+  private async getAccountMetadata(account: AccountData) {
+    const shelves = await this.getCustomerExternalData();
+    return { ...account.metadata, ...shelves };
+  }
+
   private formatAuth(auth: InPlayerAuthData): AuthData {
     const { access_token: jwt } = auth;
     return {
@@ -312,17 +317,17 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  login: Login = async ({ config, email, password, referrer }) => {
+  login: Login = async ({ email, password, referrer }) => {
     try {
       const { data } = await InPlayer.Account.signInV2({
         email,
         password,
         referrer,
-        clientId: config.integrations.jwp?.clientId || '',
+        clientId: this.clientId || '',
       });
 
       const user = this.formatAccount(data.account);
-      user.externalData = await this.getCustomerExternalData();
+      user.metadata = await this.getAccountMetadata(data.account);
 
       return {
         auth: this.formatAuth(data),
@@ -334,7 +339,7 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  register: Register = async ({ config, email, password, referrer, consents }) => {
+  register: Register = async ({ email, password, referrer, consents }) => {
     try {
       const { data } = await InPlayer.Account.signUpV2({
         email,
@@ -349,11 +354,11 @@ export default class JWPAccountService extends AccountService {
           consents: JSON.stringify(consents),
         },
         type: 'consumer',
-        clientId: config.integrations.jwp?.clientId || '',
+        clientId: this.clientId || '',
       });
 
       const user = this.formatAccount(data.account);
-      user.externalData = await this.getCustomerExternalData();
+      user.metadata = await this.getAccountMetadata(data.account);
 
       return {
         auth: this.formatAuth(data),
@@ -382,7 +387,7 @@ export default class JWPAccountService extends AccountService {
       const { data } = await InPlayer.Account.getAccountInfo();
 
       const user = this.formatAccount(data);
-      user.externalData = await this.getCustomerExternalData();
+      user.metadata = await this.getAccountMetadata(data);
 
       return {
         user,
@@ -560,10 +565,10 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  getSocialUrls: GetSocialURLs = async ({ config, redirectUrl }) => {
+  getSocialUrls: GetSocialURLs = async ({ redirectUrl }) => {
     const socialState = this.storageService.base64Encode(
       JSON.stringify({
-        client_id: config.integrations.jwp?.clientId || '',
+        client_id: this.clientId || '',
         redirect: redirectUrl,
       }),
     );

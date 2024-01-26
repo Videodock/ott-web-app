@@ -32,7 +32,7 @@ export default class FavoritesController {
         ...state,
         user: {
           ...(state.user as Customer),
-          externalData: { ...state.user?.externalData, favorites: this.serializeFavorites(favorites) },
+          metadata: { ...state.user?.metadata, favorites: this.serializeFavorites(favorites) },
         },
       }));
     }

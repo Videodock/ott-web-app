@@ -363,13 +363,13 @@ export default class CleengService {
     return this.get(`/locales${customerIP ? '?customerIP=' + customerIP : ''}`);
   };
 
-  get = <T>(path: string, options?: RequestOptions) => this.performRequest(path, 'GET', undefined, options) as T;
+  get = <T>(path: string, options?: RequestOptions) => this.performRequest(path, 'GET', undefined, options) as Promise<T>;
 
-  patch = <T>(path: string, body?: string, options?: RequestOptions) => this.performRequest(path, 'PATCH', body, options) as T;
+  patch = <T>(path: string, body?: string, options?: RequestOptions) => this.performRequest(path, 'PATCH', body, options) as Promise<T>;
 
-  put = <T>(path: string, body?: string, options?: RequestOptions) => this.performRequest(path, 'PUT', body, options) as T;
+  put = <T>(path: string, body?: string, options?: RequestOptions) => this.performRequest(path, 'PUT', body, options) as Promise<T>;
 
-  post = <T>(path: string, body?: string, options?: RequestOptions) => this.performRequest(path, 'POST', body, options) as T;
+  post = <T>(path: string, body?: string, options?: RequestOptions) => this.performRequest(path, 'POST', body, options) as Promise<T>;
 
-  remove = <T>(path: string, options?: RequestOptions) => this.performRequest(path, 'DELETE', undefined, options) as T;
+  remove = <T>(path: string, options?: RequestOptions) => this.performRequest(path, 'DELETE', undefined, options) as Promise<T>;
 }
