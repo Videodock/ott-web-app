@@ -74,6 +74,8 @@ const TextField: React.FC<Props> = ({
     const commonProps = {
       id,
       name,
+      value,
+      disabled,
       className: styles.input,
       readOnly: !editing,
       required: !!required,
