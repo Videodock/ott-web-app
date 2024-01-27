@@ -7,7 +7,6 @@ import { formatConsentsToRegisterFields } from '../../../utils/collection';
 import { getCommonResponseData, isCommonError } from '../../../utils/api';
 import type {
   AuthData,
-  Capture,
   ChangePassword,
   ChangePasswordWithOldPassword,
   Consent,
@@ -16,7 +15,6 @@ import type {
   CustomRegisterFieldVariant,
   DeleteAccount,
   ExportAccountData,
-  ExternalData,
   GetCaptureStatus,
   GetCustomerConsents,
   GetCustomerConsentsResponse,
@@ -27,19 +25,16 @@ import type {
   ResetPassword,
   GetSocialURLs,
   UpdateCaptureAnswers,
-  UpdateCustomer,
   UpdateCustomerArgs,
   UpdateCustomerConsents,
-  UpdatePersonalShelves,
 } from '../../../../types/account';
 import type { AccessModel, Config } from '../../../../types/config';
 import type { InPlayerAuthData } from '../../../../types/inplayer';
-import type { Favorite } from '../../../../types/favorite';
-import type { WatchHistoryItem } from '../../../../types/watchHistory';
+import type { SerializedFavorite } from '../../../../types/favorite';
+import type { SerializedWatchHistoryItem } from '../../../../types/watchHistory';
 import AccountService from '../AccountService';
 import StorageService from '../../StorageService';
 import { ACCESS_MODEL } from '../../../constants';
-import type { ServiceResponse } from '../../../../types/service';
 
 enum InPlayerEnv {
   Development = 'development',
@@ -76,7 +71,7 @@ export default class JWPAccountService extends AccountService {
     this.storageService = storageService;
   }
 
-  private getCustomerExternalData = async (): Promise<ExternalData> => {
+  private getCustomerExternalData = async () => {
     const [favoritesData, historyData] = await Promise.all([InPlayer.Account.getFavorites(), await InPlayer.Account.getWatchHistory({})]);
 
     const favorites = favoritesData.data?.collection?.map((favorite: FavoritesData) => {
@@ -101,17 +96,17 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  private formatFavorite = (favorite: FavoritesData): Favorite => {
+  private formatFavorite = (favorite: FavoritesData): SerializedFavorite => {
     return {
       mediaid: favorite.media_id,
-    } as Favorite;
+    };
   };
 
-  private formatHistoryItem = (history: WatchHistory): WatchHistoryItem => {
+  private formatHistoryItem = (history: WatchHistory): SerializedWatchHistoryItem => {
     return {
       mediaid: history.media_id,
       progress: history.progress,
-    } as WatchHistoryItem;
+    };
   };
 
   private formatAccount = (account: AccountData): Customer => {
@@ -278,7 +273,7 @@ export default class JWPAccountService extends AccountService {
   };
 
   updateCaptureAnswers: UpdateCaptureAnswers = async ({ customer, ...newAnswers }) => {
-    return (await this.updateCustomer({ ...customer, ...newAnswers })) as ServiceResponse<Capture>;
+    return this.updateCustomer({ ...customer, ...newAnswers });
   };
 
   changePasswordWithOldPassword: ChangePasswordWithOldPassword = async (payload) => {
@@ -398,14 +393,11 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  updateCustomer: UpdateCustomer = async (customer) => {
+  updateCustomer = async (customer: UpdateCustomerArgs) => {
     try {
       const response = await InPlayer.Account.updateAccount(this.formatUpdateAccount(customer));
 
-      return {
-        errors: [],
-        responseData: this.formatAccount(response.data),
-      };
+      return this.formatAccount(response.data);
     } catch {
       throw new Error('Failed to update user data.');
     }
@@ -492,44 +484,49 @@ export default class JWPAccountService extends AccountService {
     };
   };
 
-  updatePersonalShelves: UpdatePersonalShelves = async (payload) => {
-    const { favorites, history } = payload.externalData;
+  updateWatchHistory = async ({ history }: { id: string; history: SerializedWatchHistoryItem[] }) => {
     const externalData = await this.getCustomerExternalData();
-    const currentFavoriteIds = externalData?.favorites?.map((e) => e.mediaid);
-    const payloadFavoriteIds = favorites?.map((e) => e.mediaid);
-    const currentWatchHistoryIds = externalData?.history?.map((e) => e.mediaid);
+    const savedHistory = externalData.history?.map((e) => e.mediaid) || [];
 
-    try {
-      history?.forEach(async (history) => {
-        if (
-          !currentWatchHistoryIds?.includes(history.mediaid) ||
-          externalData?.history?.some((e) => e.mediaid == history.mediaid && e.progress != history.progress)
-        ) {
-          await InPlayer.Account.updateWatchHistory(history.mediaid, history.progress);
+    await Promise.allSettled(
+      history.map(({ mediaid, progress }) => {
+        if (!savedHistory.includes(mediaid) || externalData.history?.some((e) => e.mediaid == mediaid && e.progress != progress)) {
+          return InPlayer.Account.updateWatchHistory(mediaid, progress);
         }
-      });
+      }),
+    );
+  };
 
-      if (payloadFavoriteIds && payloadFavoriteIds.length > (currentFavoriteIds?.length || 0)) {
-        payloadFavoriteIds.forEach(async (mediaId) => {
-          if (!currentFavoriteIds?.includes(mediaId)) {
-            await InPlayer.Account.addToFavorites(mediaId);
-          }
-        });
-      } else {
-        currentFavoriteIds?.forEach(async (mediaid) => {
-          if (!payloadFavoriteIds?.includes(mediaid)) {
-            await InPlayer.Account.deleteFromFavorites(mediaid);
-          }
-        });
-      }
+  updateFavorites = async ({ favorites }: { id: string; favorites: SerializedFavorite[] }) => {
+    const externalData = await this.getCustomerExternalData();
+    const currentFavoriteIds = externalData?.favorites?.map((e) => e.mediaid) || [];
+    const payloadFavoriteIds = favorites.map((e) => e.mediaid);
 
-      return {
-        errors: [],
-        responseData: {},
-      };
-    } catch {
-      throw new Error('Failed to update external data');
-    }
+    // save new favorites
+    await Promise.allSettled(
+      payloadFavoriteIds.map((mediaId) => {
+        return !currentFavoriteIds.includes(mediaId) ? InPlayer.Account.addToFavorites(mediaId) : Promise.resolve();
+      }),
+    );
+
+    // delete removed favorites
+    await Promise.allSettled(
+      currentFavoriteIds.map((mediaId) => {
+        return !payloadFavoriteIds.includes(mediaId) ? InPlayer.Account.deleteFromFavorites(mediaId) : Promise.resolve();
+      }),
+    );
+  };
+
+  getFavorites = async () => {
+    const favoritesData = await InPlayer.Account.getFavorites();
+
+    return favoritesData.data?.collection?.map(this.formatFavorite) || [];
+  };
+
+  getWatchHistory = async () => {
+    const watchHistoryData = await InPlayer.Account.getWatchHistory({});
+
+    return watchHistoryData.data?.collection?.map(this.formatHistoryItem) || [];
   };
 
   subscribeToNotifications: NotificationsData = async ({ uuid, onMessage }) => {

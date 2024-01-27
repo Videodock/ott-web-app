@@ -23,41 +23,28 @@ import { assertFeature, assertModuleMethod, getNamedModule } from '../modules/co
 import { INTEGRATION_TYPE } from '../modules/types';
 import type { ServiceResponse } from '../../types/service';
 
-import { useWatchHistoryStore } from './WatchHistoryStore';
-import { useFavoritesStore } from './FavoritesStore';
 import { useAccountStore } from './AccountStore';
 import { useConfigStore } from './ConfigStore';
 import { useProfileStore } from './ProfileStore';
 import ProfileController from './ProfileController';
-import WatchHistoryController from './WatchHistoryController';
-import FavoritesController from './FavoritesController';
 
 @injectable()
 export default class AccountController {
   private readonly checkoutService: CheckoutService;
   private readonly accountService: AccountService;
   private readonly subscriptionService: SubscriptionService;
-  private readonly favoritesController: FavoritesController;
-  private readonly watchHistoryController: WatchHistoryController;
   private readonly profileController?: ProfileController;
   private readonly features: AccountServiceFeatures;
 
   // temporary callback for refreshing the query cache until we've updated to react-query v4 or v5
   private refreshEntitlements: (() => Promise<void>) | undefined;
 
-  constructor(
-    @inject(INTEGRATION_TYPE) integrationType: IntegrationType,
-    favoritesController: FavoritesController,
-    watchHistoryController: WatchHistoryController,
-    profileController?: ProfileController,
-  ) {
+  constructor(@inject(INTEGRATION_TYPE) integrationType: IntegrationType, profileController?: ProfileController) {
     this.checkoutService = getNamedModule(CheckoutService, integrationType);
     this.accountService = getNamedModule(AccountService, integrationType);
     this.subscriptionService = getNamedModule(SubscriptionService, integrationType);
 
     // @TODO refactor?
-    this.favoritesController = favoritesController;
-    this.watchHistoryController = watchHistoryController;
     this.profileController = profileController;
 
     this.features = integrationType ? this.accountService.features : DEFAULT_FEATURES;
@@ -69,8 +56,6 @@ export default class AccountController {
 
       if (authData) {
         await this.getAccount();
-        await this.watchHistoryController?.restoreWatchHistory();
-        await this.favoritesController?.restoreFavorites();
       }
     } catch (error: unknown) {
       logDev('Failed to get user', error);
@@ -104,26 +89,6 @@ export default class AccountController {
     return this.accountService.sandbox;
   }
 
-  updatePersonalShelves = async () => {
-    const { watchHistory } = useWatchHistoryStore.getState();
-    const { favorites } = useFavoritesStore.getState();
-    const { getAccountInfo } = useAccountStore.getState();
-
-    const { customer } = getAccountInfo();
-
-    if (!watchHistory && !favorites) return;
-
-    const personalShelfData = {
-      history: this.watchHistoryController?.serializeWatchHistory(watchHistory),
-      favorites: this.favoritesController?.serializeFavorites(favorites),
-    };
-
-    return this.accountService?.updatePersonalShelves({
-      id: customer.id,
-      externalData: personalShelfData,
-    });
-  };
-
   updateUser = async (values: FirstLastNameInput | EmailConfirmPasswordInput): Promise<ServiceResponse<Customer>> => {
     useAccountStore.setState({ loading: true });
 
@@ -152,17 +117,15 @@ export default class AccountController {
       payload = { ...values, email: user.email };
     }
 
-    const response = await this.accountService.updateCustomer({ ...payload, id: user.id.toString() });
+    const updatedUser = await this.accountService.updateCustomer({ ...payload, id: user.id.toString() });
 
-    if (!response) {
+    if (!updatedUser) {
       throw new Error('Unknown error');
     }
 
-    if (response.errors?.length === 0) {
-      useAccountStore.setState({ user: response.responseData });
-    }
+    useAccountStore.setState({ user: updatedUser });
 
-    return response;
+    return { errors: [], responseData: updatedUser };
   };
 
   getAccount = async () => {
@@ -195,9 +158,6 @@ export default class AccountController {
 
     if (response) {
       await this.afterLogin(response.user, response.customerConsents);
-
-      await this.favoritesController?.restoreFavorites().catch(logDev);
-      await this.watchHistoryController?.restoreWatchHistory().catch(logDev);
     }
 
     useAccountStore.setState({ loading: false });
@@ -220,7 +180,7 @@ export default class AccountController {
       await this.afterLogin(user, customerConsents);
     }
 
-    await this.updatePersonalShelves();
+    // @TODO save local shelves to account?
   };
 
   updateConsents = async (customerConsents: CustomerConsent[]): Promise<ServiceResponse<CustomerConsent[]>> => {
@@ -289,13 +249,11 @@ export default class AccountController {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer, customerConsents } = getAccountInfo();
 
-    const response = await this.accountService.updateCaptureAnswers({ customer, ...capture });
+    const updatedCustomer = await this.accountService.updateCaptureAnswers({ customer, ...capture });
 
-    if (response.errors.length > 0) throw new Error(response.errors[0]);
+    await this.afterLogin(updatedCustomer, customerConsents, false);
 
-    await this.afterLogin(response.responseData as Customer, customerConsents, false);
-
-    return response.responseData;
+    return updatedCustomer;
   };
 
   resetPassword = async (email: string, resetUrl: string) => {
@@ -547,8 +505,5 @@ export default class AccountController {
     });
 
     this.profileController?.unpersistProfile();
-
-    await this.favoritesController?.restoreFavorites();
-    await this.watchHistoryController?.restoreWatchHistory();
   };
 }

@@ -16,10 +16,11 @@ import type {
   ResetPassword,
   GetSocialURLs,
   UpdateCaptureAnswers,
-  UpdateCustomer,
   UpdateCustomerConsents,
-  UpdatePersonalShelves,
+  UpdateCustomerArgs,
 } from '../../../types/account';
+import type { SerializedWatchHistoryItem } from '../../../types/watchHistory';
+import type { SerializedFavorite } from '../../../types/favorite';
 
 export type AccountServiceFeatures = {
   readonly canUpdateEmail: boolean;
@@ -73,9 +74,15 @@ export default abstract class AccountService {
 
   abstract changePasswordWithOldPassword: ChangePasswordWithOldPassword;
 
-  abstract updateCustomer: UpdateCustomer;
+  abstract updateCustomer: (payload: UpdateCustomerArgs) => Promise<Customer>;
 
-  abstract updatePersonalShelves: UpdatePersonalShelves;
+  abstract updateWatchHistory: ({ id, history }: { id: string; history: SerializedWatchHistoryItem[] }) => Promise<void>;
+
+  abstract updateFavorites: ({ id, favorites }: { id: string; favorites: SerializedFavorite[] }) => Promise<void>;
+
+  abstract getWatchHistory: ({ id }: { id: string }) => Promise<SerializedWatchHistoryItem[]>;
+
+  abstract getFavorites: ({ id }: { id: string }) => Promise<SerializedFavorite[]>;
 
   abstract subscribeToNotifications: NotificationsData;
 

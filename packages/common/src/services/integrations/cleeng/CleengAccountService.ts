@@ -4,7 +4,6 @@ import { inject, injectable } from 'inversify';
 import type { AccessModel, Config } from '../../../../types/config';
 import type {
   AuthData,
-  Capture,
   ChangePassword,
   ChangePasswordWithOldPassword,
   Customer,
@@ -24,27 +23,30 @@ import type {
   ResetPassword,
   UpdateCaptureAnswers,
   UpdateCaptureAnswersPayload,
-  UpdateCustomer,
+  UpdateCustomerArgs,
   UpdateCustomerConsents,
   UpdateCustomerConsentsPayload,
   UpdateCustomerPayload,
-  UpdatePersonalShelves,
 } from '../../../../types/account';
 import AccountService from '../AccountService';
 import { GET_CUSTOMER_IP } from '../../../modules/types';
 import type { GetCustomerIP } from '../../../../types/get-customer-ip';
 import { ACCESS_MODEL } from '../../../constants';
 import type { ServiceResponse } from '../../../../types/service';
+import type { SerializedWatchHistoryItem } from '../../../../types/watchHistory';
+import type { SerializedFavorite } from '../../../../types/favorite';
 
 import CleengService from './CleengService';
-import type { CleengResponse } from './types/api';
-import type { CleengCustomer } from './types/account';
+import type { GetCustomerResponse, UpdateConsentsResponse, UpdateCustomerResponse } from './types/account';
+import type { CleengCustomer } from './types/models';
 
 @injectable()
 export default class CleengAccountService extends AccountService {
   private readonly cleengService;
   private readonly getCustomerIP;
   private publisherId = '';
+
+  private externalData: Record<string, unknown> = {};
 
   accessModel: AccessModel = ACCESS_MODEL.AUTHVOD;
   svodOfferIds: string[] = [];
@@ -93,11 +95,14 @@ export default class CleengAccountService extends AccountService {
   };
 
   private getCustomer = async ({ customerId }: { customerId: string }) => {
-    const response = await this.cleengService.get<CleengResponse<CleengCustomer>>(`/customers/${customerId}`, { authenticate: true });
+    const { responseData, errors } = await this.cleengService.get<GetCustomerResponse>(`/customers/${customerId}`, {
+      authenticate: true,
+    });
 
-    this.handleErrors(response.errors);
+    this.handleErrors(errors);
+    this.externalData = responseData.externalData || {};
 
-    return this.formatCustomer(response.responseData);
+    return this.formatCustomer(responseData);
   };
 
   private getLocales: GetLocales = async () => {
@@ -152,7 +157,7 @@ export default class CleengAccountService extends AccountService {
       consents: payload.consents,
     };
 
-    const response: ServiceResponse<never> = await this.cleengService.put(`/customers/${customer?.id}/consents`, JSON.stringify(params), {
+    const response = await this.cleengService.put<UpdateConsentsResponse>(`/customers/${customer?.id}/consents`, JSON.stringify(params), {
       authenticate: true,
     });
     this.handleErrors(response.errors);
@@ -262,14 +267,12 @@ export default class CleengAccountService extends AccountService {
       ...payload,
     };
 
-    const response = await this.cleengService.put<CleengResponse<Capture>>(`/customers/${customer.id}/capture`, JSON.stringify(params), {
+    const response = await this.cleengService.put<UpdateConsentsResponse>(`/customers/${customer.id}/capture`, JSON.stringify(params), {
       authenticate: true,
     });
     this.handleErrors(response.errors);
 
-    // const updatedCustomer = await this.getCustomer({ customerId: customer.id });
-
-    return response;
+    return this.getCustomer({ customerId: customer.id });
   };
 
   resetPassword: ResetPassword = async (payload) => {
@@ -299,21 +302,53 @@ export default class CleengAccountService extends AccountService {
     };
   };
 
-  updateCustomer: UpdateCustomer = async (payload) => {
+  updateCustomer = async (payload: UpdateCustomerArgs) => {
     const { id, metadata, fullName, ...rest } = payload;
     const params: UpdateCustomerPayload = {
       id,
       ...rest,
     };
+
     // enable keepalive to ensure data is persisted when closing the browser/tab
-    return this.cleengService.patch(`/customers/${id}`, JSON.stringify(params), {
+    const { responseData, errors } = await this.cleengService.patch<UpdateCustomerResponse>(`/customers/${id}`, JSON.stringify(params), {
       authenticate: true,
       keepalive: true,
     });
+
+    this.handleErrors(errors);
+    this.externalData = responseData.externalData || {};
+
+    return this.formatCustomer(responseData);
   };
 
-  updatePersonalShelves: UpdatePersonalShelves = async (payload) => {
-    return await this.updateCustomer(payload);
+  updateWatchHistory = async ({ id, history }: { id: string; history: SerializedWatchHistoryItem[] }) => {
+    const payload = { id, externalData: { ...this.externalData, history } };
+    const { errors, responseData } = await this.cleengService.patch<UpdateCustomerResponse>(`/customers/${id}`, JSON.stringify(payload), {
+      authenticate: true,
+      keepalive: true,
+    });
+
+    this.handleErrors(errors);
+    this.externalData = responseData.externalData || {};
+  };
+
+  updateFavorites = async ({ id, favorites }: { id: string; favorites: SerializedFavorite[] }) => {
+    const payload = { id, externalData: { ...this.externalData, favorites } };
+    const { errors, responseData } = await this.cleengService.patch<UpdateCustomerResponse>(`/customers/${id}`, JSON.stringify(payload), {
+      authenticate: true,
+      keepalive: true,
+    });
+
+    this.handleErrors(errors);
+    this.externalData = responseData.externalData || {};
+  };
+
+  getWatchHistory = async () => {
+    return (this.externalData['history'] || []) as SerializedWatchHistoryItem[];
+  };
+
+  getFavorites = async () => {
+    return (this.externalData['favorites'] || []) as SerializedFavorite[];
   };
 
   subscribeToNotifications: NotificationsData = async () => {

@@ -1,7 +1,5 @@
 import type { ProfilesData } from '@inplayer-org/inplayer.js';
 
-import type { SerializedWatchHistoryItem } from './watchHistory';
-import type { SerializedFavorite } from './favorite';
 import type { Config } from './config';
 import type { EmptyServiceRequest, EnvironmentServiceRequest, PromiseRequest } from './service';
 
@@ -89,15 +87,6 @@ export type RegisterPayload = PayloadWithIPOverride & {
   externalData?: string;
 };
 
-export type RegisterArgs = {
-  config: Config;
-  user: RegisterPayload;
-};
-export type CaptureFirstNameLastName = {
-  firstName: string;
-  lastName: string;
-};
-
 export type CleengCaptureField = {
   key: string;
   enabled: boolean;
@@ -128,16 +117,8 @@ export type PersonalDetailsFormData = {
   country: string;
 };
 
-export type GetPublisherConsentsPayload = {
-  publisherId: string;
-};
-
 export type GetPublisherConsentsResponse = {
   consents: Consent[];
-};
-
-export type GetCustomerConsentsPayload = {
-  customerId: string;
 };
 
 export type GetCustomerConsentsResponse = {
@@ -163,22 +144,12 @@ export type ChangePasswordWithOldPasswordPayload = {
   newPasswordConfirmation: string;
 };
 
-export type GetCustomerPayload = {
-  customerId: string;
-};
-
 export type UpdateCustomerPayload = {
   id?: string;
   email?: string;
   confirmationPassword?: string;
   firstName?: string;
   lastName?: string;
-  externalData?: ExternalData;
-};
-
-export type ExternalData = {
-  history?: SerializedWatchHistoryItem[];
-  favorites?: SerializedFavorite[];
 };
 
 export type UpdateCustomerConsentsPayload = {
@@ -203,7 +174,6 @@ export type UpdateCustomerArgs = {
   confirmationPassword?: string | undefined;
   firstName?: string | undefined;
   lastName?: string | undefined;
-  externalData?: ExternalData | undefined;
   metadata?: Record<string, unknown>;
   fullName?: string;
 };
@@ -253,10 +223,6 @@ export type LocalesData = {
   ipAddress: string;
 };
 
-export type GetCaptureStatusPayload = {
-  customerId: string;
-};
-
 export type GetCaptureStatusResponse = {
   isCaptureEnabled: boolean;
   shouldCaptureBeDisplayed: boolean;
@@ -294,14 +260,6 @@ export type UpdateCaptureStatusArgs = {
 export type UpdateCaptureAnswersPayload = {
   customerId: string;
 } & Capture;
-
-export type UpdatePersonalShelvesArgs = {
-  id: string;
-  externalData: {
-    history?: SerializedWatchHistoryItem[];
-    favorites?: SerializedFavorite[];
-  };
-};
 
 export type Profile = ProfilesData;
 
@@ -370,17 +328,14 @@ export type SocialURLs =
 
 export type Login = PromiseRequest<LoginArgs, AuthResponse>;
 export type Register = PromiseRequest<RegistrationArgs, AuthResponse>;
-export type GetCustomer = EnvironmentServiceRequest<GetCustomerPayload, Customer>;
-export type UpdateCustomer = EnvironmentServiceRequest<UpdateCustomerArgs, Customer>;
 export type GetPublisherConsents = PromiseRequest<Config, GetPublisherConsentsResponse>;
 export type GetCustomerConsents = PromiseRequest<CustomerConsentArgs, GetCustomerConsentsResponse>;
 export type UpdateCustomerConsents = PromiseRequest<UpdateCustomerConsentsArgs, GetCustomerConsentsResponse>;
 export type GetCaptureStatus = EnvironmentServiceRequest<GetCaptureStatusArgs, GetCaptureStatusResponse>;
-export type UpdateCaptureAnswers = EnvironmentServiceRequest<UpdateCaptureStatusArgs, Capture>;
+export type UpdateCaptureAnswers = PromiseRequest<UpdateCaptureStatusArgs, Customer>;
 export type ResetPassword = EnvironmentServiceRequest<ResetPasswordPayload, Record<string, unknown>>;
 export type ChangePassword = EnvironmentServiceRequest<ChangePasswordWithTokenPayload, unknown>;
 export type ChangePasswordWithOldPassword = EnvironmentServiceRequest<ChangePasswordWithOldPasswordPayload, unknown>;
-export type UpdatePersonalShelves = EnvironmentServiceRequest<UpdatePersonalShelvesArgs, Customer | Record<string, unknown>>;
 export type GetLocales = EmptyServiceRequest<LocalesData>;
 export type ExportAccountData = EnvironmentServiceRequest<undefined, CommonAccountResponse>;
 export type GetSocialURLs = PromiseRequest<GetSocialURLsPayload, SocialURLs[]>;
