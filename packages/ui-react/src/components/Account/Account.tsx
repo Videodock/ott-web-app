@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { shallow } from '@jwp/ott-common/src/utils/compare';
@@ -7,8 +7,8 @@ import { useMutation, useQuery } from 'react-query';
 import type { ConsentsValue } from '@jwp/ott-common/types/account';
 import { getModule } from '@jwp/ott-common/src/modules/container';
 import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
-import AccountController from '@jwp/ott-common/src/stores/AccountController';
 import { isTruthy, logDev } from '@jwp/ott-common/src/utils/common';
+import AccountController from '@jwp/ott-common/src/controllers/AccountController';
 import useToggle from '@jwp/ott-hooks-react/src/useToggle';
 import Visibility from '@jwp/ott-theme/assets/icons/visibility.svg?react';
 import VisibilityOff from '@jwp/ott-theme/assets/icons/visibility_off.svg?react';
@@ -46,13 +46,13 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
   });
   const exportDataMessage = exportData.isSuccess ? t('account.export_data_success') : t('account.export_data_error');
 
-  const { data: consentsFields } = useQuery(['consents'], accountController.getConsents);
   const { data: consentsValues } = useQuery(['consentsValues'], accountController.getConsentsValues);
   const { data: registrationFields } = useQuery(['registrationFields'], accountController.getRegistrationFields);
 
-  const { customer } = useAccountStore(
-    ({ user }) => ({
+  const { customer, consentsFields } = useAccountStore(
+    ({ user, publisherConsents }) => ({
       customer: user,
+      consentsFields: publisherConsents,
     }),
     shallow,
   );
@@ -62,6 +62,15 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
   const registerSource = customer?.metadata?.register_source;
   const isSocialLogin = (registerSource && registerSource !== 'inplayer') || false;
   const shouldAddPassword = (isSocialLogin && !customer?.metadata?.has_password) || false;
+
+  // load consents (move to `useConsents` hook?)
+  useEffect(() => {
+    if (!consentsFields) {
+      accountController.getConsents();
+
+      return;
+    }
+  }, [accountController, consentsFields]);
 
   const registrationFieldsValues = useMemo(() => {
     return Object.fromEntries(

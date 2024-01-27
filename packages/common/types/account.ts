@@ -68,12 +68,6 @@ export type EditPasswordFormData = {
   resetPasswordToken?: string;
 };
 
-export type OfferType = 'svod' | 'tvod';
-
-export type ChooseOfferFormData = {
-  offerId?: string;
-};
-
 export type GetUserArgs = {
   config: Config;
 };
