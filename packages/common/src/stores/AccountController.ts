@@ -15,8 +15,6 @@ import type {
   EmailConfirmPasswordInput,
   FirstLastNameInput,
   GetCaptureStatusResponse,
-  GetCustomerConsentsResponse,
-  GetPublisherConsentsResponse,
   SubscribeToNotificationsPayload,
 } from '../../types/account';
 import { assertFeature, assertModuleMethod, getNamedModule } from '../modules/container';
@@ -190,15 +188,15 @@ export default class AccountController {
     useAccountStore.setState({ loading: true });
 
     try {
-      const response = await this.accountService?.updateCustomerConsents({
+      const updatedConsents = await this.accountService?.updateCustomerConsents({
         customer,
         consents: customerConsents,
       });
 
-      if (response?.consents) {
-        useAccountStore.setState({ customerConsents: response.consents });
+      if (updatedConsents) {
+        useAccountStore.setState({ customerConsents: updatedConsents });
         return {
-          responseData: response.consents,
+          responseData: updatedConsents,
           errors: [],
         };
       }
@@ -213,27 +211,27 @@ export default class AccountController {
 
   // TODO: Decide if it's worth keeping this or just leave combined with getUser
   // noinspection JSUnusedGlobalSymbols
-  getCustomerConsents = async (): Promise<GetCustomerConsentsResponse> => {
+  getCustomerConsents = async () => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
-    const response = await this.accountService.getCustomerConsents({ customer });
+    const consents = await this.accountService.getCustomerConsents({ customer });
 
-    if (response?.consents) {
-      useAccountStore.setState({ customerConsents: response.consents });
+    if (consents) {
+      useAccountStore.setState({ customerConsents: consents });
     }
 
-    return response;
+    return consents;
   };
 
-  getPublisherConsents = async (): Promise<GetPublisherConsentsResponse> => {
+  getPublisherConsents = async () => {
     const { config } = useConfigStore.getState();
 
-    const response = await this.accountService.getPublisherConsents(config);
+    const consents = await this.accountService.getPublisherConsents(config);
 
-    useAccountStore.setState({ publisherConsents: response.consents });
+    useAccountStore.setState({ publisherConsents: consents });
 
-    return response;
+    return consents;
   };
 
   getCaptureStatus = async (): Promise<GetCaptureStatusResponse> => {

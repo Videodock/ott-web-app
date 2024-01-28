@@ -5,11 +5,13 @@ import { BroadcastChannel } from 'broadcast-channel';
 
 import { IS_DEVELOPMENT_BUILD, logDev } from '../../../utils/common';
 import { PromiseQueue } from '../../../utils/promiseQueue';
-import type { AuthData, GetLocales } from '../../../../types/account';
+import type { AuthData } from '../../../../types/account';
 import StorageService from '../../StorageService';
 import { GET_CUSTOMER_IP } from '../../../modules/types';
 import type { GetCustomerIP } from '../../../../types/get-customer-ip';
-import type { ServiceResponse } from '../../../../types/service';
+
+import type { GetLocalesResponse } from './types/account';
+import type { Response } from './types/api';
 
 const AUTH_PERSIST_KEY = 'auth';
 
@@ -120,7 +122,7 @@ export default class CleengService {
    */
   private getNewTokens: (tokens: Tokens) => Promise<Tokens | null> = async ({ refreshToken }) => {
     try {
-      const { responseData: newTokens } = await this.post<Promise<ServiceResponse<AuthData>>>('/auths/refresh_token', JSON.stringify({ refreshToken }));
+      const { responseData: newTokens } = await this.post<Response<AuthData>>('/auths/refresh_token', JSON.stringify({ refreshToken }));
 
       return {
         accessToken: newTokens.jwt,
@@ -357,10 +359,10 @@ export default class CleengService {
     return accessToken;
   };
 
-  getLocales: GetLocales = async () => {
+  getLocales = async () => {
     const customerIP = await this.getCustomerIP();
 
-    return this.get(`/locales${customerIP ? '?customerIP=' + customerIP : ''}`);
+    return this.get<GetLocalesResponse>(`/locales${customerIP ? '?customerIP=' + customerIP : ''}`);
   };
 
   get = <T>(path: string, options?: RequestOptions) => this.performRequest(path, 'GET', undefined, options) as Promise<T>;

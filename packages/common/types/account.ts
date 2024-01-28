@@ -1,7 +1,7 @@
 import type { ProfilesData } from '@inplayer-org/inplayer.js';
 
 import type { Config } from './config';
-import type { EmptyServiceRequest, EnvironmentServiceRequest, PromiseRequest } from './service';
+import type { EnvironmentServiceRequest, PromiseRequest } from './service';
 
 export type AuthData = {
   jwt: string;
@@ -117,10 +117,6 @@ export type PersonalDetailsFormData = {
   country: string;
 };
 
-export type GetPublisherConsentsResponse = {
-  consents: Consent[];
-};
-
 export type GetCustomerConsentsResponse = {
   consents: CustomerConsent[];
 };
@@ -180,8 +176,8 @@ export type UpdateCustomerArgs = {
 
 export type CustomRegisterFieldVariant = 'input' | 'select' | 'country' | 'us_state' | 'radio' | 'checkbox' | 'datepicker';
 
-export interface Consent {
-  type?: CustomRegisterFieldVariant;
+export interface CustomFormField {
+  type: CustomRegisterFieldVariant;
   isCustomRegisterField?: boolean;
   enabledByDefault?: boolean;
   defaultValue?: string;
@@ -214,13 +210,6 @@ export type CustomerConsentArgs = {
 export type UpdateCustomerConsentsArgs = {
   customer: Customer;
   consents: CustomerConsent[];
-};
-
-export type LocalesData = {
-  country: string;
-  currency: string;
-  locale: string;
-  ipAddress: string;
 };
 
 export type GetCaptureStatusResponse = {
@@ -328,15 +317,16 @@ export type SocialURLs =
 
 export type Login = PromiseRequest<LoginArgs, AuthResponse>;
 export type Register = PromiseRequest<RegistrationArgs, AuthResponse>;
-export type GetPublisherConsents = PromiseRequest<Config, GetPublisherConsentsResponse>;
-export type GetCustomerConsents = PromiseRequest<CustomerConsentArgs, GetCustomerConsentsResponse>;
-export type UpdateCustomerConsents = PromiseRequest<UpdateCustomerConsentsArgs, GetCustomerConsentsResponse>;
+export type GetPublisherConsents = PromiseRequest<Config, CustomFormField[]>;
+export type GetCustomerConsents = PromiseRequest<CustomerConsentArgs, CustomerConsent[]>;
+export type UpdateCustomerConsents = PromiseRequest<UpdateCustomerConsentsArgs, CustomerConsent[]>;
+
+// todo
 export type GetCaptureStatus = EnvironmentServiceRequest<GetCaptureStatusArgs, GetCaptureStatusResponse>;
 export type UpdateCaptureAnswers = PromiseRequest<UpdateCaptureStatusArgs, Customer>;
 export type ResetPassword = EnvironmentServiceRequest<ResetPasswordPayload, Record<string, unknown>>;
 export type ChangePassword = EnvironmentServiceRequest<ChangePasswordWithTokenPayload, unknown>;
 export type ChangePasswordWithOldPassword = EnvironmentServiceRequest<ChangePasswordWithOldPasswordPayload, unknown>;
-export type GetLocales = EmptyServiceRequest<LocalesData>;
 export type ExportAccountData = EnvironmentServiceRequest<undefined, CommonAccountResponse>;
 export type GetSocialURLs = PromiseRequest<GetSocialURLsPayload, SocialURLs[]>;
 export type NotificationsData = PromiseRequest<SubscribeToNotificationsPayload, boolean>;

@@ -9,7 +9,7 @@ import type {
   AuthData,
   ChangePassword,
   ChangePasswordWithOldPassword,
-  Consent,
+  CustomFormField,
   Customer,
   CustomerConsent,
   CustomRegisterFieldVariant,
@@ -17,7 +17,6 @@ import type {
   ExportAccountData,
   GetCaptureStatus,
   GetCustomerConsents,
-  GetCustomerConsentsResponse,
   GetPublisherConsents,
   Login,
   NotificationsData,
@@ -203,7 +202,7 @@ export default class JWPAccountService extends AccountService {
         // we exclude these fields because we already have them by default
         .filter((field) => !['email_confirmation', 'first_name', 'surname'].includes(field.name) && ![terms].includes(field))
         .map(
-          (field): Consent => ({
+          (field): CustomFormField => ({
             type: field.type as CustomRegisterFieldVariant,
             isCustomRegisterField: true,
             name: field.name,
@@ -211,6 +210,7 @@ export default class JWPAccountService extends AccountService {
             placeholder: field.placeholder,
             required: field.required,
             options: field.options,
+            defaultValue: '',
             version: '1',
             ...(field.type === 'checkbox'
               ? {
@@ -222,9 +222,7 @@ export default class JWPAccountService extends AccountService {
           }),
         );
 
-      const consents = terms ? [this.getTermsConsent(terms), ...result] : result;
-
-      return { consents };
+      return terms ? [this.getTermsConsent(terms), ...result] : result;
     } catch {
       throw new Error('Failed to fetch publisher consents.');
     }
@@ -239,9 +237,8 @@ export default class JWPAccountService extends AccountService {
       }
 
       const { customer } = payload;
-      const consents: GetCustomerConsentsResponse = this.parseJson(customer.metadata?.consents as string, []);
 
-      return consents;
+      return this.parseJson(customer.metadata?.consents as string, []);
     } catch {
       throw new Error('Unable to fetch Customer consents.');
     }
@@ -264,9 +261,7 @@ export default class JWPAccountService extends AccountService {
 
       const { data } = await InPlayer.Account.updateAccount(params);
 
-      return {
-        consents: this.parseJson(data?.metadata?.consents as string, []),
-      };
+      return this.parseJson(data?.metadata?.consents as string, []);
     } catch {
       throw new Error('Unable to update Customer consents');
     }
@@ -464,7 +459,7 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  getTermsConsent = ({ label: termsUrl }: RegisterField): Consent => {
+  getTermsConsent = ({ label: termsUrl }: RegisterField): CustomFormField => {
     const termsLink = `<a href="${termsUrl || JW_TERMS_URL}" target="_blank">${i18next.t('account:registration.terms_and_conditions')}</a>`;
 
     // t('account:registration.terms_consent_jwplayer')
@@ -474,6 +469,7 @@ export default class JWPAccountService extends AccountService {
       isCustomRegisterField: true,
       required: true,
       name: 'terms',
+      defaultValue: '',
       label: termsUrl
         ? i18next.t('account:registration.terms_consent', { termsLink })
         : i18next.t('account:registration.terms_consent_jwplayer', { termsLink }),

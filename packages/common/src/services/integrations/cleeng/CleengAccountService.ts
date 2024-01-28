@@ -6,14 +6,10 @@ import type {
   AuthData,
   ChangePassword,
   ChangePasswordWithOldPassword,
-  Customer,
   GetCaptureStatus,
   GetCaptureStatusResponse,
   GetCustomerConsents,
-  GetCustomerConsentsResponse,
-  GetLocales,
   GetPublisherConsents,
-  GetPublisherConsentsResponse,
   JwtDetails,
   Login,
   LoginPayload,
@@ -37,8 +33,16 @@ import type { SerializedWatchHistoryItem } from '../../../../types/watchHistory'
 import type { SerializedFavorite } from '../../../../types/favorite';
 
 import CleengService from './CleengService';
-import type { GetCustomerResponse, UpdateConsentsResponse, UpdateCustomerResponse } from './types/account';
-import type { CleengCustomer } from './types/models';
+import type {
+  GetCustomerResponse,
+  GetCustomerConsentsResponse,
+  GetPublisherConsentsResponse,
+  UpdateConsentsResponse,
+  UpdateCustomerResponse,
+  AuthResponse,
+} from './types/account';
+import { formatCustomer } from './formatters/customer';
+import { formatPublisherConsent } from './formatters/consents';
 
 @injectable()
 export default class CleengAccountService extends AccountService {
@@ -81,19 +85,6 @@ export default class CleengAccountService extends AccountService {
     return decodedToken.customerId;
   };
 
-  private formatCustomer = (customer: CleengCustomer): Customer => {
-    return {
-      id: customer.id,
-      email: customer.email,
-      country: customer.country,
-      firstName: customer.firstName,
-      lastName: customer.lastName,
-      fullName: `${customer.firstName} ${customer.lastName}`,
-      // map `externalData` to `metadata` (NOTE; The Cleeng API returns parsed values)
-      metadata: customer.externalData || {},
-    };
-  };
-
   private getCustomer = async ({ customerId }: { customerId: string }) => {
     const { responseData, errors } = await this.cleengService.get<GetCustomerResponse>(`/customers/${customerId}`, {
       authenticate: true,
@@ -102,10 +93,10 @@ export default class CleengAccountService extends AccountService {
     this.handleErrors(errors);
     this.externalData = responseData.externalData || {};
 
-    return this.formatCustomer(responseData);
+    return formatCustomer(responseData);
   };
 
-  private getLocales: GetLocales = async () => {
+  private getLocales = async () => {
     return this.cleengService.getLocales();
   };
 
@@ -139,14 +130,12 @@ export default class CleengAccountService extends AccountService {
 
   getCustomerConsents: GetCustomerConsents = async (payload) => {
     const { customer } = payload;
-    const response: ServiceResponse<GetCustomerConsentsResponse> = await this.cleengService.get(`/customers/${customer?.id}/consents`, {
+    const response = await this.cleengService.get<GetCustomerConsentsResponse>(`/customers/${customer?.id}/consents`, {
       authenticate: true,
     });
     this.handleErrors(response.errors);
 
-    return {
-      consents: response?.responseData?.consents || [],
-    };
+    return response?.responseData?.consents || [];
   };
 
   updateCustomerConsents: UpdateCustomerConsents = async (payload) => {
@@ -173,7 +162,7 @@ export default class CleengAccountService extends AccountService {
       customerIP: await this.getCustomerIP(),
     };
 
-    const { responseData: auth, errors }: ServiceResponse<AuthData> = await this.cleengService.post('/auths', JSON.stringify(payload));
+    const { responseData: auth, errors } = await this.cleengService.post<AuthResponse>('/auths', JSON.stringify(payload));
     this.handleErrors(errors);
 
     await this.cleengService.setTokens({ accessToken: auth.jwt, refreshToken: auth.refreshToken });
@@ -232,7 +221,7 @@ export default class CleengAccountService extends AccountService {
 
     const customerId = this.getCustomerIdFromAuthData(authData);
     const user = await this.getCustomer({ customerId });
-    const { consents } = await this.getCustomerConsents({ customer: user });
+    const consents = await this.getCustomerConsents({ customer: user });
 
     return {
       user,
@@ -240,15 +229,12 @@ export default class CleengAccountService extends AccountService {
     };
   };
 
-  getPublisherConsents: GetPublisherConsents = async (config) => {
-    const { cleeng } = config.integrations;
-    const response: ServiceResponse<GetPublisherConsentsResponse> = await this.cleengService.get(`/publishers/${cleeng?.id}/consents`);
+  getPublisherConsents: GetPublisherConsents = async () => {
+    const response = await this.cleengService.get<GetPublisherConsentsResponse>(`/publishers/${this.publisherId}/consents`);
 
     this.handleErrors(response.errors);
 
-    return {
-      consents: response?.responseData?.consents || [],
-    };
+    return (response.responseData?.consents || []).map(formatPublisherConsent);
   };
 
   getCaptureStatus: GetCaptureStatus = async ({ customer }) => {
@@ -318,7 +304,7 @@ export default class CleengAccountService extends AccountService {
     this.handleErrors(errors);
     this.externalData = responseData.externalData || {};
 
-    return this.formatCustomer(responseData);
+    return formatCustomer(responseData);
   };
 
   updateWatchHistory = async ({ id, history }: { id: string; history: SerializedWatchHistoryItem[] }) => {
