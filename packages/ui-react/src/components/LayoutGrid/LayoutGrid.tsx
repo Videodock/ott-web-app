@@ -1,5 +1,6 @@
 // Keyboard-accessible grid layout, with focus management
 
+import { throttle } from '@jwp/ott-common/src/utils/common';
 import useEventCallback from '@jwp/ott-hooks-react/src/useEventCallback';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
@@ -12,15 +13,25 @@ type Props<Item> = {
   renderCell: (item: Item, tabIndex: number) => JSX.Element;
 };
 
+const scrollIntoViewThrottled = throttle(function (focusedElement: HTMLElement) {
+  focusedElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}, 300);
+
 const LayoutGrid = <Item extends object>({ className, columnCount, data, renderCell }: Props<Item>) => {
   const [focused, setFocused] = useState(false);
   const [currentRowIndex, setCurrentRowIndex] = useState(0);
   const [currentColumnIndex, setCurrentColumnIndex] = useState(0);
-
+  const gridRef = useRef<HTMLDivElement>(null);
   const rowCount = Math.ceil(data.length / columnCount);
 
-  const handleKeyDown = useEventCallback(({ key, ctrlKey }: KeyboardEvent) => {
+  const handleKeyDown = useEventCallback((event: KeyboardEvent) => {
+    if (event instanceof KeyboardEvent === false) return;
+
+    const { key, ctrlKey } = event;
+
     if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(key)) return;
+
+    event.preventDefault();
 
     const isOnFirstColumn = currentColumnIndex === 0;
     const isOnLastColumn = currentColumnIndex === columnCount - 1;
@@ -74,15 +85,22 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
     }
   });
 
+  const originalScrollBehavior = useRef<string | null>(null);
+
   useEffect(() => {
     if (focused) {
       document.addEventListener('keydown', handleKeyDown);
+
+      // Prevent immediate page scrolling when out-of-viewport element gets focus
+      originalScrollBehavior.current = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'smooth';
     }
 
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      document.documentElement.style.scrollBehavior = originalScrollBehavior.current || '';
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [focused, handleKeyDown, columnCount, rowCount]);
-
-  const gridRef = useRef<HTMLDivElement>(null);
 
   // Set DOM focus to a focusable element within the currently focusable grid cell
   useLayoutEffect(() => {
@@ -92,7 +110,10 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
     const focusableElement = gridCell?.querySelector('button, a, input, [tabindex]:not([tabindex="-1"])') as HTMLElement | null;
     const elementToFocus = focusableElement || gridCell;
 
-    elementToFocus?.focus();
+    if (!elementToFocus) return;
+
+    elementToFocus.focus();
+    scrollIntoViewThrottled(elementToFocus);
   }, [focused, currentRowIndex, currentColumnIndex]);
 
   // When the window size changes, correct indexes if necessary
@@ -114,7 +135,6 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
           {data.slice(rowIndex * columnCount, rowIndex * columnCount + columnCount).map((item, columnIndex) => (
             <div
               role="gridcell"
-              onFocus={(event) => event.target.scrollIntoView?.({ behavior: 'smooth', block: 'center' })}
               id={`layout_grid_${rowIndex}-${columnIndex}`}
               key={columnIndex}
               aria-colindex={columnIndex}
