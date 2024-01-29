@@ -55,11 +55,13 @@ export default class FavoriteService {
 
   getFavorites = async (user: Customer | null, favoritesList: string) => {
     const savedItems = user ? await this.getFavoritesFromAccount(user) : await this.getFavoritesFromStorage();
+    const mediaIds = savedItems.map(({ mediaid }) => mediaid);
 
-    const playlistItems = await this.apiService.getMediaByWatchlist(
-      favoritesList,
-      savedItems.map(({ mediaid }) => mediaid),
-    );
+    if (!mediaIds) {
+      return [];
+    }
+
+    const playlistItems = await this.apiService.getMediaByWatchlist(favoritesList, mediaIds);
 
     return (playlistItems || []).map((item) => this.createFavorite(item));
   };

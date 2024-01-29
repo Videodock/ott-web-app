@@ -86,6 +86,10 @@ export default class WatchHistoryService {
     // When item is an episode of the new flow -> show the card as a series one, but keep episode to redirect in a right way
     const ids = savedItems.map(({ mediaid }) => mediaid);
 
+    if (!ids.length) {
+      return [];
+    }
+
     const watchHistoryItems = await this.getWatchHistoryItems(continueWatchingList, ids);
     const seriesItems = await this.getWatchHistorySeriesItems(continueWatchingList, ids);
 
