@@ -61,7 +61,7 @@ function CardGrid({
 }: CardGridProps) {
   const breakpoint: Breakpoint = useBreakpoint();
   const posterAspect = parseAspectRatio(playlist.cardImageAspectRatio || playlist.shelfImageAspectRatio);
-  const visibleTiles: VisibleTiles = (cols[breakpoint] + parseTilesDelta(posterAspect)) as VisibleTiles;
+  const visibleTiles = (cols[breakpoint] + parseTilesDelta(posterAspect)) as VisibleTiles;
   const [rowCount, setRowCount] = useState(INITIAL_ROW_COUNT);
 
   const defaultLoadMore = () => setRowCount((current) => current + LOAD_ROWS_COUNT);
