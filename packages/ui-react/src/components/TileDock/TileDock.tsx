@@ -236,7 +236,7 @@ function TileDock<T>({
       const length = pages;
 
       return (
-        <div role="presentation" className={styles.dots}>
+        <div aria-hidden role="presentation" className={styles.dots}>
           {Array.from({ length }, (_, pageIndex) => {
             return renderPaginationDots(index, pageIndex);
           })}
