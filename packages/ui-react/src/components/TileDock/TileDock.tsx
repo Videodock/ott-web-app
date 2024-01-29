@@ -235,6 +235,7 @@ function TileDock<T>({
     if (showDots && isMultiPage && !!renderPaginationDots) {
       const length = pages;
 
+      // Adding role and aria-hidden to the container to avoid screen readers from reading the dots as these is a purely visual indicator
       return (
         <div aria-hidden role="presentation" className={styles.dots}>
           {Array.from({ length }, (_, pageIndex) => {
