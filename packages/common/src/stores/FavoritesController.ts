@@ -3,7 +3,6 @@ import { injectable } from 'inversify';
 
 import FavoriteService from '../services/FavoriteService';
 import type { PlaylistItem } from '../../types/playlist';
-import { logDev } from '../utils/common';
 
 import { useAccountStore } from './AccountStore';
 import { useFavoritesStore } from './FavoritesStore';
@@ -15,16 +14,6 @@ export default class FavoritesController {
 
   constructor(favoritesService: FavoriteService) {
     this.favoritesService = favoritesService;
-
-    // restore watch history when the user changes
-    useAccountStore.subscribe((state, previousState) => {
-      const isLoggedIn = !!state.user && !previousState.user;
-      const isLoggedOut = !state.user && !!previousState.user;
-
-      if (isLoggedIn || isLoggedOut) {
-        this.restoreFavorites().catch(logDev);
-      }
-    });
   }
 
   initialize = async () => {

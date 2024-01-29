@@ -3,7 +3,6 @@ import { injectable } from 'inversify';
 import WatchHistoryService from '../services/WatchHistoryService';
 import type { PlaylistItem } from '../../types/playlist';
 import type { WatchHistoryItem } from '../../types/watchHistory';
-import { logDev } from '../utils/common';
 
 import { useAccountStore } from './AccountStore';
 import { useConfigStore } from './ConfigStore';
@@ -15,16 +14,6 @@ export default class WatchHistoryController {
 
   constructor(watchHistoryService: WatchHistoryService) {
     this.watchHistoryService = watchHistoryService;
-
-    // restore watch history when the user changes
-    useAccountStore.subscribe((state, previousState) => {
-      const isLoggedIn = !!state.user && !previousState.user;
-      const isLoggedOut = !state.user && !!previousState.user;
-
-      if (isLoggedIn || isLoggedOut) {
-        this.restoreWatchHistory().catch(logDev);
-      }
-    });
   }
 
   initialize = async () => {

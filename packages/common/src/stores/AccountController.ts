@@ -25,24 +25,35 @@ import { useAccountStore } from './AccountStore';
 import { useConfigStore } from './ConfigStore';
 import { useProfileStore } from './ProfileStore';
 import ProfileController from './ProfileController';
+import WatchHistoryController from './WatchHistoryController';
+import FavoritesController from './FavoritesController';
 
 @injectable()
 export default class AccountController {
   private readonly checkoutService: CheckoutService;
   private readonly accountService: AccountService;
   private readonly subscriptionService: SubscriptionService;
-  private readonly profileController?: ProfileController;
+  private readonly profileController: ProfileController;
+  private readonly favoritesController: FavoritesController;
+  private readonly watchHistoryController: WatchHistoryController;
   private readonly features: AccountServiceFeatures;
 
   // temporary callback for refreshing the query cache until we've updated to react-query v4 or v5
   private refreshEntitlements: (() => Promise<void>) | undefined;
 
-  constructor(@inject(INTEGRATION_TYPE) integrationType: IntegrationType, profileController?: ProfileController) {
+  constructor(
+    @inject(INTEGRATION_TYPE) integrationType: IntegrationType,
+    favoritesController: FavoritesController,
+    watchHistoryController: WatchHistoryController,
+    profileController: ProfileController,
+  ) {
     this.checkoutService = getNamedModule(CheckoutService, integrationType);
     this.accountService = getNamedModule(AccountService, integrationType);
     this.subscriptionService = getNamedModule(SubscriptionService, integrationType);
 
-    // @TODO refactor?
+    // @TODO: Controllers shouldn't be depending on other controllers, but we've agreed to keep this as is for now
+    this.favoritesController = favoritesController;
+    this.watchHistoryController = watchHistoryController;
     this.profileController = profileController;
 
     this.features = integrationType ? this.accountService.features : DEFAULT_FEATURES;
@@ -54,6 +65,8 @@ export default class AccountController {
 
       if (authData) {
         await this.getAccount();
+        await this.watchHistoryController.restoreWatchHistory();
+        await this.favoritesController.restoreFavorites();
       }
     } catch (error: unknown) {
       logDev('Failed to get user', error);
@@ -133,6 +146,8 @@ export default class AccountController {
       const response = await this.accountService.getUser({ config });
       if (response) {
         await this.afterLogin(response.user, response.customerConsents);
+        await this.favoritesController.restoreFavorites().catch(logDev);
+        await this.watchHistoryController.restoreWatchHistory().catch(logDev);
       }
 
       useAccountStore.setState({ loading: false });
@@ -178,7 +193,9 @@ export default class AccountController {
       await this.afterLogin(user, customerConsents);
     }
 
-    // @TODO save local shelves to account?
+    // this stores the locally stored favorites and watch history into the users account
+    await this.favoritesController.persistFavorites();
+    await this.watchHistoryController.persistWatchHistory();
   };
 
   updateConsents = async (customerConsents: CustomerConsent[]): Promise<ServiceResponse<CustomerConsent[]>> => {
@@ -502,6 +519,9 @@ export default class AccountController {
       selectingProfileAvatar: null,
     });
 
-    this.profileController?.unpersistProfile();
+    this.profileController.unpersistProfile();
+
+    await this.favoritesController.restoreFavorites().catch(logDev);
+    await this.watchHistoryController.restoreWatchHistory().catch(logDev);
   };
 }
