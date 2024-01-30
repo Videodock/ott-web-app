@@ -19,10 +19,12 @@ import type {
   ResetPassword,
   UpdateCaptureAnswers,
   UpdateCaptureAnswersPayload,
-  UpdateCustomerArgs,
+  UpdateCustomer,
   UpdateCustomerConsents,
   UpdateCustomerConsentsPayload,
   UpdateCustomerPayload,
+  UpdateFavorites,
+  UpdateWatchHistory,
 } from '../../../../types/account';
 import AccountService from '../AccountService';
 import { GET_CUSTOMER_IP } from '../../../modules/types';
@@ -290,7 +292,7 @@ export default class CleengAccountService extends AccountService {
     // Cleeng doesn't support this feature
   };
 
-  updateCustomer = async (payload: UpdateCustomerArgs) => {
+  updateCustomer: UpdateCustomer = async (payload) => {
     const { id, metadata, fullName, ...rest } = payload;
     const params: UpdateCustomerPayload = {
       id,
@@ -309,9 +311,9 @@ export default class CleengAccountService extends AccountService {
     return formatCustomer(responseData);
   };
 
-  updateWatchHistory = async ({ id, history }: { id: string; history: SerializedWatchHistoryItem[] }) => {
-    const payload = { id, externalData: { ...this.externalData, history } };
-    const { errors, responseData } = await this.cleengService.patch<UpdateCustomerResponse>(`/customers/${id}`, JSON.stringify(payload), {
+  updateWatchHistory: UpdateWatchHistory = async ({ user, history }) => {
+    const payload = { id: user.id, externalData: { ...this.externalData, history } };
+    const { errors, responseData } = await this.cleengService.patch<UpdateCustomerResponse>(`/customers/${user.id}`, JSON.stringify(payload), {
       authenticate: true,
       keepalive: true,
     });
@@ -320,9 +322,9 @@ export default class CleengAccountService extends AccountService {
     this.externalData = responseData.externalData || {};
   };
 
-  updateFavorites = async ({ id, favorites }: { id: string; favorites: SerializedFavorite[] }) => {
-    const payload = { id, externalData: { ...this.externalData, favorites } };
-    const { errors, responseData } = await this.cleengService.patch<UpdateCustomerResponse>(`/customers/${id}`, JSON.stringify(payload), {
+  updateFavorites: UpdateFavorites = async ({ user, favorites }) => {
+    const payload = { id: user.id, externalData: { ...this.externalData, favorites } };
+    const { errors, responseData } = await this.cleengService.patch<UpdateCustomerResponse>(`/customers/${user.id}`, JSON.stringify(payload), {
       authenticate: true,
       keepalive: true,
     });

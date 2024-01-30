@@ -70,11 +70,11 @@ export default class FavoriteService {
     return favorites.map(({ mediaid }) => ({ mediaid }));
   };
 
-  persistFavorites = async (user: Customer | null, favorites: Favorite[]) => {
-    if (user?.id) {
+  persistFavorites = async (favorites: Favorite[], user: Customer | null) => {
+    if (user) {
       return this.accountService?.updateFavorites({
-        id: user.id,
         favorites: this.serializeFavorites(favorites),
+        user,
       });
     } else {
       await this.storageService.setItem(this.PERSIST_KEY_FAVORITES, JSON.stringify(this.serializeFavorites(favorites)));

@@ -111,11 +111,11 @@ export default class WatchHistoryService {
       progress,
     }));
 
-  persistWatchHistory = async (user: Customer | null, watchHistory: WatchHistoryItem[]) => {
-    if (user?.id) {
+  persistWatchHistory = async (watchHistory: WatchHistoryItem[], user: Customer | null) => {
+    if (user) {
       await this.accountService?.updateWatchHistory({
-        id: user.id,
         history: this.serializeWatchHistory(watchHistory),
+        user,
       });
     } else {
       await this.storageService.setItem(this.PERSIST_KEY_WATCH_HISTORY, JSON.stringify(this.serializeWatchHistory(watchHistory)));

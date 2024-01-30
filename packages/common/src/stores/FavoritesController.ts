@@ -37,7 +37,7 @@ export default class FavoritesController {
     const { favorites } = useFavoritesStore.getState();
     const { user } = useAccountStore.getState();
 
-    await this.favoritesService.persistFavorites(user, favorites);
+    await this.favoritesService.persistFavorites(favorites, user);
   };
 
   saveItem = async (item: PlaylistItem) => {

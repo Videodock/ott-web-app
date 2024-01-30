@@ -26,6 +26,9 @@ import type {
   UpdateCaptureAnswers,
   UpdateCustomerArgs,
   UpdateCustomerConsents,
+  UpdateFavorites,
+  UpdateWatchHistory,
+  UpdateCustomer,
 } from '../../../../types/account';
 import type { AccessModel, Config } from '../../../../types/config';
 import type { InPlayerAuthData } from '../../../../types/inplayer';
@@ -381,7 +384,7 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  updateCustomer = async (customer: UpdateCustomerArgs) => {
+  updateCustomer: UpdateCustomer = async (customer) => {
     try {
       const response = await InPlayer.Account.updateAccount(this.formatUpdateAccount(customer));
 
@@ -466,7 +469,7 @@ export default class JWPAccountService extends AccountService {
     };
   };
 
-  updateWatchHistory = async ({ history }: { id: string; history: SerializedWatchHistoryItem[] }) => {
+  updateWatchHistory: UpdateWatchHistory = async ({ history }) => {
     const externalData = await this.getCustomerExternalData();
     const savedHistory = externalData.history?.map((e) => e.mediaid) || [];
 
@@ -479,7 +482,7 @@ export default class JWPAccountService extends AccountService {
     );
   };
 
-  updateFavorites = async ({ favorites }: { id: string; favorites: SerializedFavorite[] }) => {
+  updateFavorites: UpdateFavorites = async ({ favorites }) => {
     const externalData = await this.getCustomerExternalData();
     const currentFavoriteIds = externalData?.favorites?.map((e) => e.mediaid) || [];
     const payloadFavoriteIds = favorites.map((e) => e.mediaid);

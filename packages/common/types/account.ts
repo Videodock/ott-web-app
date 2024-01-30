@@ -300,12 +300,12 @@ export type SocialURLs =
     };
 
 export type UpdateWatchHistoryArgs = {
-  id: string;
+  user: Customer;
   history: SerializedWatchHistoryItem[];
 };
 
 export type UpdateFavoritesArgs = {
-  id: string;
+  user: Customer;
   favorites: SerializedFavorite[];
 };
 

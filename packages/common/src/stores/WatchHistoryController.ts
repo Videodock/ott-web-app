@@ -41,7 +41,7 @@ export default class WatchHistoryController {
     const { watchHistory } = useWatchHistoryStore.getState();
     const { user } = useAccountStore.getState();
 
-    await this.watchHistoryService.persistWatchHistory(user, watchHistory);
+    await this.watchHistoryService.persistWatchHistory(watchHistory, user);
   };
 
   /**
