@@ -73,9 +73,9 @@ exports[`<Layout /> > renders layout 1`] = `
       />
     </div>
     <div
-      aria-hidden="true"
       class="_sidebar_577f70"
       id="sidebar"
+      inert=""
     >
       <div
         class="_heading_577f70"
