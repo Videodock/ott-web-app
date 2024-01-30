@@ -5,6 +5,9 @@ export type Env = {
 
   APP_DEFAULT_CONFIG_SOURCE?: string;
   APP_PLAYER_LICENSE_KEY?: string;
+
+  APP_BODY_FONT?: string;
+  APP_BODY_ALT_FONT?: string;
 };
 
 const env: Env = {
@@ -20,6 +23,9 @@ export const configureEnv = (options: Partial<Env>) => {
 
   env.APP_DEFAULT_CONFIG_SOURCE ||= options.APP_DEFAULT_CONFIG_SOURCE;
   env.APP_PLAYER_LICENSE_KEY ||= options.APP_PLAYER_LICENSE_KEY;
+
+  env.APP_BODY_FONT = options.APP_BODY_FONT || env.APP_BODY_FONT;
+  env.APP_BODY_ALT_FONT = options.APP_BODY_ALT_FONT || env.APP_BODY_ALT_FONT;
 };
 
 export default env;
