@@ -137,7 +137,7 @@ const Layout = () => {
     );
   };
 
-  const mainProps = { inert: sideBarOpen ? '' : undefined }; // inert is not yet officially supported in react
+  const containerProps = { inert: sideBarOpen ? '' : undefined }; // inert is not yet officially supported in react
 
   return (
     <div className={styles.layout}>
@@ -149,7 +149,7 @@ const Layout = () => {
         <meta name="twitter:title" content={siteName} />
         <meta name="twitter:description" content={metaDescription} />
       </Helmet>
-      <div className={styles.main} {...mainProps}>
+      <div className={styles.container} {...containerProps}>
         <Header
           onMenuButtonClick={() => setSideBarOpen(true)}
           logoSrc={banner}
@@ -192,9 +192,9 @@ const Layout = () => {
             <Button key={item.contentId} label={item.label} to={`/p/${item.contentId}`} variant="text" />
           ))}
         </Header>
-        <div id="content" className={styles.content} tabIndex={-1}>
+        <main id="content" className={styles.main} tabIndex={-1}>
           <Outlet />
-        </div>
+        </main>
         {!!footerText && (
           <MarkdownComponent
             // The extra style below is just to fix the footer on mobile when the dev selector is shown

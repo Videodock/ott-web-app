@@ -6,7 +6,7 @@ exports[`<Layout /> > renders layout 1`] = `
     class="_layout_c71437"
   >
     <div
-      class="_main_c71437"
+      class="_container_c71437"
     >
       <header
         class="_header_f4f7a7 _static_f4f7a7"
@@ -66,8 +66,8 @@ exports[`<Layout /> > renders layout 1`] = `
           />
         </div>
       </header>
-      <div
-        class="_content_c71437"
+      <main
+        class="_main_c71437"
         id="content"
         tabindex="-1"
       />
