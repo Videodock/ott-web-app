@@ -65,6 +65,9 @@ const TextField: React.FC<Props> = ({
   const renderInput = () => {
     const { required, disabled, value, ...otherInputProps } = inputProps;
 
+    // Default to 'text' if 'type' property is absent, which occurs in textareas.
+    const inputType = 'type' in otherInputProps ? otherInputProps.type : 'text';
+
     const ariaAttributes = {
       'aria-required': !!required,
       'aria-invalid': Boolean(required && error && value !== ''),
@@ -86,7 +89,7 @@ const TextField: React.FC<Props> = ({
     return isTextArea(inputProps) ? (
       <textarea {...(commonProps as TextAreaProps)} rows={3} ref={textAreaRef} />
     ) : (
-      <input {...(commonProps as InputProps)} type="text" ref={inputRef} />
+      <input {...(commonProps as InputProps)} type={inputType} ref={inputRef} />
     );
   };
 
