@@ -41,6 +41,7 @@ type Props = {
   closeLanguageMenu: () => void;
   children?: ReactNode;
   isLoggedIn: boolean;
+  sideBarOpen: boolean;
   userMenuOpen: boolean;
   languageMenuOpen: boolean;
   canLogin: boolean;
@@ -48,7 +49,6 @@ type Props = {
   supportedLanguages: LanguageDefinition[];
   currentLanguage: LanguageDefinition | undefined;
   onLanguageClick: (code: string) => void;
-
   favoritesEnabled?: boolean;
 
   profilesData?: {
@@ -73,6 +73,7 @@ const Header: React.FC<Props> = ({
   onCloseSearchButtonClick,
   onSignUpButtonClick,
   isLoggedIn,
+  sideBarOpen,
   userMenuOpen,
   languageMenuOpen,
   openUserMenu,
@@ -198,7 +199,14 @@ const Header: React.FC<Props> = ({
     <header className={headerClassName}>
       <div className={styles.container}>
         <div className={styles.menu}>
-          <IconButton className={styles.iconButton} aria-label={t('open_menu')} onClick={onMenuButtonClick}>
+          <IconButton
+            className={styles.iconButton}
+            aria-label={sideBarOpen ? t('close_menu') : t('open_menu')}
+            aria-controls="sidebar"
+            aria-haspopup="true"
+            aria-expanded={sideBarOpen}
+            onClick={onMenuButtonClick}
+          >
             <Icon icon={Menu} />
           </IconButton>
         </div>
@@ -210,9 +218,7 @@ const Header: React.FC<Props> = ({
             <Logo src={logoSrc} onLoad={() => setLogoLoaded(true)} />
           </div>
         )}
-        <nav className={styles.nav} aria-label="menu">
-          {logoLoaded || !logoSrc ? children : null}
-        </nav>
+        <nav className={styles.nav}>{logoLoaded || !logoSrc ? children : null}</nav>
         <div className={styles.actions}>
           {renderSearch()}
           {renderLanguageDropdown()}
