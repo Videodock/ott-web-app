@@ -85,7 +85,7 @@ const User = (): JSX.Element => {
   return (
     <div className={styles.user}>
       {isLargeScreen && (
-        <div className={styles.leftColumn}>
+        <nav className={styles.leftColumn}>
           <div className={styles.panel}>
             <ul>
               {accessModel === 'SVOD' && profilesEnabled && profileAndFavoritesPage && (
@@ -123,7 +123,7 @@ const User = (): JSX.Element => {
               )}
             </ul>
           </div>
-        </div>
+        </nav>
       )}
       <div className={styles.mainColumn}>
         <Routes>
