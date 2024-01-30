@@ -18,5 +18,8 @@ export const setThemingVariables = (config: Config) => {
   if (root && headerBackground) {
     root.style.setProperty('--header-background', headerBackground);
     root.style.setProperty('--header-contrast-color', calculateContrastColor(headerBackground));
+  } else {
+    root.style.setProperty('--header-background', 'rgba(0, 0, 0, 0.85)');
+    root.style.setProperty('--header-contrast-color', '#ffff');
   }
 };
