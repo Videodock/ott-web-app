@@ -9,17 +9,21 @@ import { MediaStatus } from '@jwp/ott-common/src/utils/liveEvent';
 import Lock from '@jwp/ott-theme/assets/icons/lock.svg?react';
 import Today from '@jwp/ott-theme/assets/icons/today.svg?react';
 import { testId } from '@jwp/ott-common/src/utils/common';
+import type { PosterAspectRatio } from '@jwp/ott-common/src/utils/collection';
 
 import Image from '../Image/Image';
 import Icon from '../Icon/Icon';
 
 import styles from './Card.module.scss';
 
+type ReplaceColon<T> = T extends `${infer Left}:${infer Right}` ? `${Left}${Right}` : T;
+type PosterAspectRatioClass = ReplaceColon<PosterAspectRatio>;
+
 type CardProps = {
   item: PlaylistItem;
   onHover?: () => void;
   progress?: number;
-  posterAspect?: string;
+  posterAspect?: PosterAspectRatio;
   featured?: boolean;
   disabled?: boolean;
   loading?: boolean;
@@ -28,6 +32,7 @@ type CardProps = {
   currentLabel?: string;
   url: string;
   headingLevel?: number;
+  tabIndex?: number;
 };
 
 function Card({
@@ -43,6 +48,7 @@ function Card({
   currentLabel,
   headingLevel = 3,
   url,
+  tabIndex = 0,
 }: CardProps): JSX.Element {
   const { title, duration, episodeNumber, seasonNumber, cardImage: image, mediaStatus, scheduledStart } = item;
   const {
@@ -56,7 +62,8 @@ function Card({
     [styles.featured]: featured,
     [styles.disabled]: disabled,
   });
-  const posterClassNames = classNames(styles.poster, styles[`aspect${posterAspect.replace(':', '')}`], {
+  const aspectRatioClass = posterAspect ? styles[`aspect${posterAspect.replace(':', '') as PosterAspectRatioClass}`] : undefined;
+  const posterClassNames = classNames(styles.poster, aspectRatioClass, {
     [styles.current]: isCurrent,
   });
   const posterImageClassNames = classNames(styles.posterImage, {
@@ -71,7 +78,7 @@ function Card({
     if (loading || disabled || !title) return null;
 
     if (isSeriesItem) {
-      return <div className={styles.tag}>Series</div>;
+      return <div className={styles.tag}>{t('video:series')}</div>;
     } else if (episodeNumber) {
       return <div className={styles.tag}>{formatSeriesMetaString(seasonNumber, episodeNumber)}</div>;
     } else if (duration) {
@@ -95,12 +102,12 @@ function Card({
       className={cardClassName}
       onClick={disabled ? (e) => e.preventDefault() : undefined}
       onMouseEnter={onHover}
-      tabIndex={disabled ? -1 : 0}
+      tabIndex={disabled ? -1 : tabIndex}
       data-testid={testId(title)}
     >
       {!featured && !disabled && (
         <div className={styles.titleContainer}>
-          {React.createElement(`h${headingLevel}`, { className: `${styles.title} ${loading && styles.loading}` }, title)}
+          {React.createElement(`h${headingLevel}`, { className: classNames(styles.title, { [styles.loading]: loading }) }, title)}
           {!!scheduledStart && (
             <div className={classNames(styles.scheduledStart, { [styles.loading]: loading })}>{formatLocalizedDateTime(scheduledStart, language)}</div>
           )}

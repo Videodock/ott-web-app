@@ -13,7 +13,7 @@ import { testId } from '@jwp/ott-common/src/utils/common';
 import { PersonalShelf } from '@jwp/ott-common/src/constants';
 import usePlaylists from '@jwp/ott-hooks-react/src/usePlaylists';
 
-import ShelfComponent from '../../components/Shelf/Shelf';
+import Shelf from '../../components/Shelf/Shelf';
 import InfiniteScrollLoader from '../../components/InfiniteScrollLoader/InfiniteScrollLoader';
 import ErrorPage from '../../components/ErrorPage/ErrorPage';
 
@@ -77,7 +77,7 @@ const ShelfList = ({ rows }: Props) => {
               data-testid={testId(`shelf-${featured ? 'featured' : type === 'playlist' ? slugify(title || playlist?.title) : type}`)}
             >
               <div role="cell">
-                <ShelfComponent
+                <Shelf
                   loading={isLoading}
                   error={error}
                   type={type}
