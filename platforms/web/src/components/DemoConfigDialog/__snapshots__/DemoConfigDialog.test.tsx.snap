@@ -36,14 +36,12 @@ exports[`<DemoConfigDialog> > renders and matches snapshot error dialog 1`] = `
           class="_image_d73633"
           src="/images/logo.png"
         />
-        <header>
-          <h1
-            class="_title_d73633"
-          >
-            app_config_not_found
-          </h1>
-        </header>
-        <main
+        <h1
+          class="_title_d73633"
+        >
+          app_config_not_found
+        </h1>
+        <div
           class="_main_d73633"
         >
           <p
@@ -142,7 +140,7 @@ exports[`<DemoConfigDialog> > renders and matches snapshot error dialog 1`] = `
               </a>
             </span>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   </div>
