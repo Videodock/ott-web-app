@@ -20,15 +20,21 @@ exports[`<Favorites> > renders and matches snapshot 1`] = `
     </div>
     <div>
       <div
+        aria-rowcount="1"
         class="_container_7175d1 _cols-3_7175d1"
         role="grid"
       >
         <div
-          class="_cell_7175d1"
+          aria-rowindex="0"
+          class="_row_19b484"
           role="row"
         >
           <div
-            role="cell"
+            aria-colindex="0"
+            class="_cell_19b484"
+            id="layout_grid_0-0"
+            role="gridcell"
+            style="width: 33%;"
           >
             <a
               class="_card_d75732"
@@ -41,7 +47,7 @@ exports[`<Favorites> > renders and matches snapshot 1`] = `
                 class="_titleContainer_d75732"
               >
                 <h3
-                  class="_title_d75732 false"
+                  class="_title_d75732"
                 >
                   SVOD 002: Caminandes 1 llama drama
                 </h3>
@@ -70,26 +76,25 @@ exports[`<Favorites> > renders and matches snapshot 1`] = `
               </div>
             </a>
           </div>
-        </div>
-        <div
-          class="_cell_7175d1"
-          role="row"
-        >
           <div
-            role="cell"
+            aria-colindex="1"
+            class="_cell_19b484"
+            id="layout_grid_0-1"
+            role="gridcell"
+            style="width: 33%;"
           >
             <a
               class="_card_d75732"
               data-testid="SVOD 003: Caminandes 2 gran dillama"
               href="/m/rnibIt0n/svod-003-caminandes-2-gran-dillama?r=bdH6HTUi"
               role="button"
-              tabindex="0"
+              tabindex="-1"
             >
               <div
                 class="_titleContainer_d75732"
               >
                 <h3
-                  class="_title_d75732 false"
+                  class="_title_d75732"
                 >
                   SVOD 003: Caminandes 2 gran dillama
                 </h3>
@@ -118,26 +123,25 @@ exports[`<Favorites> > renders and matches snapshot 1`] = `
               </div>
             </a>
           </div>
-        </div>
-        <div
-          class="_cell_7175d1"
-          role="row"
-        >
           <div
-            role="cell"
+            aria-colindex="2"
+            class="_cell_19b484"
+            id="layout_grid_0-2"
+            role="gridcell"
+            style="width: 33%;"
           >
             <a
               class="_card_d75732"
               data-testid="SVOD 001: Tears of Steel"
               href="/m/MaCvdQdE/svod-001-tears-of-steel?r=E2uaFiUM"
               role="button"
-              tabindex="0"
+              tabindex="-1"
             >
               <div
                 class="_titleContainer_d75732"
               >
                 <h3
-                  class="_title_d75732 false"
+                  class="_title_d75732"
                 >
                   SVOD 001: Tears of Steel
                 </h3>
