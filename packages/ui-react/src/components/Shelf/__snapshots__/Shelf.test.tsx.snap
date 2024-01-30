@@ -193,7 +193,6 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
     </div>
     <div
       class="_dots_22abb0"
-      role="presentation"
     >
       <span
         class="_dot_81910b _active_81910b"
