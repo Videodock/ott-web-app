@@ -255,9 +255,7 @@ export default class AccountController {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
-    const { responseData } = await this.accountService.getCaptureStatus({ customer });
-
-    return responseData;
+    return this.accountService.getCaptureStatus({ customer });
   };
 
   updateCaptureAnswers = async (capture: Capture): Promise<Capture> => {
@@ -272,38 +270,27 @@ export default class AccountController {
   };
 
   resetPassword = async (email: string, resetUrl: string) => {
-    const response = await this.accountService.resetPassword({
+    await this.accountService.resetPassword({
       customerEmail: email,
       resetUrl,
     });
-
-    if (response.errors.length > 0) throw new Error(response.errors[0]);
-
-    return response.responseData;
   };
 
   changePasswordWithOldPassword = async (oldPassword: string, newPassword: string, newPasswordConfirmation: string) => {
-    const response = await this.accountService.changePasswordWithOldPassword({
+    await this.accountService.changePasswordWithOldPassword({
       oldPassword,
       newPassword,
       newPasswordConfirmation,
     });
-    if (response?.errors?.length > 0) throw new Error(response.errors[0]);
-
-    return response?.responseData;
   };
 
   changePasswordWithToken = async (customerEmail: string, newPassword: string, resetPasswordToken: string, newPasswordConfirmation: string) => {
-    const response = await this.accountService.changePasswordWithResetToken({
+    await this.accountService.changePasswordWithResetToken({
       customerEmail,
       newPassword,
       resetPasswordToken,
       newPasswordConfirmation,
     });
-
-    if (response?.errors?.length > 0) throw new Error(response.errors[0]);
-
-    return response?.responseData;
   };
 
   updateSubscription = async (status: 'active' | 'cancelled'): Promise<unknown> => {

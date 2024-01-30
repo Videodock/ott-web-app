@@ -42,7 +42,7 @@ export default class FavoriteService {
   }
 
   private async getFavoritesFromAccount(user: Customer) {
-    const favorites = await this.accountService?.getFavorites({ id: user.id });
+    const favorites = await this.accountService?.getFavorites({ user });
 
     return this.validateFavorites(favorites);
   }

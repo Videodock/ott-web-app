@@ -69,7 +69,7 @@ export default class WatchHistoryService {
   }
 
   private async getWatchHistoryFromAccount(user: Customer) {
-    const history = await this.accountService.getWatchHistory({ id: user.id });
+    const history = await this.accountService.getWatchHistory({ user });
 
     return this.validateWatchHistory(history);
   }

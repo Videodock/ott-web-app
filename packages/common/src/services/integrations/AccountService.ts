@@ -1,10 +1,7 @@
 import type { AccessModel, Config } from '../../../types/config';
 import type {
-  AuthData,
   ChangePassword,
   ChangePasswordWithOldPassword,
-  Customer,
-  CustomerConsent,
   DeleteAccount,
   ExportAccountData,
   GetCaptureStatus,
@@ -17,10 +14,15 @@ import type {
   GetSocialURLs,
   UpdateCaptureAnswers,
   UpdateCustomerConsents,
-  UpdateCustomerArgs,
+  Logout,
+  GetAuthData,
+  UpdateCustomer,
+  UpdateWatchHistory,
+  UpdateFavorites,
+  GetWatchHistory,
+  GetFavorites,
+  GetUser,
 } from '../../../types/account';
-import type { SerializedWatchHistoryItem } from '../../../types/watchHistory';
-import type { SerializedFavorite } from '../../../types/favorite';
 
 export type AccountServiceFeatures = {
   readonly canUpdateEmail: boolean;
@@ -48,15 +50,15 @@ export default abstract class AccountService {
 
   abstract initialize: (config: Config, url: string, logoutCallback: () => Promise<void>) => Promise<void>;
 
-  abstract getAuthData: () => Promise<AuthData | null>;
+  abstract getAuthData: GetAuthData;
 
   abstract login: Login;
 
   abstract register: Register;
 
-  abstract logout: () => Promise<void>;
+  abstract logout: Logout;
 
-  abstract getUser: ({ config }: { config: Config }) => Promise<{ user: Customer; customerConsents: CustomerConsent[] }>;
+  abstract getUser: GetUser;
 
   abstract getPublisherConsents: GetPublisherConsents;
 
@@ -74,15 +76,15 @@ export default abstract class AccountService {
 
   abstract changePasswordWithOldPassword: ChangePasswordWithOldPassword;
 
-  abstract updateCustomer: (payload: UpdateCustomerArgs) => Promise<Customer>;
+  abstract updateCustomer: UpdateCustomer;
 
-  abstract updateWatchHistory: ({ id, history }: { id: string; history: SerializedWatchHistoryItem[] }) => Promise<void>;
+  abstract updateWatchHistory: UpdateWatchHistory;
 
-  abstract updateFavorites: ({ id, favorites }: { id: string; favorites: SerializedFavorite[] }) => Promise<void>;
+  abstract updateFavorites: UpdateFavorites;
 
-  abstract getWatchHistory: ({ id }: { id: string }) => Promise<SerializedWatchHistoryItem[]>;
+  abstract getWatchHistory: GetWatchHistory;
 
-  abstract getFavorites: ({ id }: { id: string }) => Promise<SerializedFavorite[]>;
+  abstract getFavorites: GetFavorites;
 
   abstract subscribeToNotifications: NotificationsData;
 

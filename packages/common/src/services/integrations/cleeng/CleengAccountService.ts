@@ -43,6 +43,7 @@ import type {
 } from './types/account';
 import { formatCustomer } from './formatters/customer';
 import { formatPublisherConsent } from './formatters/consents';
+import type { Response } from './types/api';
 
 @injectable()
 export default class CleengAccountService extends AccountService {
@@ -244,7 +245,7 @@ export default class CleengAccountService extends AccountService {
 
     this.handleErrors(response.errors);
 
-    return response;
+    return response.responseData;
   };
 
   updateCaptureAnswers: UpdateCaptureAnswers = async ({ customer, ...payload }) => {
@@ -262,30 +263,31 @@ export default class CleengAccountService extends AccountService {
   };
 
   resetPassword: ResetPassword = async (payload) => {
-    return this.cleengService.put(
+    const response = await this.cleengService.put<Response<unknown>>(
       '/customers/passwords',
       JSON.stringify({
         ...payload,
         publisherId: this.publisherId,
       }),
     );
+
+    this.handleErrors(response.errors);
   };
 
   changePasswordWithResetToken: ChangePassword = async (payload) => {
-    return this.cleengService.patch(
+    const response = await this.cleengService.patch<Response<unknown>>(
       '/customers/passwords',
       JSON.stringify({
         ...payload,
         publisherId: this.publisherId,
       }),
     );
+
+    this.handleErrors(response.errors);
   };
 
   changePasswordWithOldPassword: ChangePasswordWithOldPassword = async () => {
-    return {
-      errors: [],
-      responseData: {},
-    };
+    // Cleeng doesn't support this feature
   };
 
   updateCustomer = async (payload: UpdateCustomerArgs) => {

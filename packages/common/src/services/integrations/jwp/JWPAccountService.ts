@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import { injectable } from 'inversify';
 
 import { formatConsentsToRegisterFields } from '../../../utils/collection';
-import { getCommonResponseData, isCommonError } from '../../../utils/api';
+import { isCommonError } from '../../../utils/api';
 import type {
   AuthData,
   ChangePassword,
@@ -273,16 +273,13 @@ export default class JWPAccountService extends AccountService {
 
   changePasswordWithOldPassword: ChangePasswordWithOldPassword = async (payload) => {
     const { oldPassword, newPassword, newPasswordConfirmation } = payload;
+
     try {
       await InPlayer.Account.changePassword({
         oldPassword,
         password: newPassword,
         passwordConfirmation: newPasswordConfirmation,
       });
-      return {
-        errors: [],
-        responseData: {},
-      };
     } catch (error: unknown) {
       if (isCommonError(error)) {
         throw new Error(error.response.data.message);
@@ -298,10 +295,6 @@ export default class JWPAccountService extends AccountService {
         merchantUuid: this.clientId,
         brandingId: 0,
       });
-      return {
-        errors: [],
-        responseData: {},
-      };
     } catch {
       throw new Error('Failed to reset password.');
     }
@@ -417,22 +410,19 @@ export default class JWPAccountService extends AccountService {
 
   getCaptureStatus: GetCaptureStatus = async ({ customer }) => {
     return {
-      errors: [],
-      responseData: {
-        isCaptureEnabled: true,
-        shouldCaptureBeDisplayed: true,
-        settings: [
-          {
-            answer: {
-              firstName: customer.firstName || null,
-              lastName: customer.lastName || null,
-            },
-            enabled: true,
-            key: 'firstNameLastName',
-            required: true,
+      isCaptureEnabled: true,
+      shouldCaptureBeDisplayed: true,
+      settings: [
+        {
+          answer: {
+            firstName: customer.firstName || null,
+            lastName: customer.lastName || null,
           },
-        ],
-      },
+          enabled: true,
+          key: 'firstNameLastName',
+          required: true,
+        },
+      ],
     };
   };
 
@@ -447,10 +437,6 @@ export default class JWPAccountService extends AccountService {
         },
         resetPasswordToken,
       );
-      return {
-        errors: [],
-        responseData: {},
-      };
     } catch (error: unknown) {
       if (isCommonError(error)) {
         throw new Error(error.response.data.message);
@@ -543,7 +529,8 @@ export default class JWPAccountService extends AccountService {
     // password is sent as undefined because it is now optional on BE
     try {
       const response = await InPlayer.Account.exportData({ password: undefined, brandingId: 0 });
-      return getCommonResponseData(response);
+
+      return response.data;
     } catch {
       throw new Error('Failed to export account data');
     }
@@ -552,7 +539,8 @@ export default class JWPAccountService extends AccountService {
   deleteAccount: DeleteAccount = async ({ password }) => {
     try {
       const response = await InPlayer.Account.deleteAccount({ password, brandingId: 0 });
-      return getCommonResponseData(response);
+
+      return response.data;
     } catch {
       throw new Error('Failed to delete account');
     }

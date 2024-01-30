@@ -1,7 +1,7 @@
-import type { ProfilesData } from '@inplayer-org/inplayer.js';
-
 import type { Config } from './config';
-import type { EnvironmentServiceRequest, PromiseRequest } from './service';
+import type { PromiseRequest } from './service';
+import type { SerializedWatchHistoryItem } from './watchHistory';
+import type { SerializedFavorite } from './favorite';
 
 export type AuthData = {
   jwt: string;
@@ -71,6 +71,15 @@ export type OfferType = 'svod' | 'tvod';
 
 export type ChooseOfferFormData = {
   offerId?: string;
+};
+
+export type GetUserArgs = {
+  config: Config;
+};
+
+export type GetUserPayload = {
+  user: Customer;
+  customerConsents: CustomerConsent[];
 };
 
 export type RegisterPayload = PayloadWithIPOverride & {
@@ -203,8 +212,7 @@ export type CustomerConsent = {
 };
 
 export type CustomerConsentArgs = {
-  customerId?: string;
-  customer?: Customer;
+  customer: Customer;
 };
 
 export type UpdateCustomerConsentsArgs = {
@@ -250,30 +258,6 @@ export type UpdateCaptureAnswersPayload = {
   customerId: string;
 } & Capture;
 
-export type Profile = ProfilesData;
-
-export type ProfilePayload = {
-  id?: string;
-  name: string;
-  adult: boolean;
-  avatar_url?: string;
-  pin?: number;
-};
-
-export type EnterProfilePayload = {
-  id: string;
-  pin?: number;
-};
-
-export type ProfileDetailsPayload = {
-  id: string;
-};
-
-export type ListProfilesResponse = {
-  canManageProfiles: boolean;
-  collection: ProfilesData[];
-};
-
 export type FirstLastNameInput = {
   firstName: string;
   lastName: string;
@@ -315,25 +299,43 @@ export type SocialURLs =
       google: string;
     };
 
+export type UpdateWatchHistoryArgs = {
+  id: string;
+  history: SerializedWatchHistoryItem[];
+};
+
+export type UpdateFavoritesArgs = {
+  id: string;
+  favorites: SerializedFavorite[];
+};
+
+export type GetFavoritesArgs = {
+  user: Customer;
+};
+
+export type GetWatchHistoryArgs = {
+  user: Customer;
+};
+
+export type GetAuthData = () => Promise<AuthData | null>;
 export type Login = PromiseRequest<LoginArgs, AuthResponse>;
 export type Register = PromiseRequest<RegistrationArgs, AuthResponse>;
+export type GetUser = PromiseRequest<GetUserArgs, GetUserPayload>;
+export type Logout = () => Promise<void>;
+export type UpdateCustomer = PromiseRequest<UpdateCustomerArgs, Customer>;
 export type GetPublisherConsents = PromiseRequest<Config, CustomFormField[]>;
 export type GetCustomerConsents = PromiseRequest<CustomerConsentArgs, CustomerConsent[]>;
 export type UpdateCustomerConsents = PromiseRequest<UpdateCustomerConsentsArgs, CustomerConsent[]>;
-
-// todo
-export type GetCaptureStatus = EnvironmentServiceRequest<GetCaptureStatusArgs, GetCaptureStatusResponse>;
+export type GetCaptureStatus = PromiseRequest<GetCaptureStatusArgs, GetCaptureStatusResponse>;
 export type UpdateCaptureAnswers = PromiseRequest<UpdateCaptureStatusArgs, Customer>;
-export type ResetPassword = EnvironmentServiceRequest<ResetPasswordPayload, Record<string, unknown>>;
-export type ChangePassword = EnvironmentServiceRequest<ChangePasswordWithTokenPayload, unknown>;
-export type ChangePasswordWithOldPassword = EnvironmentServiceRequest<ChangePasswordWithOldPasswordPayload, unknown>;
-export type ExportAccountData = EnvironmentServiceRequest<undefined, CommonAccountResponse>;
+export type ResetPassword = PromiseRequest<ResetPasswordPayload, void>;
+export type ChangePassword = PromiseRequest<ChangePasswordWithTokenPayload, void>;
+export type ChangePasswordWithOldPassword = PromiseRequest<ChangePasswordWithOldPasswordPayload, void>;
 export type GetSocialURLs = PromiseRequest<GetSocialURLsPayload, SocialURLs[]>;
 export type NotificationsData = PromiseRequest<SubscribeToNotificationsPayload, boolean>;
-export type DeleteAccount = EnvironmentServiceRequest<DeleteAccountPayload, CommonAccountResponse>;
-export type ListProfiles = EnvironmentServiceRequest<undefined, ListProfilesResponse>;
-export type CreateProfile = EnvironmentServiceRequest<ProfilePayload, ProfilesData>;
-export type UpdateProfile = EnvironmentServiceRequest<ProfilePayload, ProfilesData>;
-export type EnterProfile = EnvironmentServiceRequest<EnterProfilePayload, ProfilesData>;
-export type GetProfileDetails = EnvironmentServiceRequest<ProfileDetailsPayload, ProfilesData>;
-export type DeleteProfile = EnvironmentServiceRequest<ProfileDetailsPayload, CommonAccountResponse>;
+export type UpdateWatchHistory = PromiseRequest<UpdateWatchHistoryArgs, void>;
+export type UpdateFavorites = PromiseRequest<UpdateFavoritesArgs, void>;
+export type GetWatchHistory = PromiseRequest<GetWatchHistoryArgs, SerializedWatchHistoryItem[]>;
+export type GetFavorites = PromiseRequest<GetFavoritesArgs, SerializedFavorite[]>;
+export type ExportAccountData = PromiseRequest<undefined, CommonAccountResponse>;
+export type DeleteAccount = PromiseRequest<DeleteAccountPayload, CommonAccountResponse>;
