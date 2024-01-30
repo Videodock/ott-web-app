@@ -5,7 +5,7 @@ exports[`<VideoDetails> > renders and matches snapshot 1`] = `
   <div
     data-testid="cinema-layout"
   >
-    <div
+    <header
       class="_video_d0c133"
       data-testid="video-details"
     >
@@ -69,7 +69,7 @@ exports[`<VideoDetails> > renders and matches snapshot 1`] = `
           </div>
         </div>
       </div>
-    </div>
+    </header>
     <div>
       Related Videos
     </div>
