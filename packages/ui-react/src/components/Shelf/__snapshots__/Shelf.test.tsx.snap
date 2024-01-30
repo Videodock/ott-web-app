@@ -192,6 +192,7 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
       </div>
     </div>
     <div
+      aria-hidden="true"
       class="_dots_22abb0"
     >
       <span
