@@ -62,6 +62,7 @@ exports[`<Radio> > renders and matches snapshot 1`] = `
     <div
       aria-live="polite"
       class="_helperText_da58e0"
+      id="helper_text_1235"
     >
       This is required!
     </div>
