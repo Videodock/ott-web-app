@@ -86,7 +86,7 @@ const TextField: React.FC<Props> = ({
     return isTextArea(inputProps) ? (
       <textarea {...(commonProps as TextAreaProps)} rows={3} ref={textAreaRef} />
     ) : (
-      <input {...(commonProps as InputProps)} type={'text'} ref={inputRef} />
+      <input {...(commonProps as InputProps)} type="text" ref={inputRef} />
     );
   };
 
