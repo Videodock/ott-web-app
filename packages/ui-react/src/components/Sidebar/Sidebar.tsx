@@ -17,13 +17,13 @@ type SidebarProps = {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, children }) => {
   const { t } = useTranslation('menu');
   const lastFocusedElementRef = useRef<HTMLElement | null>(null);
-  const sidebarRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
+  const sidebarRef = useRef<HTMLDivElement>(null);
   const htmlAttributes = { inert: !isOpen ? '' : undefined }; // inert is not yet officially supported in react. see: https://github.com/facebook/react/pull/24730
 
   useEffect(() => {
     if (isOpen) {
       lastFocusedElementRef.current = document.activeElement as HTMLElement;
-      sidebarRef.current.querySelectorAll('a')[0]?.focus({ preventScroll: true });
+      sidebarRef.current?.querySelectorAll('a')[0]?.focus({ preventScroll: true });
     } else {
       lastFocusedElementRef.current?.focus({ preventScroll: true });
     }
@@ -31,6 +31,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, children }) => {
 
   return (
     <Fragment>
+      <div
+        className={classNames(styles.backdrop, {
+          [styles.visible]: isOpen,
+        })}
+        onClick={onClose}
+      />
       <div
         ref={sidebarRef}
         className={classNames(styles.sidebar, {
@@ -48,12 +54,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, children }) => {
           {children}
         </nav>
       </div>
-      <div
-        className={classNames(styles.backdrop, {
-          [styles.visible]: isOpen,
-        })}
-        onClick={onClose}
-      />
     </Fragment>
   );
 };

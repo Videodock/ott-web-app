@@ -73,6 +73,9 @@ exports[`<Layout /> > renders layout 1`] = `
       />
     </div>
     <div
+      class="_backdrop_577f70"
+    />
+    <div
       class="_sidebar_577f70"
       id="sidebar"
       inert=""
@@ -120,9 +123,6 @@ exports[`<Layout /> > renders layout 1`] = `
         />
       </nav>
     </div>
-    <div
-      class="_backdrop_577f70"
-    />
   </div>
 </div>
 `;

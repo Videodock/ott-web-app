@@ -5,7 +5,7 @@ exports[`User Component tests > Account Page 1`] = `
   <div
     class="_user_e9c5ca"
   >
-    <div
+    <nav
       class="_leftColumn_e9c5ca"
     >
       <div
@@ -89,7 +89,7 @@ exports[`User Component tests > Account Page 1`] = `
           </li>
         </ul>
       </div>
-    </div>
+    </nav>
     <div
       class="_mainColumn_e9c5ca"
     >
@@ -267,7 +267,7 @@ exports[`User Component tests > Favorites Page 1`] = `
   <div
     class="_user_e9c5ca"
   >
-    <div
+    <nav
       class="_leftColumn_e9c5ca"
     >
       <div
@@ -375,7 +375,7 @@ exports[`User Component tests > Favorites Page 1`] = `
           </li>
         </ul>
       </div>
-    </div>
+    </nav>
     <div
       class="_mainColumn_e9c5ca"
     >
@@ -542,7 +542,7 @@ exports[`User Component tests > Payments Page 1`] = `
   <div
     class="_user_e9c5ca"
   >
-    <div
+    <nav
       class="_leftColumn_e9c5ca"
     >
       <div
@@ -626,7 +626,7 @@ exports[`User Component tests > Payments Page 1`] = `
           </li>
         </ul>
       </div>
-    </div>
+    </nav>
     <div
       class="_mainColumn_e9c5ca"
     >
