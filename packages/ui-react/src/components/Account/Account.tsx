@@ -9,7 +9,7 @@ import { getModule } from '@jwp/ott-common/src/modules/container';
 import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
 import AccountController from '@jwp/ott-common/src/stores/AccountController';
 import { isTruthy, isTruthyCustomParamValue, logDev, testId } from '@jwp/ott-common/src/utils/common';
-import { formatConsents, formatConsentsFromValues, formatConsentsToRegisterFields, formatConsentValues } from '@jwp/ott-common/src/utils/collection';
+import { formatConsents, formatConsentsFromValues, formatConsentValues } from '@jwp/ott-common/src/utils/collection';
 import useToggle from '@jwp/ott-hooks-react/src/useToggle';
 import Visibility from '@jwp/ott-theme/assets/icons/visibility.svg?react';
 import VisibilityOff from '@jwp/ott-theme/assets/icons/visibility_off.svg?react';
@@ -200,16 +200,9 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             label: t('account.about_you'),
             editButton: t('account.edit_information'),
             onSubmit: (values) => {
-              const consents = formatConsentsFromValues(publisherConsents, { ...values.metadata, ...values.consentsValues });
-
               return accountController.updateUser({
                 firstName: values.firstName || '',
                 lastName: values.lastName || '',
-                metadata: {
-                  ...values.metadata,
-                  ...formatConsentsToRegisterFields(consents),
-                  consents: JSON.stringify(consents),
-                },
               });
             },
             content: (section) => (

@@ -1,4 +1,4 @@
-import type { CustomFormField, CustomerConsent } from '../../types/account';
+import type { CustomFormField, ConsentsValue } from '../../types/account';
 import type { Config } from '../../types/config';
 import type { GenericFormValues } from '../../types/form';
 import type { Playlist, PlaylistItem } from '../../types/playlist';
@@ -57,26 +57,23 @@ const generatePlaylistPlaceholder = (playlistLength: number = 15): Playlist => (
   ),
 });
 
-const formatConsentValues = (publisherConsents: CustomFormField[] | null = [], customerConsents: CustomerConsent[] | null = []) => {
+const formatConsentValues = (publisherConsents: CustomFormField[] | null = [], customerConsents: ConsentsValue[] | null = []) => {
   if (!publisherConsents || !customerConsents) {
     return {};
   }
 
-  const values = publisherConsents?.reduce((acc, publisherConsent) => {
+  return publisherConsents.reduce((acc, publisherConsent) => {
     const consent = customerConsents?.find((customerConsent) => customerConsent.name === publisherConsent.name);
 
     if (consent) {
-      const value = publisherConsent.isCustomRegisterField ? consent.value ?? '' : consent.state === 'accepted';
-      acc[publisherConsent.name] = value;
+      acc[publisherConsent.name] = consent.state === 'accepted';
     }
 
     return acc;
-  }, {} as Record<string, string | boolean>);
-
-  return values;
+  }, {} as Record<string, boolean>);
 };
 
-const formatConsents = (publisherConsents: CustomFormField[] | null = [], customerConsents: CustomerConsent[] | null = []) => {
+const formatConsents = (publisherConsents: CustomFormField[] | null = [], customerConsents: ConsentsValue[] | null = []) => {
   if (!publisherConsents || !customerConsents) {
     return {};
   }
@@ -105,7 +102,7 @@ const extractConsentValues = (consents?: CustomFormField[]) => {
 };
 
 const formatConsentsFromValues = (publisherConsents: CustomFormField[] | null, values?: GenericFormValues) => {
-  const consents: CustomerConsent[] = [];
+  const consents: ConsentsValue[] = [];
 
   if (!publisherConsents || !values) return consents;
 
@@ -114,7 +111,6 @@ const formatConsentsFromValues = (publisherConsents: CustomFormField[] | null, v
       name: consent.name,
       version: consent.version,
       state: values[consent.name] ? 'accepted' : 'declined',
-      value: values[consent.name] ?? '',
     });
   });
 
@@ -122,7 +118,7 @@ const formatConsentsFromValues = (publisherConsents: CustomFormField[] | null, v
 };
 
 const checkConsentsFromValues = (publisherConsents: CustomFormField[], consents: Record<string, string | boolean>) => {
-  const customerConsents: CustomerConsent[] = [];
+  const customerConsents: ConsentsValue[] = [];
   const consentsErrors: string[] = [];
 
   if (!publisherConsents || !consents) return { customerConsents, consentsErrors };
@@ -136,39 +132,11 @@ const checkConsentsFromValues = (publisherConsents: CustomFormField[], consents:
       name: consent.name,
       version: consent.version,
       state: consents[consent.name] ? 'accepted' : 'declined',
-      value: consents[consent.name] ?? '',
     });
   });
 
   return { customerConsents, consentsErrors };
 };
-
-const isNotEmptyConsent = (consent: CustomerConsent) => consent.value !== '';
-
-const formatConsentToRegisterField = ({ name, value = '' }: CustomerConsent, _: number, collection: CustomerConsent[]) => {
-  const val = (() => {
-    if (name === 'us_state') {
-      if (collection.find(({ name, value }) => name === 'country' && value === 'us')) {
-        return value === 'n/a' ? '' : value;
-      }
-
-      return 'n/a';
-    }
-
-    const isBoolean = value === true || value === false;
-
-    if (isBoolean && name !== 'terms') {
-      return value ? 'on' : 'off';
-    }
-
-    return value;
-  })();
-
-  return [name, val] as const;
-};
-
-const formatConsentsToRegisterFields = (consents: CustomerConsent[]) =>
-  Object.fromEntries(consents.filter(isNotEmptyConsent).map(formatConsentToRegisterField));
 
 const deepCopy = (obj: unknown) => {
   if (Array.isArray(obj) || (typeof obj === 'object' && obj !== null)) {
@@ -205,7 +173,4 @@ export {
   deepCopy,
   parseAspectRatio,
   parseTilesDelta,
-  isNotEmptyConsent,
-  formatConsentToRegisterField,
-  formatConsentsToRegisterFields,
 };

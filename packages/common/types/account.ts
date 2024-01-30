@@ -25,13 +25,13 @@ export type LoginArgs = {
 };
 
 export type RegistrationArgs = LoginArgs & {
-  consents: CustomerConsent[];
+  consents: ConsentsValue[];
 };
 
 export type AuthResponse = {
   auth: AuthData;
   user: Customer;
-  customerConsents: CustomerConsent[];
+  customerConsents: ConsentsValue[];
 };
 
 export type LoginPayload = PayloadWithIPOverride & {
@@ -79,7 +79,7 @@ export type GetUserArgs = {
 
 export type GetUserPayload = {
   user: Customer;
-  customerConsents: CustomerConsent[];
+  customerConsents: ConsentsValue[];
 };
 
 export type RegisterPayload = PayloadWithIPOverride & {
@@ -127,7 +127,7 @@ export type PersonalDetailsFormData = {
 };
 
 export type GetCustomerConsentsResponse = {
-  consents: CustomerConsent[];
+  consents: ConsentsValue[];
 };
 
 export type ResetPasswordPayload = {
@@ -159,7 +159,7 @@ export type UpdateCustomerPayload = {
 
 export type UpdateCustomerConsentsPayload = {
   id?: string;
-  consents: CustomerConsent[];
+  consents: ConsentsValue[];
 };
 
 export type Customer = {
@@ -198,16 +198,9 @@ export interface CustomFormField {
   version: string;
 }
 
-export type CustomerConsent = {
-  customerId?: string;
-  date?: number;
-  label?: string;
+export type ConsentsValue = {
   name: string;
-  needsUpdate?: boolean;
-  newestVersion?: string;
-  required?: boolean;
   state: 'accepted' | 'declined';
-  value?: string | boolean;
   version: string;
 };
 
@@ -217,7 +210,7 @@ export type CustomerConsentArgs = {
 
 export type UpdateCustomerConsentsArgs = {
   customer: Customer;
-  consents: CustomerConsent[];
+  consents: ConsentsValue[];
 };
 
 export type GetCaptureStatusResponse = {
@@ -323,9 +316,9 @@ export type Register = PromiseRequest<RegistrationArgs, AuthResponse>;
 export type GetUser = PromiseRequest<GetUserArgs, GetUserPayload>;
 export type Logout = () => Promise<void>;
 export type UpdateCustomer = PromiseRequest<UpdateCustomerArgs, Customer>;
-export type GetPublisherConsents = PromiseRequest<Config, CustomFormField[]>;
-export type GetCustomerConsents = PromiseRequest<CustomerConsentArgs, CustomerConsent[]>;
-export type UpdateCustomerConsents = PromiseRequest<UpdateCustomerConsentsArgs, CustomerConsent[]>;
+export type GetConsents = PromiseRequest<Config, CustomFormField[]>;
+export type GetConsentsValues = PromiseRequest<CustomerConsentArgs, ConsentsValue[]>;
+export type UpdateConsentsValues = PromiseRequest<UpdateCustomerConsentsArgs, ConsentsValue[]>;
 export type GetCaptureStatus = PromiseRequest<GetCaptureStatusArgs, GetCaptureStatusResponse>;
 export type UpdateCaptureAnswers = PromiseRequest<UpdateCaptureStatusArgs, Customer>;
 export type ResetPassword = PromiseRequest<ResetPasswordPayload, void>;

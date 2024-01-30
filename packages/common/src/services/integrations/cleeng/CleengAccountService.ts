@@ -8,8 +8,8 @@ import type {
   ChangePasswordWithOldPassword,
   GetCaptureStatus,
   GetCaptureStatusResponse,
-  GetCustomerConsents,
-  GetPublisherConsents,
+  GetConsentsValues,
+  GetConsents,
   JwtDetails,
   Login,
   LoginPayload,
@@ -20,7 +20,7 @@ import type {
   UpdateCaptureAnswers,
   UpdateCaptureAnswersPayload,
   UpdateCustomer,
-  UpdateCustomerConsents,
+  UpdateConsentsValues,
   UpdateCustomerConsentsPayload,
   UpdateCustomerPayload,
   UpdateFavorites,
@@ -131,7 +131,7 @@ export default class CleengAccountService extends AccountService {
     return null;
   };
 
-  getCustomerConsents: GetCustomerConsents = async (payload) => {
+  getConsentsValues: GetConsentsValues = async (payload) => {
     const { customer } = payload;
     const response = await this.cleengService.get<GetCustomerConsentsResponse>(`/customers/${customer?.id}/consents`, {
       authenticate: true,
@@ -141,7 +141,7 @@ export default class CleengAccountService extends AccountService {
     return response?.responseData?.consents || [];
   };
 
-  updateCustomerConsents: UpdateCustomerConsents = async (payload) => {
+  updateConsentsValues: UpdateConsentsValues = async (payload) => {
     const { customer } = payload;
 
     const params: UpdateCustomerConsentsPayload = {
@@ -154,7 +154,7 @@ export default class CleengAccountService extends AccountService {
     });
     this.handleErrors(response.errors);
 
-    return await this.getCustomerConsents(payload);
+    return await this.getConsentsValues(payload);
   };
 
   login: Login = async ({ email, password }) => {
@@ -201,7 +201,7 @@ export default class CleengAccountService extends AccountService {
 
     const { user, customerConsents } = await this.getUser();
 
-    await this.updateCustomerConsents({ consents, customer: user }).catch(() => {
+    await this.updateConsentsValues({ consents, customer: user }).catch(() => {
       // error caught while updating the consents, but continue the registration process
     });
 
@@ -224,7 +224,7 @@ export default class CleengAccountService extends AccountService {
 
     const customerId = this.getCustomerIdFromAuthData(authData);
     const user = await this.getCustomer({ customerId });
-    const consents = await this.getCustomerConsents({ customer: user });
+    const consents = await this.getConsentsValues({ customer: user });
 
     return {
       user,
@@ -232,7 +232,7 @@ export default class CleengAccountService extends AccountService {
     };
   };
 
-  getPublisherConsents: GetPublisherConsents = async () => {
+  getConsents: GetConsents = async () => {
     const response = await this.cleengService.get<GetPublisherConsentsResponse>(`/publishers/${this.publisherId}/consents`);
 
     this.handleErrors(response.errors);

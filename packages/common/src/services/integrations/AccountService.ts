@@ -5,15 +5,15 @@ import type {
   DeleteAccount,
   ExportAccountData,
   GetCaptureStatus,
-  GetCustomerConsents,
-  GetPublisherConsents,
+  GetConsentsValues,
+  GetConsents,
   Login,
   NotificationsData,
   Register,
   ResetPassword,
   GetSocialURLs,
   UpdateCaptureAnswers,
-  UpdateCustomerConsents,
+  UpdateConsentsValues,
   Logout,
   GetAuthData,
   UpdateCustomer,
@@ -60,11 +60,11 @@ export default abstract class AccountService {
 
   abstract getUser: GetUser;
 
-  abstract getPublisherConsents: GetPublisherConsents;
+  abstract getConsents: GetConsents;
 
-  abstract getCustomerConsents: GetCustomerConsents;
+  abstract getConsentsValues: GetConsentsValues;
 
-  abstract updateCustomerConsents: UpdateCustomerConsents;
+  abstract updateConsentsValues: UpdateConsentsValues;
 
   abstract getCaptureStatus: GetCaptureStatus;
 

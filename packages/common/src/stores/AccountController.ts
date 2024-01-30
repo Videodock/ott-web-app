@@ -11,7 +11,7 @@ import type { Offer } from '../../types/checkout';
 import type {
   Capture,
   Customer,
-  CustomerConsent,
+  ConsentsValue,
   EmailConfirmPasswordInput,
   FirstLastNameInput,
   GetCaptureStatusResponse,
@@ -184,7 +184,7 @@ export default class AccountController {
     await this.refreshEntitlements?.();
   };
 
-  register = async (email: string, password: string, referrer: string, consents: CustomerConsent[]) => {
+  register = async (email: string, password: string, referrer: string, consents: ConsentsValue[]) => {
     useAccountStore.setState({ loading: true });
     const response = await this.accountService.register({ email, password, consents, referrer });
 
@@ -198,14 +198,14 @@ export default class AccountController {
     await this.watchHistoryController.persistWatchHistory();
   };
 
-  updateConsents = async (customerConsents: CustomerConsent[]): Promise<ServiceResponse<CustomerConsent[]>> => {
+  updateConsents = async (customerConsents: ConsentsValue[]): Promise<ServiceResponse<ConsentsValue[]>> => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
     useAccountStore.setState({ loading: true });
 
     try {
-      const updatedConsents = await this.accountService?.updateCustomerConsents({
+      const updatedConsents = await this.accountService?.updateConsentsValues({
         customer,
         consents: customerConsents,
       });
@@ -232,7 +232,7 @@ export default class AccountController {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
-    const consents = await this.accountService.getCustomerConsents({ customer });
+    const consents = await this.accountService.getConsentsValues({ customer });
 
     if (consents) {
       useAccountStore.setState({ customerConsents: consents });
@@ -244,7 +244,7 @@ export default class AccountController {
   getPublisherConsents = async () => {
     const { config } = useConfigStore.getState();
 
-    const consents = await this.accountService.getPublisherConsents(config);
+    const consents = await this.accountService.getConsents(config);
 
     useAccountStore.setState({ publisherConsents: consents });
 
@@ -468,7 +468,7 @@ export default class AccountController {
     return this.features;
   }
 
-  private async afterLogin(user: Customer, customerConsents: CustomerConsent[] | null, shouldReloadSubscription = true) {
+  private async afterLogin(user: Customer, customerConsents: ConsentsValue[] | null, shouldReloadSubscription = true) {
     useAccountStore.setState({
       user,
       customerConsents,

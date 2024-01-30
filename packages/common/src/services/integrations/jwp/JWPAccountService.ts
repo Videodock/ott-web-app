@@ -3,7 +3,6 @@ import type { AccountData, FavoritesData, RegisterField, UpdateAccountData, Watc
 import i18next from 'i18next';
 import { injectable } from 'inversify';
 
-import { formatConsentsToRegisterFields } from '../../../utils/collection';
 import { isCommonError } from '../../../utils/api';
 import type {
   AuthData,
@@ -11,13 +10,12 @@ import type {
   ChangePasswordWithOldPassword,
   CustomFormField,
   Customer,
-  CustomerConsent,
-  CustomRegisterFieldVariant,
+  ConsentsValue,
   DeleteAccount,
   ExportAccountData,
   GetCaptureStatus,
-  GetCustomerConsents,
-  GetPublisherConsents,
+  GetConsentsValues,
+  GetConsents,
   Login,
   NotificationsData,
   Register,
@@ -25,7 +23,7 @@ import type {
   GetSocialURLs,
   UpdateCaptureAnswers,
   UpdateCustomerArgs,
-  UpdateCustomerConsents,
+  UpdateConsentsValues,
   UpdateFavorites,
   UpdateWatchHistory,
   UpdateCustomer,
@@ -195,43 +193,19 @@ export default class JWPAccountService extends AccountService {
     return null;
   };
 
-  getPublisherConsents: GetPublisherConsents = async () => {
+  getConsents: GetConsents = async () => {
     try {
       const { data } = await InPlayer.Account.getRegisterFields(this.clientId);
 
-      const terms = data?.collection.find(({ name }) => name === 'terms');
+      const termsField = data?.collection.find(({ name }) => name === 'terms');
 
-      const result = data?.collection
-        // we exclude these fields because we already have them by default
-        .filter((field) => !['email_confirmation', 'first_name', 'surname'].includes(field.name) && ![terms].includes(field))
-        .map(
-          (field): CustomFormField => ({
-            type: field.type as CustomRegisterFieldVariant,
-            isCustomRegisterField: true,
-            name: field.name,
-            label: field.label,
-            placeholder: field.placeholder,
-            required: field.required,
-            options: field.options,
-            defaultValue: '',
-            version: '1',
-            ...(field.type === 'checkbox'
-              ? {
-                  enabledByDefault: field.default_value === 'true',
-                }
-              : {
-                  defaultValue: field.default_value,
-                }),
-          }),
-        );
-
-      return terms ? [this.getTermsConsent(terms), ...result] : result;
+      return termsField ? [this.getTermsConsent(termsField)] : [];
     } catch {
       throw new Error('Failed to fetch publisher consents.');
     }
   };
 
-  getCustomerConsents: GetCustomerConsents = async (payload) => {
+  getConsentsValues: GetConsentsValues = async (payload) => {
     try {
       if (!payload?.customer) {
         return {
@@ -247,7 +221,7 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  updateCustomerConsents: UpdateCustomerConsents = async (payload) => {
+  updateConsentsValues: UpdateConsentsValues = async (payload) => {
     try {
       const { customer, consents } = payload;
 
@@ -257,7 +231,6 @@ export default class JWPAccountService extends AccountService {
         ...existingAccountData,
         metadata: {
           ...existingAccountData.metadata,
-          ...formatConsentsToRegisterFields(consents),
           consents: JSON.stringify(consents),
         },
       };
@@ -336,7 +309,6 @@ export default class JWPAccountService extends AccountService {
         metadata: {
           first_name: ' ',
           surname: ' ',
-          ...formatConsentsToRegisterFields(consents),
           consents: JSON.stringify(consents),
         },
         type: 'consumer',
@@ -377,7 +349,7 @@ export default class JWPAccountService extends AccountService {
 
       return {
         user,
-        customerConsents: this.parseJson(user?.metadata?.consents as string, []) as CustomerConsent[],
+        customerConsents: this.parseJson(user?.metadata?.consents as string, []) as ConsentsValue[],
       };
     } catch {
       throw new Error('Failed to fetch user data.');

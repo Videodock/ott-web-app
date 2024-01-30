@@ -1,4 +1,4 @@
-import type { CustomFormField, Customer, CustomerConsent } from '../../types/account';
+import type { CustomFormField, Customer, ConsentsValue } from '../../types/account';
 import type { Offer } from '../../types/checkout';
 import type { PaymentDetail, Subscription, Transaction } from '../../types/subscription';
 
@@ -10,11 +10,11 @@ type AccountStore = {
   subscription: Subscription | null;
   transactions: Transaction[] | null;
   activePayment: PaymentDetail | null;
-  customerConsents: CustomerConsent[] | null;
+  customerConsents: ConsentsValue[] | null;
   publisherConsents: CustomFormField[] | null;
   pendingOffer: Offer | null;
   setLoading: (loading: boolean) => void;
-  getAccountInfo: () => { customerId: string; customer: Customer; customerConsents: CustomerConsent[] | null };
+  getAccountInfo: () => { customerId: string; customer: Customer; customerConsents: ConsentsValue[] | null };
 };
 
 export const useAccountStore = createStore<AccountStore>('AccountStore', (set, get) => ({
