@@ -128,7 +128,9 @@ const checkConsentsFromValues = (publisherConsents: Consent[], consents: Record<
   if (!publisherConsents || !consents) return { customerConsents, consentsErrors };
 
   publisherConsents.forEach((consent) => {
-    if (consent.required && !consents[consent.name]) {
+    if (!consent) return;
+
+    if (!consents[consent.name] && consent.required) {
       consentsErrors.push(consent.name);
     }
 

@@ -43,6 +43,7 @@ const Dropdown: React.FC<Props & React.AriaAttributes> = ({
 }: Props & React.AriaAttributes) => {
   const { t } = useTranslation('common');
   const id = useOpaqueId();
+  const helperTextId = useOpaqueId('helper_text', name);
 
   return (
     <div className={classNames(styles.container, { [styles.fullWidth]: fullWidth, [styles.error]: error }, styles[size], className)} data-testid={testId}>
@@ -53,7 +54,17 @@ const Dropdown: React.FC<Props & React.AriaAttributes> = ({
         </label>
       )}
       <div className={classNames(styles.dropdown, { [styles.fullWidth]: fullWidth })}>
-        <select id={id} className={styles.select} name={name} value={value} onChange={onChange} aria-required={required} {...rest}>
+        <select
+          id={id}
+          className={styles.select}
+          name={name}
+          value={value}
+          onChange={onChange}
+          aria-required={required}
+          aria-invalid={error}
+          aria-describedby={helperTextId}
+          {...rest}
+        >
           {defaultLabel && (
             <option className={classNames(styles.option, optionsStyle)} value="" disabled={required}>
               {defaultLabel}
@@ -71,7 +82,9 @@ const Dropdown: React.FC<Props & React.AriaAttributes> = ({
             ))}
         </select>
       </div>
-      <HelperText error={error}>{helperText}</HelperText>
+      <HelperText id={helperTextId} error={error}>
+        {helperText}
+      </HelperText>
     </div>
   );
 };

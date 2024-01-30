@@ -124,21 +124,25 @@ const RegistrationForm: React.FC<Props> = ({
       />
       {publisherConsents && (
         <div className={styles.customFields} data-testid="custom-reg-fields">
-          {publisherConsents.map((consent) => (
-            <CustomRegisterField
-              key={consent.name}
-              type={consent.type}
-              name={consent.name}
-              options={consent.options}
-              label={formatConsentLabel(consent.label)}
-              placeholder={consent.placeholder}
-              value={consentValues[consent.name] || ''}
-              required={consent.required}
-              error={consentErrors?.includes(consent.name)}
-              helperText={consentErrors?.includes(consent.name) ? t('registration.consent_required') : undefined}
-              onChange={onConsentChange}
-            />
-          ))}
+          {publisherConsents.map((consent) => {
+            const consentError = consentErrors.find((error) => error === consent.name);
+
+            return (
+              <CustomRegisterField
+                key={consent.name}
+                type={consent.type}
+                name={consent.name}
+                options={consent.options}
+                label={formatConsentLabel(consent.label)}
+                placeholder={consent.placeholder}
+                value={consentValues[consent.name] || ''}
+                required={consent.required}
+                error={!!consentError}
+                helperText={consentError ? t(`registration.field_${consent.type}_required`) : undefined}
+                onChange={onConsentChange}
+              />
+            );
+          })}
         </div>
       )}
       <Button

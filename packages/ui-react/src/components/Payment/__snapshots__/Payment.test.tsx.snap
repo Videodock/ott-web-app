@@ -28,7 +28,10 @@ exports[`<Payment> > renders and matches snapshot 1`] = `
           user:payment.card_number
         </label>
         <input
+          aria-describedby="helper_text_1235_cardnumber"
+          aria-invalid="false"
           aria-label="user:payment.card_number_hidden"
+          aria-required="false"
           class="_input_e16c1b"
           id="text-field_1235_cardnumber"
           name="cardNumber"
@@ -50,6 +53,9 @@ exports[`<Payment> > renders and matches snapshot 1`] = `
             user:payment.expiry_date
           </label>
           <input
+            aria-describedby="helper_text_1235_cardexpiry"
+            aria-invalid="false"
+            aria-required="false"
             class="_input_e16c1b"
             id="text-field_1235_cardexpiry"
             name="cardExpiry"
@@ -68,7 +74,10 @@ exports[`<Payment> > renders and matches snapshot 1`] = `
             user:payment.security_code
           </label>
           <input
+            aria-describedby="helper_text_1235_cardsecuritycode"
+            aria-invalid="false"
             aria-label="user:payment.security_code_hidden"
+            aria-required="false"
             class="_input_e16c1b"
             id="text-field_1235_cardsecuritycode"
             name="cardSecurityCode"
