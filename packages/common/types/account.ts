@@ -2,6 +2,7 @@ import type { Config } from './config';
 import type { PromiseRequest } from './service';
 import type { SerializedWatchHistoryItem } from './watchHistory';
 import type { SerializedFavorite } from './favorite';
+import type { GenericFormValues } from './form';
 
 export type AuthData = {
   jwt: string;
@@ -216,7 +217,7 @@ export type GetRegistrationFieldsArgs = {
 export type UpdateRegistrationFieldsValuesArgs = {
   customer: Customer;
   fields: CustomFormField[];
-  values: Record<string, string>;
+  values: GenericFormValues;
 };
 
 export type FirstLastNameInput = {

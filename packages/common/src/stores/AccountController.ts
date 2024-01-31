@@ -19,6 +19,7 @@ import type {
 import { assertFeature, assertModuleMethod, getNamedModule } from '../modules/container';
 import { INTEGRATION_TYPE } from '../modules/types';
 import type { ServiceResponse } from '../../types/service';
+import type { GenericFormValues } from '../../types/form';
 
 import { useAccountStore } from './AccountStore';
 import { useConfigStore } from './ConfigStore';
@@ -257,7 +258,7 @@ export default class AccountController {
     return this.accountService.getRegistrationFields({ customer });
   };
 
-  updateRegistrationFieldsValues = async (fields: CustomFormField[], values: Record<string, string>) => {
+  updateRegistrationFieldsValues = async (fields: CustomFormField[], values: GenericFormValues) => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer, customerConsents } = getAccountInfo();
 
