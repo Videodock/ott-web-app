@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { array, number, object, string } from 'yup';
+import { number, object, string } from 'yup';
 
 import type { PlaylistItem } from '../../types/playlist';
 import type { SerializedWatchHistoryItem, WatchHistoryItem } from '../../types/watchHistory';
@@ -11,12 +11,10 @@ import ApiService from './ApiService';
 import StorageService from './StorageService';
 import AccountService from './integrations/AccountService';
 
-const schema = array(
-  object().shape({
-    mediaid: string(),
-    progress: number(),
-  }),
-);
+const schema = object().shape({
+  mediaid: string(),
+  progress: number(),
+});
 
 @injectable()
 export default class WatchHistoryService {
@@ -27,7 +25,7 @@ export default class WatchHistoryService {
   private readonly storageService;
   private readonly accountService;
 
-  constructor(@inject(INTEGRATION_TYPE) integrationType: string, apiService: ApiService, storageService: StorageService) {
+  constructor (@inject(INTEGRATION_TYPE) integrationType: string, apiService: ApiService, storageService: StorageService) {
     this.apiService = apiService;
     this.storageService = storageService;
     this.accountService = getNamedModule(AccountService, integrationType);
@@ -45,8 +43,8 @@ export default class WatchHistoryService {
   private getWatchHistorySeriesItems = async (continueWatchingList: string, ids: string[]): Promise<Record<string, PlaylistItem | undefined>> => {
     const mediaWithSeries = await this.apiService.getSeriesByMediaIds(ids);
     const seriesIds = Object.keys(mediaWithSeries || {})
-      .map((key) => mediaWithSeries?.[key]?.[0]?.series_id)
-      .filter(Boolean) as string[];
+    .map((key) => mediaWithSeries?.[key]?.[0]?.series_id)
+    .filter(Boolean) as string[];
 
     const seriesItems = await this.apiService.getMediaByWatchlist(continueWatchingList, seriesIds);
     const seriesItemsDict = Object.keys(mediaWithSeries || {}).reduce((acc, key) => {
@@ -60,21 +58,21 @@ export default class WatchHistoryService {
     return seriesItemsDict;
   };
 
-  private validateWatchHistory(history: unknown) {
-    if (schema.validateSync(history)) {
-      return history as SerializedWatchHistoryItem[];
+  private validateWatchHistory (history: unknown) {
+    if (Array.isArray(history)) {
+      return history.filter(item => schema.isValidSync(item)) as SerializedWatchHistoryItem[];
     }
 
     return [];
   }
 
-  private async getWatchHistoryFromAccount(user: Customer) {
+  private async getWatchHistoryFromAccount (user: Customer) {
     const history = await this.accountService.getWatchHistory({ user });
 
     return this.validateWatchHistory(history);
   }
 
-  private async getWatchHistoryFromStorage() {
+  private async getWatchHistoryFromStorage () {
     const history = await this.storageService.getItem(this.PERSIST_KEY_WATCH_HISTORY, true);
 
     return this.validateWatchHistory(history);
@@ -94,15 +92,15 @@ export default class WatchHistoryService {
     const seriesItems = await this.getWatchHistorySeriesItems(continueWatchingList, ids);
 
     return savedItems
-      .map((item) => {
-        const parentSeries = seriesItems?.[item.mediaid];
-        const historyItem = watchHistoryItems[item.mediaid];
+    .map((item) => {
+      const parentSeries = seriesItems?.[item.mediaid];
+      const historyItem = watchHistoryItems[item.mediaid];
 
-        if (historyItem) {
-          return this.createWatchHistoryItem(parentSeries || historyItem, item.mediaid, parentSeries?.mediaid, item.progress);
-        }
-      })
-      .filter((item): item is WatchHistoryItem => Boolean(item));
+      if (historyItem) {
+        return this.createWatchHistoryItem(parentSeries || historyItem, item.mediaid, parentSeries?.mediaid, item.progress);
+      }
+    })
+    .filter((item): item is WatchHistoryItem => Boolean(item));
   };
 
   serializeWatchHistory = (watchHistory: WatchHistoryItem[]): SerializedWatchHistoryItem[] =>
