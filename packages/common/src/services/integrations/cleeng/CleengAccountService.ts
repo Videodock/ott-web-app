@@ -6,8 +6,7 @@ import type {
   AuthData,
   ChangePassword,
   ChangePasswordWithOldPassword,
-  GetCaptureStatus,
-  GetCaptureStatusResponse,
+  GetRegistrationFields,
   GetConsentsValues,
   GetConsents,
   JwtDetails,
@@ -17,14 +16,14 @@ import type {
   Register,
   RegisterPayload,
   ResetPassword,
-  UpdateCaptureAnswers,
-  UpdateCaptureAnswersPayload,
+  UpdateRegistrationFieldsValues,
   UpdateCustomer,
   UpdateConsentsValues,
   UpdateCustomerConsentsPayload,
   UpdateCustomerPayload,
   UpdateFavorites,
   UpdateWatchHistory,
+  CustomFormField,
 } from '../../../../types/account';
 import AccountService from '../AccountService';
 import { GET_CUSTOMER_IP } from '../../../modules/types';
@@ -46,6 +45,8 @@ import type {
 import { formatCustomer } from './formatters/customer';
 import { formatPublisherConsent } from './formatters/consents';
 import type { Response } from './types/api';
+import type { GetCaptureStatusResponse } from './types/models';
+import { formatCapture, formatUpdateCaptureAnswersPayload } from './formatters/capture';
 
 @injectable()
 export default class CleengAccountService extends AccountService {
@@ -240,23 +241,27 @@ export default class CleengAccountService extends AccountService {
     return (response.responseData?.consents || []).map(formatPublisherConsent);
   };
 
-  getCaptureStatus: GetCaptureStatus = async ({ customer }) => {
-    const response: ServiceResponse<GetCaptureStatusResponse> = await this.cleengService.get(`/customers/${customer?.id}/capture/status`, {
+  getRegistrationFields: GetRegistrationFields = async ({ customer }) => {
+    const response = await this.cleengService.get<Response<GetCaptureStatusResponse>>(`/customers/${customer?.id}/capture/status`, {
       authenticate: true,
     });
 
     this.handleErrors(response.errors);
 
-    return response.responseData;
+    const fields: CustomFormField[] = response.responseData.settings
+      .filter((field) => field.enabled)
+      .reduce((current, value) => [...current, ...formatCapture(value)], [] as CustomFormField[]);
+
+    return {
+      beforeSignUp: false,
+      enabled: response.responseData.isCaptureEnabled,
+      fields,
+    };
   };
 
-  updateCaptureAnswers: UpdateCaptureAnswers = async ({ customer, ...payload }) => {
-    const params: UpdateCaptureAnswersPayload = {
-      customerId: customer.id,
-      ...payload,
-    };
-
-    const response = await this.cleengService.put<UpdateConsentsResponse>(`/customers/${customer.id}/capture`, JSON.stringify(params), {
+  updateRegistrationFieldsValues: UpdateRegistrationFieldsValues = async ({ customer, fields, values }) => {
+    const payload = formatUpdateCaptureAnswersPayload(fields, values);
+    const response = await this.cleengService.put<UpdateConsentsResponse>(`/customers/${customer.id}/capture`, JSON.stringify(payload), {
       authenticate: true,
     });
     this.handleErrors(response.errors);

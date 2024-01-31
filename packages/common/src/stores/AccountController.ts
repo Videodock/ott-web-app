@@ -9,13 +9,12 @@ import AccountService, { type AccountServiceFeatures } from '../services/integra
 import SubscriptionService from '../services/integrations/SubscriptionService';
 import type { Offer } from '../../types/checkout';
 import type {
-  Capture,
   Customer,
   ConsentsValue,
   EmailConfirmPasswordInput,
   FirstLastNameInput,
-  GetCaptureStatusResponse,
   SubscribeToNotificationsPayload,
+  CustomFormField,
 } from '../../types/account';
 import { assertFeature, assertModuleMethod, getNamedModule } from '../modules/container';
 import { INTEGRATION_TYPE } from '../modules/types';
@@ -251,18 +250,18 @@ export default class AccountController {
     return consents;
   };
 
-  getCaptureStatus = async (): Promise<GetCaptureStatusResponse> => {
+  getRegistrationFields = async () => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
-    return this.accountService.getCaptureStatus({ customer });
+    return this.accountService.getRegistrationFields({ customer });
   };
 
-  updateCaptureAnswers = async (capture: Capture): Promise<Capture> => {
+  updateRegistrationFieldsValues = async (fields: CustomFormField[], values: Record<string, string>) => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer, customerConsents } = getAccountInfo();
 
-    const updatedCustomer = await this.accountService.updateCaptureAnswers({ customer, ...capture });
+    const updatedCustomer = await this.accountService.updateRegistrationFieldsValues({ customer, fields, values });
 
     await this.afterLogin(updatedCustomer, customerConsents, false);
 

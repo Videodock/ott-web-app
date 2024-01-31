@@ -109,7 +109,7 @@ const formatConsentsFromValues = (publisherConsents: CustomFormField[] | null, v
   publisherConsents.forEach((consent) => {
     consents.push({
       name: consent.name,
-      version: consent.version,
+      version: consent.version || '1',
       state: values[consent.name] ? 'accepted' : 'declined',
     });
   });
@@ -130,7 +130,7 @@ const checkConsentsFromValues = (publisherConsents: CustomFormField[], consents:
 
     customerConsents.push({
       name: consent.name,
-      version: consent.version,
+      version: consent.version || '1',
       state: consents[consent.name] ? 'accepted' : 'declined',
     });
   });

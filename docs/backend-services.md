@@ -23,8 +23,8 @@ that any backend integration needs to support broken down by role:
   - getCustomer
   - refreshToken
   - getLocales
-  - getCaptureStatus
-  - updateCaptureAnswers
+  - getRegistrationFields
+  - updateRegistrationFieldsValues
 - [Subscription](../packages/common/src/services/integrations/SubscriptionService.ts)
   - getSubscriptions
   - updateSubscription

@@ -96,22 +96,6 @@ export type RegisterPayload = PayloadWithIPOverride & {
   externalData?: string;
 };
 
-export type CleengCaptureField = {
-  key: string;
-  enabled: boolean;
-  required: boolean;
-  answer: string | Record<string, string | null> | null;
-};
-
-export type CleengCaptureQuestionField = {
-  key: string;
-  enabled: boolean;
-  required: boolean;
-  value: string;
-  question: string;
-  answer: string | null;
-};
-
 export type PersonalDetailsFormData = {
   firstName: string;
   lastName: string;
@@ -194,8 +178,8 @@ export interface CustomFormField {
   label: string;
   placeholder: string;
   required: boolean;
-  options: Record<string, string>;
-  version: string;
+  options?: Record<string, string>;
+  version?: string;
 }
 
 export type ConsentsValue = {
@@ -213,43 +197,27 @@ export type UpdateCustomerConsentsArgs = {
   consents: ConsentsValue[];
 };
 
-export type GetCaptureStatusResponse = {
-  isCaptureEnabled: boolean;
-  shouldCaptureBeDisplayed: boolean;
-  settings: Array<CleengCaptureField | CleengCaptureQuestionField>;
-};
-
 export type CaptureCustomAnswer = {
   questionId: string;
   question: string;
   value: string;
 };
 
-export type Capture = {
-  firstName?: string;
-  address?: string;
-  address2?: string;
-  city?: string;
-  state?: string;
-  postCode?: string;
-  country?: string;
-  birthDate?: string;
-  companyName?: string;
-  phoneNumber?: string;
-  customAnswers?: CaptureCustomAnswer[];
+export type RegistrationFields = {
+  beforeSignUp: boolean; // true when the registration fields need to be filled in while signing up
+  enabled: boolean; // true when the registration fields are enabled and should be shown to the user
+  fields: CustomFormField[];
 };
 
-export type GetCaptureStatusArgs = {
+export type GetRegistrationFieldsArgs = {
   customer: Customer;
 };
 
-export type UpdateCaptureStatusArgs = {
+export type UpdateRegistrationFieldsValuesArgs = {
   customer: Customer;
-} & Capture;
-
-export type UpdateCaptureAnswersPayload = {
-  customerId: string;
-} & Capture;
+  fields: CustomFormField[];
+  values: Record<string, string>;
+};
 
 export type FirstLastNameInput = {
   firstName: string;
@@ -319,8 +287,8 @@ export type UpdateCustomer = PromiseRequest<UpdateCustomerArgs, Customer>;
 export type GetConsents = PromiseRequest<Config, CustomFormField[]>;
 export type GetConsentsValues = PromiseRequest<CustomerConsentArgs, ConsentsValue[]>;
 export type UpdateConsentsValues = PromiseRequest<UpdateCustomerConsentsArgs, ConsentsValue[]>;
-export type GetCaptureStatus = PromiseRequest<GetCaptureStatusArgs, GetCaptureStatusResponse>;
-export type UpdateCaptureAnswers = PromiseRequest<UpdateCaptureStatusArgs, Customer>;
+export type GetRegistrationFields = PromiseRequest<GetRegistrationFieldsArgs, RegistrationFields>;
+export type UpdateRegistrationFieldsValues = PromiseRequest<UpdateRegistrationFieldsValuesArgs, Customer>;
 export type ResetPassword = PromiseRequest<ResetPasswordPayload, void>;
 export type ChangePassword = PromiseRequest<ChangePasswordWithTokenPayload, void>;
 export type ChangePasswordWithOldPassword = PromiseRequest<ChangePasswordWithOldPasswordPayload, void>;

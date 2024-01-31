@@ -13,7 +13,7 @@ import type {
   ConsentsValue,
   DeleteAccount,
   ExportAccountData,
-  GetCaptureStatus,
+  GetRegistrationFields,
   GetConsentsValues,
   GetConsents,
   Login,
@@ -21,7 +21,7 @@ import type {
   Register,
   ResetPassword,
   GetSocialURLs,
-  UpdateCaptureAnswers,
+  UpdateRegistrationFieldsValues,
   UpdateCustomerArgs,
   UpdateConsentsValues,
   UpdateFavorites,
@@ -35,6 +35,8 @@ import type { SerializedWatchHistoryItem } from '../../../../types/watchHistory'
 import AccountService from '../AccountService';
 import StorageService from '../../StorageService';
 import { ACCESS_MODEL } from '../../../constants';
+
+import { formatRegistrationField } from './formatters/fields';
 
 enum InPlayerEnv {
   Development = 'development',
@@ -221,7 +223,7 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  updateCaptureAnswers: UpdateCaptureAnswers = async ({ customer, ...newAnswers }) => {
+  updateRegistrationFieldsValues: UpdateRegistrationFieldsValues = async ({ customer, ...newAnswers }) => {
     return this.updateCustomer({ ...customer, ...newAnswers });
   };
 
@@ -358,20 +360,32 @@ export default class JWPAccountService extends AccountService {
     return data;
   };
 
-  getCaptureStatus: GetCaptureStatus = async ({ customer }) => {
+  getRegistrationFields: GetRegistrationFields = async ({ customer }) => {
+    const { data } = await InPlayer.Account.getRegisterFields(this.clientId);
+
+    const fields = data.collection.filter((field) => field.name !== 'terms').map((field) => formatRegistrationField(field, customer.metadata[field.name]));
+
     return {
-      isCaptureEnabled: true,
-      shouldCaptureBeDisplayed: true,
-      settings: [
+      beforeSignUp: true,
+      enabled: true,
+      fields: [
         {
-          answer: {
-            firstName: customer.firstName || null,
-            lastName: customer.lastName || null,
-          },
-          enabled: true,
-          key: 'firstNameLastName',
+          type: 'input',
+          label: 'First name',
+          name: 'firstName',
+          placeholder: 'First name',
           required: true,
+          defaultValue: customer.firstName,
         },
+        {
+          type: 'input',
+          label: 'Last name',
+          name: 'lastName',
+          placeholder: 'Last name',
+          required: true,
+          defaultValue: customer.lastName,
+        },
+        ...fields,
       ],
     };
   };
