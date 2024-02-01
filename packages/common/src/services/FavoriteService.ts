@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { object, array, string } from 'yup';
+import { object, string } from 'yup';
 
 import { MAX_WATCHLIST_ITEMS_COUNT } from '../constants';
 import type { Favorite, SerializedFavorite } from '../../types/favorite';
@@ -12,11 +12,9 @@ import ApiService from './ApiService';
 import StorageService from './StorageService';
 import AccountService from './integrations/AccountService';
 
-const schema = array(
-  object().shape({
-    mediaid: string(),
-  }),
-);
+const schema = object().shape({
+  mediaid: string(),
+});
 
 @injectable()
 export default class FavoriteService {
@@ -34,8 +32,8 @@ export default class FavoriteService {
   }
 
   private validateFavorites(favorites: unknown) {
-    if (schema.validateSync(favorites)) {
-      return favorites as SerializedFavorite[];
+    if (Array.isArray(favorites)) {
+      return favorites.filter((item) => schema.isValidSync(item)) as SerializedFavorite[];
     }
 
     return [];

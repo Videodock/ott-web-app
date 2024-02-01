@@ -15,9 +15,10 @@ type Props = {
   helperText?: string;
   error?: boolean;
   required?: boolean;
+  disabled?: boolean;
 };
 
-const Radio: React.FC<Props> = ({ name, onChange, header, value, values, helperText, error, required, ...rest }: Props) => {
+const Radio: React.FC<Props> = ({ name, onChange, header, value, values, helperText, error, required, disabled, ...rest }: Props) => {
   const { t } = useTranslation('common');
   const id = useOpaqueId('radio', name);
 
@@ -31,7 +32,16 @@ const Radio: React.FC<Props> = ({ name, onChange, header, value, values, helperT
       ) : null}
       {values.map(({ value: optionValue, label: optionLabel }, index) => (
         <div className={styles.radio} key={index}>
-          <input value={optionValue} name={name} type="radio" id={id + index} onChange={onChange} checked={value === optionValue} required={required} />
+          <input
+            value={optionValue}
+            name={name}
+            type="radio"
+            id={id + index}
+            onChange={onChange}
+            checked={value === optionValue}
+            required={required}
+            disabled={disabled}
+          />
           <label htmlFor={id + index}>{optionLabel}</label>
         </div>
       ))}

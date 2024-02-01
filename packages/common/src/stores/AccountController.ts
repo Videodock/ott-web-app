@@ -9,17 +9,17 @@ import AccountService, { type AccountServiceFeatures } from '../services/integra
 import SubscriptionService from '../services/integrations/SubscriptionService';
 import type { Offer } from '../../types/checkout';
 import type {
-  Capture,
   Customer,
-  CustomerConsent,
+  ConsentsValue,
   EmailConfirmPasswordInput,
   FirstLastNameInput,
-  GetCaptureStatusResponse,
   SubscribeToNotificationsPayload,
+  CustomFormField,
 } from '../../types/account';
 import { assertFeature, assertModuleMethod, getNamedModule } from '../modules/container';
 import { INTEGRATION_TYPE } from '../modules/types';
 import type { ServiceResponse } from '../../types/service';
+import type { GenericFormValues } from '../../types/form';
 
 import { useAccountStore } from './AccountStore';
 import { useConfigStore } from './ConfigStore';
@@ -184,7 +184,7 @@ export default class AccountController {
     await this.refreshEntitlements?.();
   };
 
-  register = async (email: string, password: string, referrer: string, consents: CustomerConsent[]) => {
+  register = async (email: string, password: string, referrer: string, consents: ConsentsValue[]) => {
     useAccountStore.setState({ loading: true });
     const response = await this.accountService.register({ email, password, consents, referrer });
 
@@ -198,14 +198,14 @@ export default class AccountController {
     await this.watchHistoryController.persistWatchHistory();
   };
 
-  updateConsents = async (customerConsents: CustomerConsent[]): Promise<ServiceResponse<CustomerConsent[]>> => {
+  updateConsents = async (customerConsents: ConsentsValue[]): Promise<ServiceResponse<ConsentsValue[]>> => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
     useAccountStore.setState({ loading: true });
 
     try {
-      const updatedConsents = await this.accountService?.updateCustomerConsents({
+      const updatedConsents = await this.accountService?.updateConsentsValues({
         customer,
         consents: customerConsents,
       });
@@ -228,11 +228,11 @@ export default class AccountController {
 
   // TODO: Decide if it's worth keeping this or just leave combined with getUser
   // noinspection JSUnusedGlobalSymbols
-  getCustomerConsents = async () => {
+  getConsentsValues = async () => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
-    const consents = await this.accountService.getCustomerConsents({ customer });
+    const consents = await this.accountService.getConsentsValues({ customer });
 
     if (consents) {
       useAccountStore.setState({ customerConsents: consents });
@@ -241,28 +241,28 @@ export default class AccountController {
     return consents;
   };
 
-  getPublisherConsents = async () => {
+  getConsents = async () => {
     const { config } = useConfigStore.getState();
 
-    const consents = await this.accountService.getPublisherConsents(config);
+    const consents = await this.accountService.getConsents(config);
 
     useAccountStore.setState({ publisherConsents: consents });
 
     return consents;
   };
 
-  getCaptureStatus = async (): Promise<GetCaptureStatusResponse> => {
+  getRegistrationFields = async () => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
-    return this.accountService.getCaptureStatus({ customer });
+    return this.accountService.getRegistrationFields({ customer });
   };
 
-  updateCaptureAnswers = async (capture: Capture): Promise<Capture> => {
+  updateRegistrationFieldsValues = async (fields: CustomFormField[], values: GenericFormValues) => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer, customerConsents } = getAccountInfo();
 
-    const updatedCustomer = await this.accountService.updateCaptureAnswers({ customer, ...capture });
+    const updatedCustomer = await this.accountService.updateRegistrationFieldsValues({ customer, fields, values });
 
     await this.afterLogin(updatedCustomer, customerConsents, false);
 
@@ -468,13 +468,13 @@ export default class AccountController {
     return this.features;
   }
 
-  private async afterLogin(user: Customer, customerConsents: CustomerConsent[] | null, shouldReloadSubscription = true) {
+  private async afterLogin(user: Customer, customerConsents: ConsentsValue[] | null, shouldReloadSubscription = true) {
     useAccountStore.setState({
       user,
       customerConsents,
     });
 
-    await Promise.allSettled([shouldReloadSubscription ? this.reloadSubscriptions() : Promise.resolve(), this.getPublisherConsents()]);
+    await Promise.allSettled([shouldReloadSubscription ? this.reloadSubscriptions() : Promise.resolve(), this.getConsents()]);
     useAccountStore.setState({ loading: false });
   }
 
