@@ -228,7 +228,7 @@ export default class AccountController {
 
   // TODO: Decide if it's worth keeping this or just leave combined with getUser
   // noinspection JSUnusedGlobalSymbols
-  getCustomerConsents = async () => {
+  getConsentsValues = async () => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
@@ -241,7 +241,7 @@ export default class AccountController {
     return consents;
   };
 
-  getPublisherConsents = async () => {
+  getConsents = async () => {
     const { config } = useConfigStore.getState();
 
     const consents = await this.accountService.getConsents(config);
@@ -474,7 +474,7 @@ export default class AccountController {
       customerConsents,
     });
 
-    await Promise.allSettled([shouldReloadSubscription ? this.reloadSubscriptions() : Promise.resolve(), this.getPublisherConsents()]);
+    await Promise.allSettled([shouldReloadSubscription ? this.reloadSubscriptions() : Promise.resolve(), this.getConsents()]);
     useAccountStore.setState({ loading: false });
   }
 

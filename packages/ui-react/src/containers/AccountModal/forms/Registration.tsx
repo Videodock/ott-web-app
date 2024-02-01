@@ -23,7 +23,7 @@ const Registration = () => {
   const [consentErrors, setConsentErrors] = useState<string[]>([]);
 
   const appConfigId = useConfigStore(({ config }) => config.id);
-  const { data, isLoading: publisherConsentsLoading } = useQuery(['consents', appConfigId], accountController.getPublisherConsents);
+  const { data, isLoading: publisherConsentsLoading } = useQuery(['consents', appConfigId], accountController.getConsents);
 
   const publisherConsents = useMemo(() => data || [], [data]);
 

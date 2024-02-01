@@ -30,12 +30,14 @@
     height: 20px;
     margin: 0;
     border-radius: 15px;
+    cursor: pointer;
     transition: all 0.1s;
     appearance: none;
 
     &:not(:checked) {
       border: 2px solid theme.$input-resting-border-color;
-      &:hover {
+
+      &:hover:not(:disabled) {
         border-color: theme.$input-hover-border-color;
       }
     }
@@ -44,6 +46,7 @@
       width: 20px;
       height: 20px;
       border: 2px solid var(--primary-color);
+
       &::after {
         position: absolute;
         top: 50%;
@@ -55,6 +58,28 @@
         border-radius: 15px;
         transform: translateX(-50%) translateY(-50%);
         content: '';
+      }
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.6;
+      pointer-events: none;
+
+      & + label {
+        cursor: default;
+      }
+    }
+  }
+}
+
+.error {
+  .radio {
+    input {
+      border-color: theme.$input-field-error-color;
+
+      &::after {
+        background-color: theme.$input-field-error-color;
       }
     }
   }

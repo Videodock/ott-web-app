@@ -23,9 +23,10 @@ export type CustomRegisterFieldCommonProps = {
   disabled: boolean;
   required: boolean;
   options: RegisterFieldOptions;
+  editing: boolean;
 }>;
 
-const CustomRegisterField: FC<CustomRegisterFieldCommonProps> = ({ type, value = '', options, ...props }) => {
+const CustomRegisterField: FC<CustomRegisterFieldCommonProps> = ({ type, value = '', options, editing, ...props }) => {
   const { t, i18n } = useTranslation();
 
   const optionsList = useMemo(() => {
