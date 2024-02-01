@@ -114,32 +114,6 @@ exports[`User Component tests > Account Page 1`] = `
           >
             nav.account
           </h1>
-          <div
-            class="_textField_e16c1b"
-          >
-            <label
-              class="_label_e16c1b"
-              for="text-field_1235_firstname"
-            >
-              account.firstname
-            </label>
-            <p>
-              User
-            </p>
-          </div>
-          <div
-            class="_textField_e16c1b"
-          >
-            <label
-              class="_label_e16c1b"
-              for="text-field_1235_lastname"
-            >
-              account.lastname
-            </label>
-            <p>
-              Person
-            </p>
-          </div>
         </form>
         <div
           class="_controls_1c1c63"

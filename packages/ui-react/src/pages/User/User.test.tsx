@@ -79,6 +79,7 @@ describe('User Component tests', () => {
     mockService(ApiService, {});
     mockService(AccountController, {
       logout: vi.fn(),
+      getConsents: vi.fn().mockResolvedValue([]),
       getFeatures: vi.fn(() => ({
         ...DEFAULT_FEATURES,
         canUpdateEmail: false,
