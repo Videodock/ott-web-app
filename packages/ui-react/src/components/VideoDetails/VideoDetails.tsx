@@ -35,12 +35,13 @@ const VideoDetails: React.VFC<Props> = ({
 }) => {
   const breakpoint: Breakpoint = useBreakpoint();
   const isMobile = breakpoint === Breakpoint.xs;
+  const alt = ''; // intentionally empty for a11y, because adjacent text alternative
 
   return (
     <div data-testid={testId('cinema-layout')}>
       <header className={styles.video} data-testid={testId('video-details')}>
         <div className={classNames(styles.main, styles.mainPadding)}>
-          <Image className={styles.poster} image={image} alt={title} width={1280} />
+          <Image className={styles.poster} image={image} alt={alt} width={1280} />
           <div className={styles.info}>
             <h1 className={styles.title}>{title}</h1>
             <div className={styles.metaContainer}>
