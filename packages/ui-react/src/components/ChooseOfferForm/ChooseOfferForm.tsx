@@ -31,9 +31,10 @@ type Props = {
 
 type OfferBoxProps = {
   offer: Offer;
-} & Pick<Props, 'values' | 'onChange'>;
+  selected: boolean;
+} & Pick<Props, 'onChange'>;
 
-const OfferBox: React.FC<OfferBoxProps> = ({ offer, values, onChange }: OfferBoxProps) => {
+const OfferBox: React.FC<OfferBoxProps> = ({ offer, selected, onChange }: OfferBoxProps) => {
   const { t } = useTranslation('account');
 
   const getFreeTrialText = (offer: Offer) => {
@@ -61,7 +62,7 @@ const OfferBox: React.FC<OfferBoxProps> = ({ offer, values, onChange }: OfferBox
         name={'offerId'}
         value={offer.offerId}
         id={offer.offerId}
-        checked={values.offerId === offer.offerId}
+        checked={selected}
         data-testid={testId(title)}
       />
       <label className={styles.label} htmlFor={offer.offerId}>
@@ -162,7 +163,7 @@ const ChooseOfferForm: React.FC<Props> = ({
         {!offers.length ? (
           <p>{t('choose_offer.no_pricing_available')}</p>
         ) : (
-          offers.map((offer) => <OfferBox key={offer.offerId} offer={offer} values={values} onChange={onChange} />)
+          offers.map((offer) => <OfferBox key={offer.offerId} offer={offer} selected={values.offerId === offer.offerId} onChange={onChange} />)
         )}
       </div>
       {submitting && <LoadingOverlay transparentBackground inline />}
