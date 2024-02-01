@@ -2,6 +2,7 @@ import type { Config } from './config';
 import type { PromiseRequest } from './service';
 import type { SerializedWatchHistoryItem } from './watchHistory';
 import type { SerializedFavorite } from './favorite';
+import type { GenericFormValues } from './form';
 
 export type AuthData = {
   jwt: string;
@@ -25,13 +26,13 @@ export type LoginArgs = {
 };
 
 export type RegistrationArgs = LoginArgs & {
-  consents: CustomerConsent[];
+  consents: ConsentsValue[];
 };
 
 export type AuthResponse = {
   auth: AuthData;
   user: Customer;
-  customerConsents: CustomerConsent[];
+  customerConsents: ConsentsValue[];
 };
 
 export type LoginPayload = PayloadWithIPOverride & {
@@ -79,7 +80,7 @@ export type GetUserArgs = {
 
 export type GetUserPayload = {
   user: Customer;
-  customerConsents: CustomerConsent[];
+  customerConsents: ConsentsValue[];
 };
 
 export type RegisterPayload = PayloadWithIPOverride & {
@@ -94,22 +95,6 @@ export type RegisterPayload = PayloadWithIPOverride & {
   lastName?: string;
   externalId?: string;
   externalData?: string;
-};
-
-export type CleengCaptureField = {
-  key: string;
-  enabled: boolean;
-  required: boolean;
-  answer: string | Record<string, string | null> | null;
-};
-
-export type CleengCaptureQuestionField = {
-  key: string;
-  enabled: boolean;
-  required: boolean;
-  value: string;
-  question: string;
-  answer: string | null;
 };
 
 export type PersonalDetailsFormData = {
@@ -127,7 +112,7 @@ export type PersonalDetailsFormData = {
 };
 
 export type GetCustomerConsentsResponse = {
-  consents: CustomerConsent[];
+  consents: ConsentsValue[];
 };
 
 export type ResetPasswordPayload = {
@@ -159,7 +144,7 @@ export type UpdateCustomerPayload = {
 
 export type UpdateCustomerConsentsPayload = {
   id?: string;
-  consents: CustomerConsent[];
+  consents: ConsentsValue[];
 };
 
 export type Customer = {
@@ -194,20 +179,13 @@ export interface CustomFormField {
   label: string;
   placeholder: string;
   required: boolean;
-  options: Record<string, string>;
-  version: string;
+  options?: Record<string, string>;
+  version?: string;
 }
 
-export type CustomerConsent = {
-  customerId?: string;
-  date?: number;
-  label?: string;
+export type ConsentsValue = {
   name: string;
-  needsUpdate?: boolean;
-  newestVersion?: string;
-  required?: boolean;
   state: 'accepted' | 'declined';
-  value?: string | boolean;
   version: string;
 };
 
@@ -217,13 +195,7 @@ export type CustomerConsentArgs = {
 
 export type UpdateCustomerConsentsArgs = {
   customer: Customer;
-  consents: CustomerConsent[];
-};
-
-export type GetCaptureStatusResponse = {
-  isCaptureEnabled: boolean;
-  shouldCaptureBeDisplayed: boolean;
-  settings: Array<CleengCaptureField | CleengCaptureQuestionField>;
+  consents: ConsentsValue[];
 };
 
 export type CaptureCustomAnswer = {
@@ -232,31 +204,21 @@ export type CaptureCustomAnswer = {
   value: string;
 };
 
-export type Capture = {
-  firstName?: string;
-  address?: string;
-  address2?: string;
-  city?: string;
-  state?: string;
-  postCode?: string;
-  country?: string;
-  birthDate?: string;
-  companyName?: string;
-  phoneNumber?: string;
-  customAnswers?: CaptureCustomAnswer[];
+export type RegistrationFields = {
+  beforeSignUp: boolean; // true when the registration fields need to be filled in while signing up
+  enabled: boolean; // true when the registration fields are enabled and should be shown to the user
+  fields: CustomFormField[];
 };
 
-export type GetCaptureStatusArgs = {
+export type GetRegistrationFieldsArgs = {
   customer: Customer;
 };
 
-export type UpdateCaptureStatusArgs = {
+export type UpdateRegistrationFieldsValuesArgs = {
   customer: Customer;
-} & Capture;
-
-export type UpdateCaptureAnswersPayload = {
-  customerId: string;
-} & Capture;
+  fields: CustomFormField[];
+  values: GenericFormValues;
+};
 
 export type FirstLastNameInput = {
   firstName: string;
@@ -323,11 +285,11 @@ export type Register = PromiseRequest<RegistrationArgs, AuthResponse>;
 export type GetUser = PromiseRequest<GetUserArgs, GetUserPayload>;
 export type Logout = () => Promise<void>;
 export type UpdateCustomer = PromiseRequest<UpdateCustomerArgs, Customer>;
-export type GetPublisherConsents = PromiseRequest<Config, CustomFormField[]>;
-export type GetCustomerConsents = PromiseRequest<CustomerConsentArgs, CustomerConsent[]>;
-export type UpdateCustomerConsents = PromiseRequest<UpdateCustomerConsentsArgs, CustomerConsent[]>;
-export type GetCaptureStatus = PromiseRequest<GetCaptureStatusArgs, GetCaptureStatusResponse>;
-export type UpdateCaptureAnswers = PromiseRequest<UpdateCaptureStatusArgs, Customer>;
+export type GetConsents = PromiseRequest<Config, CustomFormField[]>;
+export type GetConsentsValues = PromiseRequest<CustomerConsentArgs, ConsentsValue[]>;
+export type UpdateConsentsValues = PromiseRequest<UpdateCustomerConsentsArgs, ConsentsValue[]>;
+export type GetRegistrationFields = PromiseRequest<GetRegistrationFieldsArgs, RegistrationFields>;
+export type UpdateRegistrationFieldsValues = PromiseRequest<UpdateRegistrationFieldsValuesArgs, Customer>;
 export type ResetPassword = PromiseRequest<ResetPasswordPayload, void>;
 export type ChangePassword = PromiseRequest<ChangePasswordWithTokenPayload, void>;
 export type ChangePasswordWithOldPassword = PromiseRequest<ChangePasswordWithOldPasswordPayload, void>;

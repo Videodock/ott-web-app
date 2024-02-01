@@ -1,7 +1,7 @@
 import type { ProfilesData } from '@inplayer-org/inplayer.js';
 import { useMutation, useQuery, type UseMutationOptions, type UseQueryOptions } from 'react-query';
 import { useTranslation } from 'react-i18next';
-import type { GenericFormErrors } from '@jwp/ott-common/types/form';
+import type { FormErrors } from '@jwp/ott-common/types/form';
 import type { CommonAccountResponse } from '@jwp/ott-common/types/account';
 import type { ListProfilesResponse, ProfileDetailsPayload, ProfileFormSubmitError, ProfileFormValues, ProfilePayload } from '@jwp/ott-common/types/profiles';
 import { getModule } from '@jwp/ott-common/src/modules/container';
@@ -84,7 +84,7 @@ export const isProfileFormSubmitError = (e: unknown): e is ProfileFormSubmitErro
 export const useProfileErrorHandler = () => {
   const { t } = useTranslation('user');
 
-  return (e: unknown, setErrors: (errors: Partial<ProfileFormValues & GenericFormErrors>) => void) => {
+  return (e: unknown, setErrors: (errors: FormErrors<ProfileFormValues>) => void) => {
     if (isProfileFormSubmitError(e) && e.message.includes('409')) {
       setErrors({ name: t('profile.validation.name.already_exists') });
       return;

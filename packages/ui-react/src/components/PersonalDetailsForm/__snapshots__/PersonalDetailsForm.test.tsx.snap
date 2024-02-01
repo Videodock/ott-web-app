@@ -17,13 +17,14 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       This is a form error
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
+      data-testid="crf-input"
     >
       <label
         class="_label_e16c1b"
         for="text-field_1235_firstname"
       >
-        personal_details.fist_name
+        First name
       </label>
       <div
         class="_container_e16c1b"
@@ -32,26 +33,22 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           class="_input_e16c1b"
           id="text-field_1235_firstname"
           name="firstName"
-          placeholder="personal_details.fist_name"
+          placeholder=""
           required=""
           type="text"
           value="Vince"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        this is wrong
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
+      data-testid="crf-input"
     >
       <label
         class="_label_e16c1b"
         for="text-field_1235_lastname"
       >
-        personal_details.last_name
+        Last name
       </label>
       <div
         class="_container_e16c1b"
@@ -60,26 +57,22 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           class="_input_e16c1b"
           id="text-field_1235_lastname"
           name="lastName"
-          placeholder="personal_details.last_name"
+          placeholder=""
           required=""
           type="text"
           value="Guy"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        also this
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
+      data-testid="crf-input"
     >
       <label
         class="_label_e16c1b"
         for="text-field_1235_companyname"
       >
-        personal_details.company_name
+        Company name
         <span>
           optional
         </span>
@@ -91,196 +84,26 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           class="_input_e16c1b"
           id="text-field_1235_companyname"
           name="companyName"
-          placeholder="personal_details.company_name"
+          placeholder=""
           type="text"
           value="JW Player"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        So much errors
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_address"
-      >
-        personal_details.address
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_address"
-          name="address"
-          placeholder="personal_details.address"
-          required=""
-          type="text"
-          value="123 Nowhere St."
-        />
-      </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        Do you know where you live
-      </div>
-    </div>
-    <div
-      class="_textField_e16c1b _error_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_address2"
-      >
-        personal_details.address2
-        <span>
-          optional
-        </span>
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_address2"
-          name="address2"
-          placeholder="personal_details.address2"
-          type="text"
-          value="Apt 1W"
-        />
-      </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        Come on
-      </div>
-    </div>
-    <div
-      class="_textField_e16c1b _error_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_city"
-      >
-        personal_details.city
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_city"
-          name="city"
-          placeholder="personal_details.city"
-          required=""
-          type="text"
-          value="Chicago"
-        />
-      </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        stop it
-      </div>
-    </div>
-    <div
-      class="_textField_e16c1b _error_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_state"
-      >
-        personal_details.state
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_state"
-          name="state"
-          placeholder="personal_details.state"
-          required=""
-          type="text"
-          value="IL"
-        />
-      </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        Confusion
-      </div>
-    </div>
-    <div
-      class="_textField_e16c1b _error_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_postcode"
-      >
-        personal_details.post_code
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_postcode"
-          name="postCode"
-          placeholder="personal_details.post_code"
-          required=""
-          type="text"
-          value="60601"
-        />
-      </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        Post Code should be 5 centimeters
-      </div>
-    </div>
-    <div
-      class="_textField_e16c1b _error_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_phonenumber"
-      >
-        personal_details.phone_number
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_phonenumber"
-          name="phoneNumber"
-          placeholder="personal_details.phone_number"
-          required=""
-          type="text"
-          value="+1 555 555 5555"
-        />
-      </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        Invalid
-      </div>
-    </div>
-    <div
-      class="_dateField_eb6974 _error_eb6974"
+      class="_dateField_eb6974"
+      data-testid="crf-datepicker"
       id="text-field_1235_birthdate"
+      placeholder=""
     >
       <label
         class="_label_eb6974"
         for="text-field_1235_birthdate"
       >
-        personal_details.birth_date
+        Birth date
+        <span>
+          optional
+        </span>
       </label>
       <div
         class="_container_eb6974"
@@ -320,20 +143,134 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="1985"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
+    </div>
+    <div
+      class="_textField_e16c1b"
+      data-testid="crf-input"
+    >
+      <label
+        class="_label_e16c1b"
+        for="text-field_1235_phonenumber"
       >
-        February 30th? Really?
+        Phone Number
+        <span>
+          optional
+        </span>
+      </label>
+      <div
+        class="_container_e16c1b"
+      >
+        <input
+          class="_input_e16c1b"
+          id="text-field_1235_phonenumber"
+          name="phoneNumber"
+          placeholder=""
+          type="text"
+          value="+1 555 555 5555"
+        />
       </div>
     </div>
     <div
-      class="_container_bb73c6 _fullWidth_bb73c6 _error_bb73c6 _medium_bb73c6"
+      class="_textField_e16c1b"
+      data-testid="crf-input"
+    >
+      <label
+        class="_label_e16c1b"
+        for="text-field_1235_custom_1"
+      >
+        This is a text field
+        <span>
+          optional
+        </span>
+      </label>
+      <div
+        class="_container_e16c1b"
+      >
+        <input
+          class="_input_e16c1b"
+          id="text-field_1235_custom_1"
+          name="custom_1"
+          placeholder=""
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="_checkbox_531f07"
+      data-testid="crf-checkbox"
+      placeholder=""
+    >
+      <div
+        class="_row_531f07"
+      >
+        <input
+          aria-required="false"
+          id="check-box_1235_custom_2"
+          name="custom_2"
+          type="checkbox"
+          value=""
+        />
+        <label
+          for="check-box_1235_custom_2"
+        >
+          This is a checkbox field
+        </label>
+      </div>
+    </div>
+    <div
+      data-testid="crf-radio"
+      label="This is a radio field"
+      placeholder=""
+    >
+      <div
+        class="_header_d50e6e"
+        data-testid="radio-header"
+      >
+        This is a radio field
+      </div>
+      <div
+        class="_radio_d50e6e"
+      >
+        <input
+          id="radio_1235_custom_30"
+          name="custom_3"
+          required=""
+          type="radio"
+          value="option1"
+        />
+        <label
+          for="radio_1235_custom_30"
+        >
+          Option 1
+        </label>
+      </div>
+      <div
+        class="_radio_d50e6e"
+      >
+        <input
+          id="radio_1235_custom_31"
+          name="custom_3"
+          required=""
+          type="radio"
+          value="option2"
+        />
+        <label
+          for="radio_1235_custom_31"
+        >
+          Option 2
+        </label>
+      </div>
+    </div>
+    <div
+      class="_container_bb73c6 _fullWidth_bb73c6 _medium_bb73c6"
+      data-testid="crf-select"
     >
       <label
         class="_label_bb73c6"
         for="1235"
       >
-        Which number is 2?
+        This is a select field
       </label>
       <div
         class="_dropdown_bb73c6 _fullWidth_bb73c6"
@@ -342,118 +279,28 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           aria-required="true"
           class="_select_bb73c6"
           id="1235"
-          name="key1"
+          name="custom_4"
+          placeholder=""
         >
           <option
             class="_option_bb73c6"
-            disabled=""
-            value=""
+            value="option1"
           >
-            personal_details.select_answer
+            Option 1
           </option>
           <option
             class="_option_bb73c6"
-            value="1"
+            value="option2"
           >
-            1
+            Option 2
           </option>
           <option
             class="_option_bb73c6"
-            value="2"
+            value="option3"
           >
-            2
-          </option>
-          <option
-            class="_option_bb73c6"
-            value="3"
-          >
-            3
+            Option 3
           </option>
         </select>
-      </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        question 1 is invalid
-      </div>
-    </div>
-    <div>
-      <div
-        class="_header_d50e6e"
-        data-testid="radio-header"
-      >
-        Is this a question?
-        <span>
-          optional
-        </span>
-      </div>
-      <div
-        class="_radio_d50e6e"
-      >
-        <input
-          id="radio_1235_key20"
-          name="key2"
-          type="radio"
-          value="Yes"
-        />
-        <label
-          for="radio_1235_key20"
-        >
-          Yes
-        </label>
-      </div>
-      <div
-        class="_radio_d50e6e"
-      >
-        <input
-          checked=""
-          id="radio_1235_key21"
-          name="key2"
-          type="radio"
-          value="No"
-        />
-        <label
-          for="radio_1235_key21"
-        >
-          No
-        </label>
-      </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-      >
-        Invalid answer
-      </div>
-    </div>
-    <div
-      class="_checkbox_531f07 _error_531f07"
-    >
-      <div
-        class="_header_531f07"
-      >
-        Check this off.
-      </div>
-      <div
-        class="_row_531f07"
-      >
-        <input
-          aria-required="true"
-          checked=""
-          id="check-box_1235_ccc"
-          name="ccc"
-          type="checkbox"
-          value="CheckMe"
-        />
-        <label
-          for="check-box_1235_ccc"
-        >
-          * 
-          CheckMe
-        </label>
-      </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0 _helperTextError_531f07"
-      >
-        No way Jose
       </div>
     </div>
     <button
@@ -482,12 +329,13 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
     </h2>
     <div
       class="_textField_e16c1b"
+      data-testid="crf-input"
     >
       <label
         class="_label_e16c1b"
         for="text-field_1235_firstname"
       >
-        personal_details.fist_name
+        First name
       </label>
       <div
         class="_container_e16c1b"
@@ -496,7 +344,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
           class="_input_e16c1b"
           id="text-field_1235_firstname"
           name="firstName"
-          placeholder="personal_details.fist_name"
+          placeholder=""
           required=""
           type="text"
           value="Vince"
@@ -505,12 +353,13 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
     </div>
     <div
       class="_textField_e16c1b"
+      data-testid="crf-input"
     >
       <label
         class="_label_e16c1b"
         for="text-field_1235_lastname"
       >
-        personal_details.last_name
+        Last name
       </label>
       <div
         class="_container_e16c1b"
@@ -519,7 +368,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
           class="_input_e16c1b"
           id="text-field_1235_lastname"
           name="lastName"
-          placeholder="personal_details.last_name"
+          placeholder=""
           required=""
           type="text"
           value="Guy"
@@ -528,12 +377,13 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
     </div>
     <div
       class="_textField_e16c1b"
+      data-testid="crf-input"
     >
       <label
         class="_label_e16c1b"
         for="text-field_1235_companyname"
       >
-        personal_details.company_name
+        Company name
         <span>
           optional
         </span>
@@ -545,161 +395,26 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
           class="_input_e16c1b"
           id="text-field_1235_companyname"
           name="companyName"
-          placeholder="personal_details.company_name"
+          placeholder=""
           type="text"
           value="JW Player"
         />
       </div>
     </div>
     <div
-      class="_textField_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_address"
-      >
-        personal_details.address
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_address"
-          name="address"
-          placeholder="personal_details.address"
-          required=""
-          type="text"
-          value="123 Nowhere St."
-        />
-      </div>
-    </div>
-    <div
-      class="_textField_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_address2"
-      >
-        personal_details.address2
-        <span>
-          optional
-        </span>
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_address2"
-          name="address2"
-          placeholder="personal_details.address2"
-          type="text"
-          value="Apt 1W"
-        />
-      </div>
-    </div>
-    <div
-      class="_textField_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_city"
-      >
-        personal_details.city
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_city"
-          name="city"
-          placeholder="personal_details.city"
-          required=""
-          type="text"
-          value="Chicago"
-        />
-      </div>
-    </div>
-    <div
-      class="_textField_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_state"
-      >
-        personal_details.state
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_state"
-          name="state"
-          placeholder="personal_details.state"
-          required=""
-          type="text"
-          value="IL"
-        />
-      </div>
-    </div>
-    <div
-      class="_textField_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_postcode"
-      >
-        personal_details.post_code
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_postcode"
-          name="postCode"
-          placeholder="personal_details.post_code"
-          required=""
-          type="text"
-          value="60601"
-        />
-      </div>
-    </div>
-    <div
-      class="_textField_e16c1b"
-    >
-      <label
-        class="_label_e16c1b"
-        for="text-field_1235_phonenumber"
-      >
-        personal_details.phone_number
-      </label>
-      <div
-        class="_container_e16c1b"
-      >
-        <input
-          class="_input_e16c1b"
-          id="text-field_1235_phonenumber"
-          name="phoneNumber"
-          placeholder="personal_details.phone_number"
-          required=""
-          type="text"
-          value="+1 555 555 5555"
-        />
-      </div>
-    </div>
-    <div
       class="_dateField_eb6974"
+      data-testid="crf-datepicker"
       id="text-field_1235_birthdate"
+      placeholder=""
     >
       <label
         class="_label_eb6974"
         for="text-field_1235_birthdate"
       >
-        personal_details.birth_date
+        Birth date
+        <span>
+          optional
+        </span>
       </label>
       <div
         class="_container_eb6974"
@@ -741,13 +456,132 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
+      class="_textField_e16c1b"
+      data-testid="crf-input"
+    >
+      <label
+        class="_label_e16c1b"
+        for="text-field_1235_phonenumber"
+      >
+        Phone Number
+        <span>
+          optional
+        </span>
+      </label>
+      <div
+        class="_container_e16c1b"
+      >
+        <input
+          class="_input_e16c1b"
+          id="text-field_1235_phonenumber"
+          name="phoneNumber"
+          placeholder=""
+          type="text"
+          value="+1 555 555 5555"
+        />
+      </div>
+    </div>
+    <div
+      class="_textField_e16c1b"
+      data-testid="crf-input"
+    >
+      <label
+        class="_label_e16c1b"
+        for="text-field_1235_custom_1"
+      >
+        This is a text field
+        <span>
+          optional
+        </span>
+      </label>
+      <div
+        class="_container_e16c1b"
+      >
+        <input
+          class="_input_e16c1b"
+          id="text-field_1235_custom_1"
+          name="custom_1"
+          placeholder=""
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="_checkbox_531f07"
+      data-testid="crf-checkbox"
+      placeholder=""
+    >
+      <div
+        class="_row_531f07"
+      >
+        <input
+          aria-required="false"
+          id="check-box_1235_custom_2"
+          name="custom_2"
+          type="checkbox"
+          value=""
+        />
+        <label
+          for="check-box_1235_custom_2"
+        >
+          This is a checkbox field
+        </label>
+      </div>
+    </div>
+    <div
+      data-testid="crf-radio"
+      label="This is a radio field"
+      placeholder=""
+    >
+      <div
+        class="_header_d50e6e"
+        data-testid="radio-header"
+      >
+        This is a radio field
+      </div>
+      <div
+        class="_radio_d50e6e"
+      >
+        <input
+          id="radio_1235_custom_30"
+          name="custom_3"
+          required=""
+          type="radio"
+          value="option1"
+        />
+        <label
+          for="radio_1235_custom_30"
+        >
+          Option 1
+        </label>
+      </div>
+      <div
+        class="_radio_d50e6e"
+      >
+        <input
+          id="radio_1235_custom_31"
+          name="custom_3"
+          required=""
+          type="radio"
+          value="option2"
+        />
+        <label
+          for="radio_1235_custom_31"
+        >
+          Option 2
+        </label>
+      </div>
+    </div>
+    <div
       class="_container_bb73c6 _fullWidth_bb73c6 _medium_bb73c6"
+      data-testid="crf-select"
     >
       <label
         class="_label_bb73c6"
         for="1235"
       >
-        Which number is 2?
+        This is a select field
       </label>
       <div
         class="_dropdown_bb73c6 _fullWidth_bb73c6"
@@ -756,103 +590,28 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
           aria-required="true"
           class="_select_bb73c6"
           id="1235"
-          name="key1"
+          name="custom_4"
+          placeholder=""
         >
           <option
             class="_option_bb73c6"
-            disabled=""
-            value=""
+            value="option1"
           >
-            personal_details.select_answer
+            Option 1
           </option>
           <option
             class="_option_bb73c6"
-            value="1"
+            value="option2"
           >
-            1
+            Option 2
           </option>
           <option
             class="_option_bb73c6"
-            value="2"
+            value="option3"
           >
-            2
-          </option>
-          <option
-            class="_option_bb73c6"
-            value="3"
-          >
-            3
+            Option 3
           </option>
         </select>
-      </div>
-    </div>
-    <div>
-      <div
-        class="_header_d50e6e"
-        data-testid="radio-header"
-      >
-        Is this a question?
-        <span>
-          optional
-        </span>
-      </div>
-      <div
-        class="_radio_d50e6e"
-      >
-        <input
-          id="radio_1235_key20"
-          name="key2"
-          type="radio"
-          value="Yes"
-        />
-        <label
-          for="radio_1235_key20"
-        >
-          Yes
-        </label>
-      </div>
-      <div
-        class="_radio_d50e6e"
-      >
-        <input
-          checked=""
-          id="radio_1235_key21"
-          name="key2"
-          type="radio"
-          value="No"
-        />
-        <label
-          for="radio_1235_key21"
-        >
-          No
-        </label>
-      </div>
-    </div>
-    <div
-      class="_checkbox_531f07"
-    >
-      <div
-        class="_header_531f07"
-      >
-        Check this off.
-      </div>
-      <div
-        class="_row_531f07"
-      >
-        <input
-          aria-required="true"
-          checked=""
-          id="check-box_1235_ccc"
-          name="ccc"
-          type="checkbox"
-          value="CheckMe"
-        />
-        <label
-          for="check-box_1235_ccc"
-        >
-          * 
-          CheckMe
-        </label>
       </div>
     </div>
     <button

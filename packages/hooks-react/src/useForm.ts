@@ -9,7 +9,7 @@ export type UseFormReturnValue<T> = {
   handleChange: UseFormChangeHandler;
   handleBlur: UseFormBlurHandler;
   handleSubmit: UseFormSubmitHandler;
-  setValue: (key: keyof T, value: string) => void;
+  setValue: (key: keyof T, value: string | boolean) => void;
   setErrors: (errors: FormErrors<T>) => void;
   setSubmitting: (submitting: boolean) => void;
   reset: () => void;

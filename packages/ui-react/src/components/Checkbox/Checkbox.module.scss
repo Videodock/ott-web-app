@@ -21,6 +21,9 @@
       &:not(:checked) {
         border: 2px solid theme.$input-field-error-color;
       }
+      &:checked {
+        background-color: theme.$input-field-error-color;
+      }
     }
   }
 

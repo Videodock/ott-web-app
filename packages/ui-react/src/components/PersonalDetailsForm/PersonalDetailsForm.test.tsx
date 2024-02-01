@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import type { CustomFormField } from '@jwp/ott-common/types/account';
 
 import PersonalDetailsForm from './PersonalDetailsForm';
 
@@ -11,94 +12,88 @@ const values = {
   birthDate: '27-Feb-1985',
   companyName: 'JW Player',
   phoneNumber: '+1 555 555 5555',
-  address: '123 Nowhere St.',
-  address2: 'Apt 1W',
-  city: 'Chicago',
-  state: 'IL',
-  postCode: '60601',
-  country: 'United States',
 };
-const fields = {
-  firstNameLastName: {
-    key: 'fnln',
-    enabled: true,
+const fields: CustomFormField[] = [
+  {
+    type: 'input',
+    name: 'firstName',
+    label: 'First name',
+    placeholder: '',
     required: true,
-    answer: '',
+    defaultValue: '',
   },
-  companyName: {
-    key: 'c',
-    enabled: true,
+  {
+    type: 'input',
+    name: 'lastName',
+    label: 'Last name',
+    placeholder: '',
+    required: true,
+    defaultValue: '',
+  },
+  {
+    type: 'input',
+    name: 'companyName',
+    label: 'Company name',
+    placeholder: '',
     required: false,
-    answer: '',
-  },
-  address: {
-    key: 'a',
-    enabled: true,
-    required: true,
-    answer: '',
-  },
-  phoneNumber: {
-    key: 'pn',
-    enabled: true,
-    required: true,
-    answer: '',
-  },
-  birthDate: {
-    key: 'dob',
-    enabled: true,
-    required: true,
-    answer: '',
-  },
-};
-const questions = [
-  {
-    key: 'key1',
-    question: 'Which number is 2?',
-    value: '1;2;3',
-    answer: '',
-    required: true,
-    enabled: true,
+    defaultValue: '',
   },
   {
-    key: 'key2',
-    question: 'Is this a question?',
-    value: 'Yes;No',
-    answer: '',
+    type: 'datepicker',
+    name: 'birthDate',
+    label: 'Birth date',
+    placeholder: '',
     required: false,
-    enabled: true,
+    defaultValue: '',
   },
   {
-    key: 'ccc',
-    question: 'Check this off.',
-    value: 'CheckMe',
-    answer: '',
+    type: 'input',
+    name: 'phoneNumber',
+    label: 'Phone Number',
+    placeholder: '',
+    required: false,
+    defaultValue: '',
+  },
+  {
+    type: 'input',
+    name: 'custom_1',
+    label: 'This is a text field',
+    placeholder: '',
+    required: false,
+    defaultValue: '',
+  },
+  {
+    type: 'checkbox',
+    name: 'custom_2',
+    label: 'This is a checkbox field',
+    options: { accept: 'accept' },
+    placeholder: '',
+    required: false,
+    enabledByDefault: false,
+  },
+  {
+    type: 'radio',
+    name: 'custom_3',
+    label: 'This is a radio field',
+    options: { option1: 'Option 1', option2: 'Option 2' },
+    placeholder: '',
     required: true,
-    enabled: true,
+    defaultValue: '',
+  },
+  {
+    type: 'select',
+    name: 'custom_4',
+    label: 'This is a select field',
+    options: { option1: 'Option 1', option2: 'Option 2', option3: 'Option 3' },
+    placeholder: '',
+    required: true,
+    defaultValue: '',
   },
 ];
-const questionValues = {
-  key1: '3',
-  key2: 'No',
-  ccc: 'true',
-};
 
 describe('<PersonalDetailsForm>', () => {
   test('Renders without crashing', () => {
-    const { container } = render(
-      <PersonalDetailsForm
-        onSubmit={noop}
-        onChange={noop}
-        setValue={noop}
-        errors={{}}
-        values={values}
-        submitting={false}
-        fields={fields}
-        questions={questions}
-        onQuestionChange={noop}
-        questionValues={questionValues}
-        questionErrors={{}}
-      />,
-    );
+    const { container } = render(<PersonalDetailsForm onSubmit={noop} onChange={noop} errors={{}} values={values} submitting={false} fields={fields} />);
 
     expect(container).toMatchSnapshot();
   });
@@ -108,32 +103,20 @@ describe('<PersonalDetailsForm>', () => {
       <PersonalDetailsForm
         onSubmit={noop}
         onChange={noop}
-        setValue={noop}
         errors={{
           firstName: 'this is wrong',
           lastName: 'also this',
-          address: 'Do you know where you live',
-          address2: 'Come on',
-          city: 'stop it',
-          companyName: 'So much errors',
-          country: 'usa is an error',
           birthDate: 'February 30th? Really?',
           phoneNumber: 'Invalid',
-          state: 'Confusion',
-          postCode: 'Post Code should be 5 centimeters',
+          custom_1: 'Please enter some text',
+          custom_2: 'Check this box please!',
+          custom_3: "It's only two choices",
+          custom_4: 'Select something...',
           form: 'This is a form error',
         }}
         values={values}
         submitting={false}
         fields={fields}
-        questions={questions}
-        onQuestionChange={noop}
-        questionValues={questionValues}
-        questionErrors={{
-          key1: 'question 1 is invalid',
-          key2: 'Invalid answer',
-          ccc: 'No way Jose',
-        }}
       />,
     );
 

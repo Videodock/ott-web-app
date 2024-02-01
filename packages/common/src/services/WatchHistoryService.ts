@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { array, number, object, string } from 'yup';
+import { number, object, string } from 'yup';
 
 import type { PlaylistItem } from '../../types/playlist';
 import type { SerializedWatchHistoryItem, WatchHistoryItem } from '../../types/watchHistory';
@@ -11,12 +11,10 @@ import ApiService from './ApiService';
 import StorageService from './StorageService';
 import AccountService from './integrations/AccountService';
 
-const schema = array(
-  object().shape({
-    mediaid: string(),
-    progress: number(),
-  }),
-);
+const schema = object().shape({
+  mediaid: string(),
+  progress: number(),
+});
 
 @injectable()
 export default class WatchHistoryService {
@@ -61,8 +59,8 @@ export default class WatchHistoryService {
   };
 
   private validateWatchHistory(history: unknown) {
-    if (schema.validateSync(history)) {
-      return history as SerializedWatchHistoryItem[];
+    if (Array.isArray(history)) {
+      return history.filter((item) => schema.isValidSync(item)) as SerializedWatchHistoryItem[];
     }
 
     return [];

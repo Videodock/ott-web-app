@@ -4,5 +4,5 @@ export type UseFormSubmitHandler = React.FormEventHandler<HTMLFormElement>;
 
 export type GenericFormErrors = { form: string };
 export type GenericFormValues = Record<string, string | boolean | GenericFormValues>;
-export type FormErrors<T> = Partial<T & GenericFormErrors>;
+export type FormErrors<T> = Partial<{ [K in keyof T]: string } & GenericFormErrors>;
 export type FormValues<T> = Partial<T & GenericFormValues>;

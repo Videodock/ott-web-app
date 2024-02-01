@@ -3,7 +3,6 @@ import type { AccountData, FavoritesData, RegisterField, UpdateAccountData, Watc
 import i18next from 'i18next';
 import { injectable } from 'inversify';
 
-import { formatConsentsToRegisterFields } from '../../../utils/collection';
 import { isCommonError } from '../../../utils/api';
 import type {
   AuthData,
@@ -11,21 +10,20 @@ import type {
   ChangePasswordWithOldPassword,
   CustomFormField,
   Customer,
-  CustomerConsent,
-  CustomRegisterFieldVariant,
+  ConsentsValue,
   DeleteAccount,
   ExportAccountData,
-  GetCaptureStatus,
-  GetCustomerConsents,
-  GetPublisherConsents,
+  GetRegistrationFields,
+  GetConsentsValues,
+  GetConsents,
   Login,
   NotificationsData,
   Register,
   ResetPassword,
   GetSocialURLs,
-  UpdateCaptureAnswers,
+  UpdateRegistrationFieldsValues,
   UpdateCustomerArgs,
-  UpdateCustomerConsents,
+  UpdateConsentsValues,
   UpdateFavorites,
   UpdateWatchHistory,
   UpdateCustomer,
@@ -37,6 +35,8 @@ import type { SerializedWatchHistoryItem } from '../../../../types/watchHistory'
 import AccountService from '../AccountService';
 import StorageService from '../../StorageService';
 import { ACCESS_MODEL } from '../../../constants';
+
+import { formatRegistrationField } from './formatters/fields';
 
 enum InPlayerEnv {
   Development = 'development',
@@ -72,23 +72,6 @@ export default class JWPAccountService extends AccountService {
 
     this.storageService = storageService;
   }
-
-  private getCustomerExternalData = async () => {
-    const [favoritesData, historyData] = await Promise.all([InPlayer.Account.getFavorites(), await InPlayer.Account.getWatchHistory({})]);
-
-    const favorites = favoritesData.data?.collection?.map((favorite: FavoritesData) => {
-      return this.formatFavorite(favorite);
-    });
-
-    const history = historyData.data?.collection?.map((history: WatchHistory) => {
-      return this.formatHistoryItem(history);
-    });
-
-    return {
-      favorites,
-      history,
-    };
-  };
 
   private parseJson = (value: string, fallback = {}) => {
     try {
@@ -131,11 +114,6 @@ export default class JWPAccountService extends AccountService {
       lastUserIp: '',
     };
   };
-
-  private async getAccountMetadata(account: AccountData) {
-    const shelves = await this.getCustomerExternalData();
-    return { ...account.metadata, ...shelves };
-  }
 
   private formatAuth(auth: InPlayerAuthData): AuthData {
     const { access_token: jwt } = auth;
@@ -195,43 +173,19 @@ export default class JWPAccountService extends AccountService {
     return null;
   };
 
-  getPublisherConsents: GetPublisherConsents = async () => {
+  getConsents: GetConsents = async () => {
     try {
       const { data } = await InPlayer.Account.getRegisterFields(this.clientId);
 
-      const terms = data?.collection.find(({ name }) => name === 'terms');
+      const termsField = data?.collection.find(({ name }) => name === 'terms');
 
-      const result = data?.collection
-        // we exclude these fields because we already have them by default
-        .filter((field) => !['email_confirmation', 'first_name', 'surname'].includes(field.name) && ![terms].includes(field))
-        .map(
-          (field): CustomFormField => ({
-            type: field.type as CustomRegisterFieldVariant,
-            isCustomRegisterField: true,
-            name: field.name,
-            label: field.label,
-            placeholder: field.placeholder,
-            required: field.required,
-            options: field.options,
-            defaultValue: '',
-            version: '1',
-            ...(field.type === 'checkbox'
-              ? {
-                  enabledByDefault: field.default_value === 'true',
-                }
-              : {
-                  defaultValue: field.default_value,
-                }),
-          }),
-        );
-
-      return terms ? [this.getTermsConsent(terms), ...result] : result;
+      return termsField ? [this.getTermsConsent(termsField)] : [];
     } catch {
       throw new Error('Failed to fetch publisher consents.');
     }
   };
 
-  getCustomerConsents: GetCustomerConsents = async (payload) => {
+  getConsentsValues: GetConsentsValues = async (payload) => {
     try {
       if (!payload?.customer) {
         return {
@@ -247,7 +201,7 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  updateCustomerConsents: UpdateCustomerConsents = async (payload) => {
+  updateConsentsValues: UpdateConsentsValues = async (payload) => {
     try {
       const { customer, consents } = payload;
 
@@ -257,7 +211,6 @@ export default class JWPAccountService extends AccountService {
         ...existingAccountData,
         metadata: {
           ...existingAccountData.metadata,
-          ...formatConsentsToRegisterFields(consents),
           consents: JSON.stringify(consents),
         },
       };
@@ -270,7 +223,7 @@ export default class JWPAccountService extends AccountService {
     }
   };
 
-  updateCaptureAnswers: UpdateCaptureAnswers = async ({ customer, ...newAnswers }) => {
+  updateRegistrationFieldsValues: UpdateRegistrationFieldsValues = async ({ customer, ...newAnswers }) => {
     return this.updateCustomer({ ...customer, ...newAnswers });
   };
 
@@ -313,7 +266,6 @@ export default class JWPAccountService extends AccountService {
       });
 
       const user = this.formatAccount(data.account);
-      user.metadata = await this.getAccountMetadata(data.account);
 
       return {
         auth: this.formatAuth(data),
@@ -336,7 +288,6 @@ export default class JWPAccountService extends AccountService {
         metadata: {
           first_name: ' ',
           surname: ' ',
-          ...formatConsentsToRegisterFields(consents),
           consents: JSON.stringify(consents),
         },
         type: 'consumer',
@@ -344,7 +295,6 @@ export default class JWPAccountService extends AccountService {
       });
 
       const user = this.formatAccount(data.account);
-      user.metadata = await this.getAccountMetadata(data.account);
 
       return {
         auth: this.formatAuth(data),
@@ -373,11 +323,10 @@ export default class JWPAccountService extends AccountService {
       const { data } = await InPlayer.Account.getAccountInfo();
 
       const user = this.formatAccount(data);
-      user.metadata = await this.getAccountMetadata(data);
 
       return {
         user,
-        customerConsents: this.parseJson(user?.metadata?.consents as string, []) as CustomerConsent[],
+        customerConsents: this.parseJson(user?.metadata?.consents as string, []) as ConsentsValue[],
       };
     } catch {
       throw new Error('Failed to fetch user data.');
@@ -411,20 +360,32 @@ export default class JWPAccountService extends AccountService {
     return data;
   };
 
-  getCaptureStatus: GetCaptureStatus = async ({ customer }) => {
+  getRegistrationFields: GetRegistrationFields = async ({ customer }) => {
+    const { data } = await InPlayer.Account.getRegisterFields(this.clientId);
+
+    const fields = data.collection.filter((field) => field.name !== 'terms').map((field) => formatRegistrationField(field, customer.metadata[field.name]));
+
     return {
-      isCaptureEnabled: true,
-      shouldCaptureBeDisplayed: true,
-      settings: [
+      beforeSignUp: true,
+      enabled: true,
+      fields: [
         {
-          answer: {
-            firstName: customer.firstName || null,
-            lastName: customer.lastName || null,
-          },
-          enabled: true,
-          key: 'firstNameLastName',
+          type: 'input',
+          label: 'First name',
+          name: 'firstName',
+          placeholder: 'First name',
           required: true,
+          defaultValue: customer.firstName,
         },
+        {
+          type: 'input',
+          label: 'Last name',
+          name: 'lastName',
+          placeholder: 'Last name',
+          required: true,
+          defaultValue: customer.lastName,
+        },
+        ...fields,
       ],
     };
   };
@@ -470,12 +431,12 @@ export default class JWPAccountService extends AccountService {
   };
 
   updateWatchHistory: UpdateWatchHistory = async ({ history }) => {
-    const externalData = await this.getCustomerExternalData();
-    const savedHistory = externalData.history?.map((e) => e.mediaid) || [];
+    const savedHistory = await this.getWatchHistory();
+    const savedHistoryIds = savedHistory.map((e) => e.mediaid);
 
     await Promise.allSettled(
       history.map(({ mediaid, progress }) => {
-        if (!savedHistory.includes(mediaid) || externalData.history?.some((e) => e.mediaid == mediaid && e.progress != progress)) {
+        if (!savedHistoryIds.includes(mediaid) || history?.some((e) => e.mediaid == mediaid && e.progress != progress)) {
           return InPlayer.Account.updateWatchHistory(mediaid, progress);
         }
       }),
@@ -483,8 +444,8 @@ export default class JWPAccountService extends AccountService {
   };
 
   updateFavorites: UpdateFavorites = async ({ favorites }) => {
-    const externalData = await this.getCustomerExternalData();
-    const currentFavoriteIds = externalData?.favorites?.map((e) => e.mediaid) || [];
+    const savedFavorites = await this.getFavorites();
+    const currentFavoriteIds = savedFavorites.map((e) => e.mediaid) || [];
     const payloadFavoriteIds = favorites.map((e) => e.mediaid);
 
     // save new favorites
