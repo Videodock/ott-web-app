@@ -12,7 +12,7 @@ type Props = {
 
 const DialogBackButton: React.FC<Props> = ({ onClick }: Props) => {
   return (
-    <IconButton onClick={onClick} className={styles.dialogBackButton} aria-label="Go back">
+    <IconButton onClick={onClick} className={styles.dialogBackButton} aria-label="Go back" data-return-button>
       <Icon icon={ArrowLeft} />
     </IconButton>
   );

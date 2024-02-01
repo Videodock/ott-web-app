@@ -20,7 +20,7 @@ const ModalCloseButton: React.FC<Props> = ({ onClick, visible = true }: Props) =
     <IconButton
       onClick={onClick}
       aria-label={t('close_modal')}
-      data-is-close-button
+      data-return-button
       className={classNames(styles.modalCloseButton, { [styles.hidden]: !visible })}
     >
       <Icon icon={Close} />

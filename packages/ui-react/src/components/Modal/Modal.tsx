@@ -52,7 +52,7 @@ const Modal: React.FC<Props> = ({ open, onClose, children, AnimationComponent = 
       // focus the first element in the modal (except the close button)
       if (modalRef.current) {
         const interactiveElements = modalRef.current.querySelectorAll('a, button, [tabindex="0"]');
-        const interactiveElement = Array.from(interactiveElements).filter((item) => !item.hasAttribute('data-is-close-button'))[0] as HTMLElement | null;
+        const interactiveElement = Array.from(interactiveElements).filter((item) => !item.hasAttribute('data-return-button'))[0] as HTMLElement | null;
 
         if (interactiveElement) interactiveElement.focus();
       }

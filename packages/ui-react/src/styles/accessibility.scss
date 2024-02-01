@@ -48,6 +48,15 @@ $focus-box-shadow: 0 0 1px 5px var(--highlight-color, variables.$white),
   }
 }
 
+@mixin accessibleOutline {
+  outline: 2px solid var(--highlight-color, #fff);
+  box-shadow: 0 0 2px 3px var(--highlight-contrast-color, #000);
+}
+@mixin accessibleOutlineContrast {
+  outline: 2px solid var(--highlight-contrast-color, #fff);
+  box-shadow: 0 0 2px 3px var(--highlight-color, #000);
+}
+
 /* Clearly visible focus rectangle (WCAG guidelines). */
 @media (hover: hover) and (pointer: fine) {
   a,
@@ -55,8 +64,7 @@ $focus-box-shadow: 0 0 1px 5px var(--highlight-color, variables.$white),
   button,
   input {
     &:focus {
-      outline: 2px solid var(--highlight-color, #fff);
-      box-shadow: 0 0 2px 3px var(--highlight-contrast-color, #000);
+      @include accessibleOutline;
     }
   }
 }

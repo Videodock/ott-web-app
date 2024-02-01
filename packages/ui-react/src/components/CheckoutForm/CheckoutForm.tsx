@@ -90,7 +90,6 @@ const CheckoutForm: React.FC<Props> = ({
   const orderTitle = offerType === 'svod' ? (offer.period === 'month' ? t('checkout.monthly') : t('checkout.yearly')) : offer.offerTitle;
   return (
     <div>
-      <DialogBackButton onClick={onBackButtonClick} />
       <h1 className={styles.title}>{t('checkout.payment_method')}</h1>
       <div className={styles.order}>
         <div className={styles.orderInfo}>
@@ -210,8 +209,9 @@ const CheckoutForm: React.FC<Props> = ({
           ) : null}
         </div>
       ) : null}
-      <div className={styles.paymentDetails}>{renderPaymentMethod ? renderPaymentMethod() : null}</div>
+      <div>{renderPaymentMethod ? renderPaymentMethod() : null}</div>
       {submitting && <LoadingOverlay transparentBackground inline />}
+      <DialogBackButton onClick={onBackButtonClick} />
     </div>
   );
 };
