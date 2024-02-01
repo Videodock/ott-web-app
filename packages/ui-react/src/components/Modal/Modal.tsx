@@ -49,9 +49,10 @@ const Modal: React.FC<Props> = ({ open, onClose, children, AnimationComponent = 
       document.body.style.marginRight = `${scrollbarSize()}px`;
       document.body.style.overflowY = 'hidden';
 
-      // focus the first element in the modal
+      // focus the first element in the modal (except the close button)
       if (modalRef.current) {
-        const interactiveElement = modalRef.current.querySelectorAll('a, button, [tabindex="0"]')[0] as HTMLElement | null;
+        const interactiveElements = modalRef.current.querySelectorAll('a, button, [tabindex="0"]');
+        const interactiveElement = Array.from(interactiveElements).filter((item) => !item.hasAttribute('data-is-close-button'))[0] as HTMLElement | null;
 
         if (interactiveElement) interactiveElement.focus();
       }
