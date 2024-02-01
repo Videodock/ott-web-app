@@ -47,3 +47,16 @@ $focus-box-shadow: 0 0 1px 5px var(--highlight-color, variables.$white),
     clip: auto;
   }
 }
+
+/* Clearly visible focus rectangle (WCAG guidelines). */
+@media (hover: hover) and (pointer: fine) {
+  a,
+  [role='button'],
+  button,
+  input {
+    &:focus {
+      outline: 2px solid var(--highlight-color, #fff);
+      box-shadow: 0 0 2px 3px var(--highlight-contrast-color, #000);
+    }
+  }
+}

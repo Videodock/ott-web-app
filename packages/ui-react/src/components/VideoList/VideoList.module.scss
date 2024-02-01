@@ -5,16 +5,14 @@
 
 .container {
   height: 100%;
-
-  @include responsive.desktop-only() {
-    overflow: hidden;
-  }
+  overflow: visible;
 }
 
 .content {
+  
   @include responsive.desktop-only() {
     height: 100%;
-    padding-right: 24px;
+    padding: 16px 24px;
     overflow-y: scroll;
   }
 }

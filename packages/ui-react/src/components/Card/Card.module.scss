@@ -17,7 +17,8 @@
     &:hover {
       position: relative;
       z-index: 1;
-      outline: none;
+      outline: none !important;
+      box-shadow: none !important;
       transform: scale(1.05);
 
       & .poster {

@@ -10,22 +10,16 @@ export const setThemingVariables = (config: Config) => {
 
   if (!root) return;
 
+  root.style.setProperty('--highlight-color', highlightColor || '#fff');
+  root.style.setProperty('--highlight-contrast-color', highlightColor ? calculateContrastColor(highlightColor) : '#000');
+
+  root.style.setProperty('--header-background', headerBackground || 'rgba(0, 0, 0, 0.85)');
+  root.style.setProperty('--header-contrast-color', headerBackground ? calculateContrastColor(headerBackground) : '#fff');
+
   if (backgroundColor) {
     root.style.setProperty('--body-background-color', backgroundColor);
     root.style.setProperty('--background-contrast-color', calculateContrastColor(backgroundColor));
   }
-  if (highlightColor) {
-    root.style.setProperty('--highlight-color', highlightColor);
-    root.style.setProperty('--highlight-contrast-color', calculateContrastColor(highlightColor));
-  }
-  if (headerBackground) {
-    root.style.setProperty('--header-background', headerBackground);
-    root.style.setProperty('--header-contrast-color', calculateContrastColor(headerBackground));
-  } else {
-    root.style.setProperty('--header-background', 'rgba(0, 0, 0, 0.85)');
-    root.style.setProperty('--header-contrast-color', '#ffff');
-  }
-
   if (bodyFont) {
     root.style.setProperty('--body-font-family', bodyFont);
   }
