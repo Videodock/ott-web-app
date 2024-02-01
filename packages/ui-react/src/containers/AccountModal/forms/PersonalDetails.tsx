@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { useQuery } from 'react-query';
 import { getModule } from '@jwp/ott-common/src/modules/container';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
-import AccountController from '@jwp/ott-common/src/stores/AccountController';
+import AccountController from '@jwp/ott-common/src/controllers/AccountController';
 import { modalURLFromLocation } from '@jwp/ott-ui-react/src/utils/location';
 import { ACCESS_MODEL } from '@jwp/ott-common/src/constants';
 import useForm, { type UseFormOnSubmitHandler } from '@jwp/ott-hooks-react/src/useForm';
@@ -50,7 +50,10 @@ const PersonalDetails = () => {
     setSubmitting(false);
   };
 
-  const { setValue, handleSubmit, handleChange, values, errors, submitting } = useForm<GenericFormValues>(initialValues, PersonalDetailSubmitHandler);
+  const { setValue, handleSubmit, handleChange, values, errors, submitting } = useForm<GenericFormValues>({
+    initialValues,
+    onSubmit: PersonalDetailSubmitHandler,
+  });
 
   useEffect(() => {
     fields.forEach((field) => {
