@@ -250,8 +250,12 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Radio> 1`] = `
       data-testid="radio-header"
       for="radio_1235_name"
     >
-      label
       <span>
+        label
+      </span>
+      <span
+        class="_note_d50e6e"
+      >
         optional
       </span>
     </label>

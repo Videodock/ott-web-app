@@ -8,8 +8,12 @@ exports[`<Radio> > renders and matches snapshot 1`] = `
       data-testid="radio-header"
       for="radio_1235_radio"
     >
-      Choose a Value
       <span>
+        Choose a Value
+      </span>
+      <span
+        class="_note_d50e6e"
+      >
         optional
       </span>
     </label>

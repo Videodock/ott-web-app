@@ -18,9 +18,10 @@ type Props = {
   helperText?: string;
   disabled?: boolean;
   required?: boolean;
+  lang?: string;
 };
 
-const Checkbox: React.FC<Props> = ({ label, name, onChange, header, checked, value, helperText, disabled, error, required, ...rest }: Props) => {
+const Checkbox: React.FC<Props> = ({ label, name, onChange, header, checked, value, helperText, disabled, error, required, lang, ...rest }: Props) => {
   const { t } = useTranslation('common');
   const id = useOpaqueId('check-box', name);
   const helperTextId = useOpaqueId('helper_text', name);
@@ -45,7 +46,7 @@ const Checkbox: React.FC<Props> = ({ label, name, onChange, header, checked, val
           aria-required={required}
           aria-describedby={helperTextId}
         />
-        <label htmlFor={id}>
+        <label htmlFor={id} lang={lang}>
           {required ? '* ' : ''}
           {label}
         </label>

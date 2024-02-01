@@ -22,6 +22,7 @@ type Props = {
   required?: boolean;
   onChange: React.ChangeEventHandler;
   testId?: string;
+  lang?: string;
 };
 
 const Dropdown: React.FC<Props & React.AriaAttributes> = ({
@@ -39,6 +40,7 @@ const Dropdown: React.FC<Props & React.AriaAttributes> = ({
   required = false,
   size = 'medium',
   testId,
+  lang,
   ...rest
 }: Props & React.AriaAttributes) => {
   const { t } = useTranslation('common');
@@ -63,6 +65,7 @@ const Dropdown: React.FC<Props & React.AriaAttributes> = ({
           aria-required={required}
           aria-invalid={error}
           aria-describedby={helperTextId}
+          lang={lang}
           {...rest}
         >
           {defaultLabel && (
