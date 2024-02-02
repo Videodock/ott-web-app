@@ -198,6 +198,9 @@ const Header: React.FC<Props> = ({
   return (
     <header className={headerClassName}>
       <div className={styles.container}>
+        <a href="#content" className={styles.skipToContent}>
+          {t('skip_to_content')}
+        </a>
         <div className={styles.menu}>
           <IconButton
             className={styles.iconButton}
@@ -210,9 +213,6 @@ const Header: React.FC<Props> = ({
             <Icon icon={Menu} />
           </IconButton>
         </div>
-        <a href="#content" className={styles.skipToContent}>
-          {t('skip_to_content')}
-        </a>
         {logoSrc && (
           <div className={styles.brand}>
             <Logo src={logoSrc} onLoad={() => setLogoLoaded(true)} />
