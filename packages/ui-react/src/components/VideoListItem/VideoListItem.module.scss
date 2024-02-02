@@ -7,6 +7,7 @@
 .listItem {
   position: relative;
   display: flex;
+  flex-direction: row-reverse;
   justify-content: flex-start;
   margin-bottom: variables.$base-spacing;
   color: inherit;
@@ -92,7 +93,7 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.14), 0 3px 4px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
-.metadata {
+.titleContainer {
   flex: 1;
   overflow: hidden;
 }
@@ -114,13 +115,14 @@
   display: flex;
 }
 
-svg.lock {
-  width: 24px;
-  height: 24px;
-  padding: 5px 5px;
-  color: var(--card-color);
-  background-color: rgba(variables.$black, 0.6);
-  border-radius: 4px;
+.lock {
+  margin-right: calc(#{variables.$base-spacing} / 2);
+  padding: 2px 6px;
+
+  > svg {
+    width: 14px;
+    height: 21px;
+  }
 }
 
 svg.scheduled {
@@ -130,16 +132,21 @@ svg.scheduled {
 }
 
 .tag {
-  margin-left: 4px;
+  display: flex;
+  align-items: center;
   padding: 2px 6px;
+  color: var(--card-color);
+  font-family: var(--body-font-family);
+  font-weight: 600;
   font-size: 14px;
+  white-space: nowrap;
+  background-color: rgba(variables.$black, 0.6);
+  border-radius: 4px;
 }
 
 .live {
   background-color: variables.$red;
 }
-
-
 
 .progressContainer {
   position: absolute;
