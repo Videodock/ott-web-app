@@ -19,7 +19,7 @@ describe('<Account>', () => {
   test('renders and matches snapshot', () => {
     useAccountStore.setState({
       user: customer,
-      publisherConsents: Array.of({ name: 'marketing', label: 'Receive Marketing Emails' } as CustomFormField),
+      consents: Array.of({ name: 'marketing', label: 'Receive Marketing Emails', type: 'checkbox', required: true } as CustomFormField),
     });
 
     const { container } = renderWithRouter(<Account panelClassName={'panel-class'} panelHeaderClassName={'header-class'} canUpdateEmail={true} />);

@@ -150,7 +150,7 @@ exports[`User Component tests > Account Page 1`] = `
           >
             <label
               class="_label_e16c1b"
-              for="text-field_1235_email"
+              for="text-field_1235_updateemail_email"
             >
               account.email
             </label>

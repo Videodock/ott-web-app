@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useEffect, useState, type SetStateAction } from 'react';
-import type { GenericFormValues } from '@jwp/ott-common/types/form';
+import type { GenericFormNestedValues } from '@jwp/ott-common/types/form';
 
 import type { FormSectionProps } from './FormSection';
 import { FormSection } from './FormSection';
@@ -11,7 +11,7 @@ interface Props<TData> {
   children?: FormSectionProps<TData, string[]>[];
 }
 
-export interface FormContext<TData> {
+export interface FormContext<TData extends GenericFormNestedValues> {
   isLoading?: boolean;
   onCancel: () => void;
   formState: FormState<TData>;
@@ -26,9 +26,9 @@ interface FormState<TData> {
   errors?: string[];
 }
 
-export const FormContext = createContext<FormContext<GenericFormValues> | undefined>(undefined);
+export const FormContext = createContext<FormContext<GenericFormNestedValues> | undefined>(undefined);
 
-function Form<TData extends GenericFormValues>({ isLoading, initialValues, onReset, children }: Props<TData>): JSX.Element {
+function Form<TData extends GenericFormNestedValues>({ isLoading, initialValues, onReset, children }: Props<TData>): JSX.Element {
   const [state, setState] = useState<FormState<TData>>({
     values: initialValues,
     activeSectionId: undefined,
@@ -70,6 +70,7 @@ function Form<TData extends GenericFormValues>({ isLoading, initialValues, onRes
         isLoading,
         onCancel,
         formState: state,
+        // @ts-ignore this typing doesn't work properly
         setFormState: setState,
       }}
     >

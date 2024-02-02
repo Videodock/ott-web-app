@@ -90,7 +90,7 @@ export default class CheckoutController {
           useCheckoutStore.getState().setOrder(null);
         }
 
-        throw new FormValidationError({ order: [response.errors[0]] });
+        throw new FormValidationError({ order: response.errors[0] });
       }
 
       if (response.responseData?.order) {
@@ -101,7 +101,7 @@ export default class CheckoutController {
         throw error;
       }
 
-      throw new FormValidationError({ couponCode: [i18next.t('account:checkout.coupon_not_valid')] });
+      throw new FormValidationError({ couponCode: i18next.t('account:checkout.coupon_not_valid') });
     }
 
     return;

@@ -23,7 +23,8 @@ import type { GenericFormValues } from '../../types/form';
 import { useAccountStore } from '../stores/AccountStore';
 import { useConfigStore } from '../stores/ConfigStore';
 import { useProfileStore } from '../stores/ProfileStore';
-import { FormValidationError } from '../FormValidationError';
+import { FormValidationError, type FormValidationErrors } from '../FormValidationError';
+import { extractCustomFormFieldValues } from '../utils/collection';
 
 import WatchHistoryController from './WatchHistoryController';
 import ProfileController from './ProfileController';
@@ -145,8 +146,9 @@ export default class AccountController {
 
     try {
       const response = await this.accountService.getUser({ config });
+
       if (response) {
-        await this.afterLogin(response.user, response.customerConsents);
+        await this.afterLogin(response.user, response.consentsValues);
         await this.favoritesController.restoreFavorites().catch(logDev);
         await this.watchHistoryController.restoreWatchHistory().catch(logDev);
       }
@@ -158,8 +160,10 @@ export default class AccountController {
         subscription: null,
         transactions: null,
         activePayment: null,
-        customerConsents: null,
-        publisherConsents: null,
+        consentsValues: null,
+        consents: null,
+        registrationFields: null,
+        registrationFieldsValues: null,
         loading: false,
       });
     }
@@ -173,15 +177,15 @@ export default class AccountController {
 
       if (!response) throw new Error("Couldn't login");
 
-      await this.afterLogin(response.user, response.customerConsents);
+      await this.afterLogin(response.user, response.consentsValues);
       await this.favoritesController?.restoreFavorites().catch(logDev);
       await this.watchHistoryController?.restoreWatchHistory().catch(logDev);
     } catch (error: unknown) {
       if (error instanceof Error) {
         if (error.message.toLowerCase().includes('invalid param email')) {
-          throw new FormValidationError({ email: [i18next.t('account:login.wrong_email')] });
+          throw new FormValidationError({ email: i18next.t('account:login.wrong_email') });
         } else {
-          throw new FormValidationError({ email: [i18next.t('account:login.wrong_combination')] });
+          throw new FormValidationError({ email: i18next.t('account:login.wrong_combination') });
         }
       }
     }
@@ -198,17 +202,16 @@ export default class AccountController {
   };
 
   register = async (email: string, password: string, referrer: string, consentsValues: ConsentsValue[]) => {
-    const consents = useAccountStore.getState().publisherConsents || [];
+    const consents = useAccountStore.getState().consents || [];
 
-    // @TODO cleanup (make util?) and translate errors
     const consentsErrors = Object.fromEntries(
       consentsValues.reduce((previousValue, currentValue) => {
         const consent = consents.find(({ name }) => name === currentValue.name);
         if (consent?.required && currentValue.state !== 'accepted') {
-          return [...previousValue, [currentValue.name, ['This field is required']]];
+          return [...previousValue, [currentValue.name, i18next.t('common:form.field_required')]];
         }
         return previousValue;
-      }, [] as [string, string[]][]),
+      }, [] as [string, string][]),
     );
 
     if (Object.keys(consentsErrors).length) {
@@ -216,23 +219,23 @@ export default class AccountController {
     }
 
     try {
-      const response = await this.accountService.register({ email, password, consents: consentsValues, referrer });
+      const response = await this.accountService.register({ email, password, consentsValues, referrer });
 
       if (response) {
-        const { user, customerConsents } = response;
-        await this.afterLogin(user, customerConsents);
+        const { user, consentsValues } = response;
+        await this.afterLogin(user, consentsValues);
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
         const errorMessage = error.message.toLowerCase();
 
         if (errorMessage.includes('customer already exists') || errorMessage.includes('account already exists')) {
-          throw new FormValidationError({ form: [i18next.t('account:registration.user_exists')] });
+          throw new FormValidationError({ form: i18next.t('account:registration.user_exists') });
         } else if (errorMessage.includes('invalid param password')) {
-          throw new FormValidationError({ password: [i18next.t('account:registration.invalid_password')] });
+          throw new FormValidationError({ password: i18next.t('account:registration.invalid_password') });
         } else {
           // in case the endpoint fails
-          throw new FormValidationError({ password: [i18next.t('account:registration.failed_to_create')] });
+          throw new FormValidationError({ password: i18next.t('account:registration.failed_to_create') });
         }
       }
     }
@@ -240,29 +243,32 @@ export default class AccountController {
     return;
   };
 
-  updateConsents = async (customerConsents: ConsentsValue[]): Promise<ServiceResponse<ConsentsValue[]>> => {
-    const { getAccountInfo } = useAccountStore.getState();
+  updateConsents = async (consentsFormValues: Record<string, boolean>) => {
+    const { getAccountInfo, consentsValues } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
     useAccountStore.setState({ loading: true });
 
+    const updateConsentsValues: ConsentsValue[] = (consentsValues || []).map((consent) => ({
+      ...consent,
+      state: consentsFormValues[consent.name] ? 'accepted' : 'declined',
+    }));
+
     try {
       const updatedConsents = await this.accountService?.updateConsentsValues({
         customer,
-        consents: customerConsents,
+        consentsValues: updateConsentsValues,
       });
 
       if (updatedConsents) {
-        useAccountStore.setState({ customerConsents: updatedConsents });
-        return {
-          responseData: updatedConsents,
-          errors: [],
-        };
+        useAccountStore.setState({
+          consentsValues: updatedConsents,
+        });
+
+        return updatedConsents;
       }
-      return {
-        responseData: [],
-        errors: [],
-      };
+
+      return [];
     } finally {
       useAccountStore.setState({ loading: false });
     }
@@ -274,36 +280,61 @@ export default class AccountController {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
-    const consents = await this.accountService.getConsentsValues({ customer });
+    const consentsValues = await this.accountService.getConsentsValues({ customer });
 
-    if (consents) {
-      useAccountStore.setState({ customerConsents: consents });
-    }
+    useAccountStore.setState({
+      consentsValues: consentsValues,
+    });
 
-    return consents;
+    return consentsValues;
   };
 
   getConsents = async () => {
     const { config } = useConfigStore.getState();
 
-    useAccountStore.setState({ loading: true });
     const consents = await this.accountService.getConsents(config);
 
-    useAccountStore.setState({ publisherConsents: consents, loading: false });
+    useAccountStore.setState({ consents });
+
+    return consents;
   };
 
   getRegistrationFields = async () => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
 
-    return this.accountService.getRegistrationFields({ customer });
+    const registrationFields = await this.accountService.getRegistrationFields({ customer });
+
+    useAccountStore.setState({
+      registrationFields: registrationFields.fields,
+      registrationFieldsEnabled: registrationFields.enabled,
+      registrationFieldsOnSignUp: registrationFields.beforeSignUp,
+      registrationFieldsValues: extractCustomFormFieldValues(registrationFields.fields || []),
+    });
+
+    return registrationFields;
   };
 
   updateRegistrationFieldsValues = async (fields: CustomFormField[], values: GenericFormValues) => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer, customerConsents } = getAccountInfo();
 
+    const requiredMessage = i18next.t('common:form.field_required');
+    const errors = fields.reduce((previousValue, currentValue) => {
+      if (currentValue.required && !values[currentValue.name]) {
+        return { ...previousValue, [currentValue.name]: requiredMessage };
+      }
+      return previousValue;
+    }, {} as FormValidationErrors);
+
+    if (Object.keys(errors).length) throw new FormValidationError(errors);
+
     const updatedCustomer = await this.accountService.updateRegistrationFieldsValues({ customer, fields, values });
+
+    // update registration fields values in store
+    useAccountStore.setState(() => ({
+      registrationFieldsValues: values,
+    }));
 
     await this.afterLogin(updatedCustomer, customerConsents, false);
 
@@ -509,10 +540,10 @@ export default class AccountController {
     return this.features;
   }
 
-  private async afterLogin(user: Customer, customerConsents: ConsentsValue[] | null, shouldReloadSubscription = true) {
+  private async afterLogin(user: Customer, consentsValues: ConsentsValue[] | null, shouldReloadSubscription = true) {
     useAccountStore.setState({
       user,
-      customerConsents,
+      consentsValues,
     });
 
     await Promise.allSettled([shouldReloadSubscription ? this.reloadSubscriptions() : Promise.resolve(), this.getConsents()]);
@@ -537,8 +568,9 @@ export default class AccountController {
       subscription: null,
       transactions: null,
       activePayment: null,
-      customerConsents: null,
-      publisherConsents: null,
+      consents: null,
+      consentsValues: null,
+      registrationFields: null,
       loading: false,
     });
 
