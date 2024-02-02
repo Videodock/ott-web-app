@@ -95,6 +95,8 @@ function Card({
     }
   };
 
+  const heading = React.createElement(`h${headingLevel}`, { className: classNames(styles.title, { [styles.loading]: loading }) }, title);
+
   return (
     <Link
       role="button"
@@ -107,7 +109,7 @@ function Card({
     >
       {!featured && !disabled && (
         <div className={styles.titleContainer}>
-          {React.createElement(`h${headingLevel}`, { className: classNames(styles.title, { [styles.loading]: loading }) }, title)}
+          {heading}
           {!!scheduledStart && (
             <div className={classNames(styles.scheduledStart, { [styles.loading]: loading })}>{formatLocalizedDateTime(scheduledStart, language)}</div>
           )}
@@ -117,7 +119,7 @@ function Card({
         <Image className={posterImageClassNames} image={image} width={featured ? 640 : 320} onLoad={() => setImageLoaded(true)} alt="" />
         {!loading && (
           <div className={styles.meta}>
-            {featured && !disabled && <h2 className={classNames(styles.title, { [styles.loading]: loading })}>{title}</h2>}
+            {featured && !disabled && heading}
             <div className={styles.tags}>
               {isLocked && (
                 <div className={classNames(styles.tag, styles.lock)} aria-label={t('card_lock')}>

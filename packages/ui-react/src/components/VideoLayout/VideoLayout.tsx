@@ -139,7 +139,6 @@ const VideoLayout: React.FC<Props> = ({
     ) : (
       <div className={styles.relatedVideosList}>
         <VideoList
-          className={styles.videoList}
           header={
             <>
               {title && <h2 className={styles.relatedVideosListTitle}>{relatedTitle}</h2>}
