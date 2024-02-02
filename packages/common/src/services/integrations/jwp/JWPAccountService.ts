@@ -10,7 +10,6 @@ import type {
   ChangePasswordWithOldPassword,
   CustomFormField,
   Customer,
-  ConsentsValue,
   DeleteAccount,
   ExportAccountData,
   GetRegistrationFields,
@@ -203,7 +202,7 @@ export default class JWPAccountService extends AccountService {
 
   updateConsentsValues: UpdateConsentsValues = async (payload) => {
     try {
-      const { customer, consents } = payload;
+      const { customer, consentsValues } = payload;
 
       const existingAccountData = this.formatUpdateAccount(customer);
 
@@ -211,7 +210,7 @@ export default class JWPAccountService extends AccountService {
         ...existingAccountData,
         metadata: {
           ...existingAccountData.metadata,
-          consents: JSON.stringify(consents),
+          consents: JSON.stringify(consentsValues),
         },
       };
 
@@ -266,18 +265,19 @@ export default class JWPAccountService extends AccountService {
       });
 
       const user = this.formatAccount(data.account);
+      const consentsValues = this.parseJson(user?.metadata?.consents as string, []);
 
       return {
         auth: this.formatAuth(data),
         user,
-        customerConsents: this.parseJson(user?.metadata?.consents as string, []),
+        consentsValues,
       };
     } catch {
       throw new Error('Failed to authenticate user.');
     }
   };
 
-  register: Register = async ({ email, password, referrer, consents }) => {
+  register: Register = async ({ email, password, referrer, consentsValues }) => {
     try {
       const { data } = await InPlayer.Account.signUpV2({
         email,
@@ -288,18 +288,19 @@ export default class JWPAccountService extends AccountService {
         metadata: {
           first_name: ' ',
           surname: ' ',
-          consents: JSON.stringify(consents),
+          consents: JSON.stringify(consentsValues),
         },
         type: 'consumer',
         clientId: this.clientId || '',
       });
 
       const user = this.formatAccount(data.account);
+      const updatedConsentsValues = this.parseJson(user?.metadata?.consents as string, []);
 
       return {
         auth: this.formatAuth(data),
+        consentsValues: updatedConsentsValues,
         user,
-        customerConsents: this.parseJson(user?.metadata?.consents as string, []),
       };
     } catch (error: unknown) {
       if (isCommonError(error)) {
@@ -328,10 +329,11 @@ export default class JWPAccountService extends AccountService {
       const { data } = await InPlayer.Account.getAccountInfo();
 
       const user = this.formatAccount(data);
+      const consentsValues = this.parseJson(user?.metadata?.consents as string, []);
 
       return {
         user,
-        customerConsents: this.parseJson(user?.metadata?.consents as string, []) as ConsentsValue[],
+        consentsValues,
       };
     } catch {
       throw new Error('Failed to fetch user data.');

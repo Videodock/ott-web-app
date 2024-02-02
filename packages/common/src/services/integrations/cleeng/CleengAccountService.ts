@@ -139,7 +139,7 @@ export default class CleengAccountService extends AccountService {
     });
     this.handleErrors(response.errors);
 
-    return response?.responseData?.consents || [];
+    return response.responseData.consents;
   };
 
   updateConsentsValues: UpdateConsentsValues = async (payload) => {
@@ -147,7 +147,7 @@ export default class CleengAccountService extends AccountService {
 
     const params: UpdateCustomerConsentsPayload = {
       id: customer.id,
-      consents: payload.consents,
+      consents: payload.consentsValues,
     };
 
     const response = await this.cleengService.put<UpdateConsentsResponse>(`/customers/${customer?.id}/consents`, JSON.stringify(params), {
@@ -155,7 +155,7 @@ export default class CleengAccountService extends AccountService {
     });
     this.handleErrors(response.errors);
 
-    return await this.getConsentsValues(payload);
+    return this.getConsentsValues(payload);
   };
 
   login: Login = async ({ email, password }) => {
@@ -171,16 +171,16 @@ export default class CleengAccountService extends AccountService {
 
     await this.cleengService.setTokens({ accessToken: auth.jwt, refreshToken: auth.refreshToken });
 
-    const { user, customerConsents } = await this.getUser();
+    const { user, consentsValues } = await this.getUser();
 
     return {
       user,
       auth,
-      customerConsents,
+      consentsValues,
     };
   };
 
-  register: Register = async ({ email, password, consents }) => {
+  register: Register = async ({ email, password, consentsValues }) => {
     const localesResponse = await this.getLocales();
 
     this.handleErrors(localesResponse.errors);
@@ -200,16 +200,16 @@ export default class CleengAccountService extends AccountService {
 
     await this.cleengService.setTokens({ accessToken: auth.jwt, refreshToken: auth.refreshToken });
 
-    const { user, customerConsents } = await this.getUser();
+    const { user } = await this.getUser();
 
-    await this.updateConsentsValues({ consents, customer: user }).catch(() => {
+    await this.updateConsentsValues({ consentsValues, customer: user }).catch(() => {
       // error caught while updating the consents, but continue the registration process
     });
 
     return {
       user,
       auth,
-      customerConsents,
+      consentsValues,
     };
   };
 
@@ -225,11 +225,11 @@ export default class CleengAccountService extends AccountService {
 
     const customerId = this.getCustomerIdFromAuthData(authData);
     const user = await this.getCustomer({ customerId });
-    const consents = await this.getConsentsValues({ customer: user });
+    const consentsValues = await this.getConsentsValues({ customer: user });
 
     return {
       user,
-      customerConsents: consents,
+      consentsValues,
     };
   };
 

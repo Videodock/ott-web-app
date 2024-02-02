@@ -26,13 +26,13 @@ export type LoginArgs = {
 };
 
 export type RegistrationArgs = LoginArgs & {
-  consents: ConsentsValue[];
+  consentsValues: ConsentsValue[];
 };
 
 export type AuthResponse = {
   auth: AuthData;
   user: Customer;
-  customerConsents: ConsentsValue[];
+  consentsValues: ConsentsValue[];
 };
 
 export type LoginPayload = PayloadWithIPOverride & {
@@ -74,7 +74,7 @@ export type GetUserArgs = {
 
 export type GetUserPayload = {
   user: Customer;
-  customerConsents: ConsentsValue[];
+  consentsValues: ConsentsValue[];
 };
 
 export type RegisterPayload = PayloadWithIPOverride & {
@@ -106,7 +106,7 @@ export type PersonalDetailsFormData = {
 };
 
 export type GetCustomerConsentsResponse = {
-  consents: ConsentsValue[];
+  consents: Record<string, boolean>;
 };
 
 export type ResetPasswordPayload = {
@@ -189,7 +189,7 @@ export type CustomerConsentArgs = {
 
 export type UpdateCustomerConsentsArgs = {
   customer: Customer;
-  consents: ConsentsValue[];
+  consentsValues: ConsentsValue[];
 };
 
 export type CaptureCustomAnswer = {

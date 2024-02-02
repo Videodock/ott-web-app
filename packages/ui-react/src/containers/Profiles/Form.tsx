@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { number, object, string } from 'yup';
+import { object, string } from 'yup';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -53,7 +53,7 @@ const Form = ({ initialValues, formHandler, selectedAvatar, showCancelButton = t
         .matches(/^[a-zA-Z0-9\s]*$/, t('profile.validation.name.invalid_characters')),
       adult: string().required(),
       avatar_url: string(),
-      pin: number(),
+      pin: string(),
     }),
     onSubmit: formHandler,
   });
@@ -90,7 +90,6 @@ const Form = ({ initialValues, formHandler, selectedAvatar, showCancelButton = t
               required
               name="adult"
               label={t('profile.content_rating')}
-              className={styles.dropdown}
               options={options}
               value={values?.adult?.toString() || 'true'}
               onChange={handleChange}

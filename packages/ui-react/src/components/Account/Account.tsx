@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { shallow } from '@jwp/ott-common/src/utils/compare';
 import DOMPurify from 'dompurify';
 import { useMutation, useQuery } from 'react-query';
-import type { ConsentsValue } from '@jwp/ott-common/types/account';
 import { getModule } from '@jwp/ott-common/src/modules/container';
 import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
 import { isTruthy, logDev } from '@jwp/ott-common/src/utils/common';
@@ -26,6 +25,7 @@ import Icon from '../Icon/Icon';
 import { modalURLFromLocation } from '../../utils/location';
 
 import styles from './Account.module.scss';
+import { formatConsentsValues } from '@jwp/ott-common/src/utils/collection';
 
 type Props = {
   panelClassName?: string;
@@ -46,13 +46,17 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
   });
   const exportDataMessage = exportData.isSuccess ? t('account.export_data_success') : t('account.export_data_error');
 
-  const { data: consentsValues } = useQuery(['consentsValues'], accountController.getConsentsValues);
-  const { data: registrationFields } = useQuery(['registrationFields'], accountController.getRegistrationFields);
+  useQuery(['consents'], accountController.getConsents);
+  useQuery(['consentsValues'], accountController.getConsentsValues);
+  useQuery(['registrationFields'], accountController.getRegistrationFields);
 
-  const { customer, consentsFields } = useAccountStore(
-    ({ user, publisherConsents }) => ({
-      customer: user,
-      consentsFields: publisherConsents,
+  const { customer, consentsFields, consentsFormValues, registrationFields, registrationFieldsValues } = useAccountStore(
+    (s) => ({
+      customer: s.user,
+      consentsFields: s.consents || [],
+      consentsFormValues: formatConsentsValues(s.consentsValues || []),
+      registrationFields: s.registrationFields || [],
+      registrationFieldsValues: s.registrationFieldsValues || {},
     }),
     shallow,
   );
@@ -63,29 +67,16 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
   const isSocialLogin = (registerSource && registerSource !== 'inplayer') || false;
   const shouldAddPassword = (isSocialLogin && !customer?.metadata?.has_password) || false;
 
-  // load consents (move to `useConsents` hook?)
-  useEffect(() => {
-    if (!consentsFields) {
-      accountController.getConsents();
-
-      return;
-    }
-  }, [accountController, consentsFields]);
-
-  const registrationFieldsValues = useMemo(() => {
-    return Object.fromEntries(
-      (registrationFields?.fields || []).map((field) => [field.name, field.type === 'checkbox' ? field.enabledByDefault : field.defaultValue]),
-    );
-  }, [registrationFields]);
-
   const initialValues = useMemo(
     () => ({
-      customer,
-      consentsValues: Object.fromEntries((consentsValues || []).map((consent) => [consent.name, consent.state === 'accepted'])),
-      registrationFieldsValues,
-      confirmationPassword: '',
+      consents: consentsFormValues,
+      registrationFields: registrationFieldsValues,
+      updateEmail: {
+        confirmationPassword: '',
+        email: customer?.email || '',
+      },
     }),
-    [customer, consentsValues, registrationFieldsValues],
+    [consentsFormValues, registrationFieldsValues, customer?.email],
   );
 
   const formatConsentLabel = (label: string): string | JSX.Element => {
@@ -187,7 +178,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             editButton: t('account.edit_information'),
             onSubmit: async (values) => {
               if (registrationFields) {
-                await accountController.updateRegistrationFieldsValues(registrationFields.fields, values.registrationFieldsValues);
+                await accountController.updateRegistrationFieldsValues(registrationFields, values.registrationFields);
                 return;
               }
               throw new Error('Registration fields are not loaded');
@@ -195,12 +186,12 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             content: (section) => (
               <>
                 <h1 className={styles.hideUntilFocus}>{t('nav.account')}</h1>
-                {registrationFields?.fields.map((field) => (
+                {registrationFields?.map((field) => (
                   <CustomRegisterField
                     key={field.name}
                     type={field.type}
-                    name={`registrationFieldsValues.${field.name}`}
-                    value={section.values.registrationFieldsValues[field.name] || ''}
+                    name={`registrationFields.${field.name}`}
+                    value={section.values.registrationFields[field.name] || ''}
                     onChange={section.onChange}
                     placeholder={field.placeholder}
                     disabled={!section.isEditing || section.isBusy}
@@ -216,19 +207,19 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             label: t('account.email'),
             onSubmit: async (values) => {
               await accountController.updateUser({
-                email: values.customer?.email || '',
-                confirmationPassword: values.confirmationPassword,
+                email: values.updateEmail.email || '',
+                confirmationPassword: values.updateEmail.confirmationPassword,
               });
             },
-            canSave: (values) => !!(values.customer?.email && values.confirmationPassword),
+            canSave: (values) => !!(values.updateEmail.email && values.updateEmail.confirmationPassword),
             editButton: t('account.edit_account'),
             readOnly: !canUpdateEmail,
             content: (section) => (
               <>
                 <TextField
-                  name="email"
+                  name="updateEmail.email"
                   label={t('account.email')}
-                  value={section.values.customer?.email || ''}
+                  value={section.values.updateEmail?.email || ''}
                   onChange={section.onChange}
                   // @TODO after moving error handling to controller
                   // error={!!section.errors?.email}
@@ -239,9 +230,9 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
                 />
                 {section.isEditing && (
                   <TextField
-                    name="confirmationPassword"
+                    name="updateEmail.confirmationPassword"
                     label={t('account.confirm_password')}
-                    value={section.values.confirmationPassword}
+                    value={section.values.updateEmail.confirmationPassword}
                     onChange={section.onChange}
                     error={!!section.errors?.confirmationPassword}
                     helperText={section.errors?.confirmationPassword}
@@ -272,20 +263,15 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             label: t('account.terms_and_tracking'),
             saveButton: t('account.update_consents'),
             onSubmit: async (values) => {
-              const updatedConsents: ConsentsValue[] = (consentsValues || []).map((consent) => ({
-                ...consent,
-                state: values.consentsValues?.[consent.name] ? 'accepted' : 'declined',
-              }));
-
-              await accountController.updateConsents(updatedConsents);
+              await accountController.updateConsents(values.consents);
             },
             content: (section) => (
               <>
                 {consentsFields?.map((consent, index) => (
                   <Checkbox
                     key={index}
-                    name={`consentsValues.${consent.name}`}
-                    checked={section.values.consentsValues?.[consent.name]}
+                    name={`consents.${consent.name}`}
+                    checked={section.values.consents?.[consent.name]}
                     onChange={section.onChange}
                     label={formatConsentLabel(consent.label)}
                     disabled={consent.required || section.isBusy}
@@ -297,10 +283,10 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
           canExportAccountData &&
             formSection({
               label: t('account.export_data_title'),
-              content: (section) => (
+              content: () => (
                 <div className={styles.textWithButtonContainer}>
                   <div>
-                    <Trans t={t} i18nKey="account.export_data_body" values={{ email: section.values.customer?.email || '' }} />
+                    <Trans t={t} i18nKey="account.export_data_body" values={{ email: customer?.email || '' }} />
                   </div>
                   <div>
                     <Button

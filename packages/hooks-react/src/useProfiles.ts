@@ -15,7 +15,7 @@ export const useSelectProfile = (options?: { onSuccess: () => void; onError: () 
   const accountController = getModule(AccountController, false);
   const profileController = getModule(ProfileController, false);
 
-  return useMutation(async (vars: { id: string; pin?: number; avatarUrl: string }) => profileController?.enterProfile({ id: vars.id, pin: vars.pin }), {
+  return useMutation(async (vars: { id: string; pin?: string; avatarUrl: string }) => profileController?.enterProfile({ id: vars.id, pin: vars.pin }), {
     onMutate: ({ avatarUrl }) => {
       useProfileStore.setState({ selectingProfileAvatar: avatarUrl });
     },

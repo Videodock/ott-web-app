@@ -37,7 +37,8 @@ export default class JWPProfileService extends ProfileService {
   };
 
   createProfile: CreateProfile = async (payload) => {
-    const response = await InPlayer.Account.createProfile(payload.name, payload.adult, payload.avatar_url, payload.pin);
+    const pin = payload.pin ? parseInt(payload.pin) : undefined;
+    const response = await InPlayer.Account.createProfile(payload.name, payload.adult, payload.avatar_url, pin);
 
     return response.data;
   };
@@ -54,7 +55,7 @@ export default class JWPProfileService extends ProfileService {
 
   enterProfile: EnterProfile = async ({ id, pin }) => {
     try {
-      const response = await InPlayer.Account.enterProfile(id, pin);
+      const response = await InPlayer.Account.enterProfile(id, pin ? parseInt(pin) : undefined);
       const profile = response.data;
 
       // this sets the inplayer_token for the InPlayer SDK

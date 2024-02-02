@@ -4,7 +4,11 @@ import { render } from '@testing-library/react';
 import Form from './Form';
 
 describe('<Form>', () => {
-  const initialValues = { test: 'Testing' };
+  const initialValues = {
+    nested: {
+      test: 'Testing',
+    },
+  };
 
   it('renders Form', () => {
     const { container } = render(
@@ -18,7 +22,7 @@ describe('<Form>', () => {
             content: (section) => (
               <input
                 name="test"
-                value={section.values.test || ''}
+                value={section.values.nested.test || ''}
                 onChange={() => {
                   /**/
                 }}

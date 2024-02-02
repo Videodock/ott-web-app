@@ -9,6 +9,7 @@ import { ACCESS_MODEL } from '@jwp/ott-common/src/constants';
 import useForm, { type UseFormOnSubmitHandler } from '@jwp/ott-hooks-react/src/useForm';
 import useOffers from '@jwp/ott-hooks-react/src/useOffers';
 import type { GenericFormValues } from '@jwp/ott-common/types/form';
+import { FormValidationError } from '@jwp/ott-common/src/FormValidationError';
 
 import PersonalDetailsForm from '../../../components/PersonalDetailsForm/PersonalDetailsForm';
 import LoadingOverlay from '../../../components/LoadingOverlay/LoadingOverlay';
@@ -41,9 +42,10 @@ const PersonalDetails = () => {
       await accountController.updateRegistrationFieldsValues(fields, formData);
       nextStep();
     } catch (error: unknown) {
-      // TODO: handle form errors from thrown by controller
-      if (error instanceof Error) {
-        setErrors({ form: error.message });
+      if (error instanceof FormValidationError) {
+        setErrors(error.errors);
+      } else {
+        setErrors({ form: 'Something went wrong...' });
       }
     }
 
