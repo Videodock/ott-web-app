@@ -13,6 +13,7 @@ import { formatConsents, formatConsentsFromValues, formatConsentsToRegisterField
 import useToggle from '@jwp/ott-hooks-react/src/useToggle';
 import Visibility from '@jwp/ott-theme/assets/icons/visibility.svg?react';
 import VisibilityOff from '@jwp/ott-theme/assets/icons/visibility_off.svg?react';
+import env from '@jwp/ott-common/src/env';
 
 import type { FormSectionContentArgs, FormSectionProps } from '../Form/FormSection';
 import Alert from '../Alert/Alert';
@@ -46,7 +47,7 @@ interface FormErrors {
 const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }: Props): JSX.Element => {
   const accountController = getModule(AccountController);
 
-  const { t } = useTranslation('user');
+  const { t, i18n } = useTranslation('user');
   const announce = useAriaAnnouncer();
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,6 +55,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
   const exportData = useMutation(accountController.exportAccountData);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const exportDataMessage = exportData.isSuccess ? t('account.export_data_success') : t('account.export_data_error');
+  const htmlLang = i18n.language !== env.APP_DEFAULT_LANGUAGE ? env.APP_DEFAULT_LANGUAGE : undefined;
 
   useEffect(() => {
     if (exportData.isSuccess || exportData.isError) {
@@ -332,6 +334,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
                     onChange={section.onChange}
                     label={formatConsentLabel(consent.label)}
                     disabled={consent.required || section.isBusy}
+                    lang={htmlLang}
                   />
                 ))}
               </>
@@ -366,6 +369,7 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
                       disabled={(consent.type === 'checkbox' && consent.required) || section.isBusy}
                       onChange={section.onChange}
                       required={consent.required}
+                      lang={htmlLang}
                     />
                   ))}
                 </div>

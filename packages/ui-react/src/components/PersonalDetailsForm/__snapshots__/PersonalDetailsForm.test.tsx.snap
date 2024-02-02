@@ -437,8 +437,12 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         data-testid="radio-header"
         for="radio_1235_key2"
       >
-        Is this a question?
         <span>
+          Is this a question?
+        </span>
+        <span
+          class="_note_d50e6e"
+        >
           optional
         </span>
       </label>
@@ -883,8 +887,12 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         data-testid="radio-header"
         for="radio_1235_key2"
       >
-        Is this a question?
         <span>
+          Is this a question?
+        </span>
+        <span
+          class="_note_d50e6e"
+        >
           optional
         </span>
       </label>

@@ -7,7 +7,7 @@
   font-weight: var(--body-font-weight-bold);
   text-align: left;
 
-  > span {
+  > span.note {
     margin-left: auto;
     color: rgba(variables.$white, 0.7);
     font-weight: normal;
