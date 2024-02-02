@@ -60,7 +60,7 @@ exports[`<Account> > renders and matches snapshot 1`] = `
       >
         <label
           class="_label_e16c1b"
-          for="text-field_1235_email"
+          for="text-field_1235_updateemail_email"
         >
           account.email
         </label>
@@ -136,13 +136,14 @@ exports[`<Account> > renders and matches snapshot 1`] = `
           class="_row_531f07"
         >
           <input
-            id="check-box_1235_consentsvalues_marketing"
-            name="consentsValues.marketing"
+            disabled=""
+            id="check-box_1235_consents_marketing"
+            name="consents.marketing"
             type="checkbox"
             value=""
           />
           <label
-            for="check-box_1235_consentsvalues_marketing"
+            for="check-box_1235_consents_marketing"
           >
             Receive Marketing Emails
           </label>

@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router';
 import type { RegistrationFormData } from '@jwp/ott-common/types/account';
 import { getModule } from '@jwp/ott-common/src/modules/container';
 import AccountController from '@jwp/ott-common/src/controllers/AccountController';
-import { extractConsentValues, formatConsentsFromValues } from '@jwp/ott-common/src/utils/collection';
+import { extractCustomFormFieldValues, formatConsentsFromValues } from '@jwp/ott-common/src/utils/collection';
 import useForm from '@jwp/ott-hooks-react/src/useForm';
 import { modalURLFromLocation } from '@jwp/ott-ui-react/src/utils/location';
 import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
@@ -22,7 +22,7 @@ const Registration = () => {
   const [consentValues, setConsentValues] = useState<Record<string, string | boolean>>({});
   const [consentErrors, setConsentErrors] = useState<string[]>([]);
 
-  const { publisherConsents, loading } = useAccountStore(({ publisherConsents, loading }) => ({ publisherConsents, loading }));
+  const { consents, loading } = useAccountStore(({ consents, loading }) => ({ consents, loading }));
 
   const handleChangeConsent: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = ({ currentTarget }) => {
     if (!currentTarget) return;
@@ -40,14 +40,14 @@ const Registration = () => {
   };
 
   useEffect(() => {
-    if (!publisherConsents) {
+    if (!consents) {
       accountController.getConsents();
 
       return;
     }
 
-    setConsentValues(extractConsentValues(publisherConsents));
-  }, [accountController, publisherConsents]);
+    setConsentValues(extractCustomFormFieldValues(consents));
+  }, [accountController, consents]);
 
   const { handleSubmit, handleChange, handleBlur, values, errors, submitting } = useForm<RegistrationFormData>({
     initialValues: { email: '', password: '' },
@@ -58,8 +58,7 @@ const Registration = () => {
         .required(t('registration.field_required')),
     }),
     validateOnBlur: true,
-    onSubmit: ({ email, password }) =>
-      accountController.register(email, password, window.location.href, formatConsentsFromValues(publisherConsents, consentValues)),
+    onSubmit: ({ email, password }) => accountController.register(email, password, window.location.href, formatConsentsFromValues(consents, consentValues)),
     onSubmitSuccess: () => navigate(modalURLFromLocation(location, 'personal-details')),
     onSubmitError: ({ resetValue }) => resetValue('password'),
   });
@@ -75,7 +74,7 @@ const Registration = () => {
       consentErrors={consentErrors}
       submitting={submitting}
       consentValues={consentValues}
-      publisherConsents={publisherConsents}
+      publisherConsents={consents}
       loading={loading}
       canSubmit={!!values.email && !!values.password}
     />

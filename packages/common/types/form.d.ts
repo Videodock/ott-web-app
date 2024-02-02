@@ -3,6 +3,8 @@ export type UseFormBlurHandler = React.FocusEventHandler<HTMLInputElement | HTML
 export type UseFormSubmitHandler = React.FormEventHandler<HTMLFormElement>;
 
 export type GenericFormErrors = { form: string };
-export type GenericFormValues = Record<string, string | boolean | GenericFormValues>;
+// @TODO: this type is recursive and not working properly
+export type GenericFormValues = Record<string, string | boolean>;
+export type GenericFormNestedValues = Record<string, GenericFormValues>;
 export type FormErrors<T> = Partial<{ [K in keyof T]: string } & GenericFormErrors>;
 export type FormValues<T> = Partial<T & GenericFormValues>;

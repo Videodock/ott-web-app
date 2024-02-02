@@ -10,12 +10,12 @@ export type ProfilePayload = {
   name: string;
   adult: boolean;
   avatar_url?: string;
-  pin?: number;
+  pin?: string;
 };
 
 export type EnterProfilePayload = {
   id: string;
-  pin?: number;
+  pin?: string;
 };
 
 export type ProfileDetailsPayload = {

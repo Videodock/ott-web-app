@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, type ReactElement, type ReactNode } from 'react';
-import type { GenericFormValues } from '@jwp/ott-common/types/form';
+import type { GenericFormNestedValues } from '@jwp/ott-common/types/form';
 import useOpaqueId from '@jwp/ott-hooks-react/src/useOpaqueId';
 
 import Button from '../Button/Button';
@@ -8,7 +8,7 @@ import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 import styles from './Form.module.scss';
 import { FormContext } from './Form';
 
-export interface FormSectionContentArgs<T extends GenericFormValues, TErrors> {
+export interface FormSectionContentArgs<T, TErrors> {
   values: T;
   isEditing: boolean;
   isBusy: boolean;
@@ -16,7 +16,7 @@ export interface FormSectionContentArgs<T extends GenericFormValues, TErrors> {
   errors?: TErrors | undefined;
 }
 
-export interface FormSectionProps<TData extends GenericFormValues, TErrors> {
+export interface FormSectionProps<TData, TErrors> {
   className?: string;
   panelHeaderClassName?: string;
   label: string;
@@ -30,7 +30,7 @@ export interface FormSectionProps<TData extends GenericFormValues, TErrors> {
   readOnly?: boolean;
 }
 
-export function FormSection<TData extends GenericFormValues>({
+export function FormSection<TData extends GenericFormNestedValues>({
   className,
   panelHeaderClassName,
   label,
@@ -48,7 +48,7 @@ export function FormSection<TData extends GenericFormValues>({
     setFormState,
     isLoading,
     onCancel,
-  } = useContext(FormContext) as FormContext<TData>;
+  } = useContext(FormContext) as unknown as FormContext<TData>;
 
   const isEditing = sectionId === activeSectionId;
 
@@ -67,15 +67,15 @@ export function FormSection<TData extends GenericFormValues>({
         const newValues = { ...oldState.values };
 
         // This logic handles nested names like 'consents.terms'
-        name.split('.').reduce((parent, field, index, arr) => {
-          if (index === arr.length - 1) {
-            parent[field] = value;
-          } else {
-            parent[field] = { ...parent[field] } || {};
-          }
+        const [nestedKey, fieldName] = name.split('.');
 
-          return parent[field];
-        }, newValues);
+        if (nestedKey in newValues) {
+          // @ts-ignore this typing is not working properly
+          newValues[nestedKey as keyof TData] = {
+            ...newValues[nestedKey],
+            [fieldName]: value,
+          };
+        }
 
         return {
           ...oldState,

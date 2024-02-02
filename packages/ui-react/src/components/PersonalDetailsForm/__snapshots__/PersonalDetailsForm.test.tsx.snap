@@ -17,7 +17,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       This is a form error
     </div>
     <div
-      class="_textField_e16c1b"
+      class="_textField_e16c1b _error_e16c1b"
       data-testid="crf-input"
     >
       <label
@@ -39,9 +39,14 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="Vince"
         />
       </div>
+      <div
+        class="_helperText_da58e0 _error_da58e0"
+      >
+        this is wrong
+      </div>
     </div>
     <div
-      class="_textField_e16c1b"
+      class="_textField_e16c1b _error_e16c1b"
       data-testid="crf-input"
     >
       <label
@@ -62,6 +67,11 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           type="text"
           value="Guy"
         />
+      </div>
+      <div
+        class="_helperText_da58e0 _error_da58e0"
+      >
+        also this
       </div>
     </div>
     <div
@@ -91,7 +101,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_dateField_eb6974"
+      class="_dateField_eb6974 _error_eb6974"
       data-testid="crf-datepicker"
       id="text-field_1235_birthdate"
       placeholder=""
@@ -143,9 +153,14 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="1985"
         />
       </div>
+      <div
+        class="_helperText_da58e0 _error_da58e0"
+      >
+        February 30th? Really?
+      </div>
     </div>
     <div
-      class="_textField_e16c1b"
+      class="_textField_e16c1b _error_e16c1b"
       data-testid="crf-input"
     >
       <label
@@ -169,9 +184,14 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="+1 555 555 5555"
         />
       </div>
+      <div
+        class="_helperText_da58e0 _error_da58e0"
+      >
+        Invalid
+      </div>
     </div>
     <div
-      class="_textField_e16c1b"
+      class="_textField_e16c1b _error_e16c1b"
       data-testid="crf-input"
     >
       <label
@@ -195,9 +215,14 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value=""
         />
       </div>
+      <div
+        class="_helperText_da58e0 _error_da58e0"
+      >
+        Please enter some text
+      </div>
     </div>
     <div
-      class="_checkbox_531f07"
+      class="_checkbox_531f07 _error_531f07"
       data-testid="crf-checkbox"
       placeholder=""
     >
@@ -217,8 +242,14 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           This is a checkbox field
         </label>
       </div>
+      <div
+        class="_helperText_da58e0 _error_da58e0 _helperTextError_531f07"
+      >
+        Check this box please!
+      </div>
     </div>
     <div
+      class="_error_d50e6e"
       data-testid="crf-radio"
       label="This is a radio field"
       placeholder=""
@@ -261,9 +292,14 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           Option 2
         </label>
       </div>
+      <div
+        class="_helperText_da58e0 _error_da58e0"
+      >
+        It's only two choices
+      </div>
     </div>
     <div
-      class="_container_bb73c6 _fullWidth_bb73c6 _medium_bb73c6"
+      class="_container_bb73c6 _fullWidth_bb73c6 _error_bb73c6 _medium_bb73c6"
       data-testid="crf-select"
     >
       <label
@@ -301,6 +337,11 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
             Option 3
           </option>
         </select>
+      </div>
+      <div
+        class="_helperText_da58e0 _error_da58e0"
+      >
+        Select something...
       </div>
     </div>
     <button
