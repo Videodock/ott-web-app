@@ -78,14 +78,6 @@ const RegistrationForm: React.FC<Props> = ({
     }
   }, [errors.form]);
 
-  if (loading) {
-    return (
-      <div style={{ height: 400 }}>
-        <LoadingOverlay inline />
-      </div>
-    );
-  }
-
   return (
     <form onSubmit={onSubmit} data-testid={testId('registration-form')} noValidate>
       <h2 className={styles.title}>{t('registration.sign_up')}</h2>
@@ -161,7 +153,7 @@ const RegistrationForm: React.FC<Props> = ({
       <p className={styles.bottom}>
         {t('registration.already_account')} <Link to={modalURLFromLocation(location, 'login')}>{t('login.sign_in')}</Link>
       </p>
-      {submitting && <LoadingOverlay transparentBackground inline />}
+      {(loading || submitting) && <LoadingOverlay transparentBackground inline />}
     </form>
   );
 };

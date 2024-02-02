@@ -49,13 +49,16 @@ const Modal: React.FC<Props> = ({ open, onClose, children, AnimationComponent = 
       document.body.style.marginRight = `${scrollbarSize()}px`;
       document.body.style.overflowY = 'hidden';
 
-      // focus the first element in the modal (except the close button)
-      if (modalRef.current) {
-        const interactiveElements = modalRef.current.querySelectorAll('a, button, [tabindex="0"]');
-        const interactiveElement = Array.from(interactiveElements).filter((item) => !item.hasAttribute('data-return-button'))[0] as HTMLElement | null;
+      // focus the first element in the modal, after a short delay to allow the modal to be rendered
+      setTimeout(() => {
+        if (modalRef.current) {
+          const interactiveElement = modalRef.current.querySelectorAll(
+            'div[role="dialog"] input, div[role="dialog"] a, div[role="dialog"] button, div[role="dialog"] [tabindex]',
+          )[0] as HTMLElement | null;
 
-        if (interactiveElement) interactiveElement.focus();
-      }
+          if (interactiveElement) interactiveElement.focus();
+        }
+      }, 10);
     } else {
       if (appView) {
         appView.inert = false;
