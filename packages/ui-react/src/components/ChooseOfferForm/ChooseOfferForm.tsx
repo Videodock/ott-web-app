@@ -54,7 +54,7 @@ const OfferBox: React.FC<OfferBoxProps> = ({ offer, selected, onChange }: OfferB
   };
 
   const renderOption = ({ title, periodString, secondBenefit }: { title: string; periodString?: string; secondBenefit?: string }) => (
-    <div className={styles.offer}>
+    <div className={styles.offer} role="option">
       <input
         className={styles.radio}
         onChange={onChange}
