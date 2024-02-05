@@ -319,7 +319,7 @@ export default class AccountController {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer, customerConsents } = getAccountInfo();
 
-    const requiredMessage = i18next.t('common:form.field_required');
+    const requiredMessage = i18next.t('account:personal_details.this_field_is_required');
     const errors = fields.reduce((previousValue, currentValue) => {
       if (currentValue.required && !values[currentValue.name]) {
         return { ...previousValue, [currentValue.name]: requiredMessage };
