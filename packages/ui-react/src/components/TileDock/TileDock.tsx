@@ -194,7 +194,6 @@ function TileDock<T>({
   // Run code after the slide animation to set the new index
   useLayoutEffect(() => {
     const postAnimationCleanup = (): void => {
-      const firstVisibleTileIndex = Array.from(frameRef.current?.children || []).findIndex((element) => element.getAttribute('aria-hidden') === 'false');
       let resetIndex: number = slideToIndex;
 
       resetIndex = resetIndex >= items.length ? slideToIndex - items.length : resetIndex;
@@ -202,10 +201,6 @@ function TileDock<T>({
 
       if (resetIndex !== slideToIndex) {
         setSlideToIndex(resetIndex);
-      }
-
-      if (firstVisibleTileIndex !== -1) {
-        (frameRef.current?.children[firstVisibleTileIndex] as HTMLElement).focus();
       }
 
       setIndex(resetIndex);
@@ -278,7 +273,6 @@ function TileDock<T>({
                 aria-posinset={posInSet + 1}
                 aria-hidden={!isInView}
                 className={classNames({ [styles.notInView]: !isInView })}
-                tabIndex={-1}
                 style={{
                   width: `${tileWidth}%`,
                   paddingLeft: spacing / 2,
