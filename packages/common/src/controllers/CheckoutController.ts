@@ -57,6 +57,8 @@ export default class CheckoutController {
     useCheckoutStore.setState({ availableOffers });
   };
 
+  getSubscriptionOfferIds = () => this.accountService.svodOfferIds;
+
   chooseOffer = async (selectedOfferId: string) => {
     const availableOffers = useCheckoutStore.getState().availableOffers;
     const selectedOffer = availableOffers.find(({ offerId }) => offerId === selectedOfferId);
