@@ -65,9 +65,9 @@ const StartWatchingButton: React.VFC<Props> = ({ item, playUrl, disabled = false
 
   useEffect(() => {
     // set the TVOD mediaOffers in the checkout store
-    setRequestedMediaOffers(mediaOffers.length ? mediaOffers : null);
+    setRequestedMediaOffers(mediaOffers);
 
-    return () => setRequestedMediaOffers(null);
+    return () => setRequestedMediaOffers([]);
   }, [mediaOffers, setRequestedMediaOffers]);
 
   return (

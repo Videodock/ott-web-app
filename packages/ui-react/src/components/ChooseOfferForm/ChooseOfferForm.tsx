@@ -2,9 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import type { FormErrors } from '@jwp/ott-common/types/form';
-import type { Offer, ChooseOfferFormData, OfferType } from '@jwp/ott-common/types/checkout';
+import type { Offer, ChooseOfferFormData } from '@jwp/ott-common/types/checkout';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
-import { getOfferPrice, isSVODOffer } from '@jwp/ott-common/src/utils/subscription';
+import { getOfferPrice, isSVODOffer } from '@jwp/ott-common/src/utils/offers';
 import { testId } from '@jwp/ott-common/src/utils/common';
 import CheckCircle from '@jwp/ott-theme/assets/icons/check_circle.svg?react';
 
@@ -16,40 +16,12 @@ import Icon from '../Icon/Icon';
 
 import styles from './ChooseOfferForm.module.scss';
 
-type Props = {
-  values: ChooseOfferFormData;
-  errors: FormErrors<ChooseOfferFormData>;
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
-  onBackButtonClickHandler?: () => void;
-  offers: Offer[];
-  submitting: boolean;
-  offerType: OfferType;
-  setOfferType?: (offerType: OfferType) => void;
-};
-
 type OfferBoxProps = {
   offer: Offer;
-  title: string;
-  ariaLabel: string;
-  secondBenefit?: string;
-  periodString?: string;
-};
+  selected: boolean;
+} & Pick<Props, 'onChange'>;
 
-type OfferBox = ({ offer, title, ariaLabel, secondBenefit, periodString }: OfferBoxProps) => JSX.Element;
-
-const ChooseOfferForm: React.FC<Props> = ({
-  values,
-  errors,
-  onChange,
-  onSubmit,
-  submitting,
-  offers,
-  onBackButtonClickHandler,
-  offerType,
-  setOfferType,
-}: Props) => {
-  const siteName = useConfigStore((s) => s.config.siteName);
+const OfferBox: React.FC<OfferBoxProps> = ({ offer, selected, onChange }: OfferBoxProps) => {
   const { t } = useTranslation('account');
 
   const getFreeTrialText = (offer: Offer) => {
@@ -68,17 +40,17 @@ const ChooseOfferForm: React.FC<Props> = ({
     return null;
   };
 
-  const OfferBox: OfferBox = ({ offer, title, ariaLabel, secondBenefit, periodString }) => (
-    <div className={styles.offer}>
+  const renderOption = ({ title, periodString, secondBenefit }: { title: string; periodString?: string; secondBenefit?: string }) => (
+    <div className={styles.offer} role="option">
       <input
         className={styles.radio}
         onChange={onChange}
         type="radio"
-        name={'offerId'}
+        name={'selectedOfferId'}
         value={offer.offerId}
         id={offer.offerId}
-        checked={values.offerId === offer.offerId}
-        aria-label={ariaLabel}
+        checked={selected}
+        data-testid={testId(title)}
       />
       <label className={styles.label} htmlFor={offer.offerId}>
         <h2 className={styles.offerTitle}>{title}</h2>
@@ -107,36 +79,40 @@ const ChooseOfferForm: React.FC<Props> = ({
     </div>
   );
 
-  const renderOfferBox = (offer: Offer) => {
-    if (isSVODOffer(offer)) {
-      const isMonthly = offer.period === 'month';
+  if (isSVODOffer(offer)) {
+    const isMonthly = offer.period === 'month';
 
-      return (
-        <OfferBox
-          offer={offer}
-          key={offer.offerId}
-          title={isMonthly ? t('choose_offer.monthly') : t('choose_offer.yearly')}
-          ariaLabel={isMonthly ? t('choose_offer.monthly_subscription') : t('choose_offer.yearly_subscription')}
-          secondBenefit={t('choose_offer.benefits.cancel_anytime')}
-          periodString={isMonthly ? t('periods.month') : t('periods.year')}
-        />
-      );
-    }
+    return renderOption({
+      title: isMonthly ? t('choose_offer.monthly') : t('choose_offer.yearly'),
+      secondBenefit: t('choose_offer.benefits.cancel_anytime'),
+      periodString: isMonthly ? t('periods.month') : t('periods.year'),
+    });
+  }
 
-    return (
-      <OfferBox
-        offer={offer}
-        key={offer.offerId}
-        title={offer.offerTitle}
-        ariaLabel={offer.offerTitle}
-        secondBenefit={
-          !!offer.durationPeriod && !!offer.durationAmount
-            ? t('choose_offer.tvod_access', { period: offer.durationPeriod, count: offer.durationAmount })
-            : undefined
-        }
-      />
-    );
-  };
+  return renderOption({
+    title: offer.offerTitle,
+    secondBenefit:
+      !!offer.durationPeriod && !!offer.durationAmount
+        ? t('choose_offer.tvod_access', { period: offer.durationPeriod, count: offer.durationAmount })
+        : undefined,
+  });
+};
+
+type Props = {
+  values: ChooseOfferFormData;
+  errors: FormErrors<ChooseOfferFormData>;
+  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+  onBackButtonClickHandler?: () => void;
+  offers: Offer[];
+  showOfferTypeSwitch: boolean;
+  submitting: boolean;
+};
+
+const ChooseOfferForm: React.FC<Props> = ({ values, errors, submitting, offers, showOfferTypeSwitch, onChange, onSubmit, onBackButtonClickHandler }: Props) => {
+  const siteName = useConfigStore((s) => s.config.siteName);
+  const { t } = useTranslation('account');
+  const { selectedOfferType, selectedOfferId } = values;
 
   return (
     <form onSubmit={onSubmit} data-testid={testId('choose-offer-form')} noValidate>
@@ -144,35 +120,41 @@ const ChooseOfferForm: React.FC<Props> = ({
       <h1 className={styles.title}>{t('choose_offer.title')}</h1>
       <p className={styles.subtitle}>{t('choose_offer.watch_this_on_platform', { siteName })}</p>
       {errors.form ? <FormFeedback variant="error">{errors.form}</FormFeedback> : null}
-      {setOfferType && (
+      {showOfferTypeSwitch && (
         <div className={styles.offerGroupSwitch}>
           <input
             className={styles.radio}
-            onChange={() => setOfferType('svod')}
+            onChange={onChange}
             type="radio"
-            name="offerType"
+            name="selectedOfferType"
             id="svod"
             value="svod"
-            checked={offerType === 'svod'}
+            checked={selectedOfferType === 'svod'}
           />
           <label className={classNames(styles.label, styles.offerGroupLabel)} htmlFor="svod">
             {t('choose_offer.subscription')}
           </label>
           <input
             className={styles.radio}
-            onChange={() => setOfferType('tvod')}
+            onChange={onChange}
             type="radio"
-            name="offerType"
+            name="selectedOfferType"
             id="tvod"
             value="tvod"
-            checked={offerType === 'tvod'}
+            checked={selectedOfferType === 'tvod'}
           />
           <label className={classNames(styles.label, styles.offerGroupLabel)} htmlFor="tvod">
             {t('choose_offer.one_time_only')}
           </label>
         </div>
       )}
-      {<div className={styles.offers}>{!offers.length ? <p>{t('choose_offer.no_pricing_available')}</p> : offers.map(renderOfferBox)}</div>}
+      <div className={styles.offers}>
+        {!offers.length ? (
+          <p>{t('choose_offer.no_pricing_available')}</p>
+        ) : (
+          offers.map((offer) => <OfferBox key={offer.offerId} offer={offer} selected={selectedOfferId === offer.offerId} onChange={onChange} />)
+        )}
+      </div>
       {submitting && <LoadingOverlay transparentBackground inline />}
       <Button label={t('choose_offer.continue')} disabled={submitting || !offers.length} variant="contained" color="primary" type="submit" fullWidth />
     </form>

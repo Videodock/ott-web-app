@@ -47,7 +47,8 @@ export type Offer = {
 export type OfferType = 'svod' | 'tvod';
 
 export type ChooseOfferFormData = {
-  offerId?: string;
+  selectedOfferType?: OfferType;
+  selectedOfferId?: string;
 };
 
 export type OrderOffer = {
@@ -216,7 +217,6 @@ export type CreateOrderArgs = {
   offer: Offer;
   customerId: string;
   country: string;
-  customerIP: string;
   paymentMethodId?: number;
   couponCode?: string;
 };
