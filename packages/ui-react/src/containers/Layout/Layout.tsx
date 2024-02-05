@@ -193,7 +193,7 @@ const Layout = () => {
         >
           <Button label={t('home')} to="/" variant="text" />
           {menu.map((item) => (
-            <Button key={item.contentId} label={item.label} to={playlistURL(item.contentId)} variant="text" />
+            <Button key={item.contentId} label={item.label} to={playlistURL(item.contentId)} variant="text" inHeader />
           ))}
         </Header>
         <main id="content" className={styles.main} tabIndex={-1}>

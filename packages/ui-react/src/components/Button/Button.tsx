@@ -29,6 +29,7 @@ type Props = {
   busy?: boolean;
   id?: string;
   as?: 'button' | 'a';
+  inHeader?: boolean;
 } & React.AriaAttributes;
 
 const Button: React.FC<Props> = ({
@@ -47,6 +48,7 @@ const Button: React.FC<Props> = ({
   as = 'button',
   onClick,
   className,
+  inHeader = false,
   ...rest
 }: Props) => {
   const buttonClassName = (isActive: boolean) =>
@@ -56,6 +58,7 @@ const Button: React.FC<Props> = ({
       [styles.large]: size === 'large',
       [styles.small]: size === 'small',
       [styles.disabled]: disabled,
+      [styles.inHeader]: inHeader && variant === 'text',
     });
 
   const content = (
