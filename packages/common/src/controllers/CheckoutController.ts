@@ -50,7 +50,6 @@ export default class CheckoutController {
   createOrder = async (offer: Offer): Promise<void> => {
     const { getAccountInfo } = useAccountStore.getState();
     const { customer } = getAccountInfo();
-    const customerIP = typeof customer?.lastUserIp === 'string' && customer.lastUserIp ? customer.lastUserIp : '';
 
     const paymentMethods = await this.getPaymentMethods();
     const paymentMethodId = paymentMethods[0]?.id;
@@ -59,7 +58,6 @@ export default class CheckoutController {
       offer,
       customerId: customer.id,
       country: customer?.country || '',
-      customerIP,
       paymentMethodId,
     };
 
