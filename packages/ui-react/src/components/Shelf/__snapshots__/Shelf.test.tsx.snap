@@ -34,8 +34,11 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
       >
         <li
           aria-hidden="true"
+          aria-posinset="3"
+          aria-setsize="4"
           class="_notInView_22abb0"
           style="width: 100%; padding-left: 4px; padding-right: 4px; box-sizing: border-box; transition: opacity .2s ease-in 0s;"
+          tabindex="-1"
         >
           <a
             class="_card_d75732 _featured_d75732 _disabled_d75732"
@@ -59,8 +62,11 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
         </li>
         <li
           aria-hidden="true"
+          aria-posinset="4"
+          aria-setsize="4"
           class="_notInView_22abb0"
           style="width: 100%; padding-left: 4px; padding-right: 4px; box-sizing: border-box; transition: opacity .2s ease-in 0s;"
+          tabindex="-1"
         >
           <a
             class="_card_d75732 _featured_d75732 _disabled_d75732"
@@ -84,8 +90,11 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
         </li>
         <li
           aria-hidden="false"
+          aria-posinset="1"
+          aria-setsize="4"
           class=""
           style="width: 100%; padding-left: 4px; padding-right: 4px; box-sizing: border-box;"
+          tabindex="-1"
         >
           <a
             class="_card_d75732 _featured_d75732"
@@ -120,8 +129,11 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
         </li>
         <li
           aria-hidden="true"
+          aria-posinset="2"
+          aria-setsize="4"
           class="_notInView_22abb0"
           style="width: 100%; padding-left: 4px; padding-right: 4px; box-sizing: border-box; transition: opacity .2s ease-in 0s;"
+          tabindex="-1"
         >
           <a
             class="_card_d75732 _featured_d75732 _disabled_d75732"
@@ -145,8 +157,11 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
         </li>
         <li
           aria-hidden="true"
+          aria-posinset="3"
+          aria-setsize="4"
           class="_notInView_22abb0"
           style="width: 100%; padding-left: 4px; padding-right: 4px; box-sizing: border-box; transition: opacity .2s ease-in 0s;"
+          tabindex="-1"
         >
           <a
             class="_card_d75732 _featured_d75732 _disabled_d75732"
@@ -230,8 +245,11 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
       >
         <li
           aria-hidden="false"
+          aria-posinset="1"
+          aria-setsize="4"
           class=""
           style="width: 20%; padding-left: 4px; padding-right: 4px; box-sizing: border-box;"
+          tabindex="-1"
         >
           <a
             class="_card_d75732"
@@ -270,8 +288,11 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
         </li>
         <li
           aria-hidden="false"
+          aria-posinset="2"
+          aria-setsize="4"
           class=""
           style="width: 20%; padding-left: 4px; padding-right: 4px; box-sizing: border-box;"
+          tabindex="-1"
         >
           <a
             class="_card_d75732"
@@ -310,8 +331,11 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
         </li>
         <li
           aria-hidden="false"
+          aria-posinset="3"
+          aria-setsize="4"
           class=""
           style="width: 20%; padding-left: 4px; padding-right: 4px; box-sizing: border-box;"
+          tabindex="-1"
         >
           <a
             class="_card_d75732"
@@ -350,8 +374,11 @@ exports[`Shelf Component tests > Regular shelf 1`] = `
         </li>
         <li
           aria-hidden="false"
+          aria-posinset="4"
+          aria-setsize="4"
           class=""
           style="width: 20%; padding-left: 4px; padding-right: 4px; box-sizing: border-box;"
+          tabindex="-1"
         >
           <a
             class="_card_d75732"
