@@ -10,6 +10,7 @@ import useForm, { type UseFormOnSubmitHandler } from '@jwp/ott-hooks-react/src/u
 import useOffers from '@jwp/ott-hooks-react/src/useOffers';
 import type { GenericFormValues } from '@jwp/ott-common/types/form';
 import { FormValidationError } from '@jwp/ott-common/src/FormValidationError';
+import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
 
 import PersonalDetailsForm from '../../../components/PersonalDetailsForm/PersonalDetailsForm';
 import LoadingOverlay from '../../../components/LoadingOverlay/LoadingOverlay';
@@ -20,7 +21,8 @@ const PersonalDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const accessModel = useConfigStore((s) => s.accessModel);
-  const { data, isLoading } = useQuery('captureStatus', accountController.getRegistrationFields);
+  const user = useAccountStore((s) => s.user);
+  const { data, isLoading } = useQuery(['registrationFields', user?.id], accountController.getRegistrationFields);
   const { hasMediaOffers } = useOffers();
 
   const fields = useMemo(() => data?.fields || [], [data]);

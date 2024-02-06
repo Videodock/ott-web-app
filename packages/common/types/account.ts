@@ -50,6 +50,8 @@ export type LoginFormData = {
 export type RegistrationFormData = {
   email: string;
   password: string;
+  consents: Record<string, boolean>;
+  registrationFields: Record<string, string | boolean>;
 };
 
 export type ForgotPasswordFormData = {
@@ -205,7 +207,7 @@ export type RegistrationFields = {
 };
 
 export type GetRegistrationFieldsArgs = {
-  customer: Customer;
+  customer: Customer | null;
 };
 
 export type UpdateRegistrationFieldsValuesArgs = {

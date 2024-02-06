@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { type AnySchema, ValidationError, SchemaOf } from 'yup';
-import type { FormErrors, GenericFormValues, UseFormBlurHandler, UseFormChangeHandler, UseFormSubmitHandler } from '@jwp/ott-common/types/form';
+import type { FormErrors, GenericFormNestedValues, UseFormBlurHandler, UseFormChangeHandler, UseFormSubmitHandler } from '@jwp/ott-common/types/form';
 import { FormValidationError } from '@jwp/ott-common/src/FormValidationError';
 import { useTranslation } from 'react-i18next';
 
@@ -11,14 +11,14 @@ export type UseFormReturnValue<T> = {
   handleChange: UseFormChangeHandler;
   handleBlur: UseFormBlurHandler;
   handleSubmit: UseFormSubmitHandler;
-  setValue: (key: keyof T, value: T[keyof T]) => void;
+  setValue: (key: string, value: string | boolean) => void;
   setErrors: (errors: FormErrors<T>) => void;
   setSubmitting: (submitting: boolean) => void;
   reset: () => void;
 };
 
 type UseFormMethods<T> = {
-  setValue: (key: keyof T, value: string | boolean) => void;
+  setValue: (key: string, value: string | boolean) => void;
   setErrors: (errors: FormErrors<T>) => void;
   setSubmitting: (submitting: boolean) => void;
   validate: (validationSchema: AnySchema) => boolean;
@@ -26,7 +26,19 @@ type UseFormMethods<T> = {
 
 export type UseFormOnSubmitHandler<T> = (values: T, formMethods: UseFormMethods<T>) => void;
 
-export default function useForm<T extends GenericFormValues>({
+export const updateValues = <T extends GenericFormNestedValues>(current: T, name: string, value: string | boolean) => {
+  // This logic handles nested names like 'consents.terms'
+  const [nestedKey, fieldName] = name.split('.');
+  const nestedValue = current[nestedKey];
+
+  if (fieldName && nestedValue && typeof nestedValue === 'object') {
+    return { ...current, [nestedKey]: { ...nestedValue, [fieldName]: value } };
+  }
+
+  return { ...current, [name]: value };
+};
+
+export default function useForm<T extends GenericFormNestedValues>({
   initialValues,
   validationSchema,
   validateOnBlur = false,
@@ -39,7 +51,7 @@ export default function useForm<T extends GenericFormValues>({
   validateOnBlur?: boolean;
   onSubmit: UseFormOnSubmitHandler<T>;
   onSubmitSuccess?: (values: T) => void;
-  onSubmitError?: ({ error, resetValue }: { error: unknown; resetValue: (key: keyof T) => void }) => void;
+  onSubmitError?: ({ error, resetValue }: { error: unknown; resetValue: (key: string) => void }) => void;
 }): UseFormReturnValue<T> {
   const { t } = useTranslation('error');
   const [touched, setTouched] = useState<Record<keyof T, boolean>>(
@@ -72,21 +84,20 @@ export default function useForm<T extends GenericFormValues>({
     }
   };
 
-  const setValue = useCallback((name: keyof T, value: string | boolean) => {
-    setValues((current) => ({ ...current, [name]: value }));
+  const setValue = useCallback((name: string, value: string | boolean) => {
+    setValues((current) => updateValues(current, name, value));
   }, []);
 
   const handleChange: UseFormChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target instanceof HTMLInputElement && event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+    const updatedValues = updateValues(values, name, value);
 
-    const newValues = { ...values, [name]: value };
-
-    setValues(newValues);
+    setValues(updatedValues);
     setTouched((current) => ({ ...current, [name]: value }));
 
     if (errors[name]) {
-      validateField(name, newValues);
+      validateField(name, updatedValues);
     }
   };
 
@@ -158,7 +169,7 @@ export default function useForm<T extends GenericFormValues>({
 
       onSubmitError?.({
         error,
-        resetValue: (key: keyof T) => setValue(key, ''),
+        resetValue: (key: string) => setValue(key, ''),
       });
     }
 

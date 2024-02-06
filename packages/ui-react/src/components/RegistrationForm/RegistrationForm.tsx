@@ -1,24 +1,19 @@
-import React, { type ChangeEventHandler, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import DOMPurify from 'dompurify';
 import type { FormErrors } from '@jwp/ott-common/types/form';
 import type { CustomFormField, RegistrationFormData } from '@jwp/ott-common/types/account';
 import { testId } from '@jwp/ott-common/src/utils/common';
-import useToggle from '@jwp/ott-hooks-react/src/useToggle';
-import Visibility from '@jwp/ott-theme/assets/icons/visibility.svg?react';
-import VisibilityOff from '@jwp/ott-theme/assets/icons/visibility_off.svg?react';
 
 import TextField from '../TextField/TextField';
 import Button from '../Button/Button';
-import IconButton from '../IconButton/IconButton';
-import PasswordStrength from '../PasswordStrength/PasswordStrength';
 import CustomRegisterField from '../CustomRegisterField/CustomRegisterField';
 import FormFeedback from '../FormFeedback/FormFeedback';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 import Link from '../Link/Link';
-import Icon from '../Icon/Icon';
 import { modalURLFromLocation } from '../../utils/location';
+import PasswordField from '../PasswordField/PasswordField';
 
 import styles from './RegistrationForm.module.scss';
 
@@ -26,15 +21,13 @@ type Props = {
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onBlur: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  onConsentChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   errors: FormErrors<RegistrationFormData>;
   values: RegistrationFormData;
   loading: boolean;
-  consentValues: Record<string, string | boolean>;
-  consentErrors: string[];
   submitting: boolean;
   canSubmit: boolean;
-  publisherConsents: CustomFormField[] | null;
+  consents: CustomFormField[] | null;
+  registrationFields: CustomFormField[] | null;
 };
 
 const RegistrationForm: React.FC<Props> = ({
@@ -46,13 +39,9 @@ const RegistrationForm: React.FC<Props> = ({
   submitting,
   loading,
   canSubmit,
-  publisherConsents,
-  consentValues,
-  onConsentChange,
-  consentErrors,
+  consents,
+  registrationFields,
 }: Props) => {
-  const [viewPassword, toggleViewPassword] = useToggle();
-
   const { t } = useTranslation('account');
   const location = useLocation();
 
@@ -100,43 +89,50 @@ const RegistrationForm: React.FC<Props> = ({
         type="email"
         required
       />
-      <TextField
+      <PasswordField
+        name="password"
         value={values.password}
         onChange={onChange}
         onBlur={onBlur}
         label={t('registration.password')}
         placeholder={t('registration.password')}
         error={!!errors.password || !!errors.form}
-        helperText={
-          <React.Fragment>
-            <PasswordStrength password={values.password} />
-            {t('registration.password_helper_text')}
-          </React.Fragment>
-        }
-        name="password"
-        type={viewPassword ? 'text' : 'password'}
-        rightControl={
-          <IconButton aria-label={viewPassword ? t('registration.hide_password') : t('registration.view_password')} onClick={() => toggleViewPassword()}>
-            <Icon icon={viewPassword ? Visibility : VisibilityOff} />
-          </IconButton>
-        }
         required
       />
-      {publisherConsents && (
-        <div className={styles.customFields} data-testid="custom-reg-fields">
-          {publisherConsents.map((consent) => (
+      {consents && (
+        <div className={styles.customFields} data-testid="consents">
+          {consents.map((consent) => (
             <CustomRegisterField
               key={consent.name}
               type={consent.type}
-              name={consent.name}
+              name={`consents.${consent.name}`}
               options={consent.options}
               label={formatConsentLabel(consent.label)}
               placeholder={consent.placeholder}
-              value={consentValues[consent.name] || ''}
+              value={values.consents[consent.name] || ''}
               required={consent.required}
-              error={consentErrors?.includes(consent.name)}
-              helperText={consentErrors?.includes(consent.name) ? t('registration.consent_required') : undefined}
-              onChange={onConsentChange}
+              error={!!errors.consents?.[consent.name]}
+              helperText={errors.consents?.[consent.name]}
+              onChange={onChange}
+            />
+          ))}
+        </div>
+      )}
+      {registrationFields && (
+        <div className={styles.customFields} data-testid="custom-reg-fields">
+          {registrationFields.map((field) => (
+            <CustomRegisterField
+              key={field.name}
+              type={field.type}
+              name={`registrationFields.${field.name}`}
+              options={field.options}
+              label={field.label}
+              placeholder={field.placeholder}
+              value={values.registrationFields[field.name] || ''}
+              required={field.required}
+              error={!!errors.registrationFields?.[field.name]}
+              helperText={errors.registrationFields?.[field.name]}
+              onChange={onChange}
             />
           ))}
         </div>

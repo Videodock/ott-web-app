@@ -201,7 +201,13 @@ export default class AccountController {
     await this.refreshEntitlements?.();
   };
 
-  register = async (email: string, password: string, referrer: string, consentsValues: ConsentsValue[]) => {
+  register = async (
+    email: string,
+    password: string,
+    referrer: string,
+    consentsValues: ConsentsValue[],
+    registrationFieldValues: Record<string, string | boolean>,
+  ) => {
     const consents = useAccountStore.getState().consents || [];
 
     const consentsErrors = Object.fromEntries(
@@ -300,10 +306,9 @@ export default class AccountController {
   };
 
   getRegistrationFields = async () => {
-    const { getAccountInfo } = useAccountStore.getState();
-    const { customer } = getAccountInfo();
+    const { user } = useAccountStore.getState();
 
-    const registrationFields = await this.accountService.getRegistrationFields({ customer });
+    const registrationFields = await this.accountService.getRegistrationFields({ customer: user });
 
     useAccountStore.setState({
       registrationFields: registrationFields.fields,

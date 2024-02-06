@@ -8,7 +8,7 @@ describe('<RegistrationForm>', () => {
   test('renders and matches snapshot', () => {
     const { container } = renderWithRouter(
       <RegistrationForm
-        publisherConsents={null}
+        consents={null}
         onSubmit={vi.fn()}
         onChange={vi.fn()}
         onBlur={vi.fn()}

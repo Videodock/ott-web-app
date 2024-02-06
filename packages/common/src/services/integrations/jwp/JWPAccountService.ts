@@ -370,7 +370,7 @@ export default class JWPAccountService extends AccountService {
   getRegistrationFields: GetRegistrationFields = async ({ customer }) => {
     const { data } = await InPlayer.Account.getRegisterFields(this.clientId);
 
-    const fields = data.collection.filter((field) => field.name !== 'terms').map((field) => formatRegistrationField(field, customer.metadata[field.name]));
+    const fields = data.collection.filter((field) => field.name !== 'terms').map((field) => formatRegistrationField(field, customer?.metadata[field.name]));
 
     return {
       beforeSignUp: true,
@@ -382,7 +382,7 @@ export default class JWPAccountService extends AccountService {
           name: 'firstName',
           placeholder: 'First name',
           required: true,
-          defaultValue: customer.firstName,
+          defaultValue: customer?.firstName,
         },
         {
           type: 'input',
@@ -390,7 +390,7 @@ export default class JWPAccountService extends AccountService {
           name: 'lastName',
           placeholder: 'Last name',
           required: true,
-          defaultValue: customer.lastName,
+          defaultValue: customer?.lastName,
         },
         ...fields,
       ],

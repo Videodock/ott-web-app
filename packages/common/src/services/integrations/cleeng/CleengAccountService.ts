@@ -242,7 +242,15 @@ export default class CleengAccountService extends AccountService {
   };
 
   getRegistrationFields: GetRegistrationFields = async ({ customer }) => {
-    const response = await this.cleengService.get<Response<GetCaptureStatusResponse>>(`/customers/${customer?.id}/capture/status`, {
+    if (!customer) {
+      return {
+        beforeSignUp: false,
+        enabled: false,
+        fields: [],
+      };
+    }
+
+    const response = await this.cleengService.get<Response<GetCaptureStatusResponse>>(`/customers/${customer.id}/capture/status`, {
       authenticate: true,
     });
 
