@@ -68,11 +68,12 @@ export function FormSection<TData extends GenericFormNestedValues>({
 
         // This logic handles nested names like 'consents.terms'
         const [nestedKey, fieldName] = name.split('.');
+        const currentValue = newValues[nestedKey];
 
-        if (nestedKey in newValues) {
+        if (currentValue && typeof currentValue === 'object') {
           // @ts-ignore this typing is not working properly
           newValues[nestedKey as keyof TData] = {
-            ...newValues[nestedKey],
+            ...currentValue,
             [fieldName]: value,
           };
         }

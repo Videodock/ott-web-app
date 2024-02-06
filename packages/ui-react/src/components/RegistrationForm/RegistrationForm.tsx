@@ -111,8 +111,8 @@ const RegistrationForm: React.FC<Props> = ({
               placeholder={consent.placeholder}
               value={values.consents[consent.name] || ''}
               required={consent.required}
-              error={!!errors.consents?.[consent.name]}
-              helperText={errors.consents?.[consent.name]}
+              error={!!errors[`consents.${consent.name}`]}
+              helperText={errors[`consents.${consent.name}`]}
               onChange={onChange}
             />
           ))}
@@ -130,8 +130,8 @@ const RegistrationForm: React.FC<Props> = ({
               placeholder={field.placeholder}
               value={values.registrationFields[field.name] || ''}
               required={field.required}
-              error={!!errors.registrationFields?.[field.name]}
-              helperText={errors.registrationFields?.[field.name]}
+              error={!!errors[`registrationFields.${field.name}`]}
+              helperText={errors[`registrationFields.${field.name}`]}
               onChange={onChange}
             />
           ))}

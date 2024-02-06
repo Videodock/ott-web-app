@@ -214,7 +214,7 @@ export default class AccountController {
       consentsValues.reduce((previousValue, currentValue) => {
         const consent = consents.find(({ name }) => name === currentValue.name);
         if (consent?.required && currentValue.state !== 'accepted') {
-          return [...previousValue, [currentValue.name, i18next.t('common:form.field_required')]];
+          return [...previousValue, [`consents.${currentValue.name}`, i18next.t('account:registration.field_required')]];
         }
         return previousValue;
       }, [] as [string, string][]),

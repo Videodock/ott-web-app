@@ -26,7 +26,7 @@ type UseFormMethods<T> = {
 
 export type UseFormOnSubmitHandler<T> = (values: T, formMethods: UseFormMethods<T>) => void;
 
-export const updateValues = <T extends GenericFormNestedValues>(current: T, name: string, value: string | boolean) => {
+export const updateNestedValue = <T extends Record<string, unknown>>(current: T, name: string, value: string | boolean) => {
   // This logic handles nested names like 'consents.terms'
   const [nestedKey, fieldName] = name.split('.');
   const nestedValue = current[nestedKey];
@@ -72,10 +72,10 @@ export default function useForm<T extends GenericFormNestedValues>({
     if (!validationSchema) return;
 
     try {
-      validationSchema.validateSyncAt(name, formValues);
-
+      // @todo this fails because dynamic fields are not known by the validation schema...
+      validationSchema.validateSyncAt(name, formValues, { strict: true, stripUnknown: true });
       // clear error
-      setErrors((errors) => ({ ...errors, [name]: null }));
+      setErrors((errors) => ({ ...errors, [name]: undefined }));
     } catch (error: unknown) {
       if (error instanceof ValidationError) {
         const errorMessage = error.errors[0];
@@ -85,13 +85,13 @@ export default function useForm<T extends GenericFormNestedValues>({
   };
 
   const setValue = useCallback((name: string, value: string | boolean) => {
-    setValues((current) => updateValues(current, name, value));
+    setValues((current) => updateNestedValue(current, name, value));
   }, []);
 
   const handleChange: UseFormChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target instanceof HTMLInputElement && event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-    const updatedValues = updateValues(values, name, value);
+    const updatedValues = updateNestedValue(values, name, value);
 
     setValues(updatedValues);
     setTouched((current) => ({ ...current, [name]: value }));
