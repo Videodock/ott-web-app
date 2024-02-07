@@ -41,7 +41,7 @@ Scenario('I can see the series inline player layout', async ({ I }) => {
   await I.openVideoCard(constants.minecraftAnimationWorkshopTitle, ShelfId.allCourses, true);
   I.seeElement(`[data-testid="inline-layout"]`);
   I.dontSeeElement(`[data-testid="cinema-layout"]`);
-  I.dontSeeElement('video'); // Because TVOD, this is locked behind paywall
+  I.seeElement('video');
   I.see(constants.minecraftAnimationWorkshopTitle);
   I.see('2023');
   I.see('17 episodes');
@@ -57,8 +57,8 @@ Scenario('I can see the series inline player layout', async ({ I }) => {
 });
 
 Scenario('I can start the inline player', async ({ I }) => {
-  await I.openVideoCard(constants.agent327Title, ShelfId.allFilms, true);
-  await playInlineVideo(I, constants.agent327Title);
+  await I.openVideoCard(constants.minecraftAnimationWorkshopTitle, ShelfId.allCourses, true);
+  await playInlineVideo(I, constants.minecraftAnimationWorkshopTitle);
 });
 
 Scenario('I switch to the episode in the video list', async ({ I }) => {
