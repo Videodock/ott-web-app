@@ -20,7 +20,7 @@ const IS_DEMO_OR_PREVIEW = IS_DEMO_MODE || IS_PREVIEW_MODE;
 
 const renderError = (error: Error | AppError) => {
   if (error instanceof AppError) {
-    return <ErrorPage title={error.payload.title} message={error.payload.description} helpLink={error.payload.helpLink} />;
+    return <ErrorPage title={error.payload.title} message={error.payload.description} helpLink={error.payload.helpLink} error={error} />;
   }
   return <ErrorPage error={error} />;
 };
