@@ -41,7 +41,7 @@ Scenario('I can see the series inline player layout', async ({ I }) => {
   await I.openVideoCard(constants.minecraftAnimationWorkshopTitle, ShelfId.allCourses, true);
   I.seeElement(`[data-testid="inline-layout"]`);
   I.dontSeeElement(`[data-testid="cinema-layout"]`);
-  I.seeElement('video');
+  I.dontSeeElement('video'); // Because TVOD, this is locked behind paywall
   I.see(constants.minecraftAnimationWorkshopTitle);
   I.see('2023');
   I.see('17 episodes');
@@ -50,15 +50,15 @@ Scenario('I can see the series inline player layout', async ({ I }) => {
   I.see(constants.minecraftAnimationWorkshopDescription);
   I.see('Favorite');
   I.see('Share');
-  I.seeTextEquals('Minecraft Animation Workshop', 'h2');
+  I.seeTextEquals('Minecraft Animation Workshop', 'h1');
   I.see('Season 1', locate({ css: 'select' }).inside(videoListLocator));
   I.see('S1:E2', locate({ css: 'a[aria-label="Basics Of Blender"]' }).inside(videoListLocator));
   I.see('S1:E3', locate({ css: 'a[aria-label="Using Mineways"]' }).inside(videoListLocator));
 });
 
 Scenario('I can start the inline player', async ({ I }) => {
-  await I.openVideoCard(constants.minecraftAnimationWorkshopTitle, ShelfId.allCourses, true);
-  await playInlineVideo(I, constants.minecraftAnimationWorkshopTitle);
+  await I.openVideoCard(constants.agent327Title, ShelfId.allFilms, true);
+  await playInlineVideo(I, constants.agent327Title);
 });
 
 Scenario('I switch to the episode in the video list', async ({ I }) => {
