@@ -36,9 +36,7 @@ Before(async ({ I }) => {
   I.useConfig(testConfigs.basicNoAuth);
 });
 
-const videoDetailsLocator = locate({ css: 'div[data-testid="video-details"]' });
-const shelfContainerLocator = locate({ css: 'div[role="row"]' });
-const shelfLocator = locate({ css: 'div[role="cell"]' }).inside(shelfContainerLocator);
+const videoDetailsLocator = locate({ css: 'header[data-testid="video-details"]' });
 const epgContainerLocator = locate({ css: 'div[data-testid="container"]' });
 
 const makeEpgProgramLocator = (id: string) => locate({ css: `div[data-testid*="${id}"]` }).inside(epgContainerLocator);
@@ -58,7 +56,7 @@ Scenario('I can navigate to live channels from the live channels shelf', async (
   await I.scrollToShelf(ShelfId.liveChannels);
 
   for (let i = 1; i <= liveChannelsCount; i++) {
-    I.see(`Channel ${i}`, shelfLocator);
+    I.see(`Channel ${i}`, { xpath: `//section[@data-testid="shelf-${ShelfId.liveChannels}"]` });
   }
 
   I.see('Live Channels');
