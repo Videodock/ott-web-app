@@ -245,12 +245,18 @@ Scenario('I can see the channel logo for Channel 2', async ({ I }) => {
 
 Scenario('I can see the background image for Channel 3', async ({ I }) => {
   await I.openVideoCard('Channel 3');
-  await I.seeVideoDetailsBackgroundImage('Channel 3', 'https://cdn.jwplayer.com/v2/media/wewsVyR7/images/background.webp?poster_fallback=1&width=1280');
+  I.seeAttributesOnElements('header[data-testid="video-details"] img', {
+    alt: '', // Intentionally empty
+    src: 'https://cdn.jwplayer.com/v2/media/wewsVyR7/images/background.webp?poster_fallback=1&width=1280',
+  });
 });
 
 Scenario('I can see the background image for Channel 4', async ({ I }) => {
   await I.openVideoCard('Channel 4');
-  await I.seeVideoDetailsBackgroundImage('Channel 4', 'https://cdn.jwplayer.com/v2/media/kH7LozaK/images/background.webp?poster_fallback=1&width=1280');
+  I.seeAttributesOnElements('header[data-testid="video-details"] img', {
+    alt: '', // Intentionally empty
+    src: 'https://cdn.jwplayer.com/v2/media/kH7LozaK/images/background.webp?poster_fallback=1&width=1280',
+  });
 });
 
 async function isSelectedProgram(I: CodeceptJS.I, locator: CodeceptJS.Locator, channel: string, isLive: boolean) {
