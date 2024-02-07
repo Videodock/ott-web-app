@@ -449,11 +449,6 @@ const stepsObj = {
       }`);
     });
   },
-  seeVideoDetailsBackgroundImage: async function (this: CodeceptJS.I, name: string, src: string) {
-    const imageLocator = locate({ css: `div[data-testid="video-details"] img[alt="${name}"]` });
-    const imgSrc = await this.grabAttributeFrom(imageLocator, 'src');
-    assert.equal(imgSrc, src, "img element src attribute doesn't match");
-  },
   seeEpgChannelLogoImage: async function (this: CodeceptJS.I, channelId: string, src: string, alt: string) {
     const imageLocator = locate({ css: `div[data-testid="${channelId}"] img[alt="${alt}"]` });
     const imgSrc = await this.grabAttributeFrom(imageLocator, 'src');
