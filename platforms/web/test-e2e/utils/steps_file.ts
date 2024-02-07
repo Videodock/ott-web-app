@@ -42,7 +42,7 @@ const stepsObj = {
   logout: async function (this: CodeceptJS.I) {
     await this.openMainMenu();
 
-    this.click('div[aria-label="Log out"]');
+    this.click('text=Log out');
   },
   // This function will register the user on the first call and return the context
   // then assuming context is passed in the next time, will log that same user back in
