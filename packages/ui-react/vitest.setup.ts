@@ -1,8 +1,12 @@
 import 'vi-fetch/setup';
 import 'reflect-metadata';
-import '@testing-library/jest-dom'; // Including this for the expect extensions
+import '@testing-library/jest-dom/vitest'; // Including this for the expect extensions
 import 'react-app-polyfill/stable';
 import type { ComponentType } from 'react';
+import * as matchers from 'vitest-axe/matchers';
+import { expect } from 'vitest';
+
+expect.extend(matchers);
 
 const country = {
   af: 'Afghanistan',

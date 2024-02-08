@@ -43,7 +43,7 @@
     "@babel/core": "^7.22.11",
     "@babel/plugin-proposal-decorators": "^7.22.10",
     "@codeceptjs/configure": "^0.8.0",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^6.4.2",
     "@types/jwplayer": "^8.2.13",
     "@types/luxon": "^3.0.2",
     "@types/node": "^18.15.3",
@@ -78,6 +78,7 @@
     "vite-plugin-stylelint": "^4.3.0",
     "vite-plugin-svgr": "4.2.0",
     "vitest": "^0.34.6",
+    "vitest-axe": "^1.0.0-pre.3",
     "workbox-build": "^6.5.4",
     "workbox-window": "^6.5.4"
   },
