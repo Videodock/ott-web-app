@@ -85,22 +85,22 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
         >
           <div>
             <div
-              class="_textField_e16c1b"
+              class="_formField_86f2f5 _textField_e16c1b"
             >
               <label
-                class="_label_e16c1b"
+                class="_label_86f2f5"
                 for="text-field_1235_cardholdername"
               >
                 checkout.card_holder_name
               </label>
               <div
-                class="_container_e16c1b"
+                class="_container_859b20"
               >
                 <input
                   aria-describedby="helper_text_1235_cardholdername"
                   aria-invalid="false"
                   aria-required="true"
-                  class="_input_e16c1b"
+                  class="_input_859b20"
                   id="text-field_1235_cardholdername"
                   name="cardholderName"
                   placeholder="checkout.credit_card_name"
@@ -113,22 +113,22 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
           </div>
           <div>
             <div
-              class="_textField_e16c1b directPostCreditCardNumber"
+              class="_formField_86f2f5 _textField_e16c1b directPostCreditCardNumber"
             >
               <label
-                class="_label_e16c1b"
+                class="_label_86f2f5"
                 for="text-field_1235_cardnumber"
               >
                 Card number
               </label>
               <div
-                class="_container_e16c1b"
+                class="_container_859b20"
               >
                 <input
                   aria-describedby="helper_text_1235_cardnumber"
                   aria-invalid="false"
                   aria-required="true"
-                  class="_input_e16c1b"
+                  class="_input_859b20"
                   id="text-field_1235_cardnumber"
                   name="cardNumber"
                   pattern="\\\\d*"
@@ -145,22 +145,22 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
           >
             <div>
               <div
-                class="_textField_e16c1b directPostExpiryDate"
+                class="_formField_86f2f5 _textField_e16c1b directPostExpiryDate"
               >
                 <label
-                  class="_label_e16c1b"
+                  class="_label_86f2f5"
                   for="text-field_1235_cardexpiry"
                 >
                   Expiry date
                 </label>
                 <div
-                  class="_container_e16c1b"
+                  class="_container_859b20"
                 >
                   <input
                     aria-describedby="helper_text_1235_cardexpiry"
                     aria-invalid="false"
                     aria-required="true"
-                    class="_input_e16c1b"
+                    class="_input_859b20"
                     id="text-field_1235_cardexpiry"
                     name="cardExpiry"
                     pattern="\\\\d*"
@@ -174,23 +174,23 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
             </div>
             <div>
               <div
-                class="_textField_e16c1b directPostSecurityCode"
+                class="_formField_86f2f5 _textField_e16c1b directPostSecurityCode"
               >
                 <label
-                  class="_label_e16c1b"
+                  class="_label_86f2f5"
                   for="text-field_1235_cardcvc"
                 >
                   payment.security_code
                 </label>
                 <div
-                  class="_container_e16c1b"
+                  class="_container_859b20"
                 >
                   <input
                     aria-describedby="helper_text_1235_cardcvc"
                     aria-invalid="false"
                     aria-label="payment.security_code"
                     aria-required="true"
-                    class="_input_e16c1b"
+                    class="_input_859b20"
                     id="text-field_1235_cardcvc"
                     name="cardCVC"
                     pattern="\\\\d*"

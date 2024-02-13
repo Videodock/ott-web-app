@@ -1,0 +1,31 @@
+@use '@jwp/ott-ui-react/src/styles/variables';
+@use '@jwp/ott-ui-react/src/styles/theme';
+
+.formField {
+  width: 100%;
+  margin-bottom: 8px;
+
+  &.disabled {
+    .container {
+      opacity: 0.7;
+    }
+  }
+}
+
+.label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: var(--body-font-weight-bold);
+  text-align: left;
+
+  > span {
+    float: right;
+    color: rgba(variables.$white, 0.7);
+    font-weight: normal;
+  }
+}
+
+.control > div {
+  width: 48px;
+  height: 48px;
+}

@@ -116,10 +116,10 @@ exports[`User Component tests > Account Page 1`] = `
           novalidate=""
         >
           <div
-            class="_textField_e16c1b"
+            class="_formField_86f2f5 _textField_e16c1b"
           >
             <label
-              class="_label_e16c1b"
+              class="_label_86f2f5"
               for="text-field_1235_firstname"
             >
               account.firstname
@@ -128,7 +128,7 @@ exports[`User Component tests > Account Page 1`] = `
               aria-describedby="helper_text_1235_firstname"
               aria-invalid="false"
               aria-required="false"
-              class="_input_e16c1b"
+              class="_input_859b20"
               id="text-field_1235_firstname"
               lang="en"
               name="firstName"
@@ -138,10 +138,10 @@ exports[`User Component tests > Account Page 1`] = `
             />
           </div>
           <div
-            class="_textField_e16c1b"
+            class="_formField_86f2f5 _textField_e16c1b"
           >
             <label
-              class="_label_e16c1b"
+              class="_label_86f2f5"
               for="text-field_1235_lastname"
             >
               account.lastname
@@ -150,7 +150,7 @@ exports[`User Component tests > Account Page 1`] = `
               aria-describedby="helper_text_1235_lastname"
               aria-invalid="false"
               aria-required="false"
-              class="_input_e16c1b"
+              class="_input_859b20"
               id="text-field_1235_lastname"
               lang="en"
               name="lastName"
@@ -191,10 +191,10 @@ exports[`User Component tests > Account Page 1`] = `
           novalidate=""
         >
           <div
-            class="_textField_e16c1b"
+            class="_formField_86f2f5 _textField_e16c1b"
           >
             <label
-              class="_label_e16c1b"
+              class="_label_86f2f5"
               for="text-field_1235_email"
             >
               account.email
@@ -203,7 +203,7 @@ exports[`User Component tests > Account Page 1`] = `
               aria-describedby="helper_text_1235_email"
               aria-invalid="false"
               aria-required="true"
-              class="_input_e16c1b"
+              class="_input_859b20"
               id="text-field_1235_email"
               name="email"
               readonly=""
@@ -712,10 +712,10 @@ exports[`User Component tests > Payments Page 1`] = `
         </div>
         <div>
           <div
-            class="_textField_e16c1b"
+            class="_formField_86f2f5 _textField_e16c1b"
           >
             <label
-              class="_label_e16c1b"
+              class="_label_86f2f5"
               for="text-field_1235_cardnumber"
             >
               user:payment.card_number
@@ -725,7 +725,7 @@ exports[`User Component tests > Payments Page 1`] = `
               aria-invalid="false"
               aria-label="user:payment.card_number_hidden"
               aria-required="false"
-              class="_input_e16c1b"
+              class="_input_859b20"
               id="text-field_1235_cardnumber"
               name="cardNumber"
               readonly=""
@@ -737,10 +737,10 @@ exports[`User Component tests > Payments Page 1`] = `
             class="_cardDetails_c57ff5"
           >
             <div
-              class="_textField_e16c1b"
+              class="_formField_86f2f5 _textField_e16c1b"
             >
               <label
-                class="_label_e16c1b"
+                class="_label_86f2f5"
                 for="text-field_1235_cardexpiry"
               >
                 user:payment.expiry_date
@@ -749,7 +749,7 @@ exports[`User Component tests > Payments Page 1`] = `
                 aria-describedby="helper_text_1235_cardexpiry"
                 aria-invalid="false"
                 aria-required="false"
-                class="_input_e16c1b"
+                class="_input_859b20"
                 id="text-field_1235_cardexpiry"
                 name="cardExpiry"
                 readonly=""
@@ -758,10 +758,10 @@ exports[`User Component tests > Payments Page 1`] = `
               />
             </div>
             <div
-              class="_textField_e16c1b"
+              class="_formField_86f2f5 _textField_e16c1b"
             >
               <label
-                class="_label_e16c1b"
+                class="_label_86f2f5"
                 for="text-field_1235_cardsecuritycode"
               >
                 user:payment.security_code
@@ -771,7 +771,7 @@ exports[`User Component tests > Payments Page 1`] = `
                 aria-invalid="false"
                 aria-label="user:payment.security_code_hidden"
                 aria-required="false"
-                class="_input_e16c1b"
+                class="_input_859b20"
                 id="text-field_1235_cardsecuritycode"
                 name="cardSecurityCode"
                 readonly=""

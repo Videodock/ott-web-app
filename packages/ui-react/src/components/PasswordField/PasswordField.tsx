@@ -8,20 +8,15 @@ import TextField from '../TextField/TextField';
 import PasswordStrength from '../PasswordStrength/PasswordStrength';
 import IconButton from '../IconButton/IconButton';
 import Icon from '../Icon/Icon';
+import type { FieldProps } from '../../types/form-fields';
 
 type Props = {
-  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  error?: boolean;
-  value?: string;
-  label?: string;
-  placeholder?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   helperText?: React.ReactNode;
-  name: string;
-  required?: boolean;
   showToggleView?: boolean;
   showHelperText?: boolean;
-};
+} & FieldProps;
 
 const PasswordField: React.FC<Props> = ({ value, showToggleView = true, helperText, showHelperText = true, ...props }: Props) => {
   const { t } = useTranslation('account');
@@ -31,7 +26,7 @@ const PasswordField: React.FC<Props> = ({ value, showToggleView = true, helperTe
     <TextField
       {...props}
       helperText={
-        helperText ||
+        helperText ??
         (showHelperText ? (
           <React.Fragment>
             <PasswordStrength password={value || ''} />

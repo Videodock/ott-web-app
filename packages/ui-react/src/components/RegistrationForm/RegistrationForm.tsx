@@ -5,21 +5,16 @@ import DOMPurify from 'dompurify';
 import type { FormErrors } from '@jwp/ott-common/types/form';
 import type { CustomFormField, RegistrationFormData } from '@jwp/ott-common/types/account';
 import { testId } from '@jwp/ott-common/src/utils/common';
-import useToggle from '@jwp/ott-hooks-react/src/useToggle';
-import Visibility from '@jwp/ott-theme/assets/icons/visibility.svg?react';
-import VisibilityOff from '@jwp/ott-theme/assets/icons/visibility_off.svg?react';
 import env from '@jwp/ott-common/src/env';
 
 import TextField from '../TextField/TextField';
 import Button from '../Button/Button';
-import IconButton from '../IconButton/IconButton';
-import PasswordStrength from '../PasswordStrength/PasswordStrength';
 import CustomRegisterField from '../CustomRegisterField/CustomRegisterField';
 import FormFeedback from '../FormFeedback/FormFeedback';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 import Link from '../Link/Link';
-import Icon from '../Icon/Icon';
 import { modalURLFromLocation } from '../../utils/location';
+import PasswordField from '../PasswordField/PasswordField';
 
 import styles from './RegistrationForm.module.scss';
 
@@ -52,8 +47,6 @@ const RegistrationForm: React.FC<Props> = ({
   onConsentChange,
   consentErrors,
 }: Props) => {
-  const [viewPassword, toggleViewPassword] = useToggle();
-
   const { t, i18n } = useTranslation('account');
   const location = useLocation();
 
@@ -94,26 +87,14 @@ const RegistrationForm: React.FC<Props> = ({
         type="email"
         required
       />
-      <TextField
+      <PasswordField
         value={values.password}
         onChange={onChange}
         onBlur={onBlur}
         label={t('registration.password')}
         placeholder={t('registration.password')}
         error={!!errors.password || !!errors.form}
-        helperText={
-          <React.Fragment>
-            <PasswordStrength password={values.password} />
-            {t('registration.password_helper_text')}
-          </React.Fragment>
-        }
         name="password"
-        type={viewPassword ? 'text' : 'password'}
-        rightControl={
-          <IconButton aria-label={viewPassword ? t('registration.hide_password') : t('registration.view_password')} onClick={() => toggleViewPassword()}>
-            <Icon icon={viewPassword ? Visibility : VisibilityOff} />
-          </IconButton>
-        }
         required
       />
       {publisherConsents && (

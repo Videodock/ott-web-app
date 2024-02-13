@@ -57,7 +57,6 @@ const Filter: FC<Props> = ({ name, value, defaultLabel, options, setValue, force
             value={value}
             onChange={handleChange}
             aria-label={t('filter_videos_by', { name })}
-            hideOptional
           />
         </div>
       )}

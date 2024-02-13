@@ -1,15 +1,5 @@
-@use '@jwp/ott-ui-react/src/styles/variables';
-@use '@jwp/ott-ui-react/src/styles/theme';
-
-.textField {
-  width: 100%;
-  margin-bottom: 8px;
-}
-
-.control > div {
-  width: 48px;
-  height: 48px;
-}
+@use '../../../../../node_modules/@jwp/ott-ui-react/src/styles/variables';
+@use '../../../../../node_modules/@jwp/ott-ui-react/src/styles/theme';
 
 .container {
   display: flex;
@@ -26,6 +16,34 @@
     color: theme.$text-field-active-color;
     border-color: theme.$text-field-active-border-color;
   }
+
+  &.error {
+    border-color: theme.$text-field-error-color;
+  }
+
+  &.disabled {
+    opacity: 0.7;
+  }
+
+  &.leftControl .input {
+    padding-left: 0;
+  }
+
+  &.rightControl .input {
+    padding-right: 0;
+  }
+
+  &:hover {
+    &:not(.disabled) {
+      background-color: theme.$text-field-hover-bg-color;
+      border-color: theme.$text-field-hover-border-color;
+    }
+  }
+}
+
+.control > div {
+  width: 48px;
+  height: 48px;
 }
 
 .input {

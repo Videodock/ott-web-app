@@ -13,22 +13,22 @@ exports[`<RegistrationForm> > renders and matches snapshot 1`] = `
     </h2>
     <div />
     <div
-      class="_textField_e16c1b"
+      class="_formField_86f2f5 _textField_e16c1b"
     >
       <label
-        class="_label_e16c1b"
+        class="_label_86f2f5"
         for="text-field_1235_email"
       >
         registration.email
       </label>
       <div
-        class="_container_e16c1b"
+        class="_container_859b20"
       >
         <input
           aria-describedby="helper_text_1235_email"
           aria-invalid="false"
           aria-required="true"
-          class="_input_e16c1b"
+          class="_input_859b20"
           id="text-field_1235_email"
           name="email"
           placeholder="registration.email"
@@ -39,22 +39,22 @@ exports[`<RegistrationForm> > renders and matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="_textField_e16c1b _rightControl_e16c1b"
+      class="_formField_86f2f5 _textField_e16c1b"
     >
       <label
-        class="_label_e16c1b"
+        class="_label_86f2f5"
         for="text-field_1235_password"
       >
         registration.password
       </label>
       <div
-        class="_container_e16c1b"
+        class="_container_859b20 _rightControl_859b20"
       >
         <input
           aria-describedby="helper_text_1235_password"
           aria-invalid="false"
           aria-required="true"
-          class="_input_e16c1b"
+          class="_input_859b20"
           id="text-field_1235_password"
           name="password"
           placeholder="registration.password"
@@ -63,10 +63,10 @@ exports[`<RegistrationForm> > renders and matches snapshot 1`] = `
           value=""
         />
         <div
-          class="_control_e16c1b"
+          class="_control_859b20"
         >
           <div
-            aria-label="registration.view_password"
+            aria-label="reset.view_password"
             class="_iconButton_0fef65"
             role="button"
             tabindex="0"
@@ -89,7 +89,7 @@ exports[`<RegistrationForm> > renders and matches snapshot 1`] = `
         class="_helperText_da58e0"
         id="helper_text_1235_password_1235"
       >
-        registration.password_helper_text
+        reset.password_helper_text
       </div>
     </div>
     <button
