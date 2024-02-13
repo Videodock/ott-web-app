@@ -140,7 +140,7 @@ const RegistrationForm: React.FC<Props> = ({
                 value={consentValues[consent.name] || ''}
                 required={consent.required}
                 error={!!consentError}
-                helperText={consentError ? t(`registration.field_${consent.type}_required`) : undefined}
+                helperText={consentErrors?.includes(consent.name) ? t('registration.consent_required', { field: consent.name }) : undefined}
                 onChange={onConsentChange}
                 lang={htmlLang}
               />
