@@ -3,25 +3,22 @@
 exports[`<CustomRegisterField> > renders and matches snapshot <Checkbox> 1`] = `
 <div>
   <div
-    class="_checkbox_531f07"
-    data-testid="crf-checkbox"
+    class="_formField_86f2f5 _checkbox_a98c3a"
   >
     <div
-      class="_row_531f07"
+      class="_row_a98c3a"
     >
       <input
         aria-describedby="helper_text_1235_name"
-        id="check-box_1235_name"
+        data-testid="crf-checkbox"
+        id="text-field_1235_name"
         name="name"
         type="checkbox"
         value=""
       />
       <label
-        for="check-box_1235_name"
+        for="text-field_1235_name"
       >
-        <span
-          aria-hidden="true"
-        />
         label
       </label>
     </div>
@@ -32,42 +29,40 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Checkbox> 1`] = `
 exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="country"> 1`] = `
 <div>
   <div
-    class="_container_bb73c6 _fullWidth_bb73c6 _medium_bb73c6"
+    class="_formField_86f2f5"
     data-testid="crf-country"
   >
     <label
-      class="_label_bb73c6"
-      for="1235"
+      class="_label_86f2f5"
+      for="text-field_1235_name"
     >
       label
-      <span>
-        optional
-      </span>
     </label>
     <div
-      class="_dropdown_bb73c6 _fullWidth_bb73c6"
+      class="_container_d97916"
     >
       <select
         aria-describedby="helper_text_1235_name"
+        aria-invalid="false"
         aria-required="false"
-        class="_select_bb73c6"
-        id="1235"
+        class="_select_d97916"
+        id="text-field_1235_name"
         name="name"
       >
         <option
-          class="_option_bb73c6"
+          class="_option_d97916"
           value="af"
         >
           country:af
         </option>
         <option
-          class="_option_bb73c6"
+          class="_option_d97916"
           value="ax"
         >
           country:ax
         </option>
         <option
-          class="_option_bb73c6"
+          class="_option_d97916"
           value="al"
         >
           country:al
@@ -81,31 +76,27 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="co
 exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="datepicker"> 1`] = `
 <div>
   <div
-    class="_dateField_eb6974"
+    class="_formField_86f2f5 _dateField_0addad"
     data-testid="crf-datepicker"
-    id="text-field_1235_name"
   >
     <label
-      class="_label_eb6974"
+      class="_label_86f2f5"
       for="text-field_1235_name"
     >
       label
-      <span>
-        optional
-      </span>
     </label>
     <div
-      class="_container_eb6974"
+      class="_container_0addad"
     >
       <input
         aria-describedby="helper_text_1235_name"
-        class="_hiddenInput_eb6974"
+        class="_hiddenInput_0addad"
         id="text-field_1235_name-hidden"
         name="name"
       />
       <input
         autocomplete="bday-day"
-        class="_input_eb6974"
+        class="_input_0addad"
         id="text-field_1235_name-date"
         maxlength="2"
         name="date"
@@ -116,7 +107,7 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="da
        / 
       <input
         autocomplete="bday-month"
-        class="_input_eb6974"
+        class="_input_0addad"
         id="text-field_1235_name-month"
         maxlength="2"
         name="month"
@@ -127,7 +118,7 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="da
        / 
       <input
         autocomplete="bday-year"
-        class="_input_eb6974"
+        class="_input_0addad"
         id="text-field_1235_name-year"
         maxlength="4"
         name="year"
@@ -143,25 +134,22 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="da
 exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="randomstring"> 1`] = `
 <div>
   <div
-    class="_checkbox_531f07"
-    data-testid="crf-randomstring"
+    class="_formField_86f2f5 _checkbox_a98c3a"
   >
     <div
-      class="_row_531f07"
+      class="_row_a98c3a"
     >
       <input
         aria-describedby="helper_text_1235_name"
-        id="check-box_1235_name"
+        data-testid="crf-randomstring"
+        id="text-field_1235_name"
         name="name"
         type="checkbox"
         value=""
       />
       <label
-        for="check-box_1235_name"
+        for="text-field_1235_name"
       >
-        <span
-          aria-hidden="true"
-        />
         label
       </label>
     </div>
@@ -172,26 +160,24 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="ra
 exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="select"> 1`] = `
 <div>
   <div
-    class="_container_bb73c6 _fullWidth_bb73c6 _medium_bb73c6"
+    class="_formField_86f2f5"
     data-testid="crf-select"
   >
     <label
-      class="_label_bb73c6"
-      for="1235"
+      class="_label_86f2f5"
+      for="text-field_1235_name"
     >
       label
-      <span>
-        optional
-      </span>
     </label>
     <div
-      class="_dropdown_bb73c6 _fullWidth_bb73c6"
+      class="_container_d97916"
     >
       <select
         aria-describedby="helper_text_1235_name"
+        aria-invalid="false"
         aria-required="false"
-        class="_select_bb73c6"
-        id="1235"
+        class="_select_d97916"
+        id="text-field_1235_name"
         name="name"
       />
     </div>
@@ -202,42 +188,40 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="se
 exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="us_state"> 1`] = `
 <div>
   <div
-    class="_container_bb73c6 _fullWidth_bb73c6 _medium_bb73c6"
+    class="_formField_86f2f5"
     data-testid="crf-us_state"
   >
     <label
-      class="_label_bb73c6"
-      for="1235"
+      class="_label_86f2f5"
+      for="text-field_1235_name"
     >
       label
-      <span>
-        optional
-      </span>
     </label>
     <div
-      class="_dropdown_bb73c6 _fullWidth_bb73c6"
+      class="_container_d97916"
     >
       <select
         aria-describedby="helper_text_1235_name"
+        aria-invalid="false"
         aria-required="false"
-        class="_select_bb73c6"
-        id="1235"
+        class="_select_d97916"
+        id="text-field_1235_name"
         name="name"
       >
         <option
-          class="_option_bb73c6"
+          class="_option_d97916"
           value="al"
         >
           us_state:al
         </option>
         <option
-          class="_option_bb73c6"
+          class="_option_d97916"
           value="ak"
         >
           us_state:ak
         </option>
         <option
-          class="_option_bb73c6"
+          class="_option_d97916"
           value="az"
         >
           us_state:az
@@ -251,23 +235,17 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="us
 exports[`<CustomRegisterField> > renders and matches snapshot <Radio> 1`] = `
 <div>
   <div
-    data-testid="crf-radio"
-    label="label"
+    class="_formField_86f2f5"
   >
     <label
-      class="_header_d50e6e"
-      data-testid="radio-header"
-      for="radio_1235_name"
+      class="_label_86f2f5"
+      for="text-field_1235_name"
     >
-      <span>
-        label
-      </span>
-      <span
-        class="_note_d50e6e"
-      >
-        optional
-      </span>
+      label
     </label>
+    <div
+      id="text-field_1235_name"
+    />
   </div>
 </div>
 `;
@@ -275,25 +253,23 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Radio> 1`] = `
 exports[`<CustomRegisterField> > renders and matches snapshot <TextField> 1`] = `
 <div>
   <div
-    class="_textField_e16c1b"
+    class="_formField_86f2f5 _textField_c799b0"
     data-testid="crf-input"
   >
     <label
-      class="_label_e16c1b"
+      class="_label_86f2f5"
       for="text-field_1235_name"
     >
       label
-      <span>
-        optional
-      </span>
     </label>
     <div
-      class="_container_e16c1b"
+      class="_container_859b20"
     >
       <input
         aria-describedby="helper_text_1235_name"
         aria-invalid="false"
-        class="_input_e16c1b"
+        aria-required="false"
+        class="_input_859b20"
         id="text-field_1235_name"
         name="name"
         type="text"

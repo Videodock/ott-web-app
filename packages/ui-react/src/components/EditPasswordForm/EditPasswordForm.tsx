@@ -4,8 +4,8 @@ import type { EditPasswordFormData } from '@jwp/ott-common/types/account';
 import type { FormErrors } from '@jwp/ott-common/types/form';
 import { testId } from '@jwp/ott-common/src/utils/common';
 
-import PasswordField from '../PasswordField/PasswordField';
-import TextField from '../TextField/TextField';
+import PasswordField from '../form-fields/PasswordField/PasswordField';
+import TextField from '../form-fields/TextField/TextField';
 import Button from '../Button/Button';
 import FormFeedback from '../FormFeedback/FormFeedback';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
@@ -109,6 +109,7 @@ const EditPasswordForm: React.FC<Props> = ({
         error={!!errors.passwordConfirmation}
         name="passwordConfirmation"
         autoComplete="new-password"
+        showHelperText={false}
         required
       />
 

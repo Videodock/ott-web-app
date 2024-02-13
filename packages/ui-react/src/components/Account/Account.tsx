@@ -20,9 +20,9 @@ import Alert from '../Alert/Alert';
 import Button from '../Button/Button';
 import Form from '../Form/Form';
 import IconButton from '../IconButton/IconButton';
-import TextField from '../TextField/TextField';
-import Checkbox from '../Checkbox/Checkbox';
 import FormFeedback from '../FormFeedback/FormFeedback';
+import TextField from '../form-fields/TextField/TextField';
+import Checkbox from '../form-fields/Checkbox/Checkbox';
 import CustomRegisterField from '../CustomRegisterField/CustomRegisterField';
 import Icon from '../Icon/Icon';
 import { modalURLFromLocation } from '../../utils/location';
@@ -351,8 +351,9 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
                     name={`consentsValues.${consent.name}`}
                     checked={isTruthyCustomParamValue(section.values.consentsValues?.[consent.name])}
                     onChange={section.onChange}
-                    label={formatConsentLabel(consent.label)}
+                    checkboxLabel={formatConsentLabel(consent.label)}
                     disabled={consent.required || section.isBusy}
+                    required={consent.required}
                     lang={htmlLang}
                   />
                 ))}

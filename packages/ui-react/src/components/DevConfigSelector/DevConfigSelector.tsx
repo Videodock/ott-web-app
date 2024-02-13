@@ -3,7 +3,7 @@ import { createURL } from '@jwp/ott-common/src/utils/urlFormatting';
 import { CONFIG_QUERY_KEY } from '@jwp/ott-common/src/constants';
 import { jwDevEnvConfigs, testConfigs } from '@jwp/ott-testing/constants';
 
-import Dropdown from '../Dropdown/Dropdown';
+import Select from '../Select/Select';
 
 import styles from './DevConfigSelector.module.scss';
 
@@ -23,7 +23,7 @@ const DevConfigSelector = ({ selectedConfig }: Props) => {
   }, []);
 
   return (
-    <Dropdown
+    <Select
       className={styles.dropdown}
       size="small"
       options={configOptions}

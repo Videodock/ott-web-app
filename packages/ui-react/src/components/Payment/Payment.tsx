@@ -18,7 +18,7 @@ import Alert from '../Alert/Alert';
 import Button from '../Button/Button';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 import OfferSwitch from '../OfferSwitch/OfferSwitch';
-import TextField from '../TextField/TextField';
+import TextField from '../form-fields/TextField/TextField';
 import Icon from '../Icon/Icon';
 import { modalURLFromLocation } from '../../utils/location';
 

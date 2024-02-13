@@ -10,9 +10,9 @@ import { PATH_USER_PROFILES } from '@jwp/ott-common/src/paths';
 
 import styles from '../../pages/User/User.module.scss';
 import Button from '../../components/Button/Button';
-import Dropdown from '../../components/Dropdown/Dropdown';
+import Dropdown from '../../components/form-fields/Dropdown/Dropdown';
 import FormFeedback from '../../components/FormFeedback/FormFeedback';
-import TextField from '../../components/TextField/TextField';
+import TextField from '../../components/form-fields/TextField/TextField';
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
 import ProfileBox from '../../components/ProfileBox/ProfileBox';
 
@@ -84,11 +84,9 @@ const Form = ({ initialValues, formHandler, selectedAvatar, showCancelButton = t
           />
           {showContentRating && (
             <Dropdown
-              fullWidth
               required
               name="adult"
               label={t('profile.content_rating')}
-              className={styles.dropdown}
               options={options}
               value={values?.adult?.toString() || 'true'}
               onChange={handleChange}

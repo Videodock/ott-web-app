@@ -6,10 +6,10 @@ import useForm from '@jwp/ott-hooks-react/src/useForm';
 import { testId } from '@jwp/ott-common/src/utils/common';
 
 import Button from '../Button/Button';
-import CreditCardCVCField from '../CreditCardCVCField/CreditCardCVCField';
-import CreditCardExpiryField from '../CreditCardExpiryField/CreditCardExpiryField';
-import CreditCardNumberField from '../CreditCardNumberField/CreditCardNumberField';
-import TextField from '../TextField/TextField';
+import CreditCardCVCField from '../form-fields/CreditCardCVCField/CreditCardCVCField';
+import CreditCardExpiryField from '../form-fields/CreditCardExpiryField/CreditCardExpiryField';
+import CreditCardNumberField from '../form-fields/CreditCardNumberField/CreditCardNumberField';
+import TextField from '../form-fields/TextField/TextField';
 import FormFeedback from '../FormFeedback/FormFeedback';
 
 import styles from './PaymentForm.module.scss';

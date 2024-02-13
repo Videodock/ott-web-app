@@ -2,7 +2,7 @@ import React, { type FC, Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
-import Dropdown from '../Dropdown/Dropdown';
+import Select from '../Select/Select';
 import Button from '../Button/Button';
 
 import styles from './Filter.module.scss';
@@ -49,7 +49,7 @@ const Filter: FC<Props> = ({ name, value, defaultLabel, options, setValue, force
         </div>
       ) : (
         <div className={styles.filterDropDown}>
-          <Dropdown
+          <Select
             className={styles.dropDown}
             size="small"
             options={options}
@@ -58,7 +58,6 @@ const Filter: FC<Props> = ({ name, value, defaultLabel, options, setValue, force
             value={value}
             onChange={handleChange}
             aria-label={t('filter_videos_by', { name })}
-            hideOptional
           />
         </div>
       )}

@@ -4,17 +4,17 @@ import type { RegisterFieldOptions } from '@inplayer-org/inplayer.js';
 import type { CustomRegisterFieldVariant } from '@jwp/ott-common/types/account';
 import { isTruthyCustomParamValue, testId } from '@jwp/ott-common/src/utils/common';
 
-import Checkbox from '../Checkbox/Checkbox';
-import TextField from '../TextField/TextField';
-import Radio from '../Radio/Radio';
-import Dropdown from '../Dropdown/Dropdown';
-import DateField from '../DateField/DateField';
+import Checkbox from '../form-fields/Checkbox/Checkbox';
+import TextField from '../form-fields/TextField/TextField';
+import Radio from '../form-fields/Radio/Radio';
+import Dropdown from '../form-fields/Dropdown/Dropdown';
+import DateField from '../form-fields/DateField/DateField';
 
 export type CustomRegisterFieldCommonProps = {
   type?: CustomRegisterFieldVariant;
   name: string;
   value: string | boolean;
-  onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onChange: ChangeEventHandler;
 } & Partial<{
   label: ReactNode;
   placeholder: string;
@@ -27,7 +27,7 @@ export type CustomRegisterFieldCommonProps = {
   lang: string;
 }>;
 
-const CustomRegisterField: FC<CustomRegisterFieldCommonProps> = ({ type, value = '', options, editing, lang, ...props }) => {
+const CustomRegisterField: FC<CustomRegisterFieldCommonProps> = ({ type, value = '', label, options, editing, lang, ...props }) => {
   const { t, i18n } = useTranslation();
 
   const optionsList = useMemo(() => {
@@ -49,9 +49,9 @@ const CustomRegisterField: FC<CustomRegisterFieldCommonProps> = ({ type, value =
 
   switch (type) {
     case 'input':
-      return <TextField {...props} value={value as string} testId={testId(`crf-${type}`)} />;
+      return <TextField {...props} value={String(value)} label={label} testId={testId(`crf-${type}`)} />;
     case 'radio':
-      return <Radio {...props} values={optionsList} value={value as string} header={props.label} data-testid={testId(`crf-${type}`)} lang={lang} />;
+      return <Radio {...props} label={label} values={optionsList} value={String(value)} data-testid={testId(`crf-${type}`)} lang={lang} />;
     case 'select':
     case 'country':
     case 'us_state':
@@ -59,17 +59,17 @@ const CustomRegisterField: FC<CustomRegisterFieldCommonProps> = ({ type, value =
         <Dropdown
           {...props}
           options={optionsList}
-          value={value as string}
+          value={String(value)}
+          label={label}
           defaultLabel={props.placeholder}
-          fullWidth
           testId={testId(`crf-${type}`)}
           lang={lang}
         />
       );
     case 'datepicker':
-      return <DateField {...props} value={value as string} testId={testId(`crf-${type}`)} />;
+      return <DateField {...props} value={String(value)} label={label} testId={testId(`crf-${type}`)} />;
     default:
-      return <Checkbox {...props} checked={isTruthyCustomParamValue(value)} data-testid={testId(`crf-${type}`)} lang={lang} />;
+      return <Checkbox {...props} checkboxLabel={label} checked={isTruthyCustomParamValue(value)} data-testid={testId(`crf-${type}`)} lang={lang} />;
   }
 };
 

@@ -31,23 +31,29 @@ exports[`<LoginForm> > renders and matches snapshot 1`] = `
       login.sign_in
     </h2>
     <div
-      class="_textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
       data-testid="login-email-input"
     >
       <label
-        class="_label_e16c1b"
+        class="_label_86f2f5"
         for="text-field_1235_email"
       >
         login.email
+        <span
+          aria-hidden="true"
+        >
+          *
+        </span>
       </label>
       <div
-        class="_container_e16c1b"
+        class="_container_859b20"
       >
         <input
           aria-describedby="helper_text_1235_email"
           aria-invalid="false"
+          aria-required="true"
           autocomplete="email"
-          class="_input_e16c1b"
+          class="_input_859b20"
           id="text-field_1235_email"
           name="email"
           placeholder="login.email"
@@ -58,23 +64,29 @@ exports[`<LoginForm> > renders and matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="_textField_e16c1b _rightControl_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
       data-testid="login-password-input"
     >
       <label
-        class="_label_e16c1b"
+        class="_label_86f2f5"
         for="text-field_1235_password"
       >
         login.password
+        <span
+          aria-hidden="true"
+        >
+          *
+        </span>
       </label>
       <div
-        class="_container_e16c1b"
+        class="_container_859b20 _rightControl_859b20"
       >
         <input
           aria-describedby="helper_text_1235_password"
           aria-invalid="false"
+          aria-required="true"
           autocomplete="current-password"
-          class="_input_e16c1b"
+          class="_input_859b20"
           id="text-field_1235_password"
           name="password"
           placeholder="login.password"
@@ -83,7 +95,7 @@ exports[`<LoginForm> > renders and matches snapshot 1`] = `
           value=""
         />
         <div
-          class="_control_e16c1b"
+          class="_control_859b20"
         >
           <button
             aria-label="login.view_password"

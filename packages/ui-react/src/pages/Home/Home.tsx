@@ -6,8 +6,6 @@ import { useTranslation } from 'react-i18next';
 
 import ShelfList from '../../containers/ShelfList/ShelfList';
 
-import '../../styles/accessibility.scss';
-
 const Home = () => {
   const { config } = useConfigStore(({ config, accessModel }) => ({ config, accessModel }), shallow);
   const content: Content[] = config?.content;

@@ -55,20 +55,17 @@ exports[`<DemoConfigDialog> > renders and matches snapshot error dialog 1`] = `
             target="/"
           >
             <div
-              class="_textField_25c745 _error_25c745 _maxWidth_561a54"
+              class="_formField_a245e1 _textField_0fa545 _maxWidth_561a54"
             >
-              <label
-                class="_label_25c745"
-                for="text-field_1235_app-config"
-              />
               <div
-                class="_container_25c745"
+                class="_container_ac31ed _error_ac31ed"
               >
                 <input
                   aria-describedby="helper_text_1235_app-config"
                   aria-invalid="true"
+                  aria-required="true"
                   autocapitalize="none"
-                  class="_input_25c745"
+                  class="_input_ac31ed"
                   id="text-field_1235_app-config"
                   maxlength="8"
                   name="app-config"

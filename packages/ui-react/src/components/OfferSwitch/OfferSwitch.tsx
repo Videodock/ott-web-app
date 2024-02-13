@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { Offer } from '@jwp/ott-common/types/checkout';
 import { formatLocalizedDate, formatPrice } from '@jwp/ott-common/src/utils/formatting';
 
-import Checkbox from '../Checkbox/Checkbox';
+import Checkbox from '../form-fields/Checkbox/Checkbox';
 
 import styles from './OfferSwitch.module.scss';
 

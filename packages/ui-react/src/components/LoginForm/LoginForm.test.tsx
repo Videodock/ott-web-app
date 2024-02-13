@@ -69,8 +69,8 @@ describe('<LoginForm>', () => {
 
     await waitForWithFakeTimers();
 
-    expect(getByLabelText('login.email')).toHaveValue('myemail@email.com');
-    expect(getByLabelText('login.password')).toHaveValue('mypassword');
+    expect(getByLabelText('login.email', { exact: false })).toHaveValue('myemail@email.com');
+    expect(getByLabelText('login.password', { exact: false })).toHaveValue('mypassword');
   });
 
   test('sets the correct errors in the form fields', async () => {
@@ -167,8 +167,8 @@ describe('<LoginForm>', () => {
     );
 
     act(() => {
-      fireEvent.change(getByLabelText('login.email'), { target: { value: 'email' } });
-      fireEvent.change(getByLabelText('login.password'), { target: { value: 'password' } });
+      fireEvent.change(getByLabelText('login.email', { exact: false }), { target: { value: 'email' } });
+      fireEvent.change(getByLabelText('login.password', { exact: false }), { target: { value: 'password' } });
     });
 
     await waitForWithFakeTimers();
