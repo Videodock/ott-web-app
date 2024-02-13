@@ -62,7 +62,7 @@ const Registration = () => {
         .required(t('registration.field_required', { field: t('registration.email') })),
       password: string()
         .matches(/^(?=.*[a-z])(?=.*[0-9]).{8,}$/, t('registration.invalid_password', { field: t('registration.password') }))
-        .required(t('registration.field_required')),
+        .required(t('registration.field_required', { field: t('registration.password') })),
     }),
     validateOnBlur: true,
     onSubmit: async ({ email, password }) => {
@@ -70,7 +70,7 @@ const Registration = () => {
 
       if (consentsErrors.length) {
         setConsentErrors(consentsErrors);
-        throw new Error('Consents error');
+        throw new Error('Consents error'); //TODO: use validationSchema for streamlined validation
       }
 
       await accountController.register(email, password, window.location.href, formatConsentsFromValues(publisherConsents, consentValues));
