@@ -44,9 +44,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_firstname_1235"
+        id="helper_text_1235_firstname"
       >
         this is wrong
       </div>
@@ -78,9 +77,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_lastname_1235"
+        id="helper_text_1235_lastname"
       >
         also this
       </div>
@@ -114,9 +112,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_companyname_1235"
+        id="helper_text_1235_companyname"
       >
         So much errors
       </div>
@@ -148,9 +145,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_address_1235"
+        id="helper_text_1235_address"
       >
         Do you know where you live
       </div>
@@ -184,9 +180,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_address2_1235"
+        id="helper_text_1235_address2"
       >
         Come on
       </div>
@@ -218,9 +213,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_city_1235"
+        id="helper_text_1235_city"
       >
         stop it
       </div>
@@ -252,9 +246,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_state_1235"
+        id="helper_text_1235_state"
       >
         Confusion
       </div>
@@ -286,9 +279,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_postcode_1235"
+        id="helper_text_1235_postcode"
       >
         Post Code should be 5 centimeters
       </div>
@@ -319,9 +311,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_phonenumber_1235"
+        id="helper_text_1235_phonenumber"
       >
         Invalid
       </div>
@@ -380,9 +371,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_birthdate_1235"
+        id="helper_text_1235_birthdate"
       >
         February 30th? Really?
       </div>
@@ -435,9 +425,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         </select>
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_key1_1235"
+        id="helper_text_1235_key1"
       >
         question 1 is invalid
       </div>
@@ -489,7 +478,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         </label>
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0"
         id="helper_text_1235"
       >
@@ -524,9 +512,8 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         </label>
       </div>
       <div
-        aria-live="assertive"
         class="_helperText_da58e0 _error_da58e0 _helperTextError_531f07"
-        id="helper_text_1235_ccc_1235"
+        id="helper_text_1235_ccc"
       >
         No way Jose
       </div>

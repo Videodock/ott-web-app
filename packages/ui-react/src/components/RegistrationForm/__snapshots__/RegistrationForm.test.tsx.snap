@@ -87,9 +87,8 @@ exports[`<RegistrationForm> > renders and matches snapshot 1`] = `
         </div>
       </div>
       <div
-        aria-live="polite"
         class="_helperText_da58e0"
-        id="helper_text_1235_password_1235"
+        id="helper_text_1235_password"
       >
         registration.password_helper_text
       </div>
