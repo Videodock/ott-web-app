@@ -163,6 +163,7 @@
       "very_strong": "Very strong",
       "weak": "Weak"
     },
+    "password_strength_prefix": "Password strength",
     "sign_up": "Sign up",
     "success": "Registration successful",
     "account_delete_success": "Your account has been deleted",

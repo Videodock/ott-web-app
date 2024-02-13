@@ -173,6 +173,7 @@
       "very_strong": "Muy fuerte",
       "weak": "Débil"
     },
+    "password_strength_prefix": "Seguridad de la contraseña",
     "sign_up": "Registrarse",
     "success": "¡Cuenta creada!",
     "account_delete_success": "Tu cuenta ha sido eliminada",
