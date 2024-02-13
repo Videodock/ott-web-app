@@ -54,7 +54,7 @@ const Registration = () => {
     setConsentValues(extractConsentValues(publisherConsents));
   }, [accountController, publisherConsents]);
 
-  const { handleSubmit, handleChange, handleBlur, values, errors, submitting } = useForm<RegistrationFormData>({
+  const { handleSubmit, handleChange, handleBlur, values, errors, validationSchemaError, submitting } = useForm<RegistrationFormData>({
     initialValues: { email: '', password: '' },
     validationSchema: object().shape({
       email: string()
@@ -91,11 +91,11 @@ const Registration = () => {
       values={values}
       errors={errors}
       consentErrors={consentErrors}
+      validationError={validationSchemaError}
       submitting={submitting}
       consentValues={consentValues}
       publisherConsents={publisherConsents}
       loading={loading || publisherConsentsLoading}
-      canSubmit={!!values.email && !!values.password}
     />
   );
 };

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 export type UseFormReturnValue<T> = {
   values: T;
   errors: FormErrors<T>;
+  validationSchemaError: boolean;
   submitting: boolean;
   handleChange: UseFormChangeHandler;
   handleBlur: UseFormBlurHandler;
@@ -14,6 +15,7 @@ export type UseFormReturnValue<T> = {
   setValue: (key: keyof T, value: T[keyof T]) => void;
   setErrors: (errors: FormErrors<T>) => void;
   setSubmitting: (submitting: boolean) => void;
+  setValidationSchemaError: (error: boolean) => void;
   reset: () => void;
 };
 
@@ -21,6 +23,7 @@ type UseFormMethods<T> = {
   setValue: (key: keyof T, value: string | boolean) => void;
   setErrors: (errors: FormErrors<T>) => void;
   setSubmitting: (submitting: boolean) => void;
+  setValidationSchemaError: (error: boolean) => void;
   validate: (validationSchema: AnySchema) => boolean;
 };
 
@@ -48,11 +51,12 @@ export default function useForm<T extends GenericFormValues>({
   const [values, setValues] = useState<T>(initialValues);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<FormErrors<T>>({});
+  const [validationSchemaError, setValidationSchemaError] = useState(false);
 
   const reset = useCallback(() => {
     setValues(initialValues);
     setErrors({});
-    setSubmitting(false);
+    setValidationSchemaError(false), setSubmitting(false);
     setTouched(Object.fromEntries((Object.keys(initialValues) as Array<keyof T>).map((key) => [key, false])) as Record<keyof T, boolean>);
   }, [initialValues]);
 
@@ -68,6 +72,7 @@ export default function useForm<T extends GenericFormValues>({
       if (error instanceof ValidationError) {
         const errorMessage = error.errors[0];
         setErrors((errors) => ({ ...errors, [name]: errorMessage }));
+        setValidationSchemaError(true);
       }
     }
   };
@@ -114,6 +119,12 @@ export default function useForm<T extends GenericFormValues>({
           }
         }
 
+        if (error.inner.every((error) => error.type === 'required')) {
+          newErrors.form = t('validation_form_error.required');
+        } else {
+          newErrors.form = t('validation_form_error.other');
+        }
+
         setErrors(newErrors as FormErrors<T>);
       }
     }
@@ -128,9 +139,11 @@ export default function useForm<T extends GenericFormValues>({
 
     // reset errors before submitting
     setErrors({});
+    setValidationSchemaError(false);
 
     // validate values with schema
     if (validationSchema && !validate(validationSchema)) {
+      setValidationSchemaError(true);
       return;
     }
 
@@ -138,7 +151,7 @@ export default function useForm<T extends GenericFormValues>({
     setSubmitting(true);
 
     try {
-      await onSubmit(values, { setValue, setErrors, setSubmitting, validate });
+      await onSubmit(values, { setValue, setErrors, setSubmitting, setValidationSchemaError, validate });
       onSubmitSuccess?.(values);
     } catch (error: unknown) {
       const newErrors: Record<string, string> = {};
@@ -165,5 +178,18 @@ export default function useForm<T extends GenericFormValues>({
     setSubmitting(false);
   };
 
-  return { values, errors, handleChange, handleBlur, handleSubmit, submitting, setValue, setErrors, setSubmitting, reset };
+  return {
+    values,
+    errors,
+    validationSchemaError,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    submitting,
+    setValue,
+    setErrors,
+    setSubmitting,
+    setValidationSchemaError,
+    reset,
+  };
 }
