@@ -1,5 +1,3 @@
-import type { Playlist, PlaylistItem } from '../../types/playlist';
-
 export const formatDurationTag = (seconds: number): string | null => {
   if (!seconds) return null;
 
@@ -37,46 +35,12 @@ export const formatPrice = (price: number, currency: string, country?: string) =
   }).format(price);
 };
 
-export const formatVideoMetaString = (item: PlaylistItem, episodesLabel?: string) => {
-  const metaData = [];
-
-  if (item.pubdate) metaData.push(new Date(item.pubdate * 1000).getFullYear());
-  if (!episodesLabel && item.duration) metaData.push(formatDuration(item.duration));
-  if (episodesLabel) metaData.push(episodesLabel);
-  if (item.genre) metaData.push(item.genre);
-  if (item.rating) metaData.push(item.rating);
-
-  return metaData;
-};
-
-export const formatPlaylistMetaString = (item: Playlist, episodesLabel?: string) => {
-  const metaData = [];
-
-  if (episodesLabel) metaData.push(episodesLabel);
-  if (item.genre) metaData.push(item.genre);
-  if (item.rating) metaData.push(item.rating);
-
-  return metaData;
-};
-
 export const formatSeriesMetaString = (seasonNumber?: string, episodeNumber?: string) => {
   if (!seasonNumber && !episodeNumber) {
     return '';
   }
 
   return seasonNumber && seasonNumber !== '0' ? `S${seasonNumber}:E${episodeNumber}` : `E${episodeNumber}`;
-};
-
-export const formatLiveEventMetaString = (media: PlaylistItem, locale: string) => {
-  const metaData = [];
-  const scheduled = formatVideoSchedule(locale, media.scheduledStart, media.scheduledEnd);
-
-  if (scheduled) metaData.push(scheduled);
-  if (media.duration) metaData.push(formatDuration(media.duration));
-  if (media.genre) metaData.push(media.genre);
-  if (media.rating) metaData.push(media.rating);
-
-  return metaData;
 };
 
 export const formatVideoSchedule = (locale: string, scheduledStart?: Date, scheduledEnd?: Date) => {

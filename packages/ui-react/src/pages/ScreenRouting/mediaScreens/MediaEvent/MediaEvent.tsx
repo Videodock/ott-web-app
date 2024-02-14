@@ -7,7 +7,7 @@ import type { PlaylistItem } from '@jwp/ott-common/types/playlist';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
 import { MediaStatus } from '@jwp/ott-common/src/utils/liveEvent';
-import { formatLiveEventMetaString } from '@jwp/ott-common/src/utils/formatting';
+import { createLiveEventMetaArray } from '@jwp/ott-common/src/utils/media';
 import { mediaURL } from '@jwp/ott-common/src/utils/urlFormatting';
 import { generateMovieJSONLD } from '@jwp/ott-common/src/utils/structuredData';
 import useMedia from '@jwp/ott-hooks-react/src/useMedia';
@@ -93,7 +93,7 @@ const MediaEvent: ScreenComponent<PlaylistItem> = ({ data: media, isLoading }) =
   const primaryMetadata = (
     <>
       <StatusIcon mediaStatus={media.mediaStatus} />
-      <VideoMetaData attributes={formatLiveEventMetaString(media, i18n.language)} />
+      <VideoMetaData attributes={createLiveEventMetaArray(media, i18n.language)} />
     </>
   );
 

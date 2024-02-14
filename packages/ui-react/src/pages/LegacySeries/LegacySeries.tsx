@@ -7,7 +7,8 @@ import type { PlaylistItem } from '@jwp/ott-common/types/playlist';
 import { useWatchHistoryStore } from '@jwp/ott-common/src/stores/WatchHistoryStore';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
-import { formatPlaylistMetaString, formatSeriesMetaString, formatVideoMetaString } from '@jwp/ott-common/src/utils/formatting';
+import { createPlaylistMetaArray, createVideoMetaArray } from '@jwp/ott-common/src/utils/media';
+import { formatSeriesMetaString } from '@jwp/ott-common/src/utils/formatting';
 import { legacySeriesURL } from '@jwp/ott-common/src/utils/urlFormatting';
 import useEntitlement from '@jwp/ott-hooks-react/src/useEntitlement';
 import useMedia from '@jwp/ott-hooks-react/src/useMedia';
@@ -116,9 +117,9 @@ const LegacySeries = () => {
   const backgroundImage = (selectedItem.backgroundImage as string) || undefined;
 
   const primaryMetadata = episode ? (
-    <VideoMetaData attributes={formatVideoMetaString(episode, t('video:total_episodes', { count: seriesPlaylist?.playlist?.length }))} />
+    <VideoMetaData attributes={createVideoMetaArray(episode, t('video:total_episodes', { count: seriesPlaylist?.playlist?.length }))} />
   ) : (
-    <VideoMetaData attributes={formatPlaylistMetaString(seriesPlaylist, t('video:total_episodes', { count: seriesPlaylist?.playlist?.length }))} />
+    <VideoMetaData attributes={createPlaylistMetaArray(seriesPlaylist, t('video:total_episodes', { count: seriesPlaylist?.playlist?.length }))} />
   );
   const secondaryMetadata = episodeMetadata && episode && (
     <>
