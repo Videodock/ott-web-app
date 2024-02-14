@@ -56,7 +56,8 @@ export default function useForm<T extends GenericFormValues>({
   const reset = useCallback(() => {
     setValues(initialValues);
     setErrors({});
-    setValidationSchemaError(false), setSubmitting(false);
+    setValidationSchemaError(false);
+    setSubmitting(false);
     setTouched(Object.fromEntries((Object.keys(initialValues) as Array<keyof T>).map((key) => [key, false])) as Record<keyof T, boolean>);
   }, [initialValues]);
 

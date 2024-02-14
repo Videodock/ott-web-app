@@ -269,8 +269,8 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
           formSection({
             label: t('account.email'),
             onSubmit: async (values) => {
-              if (!(values.email && values.confirmationPassword)) {
-                // This is a workaroud to make the form accesible when a empty form has been submitted.
+              if (!values.email && !values.confirmationPassword) {
+                // This is a workaround to make the form accessible when an empty form has been submitted
                 throw new Error('Invalid confirmationPassword');
               }
               const response = await accountController.updateUser({
