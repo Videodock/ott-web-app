@@ -27,6 +27,7 @@ import FavoriteButton from '../../containers/FavoriteButton/FavoriteButton';
 import Button from '../../components/Button/Button';
 import Loading from '../Loading/Loading';
 import Icon from '../../components/Icon/Icon';
+import VideoMetaData from '../../components/VideoMetaData/VideoMetaData';
 
 import { filterSeries, generateLegacyEpisodeJSONLD, getEpisodesInSeason, getFiltersFromSeries, getNextItem } from './utils';
 
@@ -114,9 +115,11 @@ const LegacySeries = () => {
   const canonicalUrl = `${window.location.origin}${legacySeriesURL({ episodeId: episode?.mediaid, seriesId })}`;
   const backgroundImage = (selectedItem.backgroundImage as string) || undefined;
 
-  const primaryMetadata = episode
-    ? formatVideoMetaString(episode, t('video:total_episodes', { count: seriesPlaylist?.playlist?.length }))
-    : formatPlaylistMetaString(seriesPlaylist, t('video:total_episodes', { count: seriesPlaylist?.playlist?.length }));
+  const primaryMetadata = episode ? (
+    <VideoMetaData attributes={formatVideoMetaString(episode, t('video:total_episodes', { count: seriesPlaylist?.playlist?.length }))} />
+  ) : (
+    <VideoMetaData attributes={formatPlaylistMetaString(seriesPlaylist, t('video:total_episodes', { count: seriesPlaylist?.playlist?.length }))} />
+  );
   const secondaryMetadata = episodeMetadata && episode && (
     <>
       <strong>{formatSeriesMetaString(episodeMetadata.seasonNumber, episodeMetadata.episodeNumber)}</strong> - {episode.title}

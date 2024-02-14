@@ -46,7 +46,7 @@ export const formatVideoMetaString = (item: PlaylistItem, episodesLabel?: string
   if (item.genre) metaData.push(item.genre);
   if (item.rating) metaData.push(item.rating);
 
-  return metaData.join(' • ');
+  return metaData;
 };
 
 export const formatPlaylistMetaString = (item: Playlist, episodesLabel?: string) => {
@@ -56,7 +56,7 @@ export const formatPlaylistMetaString = (item: Playlist, episodesLabel?: string)
   if (item.genre) metaData.push(item.genre);
   if (item.rating) metaData.push(item.rating);
 
-  return metaData.join(' • ');
+  return metaData;
 };
 
 export const formatSeriesMetaString = (seasonNumber?: string, episodeNumber?: string) => {
@@ -76,7 +76,7 @@ export const formatLiveEventMetaString = (media: PlaylistItem, locale: string) =
   if (media.genre) metaData.push(media.genre);
   if (media.rating) metaData.push(media.rating);
 
-  return metaData.join(' • ');
+  return metaData;
 };
 
 export const formatVideoSchedule = (locale: string, scheduledStart?: Date, scheduledEnd?: Date) => {

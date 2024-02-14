@@ -28,6 +28,7 @@ import FavoriteButton from '../../../../containers/FavoriteButton/FavoriteButton
 import Button from '../../../../components/Button/Button';
 import InlinePlayer from '../../../../containers/InlinePlayer/InlinePlayer';
 import StatusIcon from '../../../../components/StatusIcon/StatusIcon';
+import VideoMetaData from '../../../../components/VideoMetaData/VideoMetaData';
 import Icon from '../../../../components/Icon/Icon';
 
 const MediaEvent: ScreenComponent<PlaylistItem> = ({ data: media, isLoading }) => {
@@ -92,7 +93,7 @@ const MediaEvent: ScreenComponent<PlaylistItem> = ({ data: media, isLoading }) =
   const primaryMetadata = (
     <>
       <StatusIcon mediaStatus={media.mediaStatus} />
-      {formatLiveEventMetaString(media, i18n.language)}
+      <VideoMetaData attributes={formatLiveEventMetaString(media, i18n.language)} />
     </>
   );
 

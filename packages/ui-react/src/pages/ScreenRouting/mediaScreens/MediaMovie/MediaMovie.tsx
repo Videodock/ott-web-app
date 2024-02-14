@@ -26,6 +26,7 @@ import FavoriteButton from '../../../../containers/FavoriteButton/FavoriteButton
 import Button from '../../../../components/Button/Button';
 import InlinePlayer from '../../../../containers/InlinePlayer/InlinePlayer';
 import Icon from '../../../../components/Icon/Icon';
+import VideoMetaData from '../../../../components/VideoMetaData/VideoMetaData';
 
 const MediaMovie: ScreenComponent<PlaylistItem> = ({ data, isLoading }) => {
   const { t } = useTranslation('video');
@@ -79,7 +80,7 @@ const MediaMovie: ScreenComponent<PlaylistItem> = ({ data, isLoading }) => {
   const pageTitle = `${data.title} - ${siteName}`;
   const canonicalUrl = data ? `${window.location.origin}${mediaURL({ media: data })}` : window.location.href;
 
-  const primaryMetadata = formatVideoMetaString(data);
+  const primaryMetadata = <VideoMetaData attributes={formatVideoMetaString(data)} />;
   const shareButton = <ShareButton title={data.title} description={data.description} url={canonicalUrl} />;
   const startWatchingButton = <StartWatchingButton item={data} playUrl={mediaURL({ media: data, playlistId: feedId, play: true })} />;
 

@@ -34,6 +34,7 @@ import FavoriteButton from '../../../../containers/FavoriteButton/FavoriteButton
 import Button from '../../../../components/Button/Button';
 import Loading from '../../../Loading/Loading';
 import Icon from '../../../../components/Icon/Icon';
+import VideoMetaData from '../../../../components/VideoMetaData/VideoMetaData';
 import { createURLFromLocation } from '../../../../utils/location';
 
 const MediaSeries: ScreenComponent<PlaylistItem> = ({ data: seriesMedia }) => {
@@ -188,7 +189,7 @@ const MediaSeries: ScreenComponent<PlaylistItem> = ({ data: seriesMedia }) => {
   const pageTitle = `${selectedItem.title} - ${siteName}`;
   const canonicalUrl = `${window.location.origin}${mediaURL({ media: seriesMedia, episodeId: episode?.mediaid })}`;
 
-  const primaryMetadata = formatVideoMetaString(selectedItem, t('video:total_episodes', { count: series.episode_count }));
+  const primaryMetadata = <VideoMetaData attributes={formatVideoMetaString(selectedItem, t('video:total_episodes', { count: series.episode_count }))} />;
   const secondaryMetadata = episodeMetadata && episode && (
     <>
       <strong>{formatSeriesMetaString(episodeMetadata.seasonNumber, episodeMetadata.episodeNumber)}</strong> - {episode.title}
