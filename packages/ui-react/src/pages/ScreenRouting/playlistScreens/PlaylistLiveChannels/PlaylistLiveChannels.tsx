@@ -106,6 +106,10 @@ const PlaylistLiveChannels: ScreenComponent<Playlist> = ({ data: { feedid, playl
 
     // scroll to top when clicking a program
     (document.scrollingElement || document.body).scroll({ top: 0, behavior: 'smooth' });
+
+    // focus first interactive element
+    const focusableElement = document.querySelector('#content button') as HTMLElement | null;
+    focusableElement?.focus();
   };
 
   const handleChannelClick = (channelId: string) => {
