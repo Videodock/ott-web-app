@@ -7,7 +7,7 @@ describe('<PasswordField>', () => {
   test('renders and matches snapshot', () => {
     const { container } = render(<PasswordField label="Label" placeholder="Placeholder" name="password" value="" onChange={vi.fn()} />);
 
-    expect(container).toMatchSnapshot();
+    expect(container).toMatchSnapshot(); //.
   });
 
   test('triggers an onChange event when the input value changes', () => {
