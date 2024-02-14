@@ -29,7 +29,7 @@ const ProgramItem: React.VFC<Props> = ({ program, onClick, isActive, compact, di
 
   const { t } = useTranslation('common');
   const { data } = program;
-  const { image, title, since, till } = data;
+  const { id, image, title, since, till } = data;
 
   const sinceTime = formatTime(since, set12HoursTimeFormat()).toLowerCase();
   const tillTime = formatTime(till, set12HoursTimeFormat()).toLowerCase();
@@ -39,7 +39,7 @@ const ProgramItem: React.VFC<Props> = ({ program, onClick, isActive, compact, di
   const alt = ''; // intentionally empty for a11y, because adjacent text alternative
 
   return (
-    <div className={styles.epgProgramBox} style={position} onClick={() => onClick && onClick(program)}>
+    <div className={styles.epgProgramBox} style={position}>
       <div
         className={classNames(styles.epgProgram, {
           [styles.selected]: isActive,
@@ -48,6 +48,10 @@ const ProgramItem: React.VFC<Props> = ({ program, onClick, isActive, compact, di
         })}
         style={{ width: styles.width }}
         data-testid={testId(program.data.id)}
+        onClick={() => onClick && onClick(program)}
+        role="button"
+        tabIndex={0}
+        id={`program-${id}`}
       >
         {showImage && <img className={styles.epgProgramImage} src={image} alt={alt} />}
         {showLiveTagInImage && <div className={styles.epgLiveTag}>{t('live')}</div>}

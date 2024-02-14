@@ -50,10 +50,17 @@ export default function Epg({ channels, selectedChannel, onChannelClick, onProgr
   const catchupHoursDict = useMemo(() => Object.fromEntries(channels.map((channel) => [channel.id, channel.catchupHours])), [channels]);
   const titlesDict = useMemo(() => Object.fromEntries(channels.map((channel) => [channel.id, channel.title])), [channels]);
 
+  const onNowClick = () => {
+    onScrollToNow();
+    if (program) {
+      document.getElementById(`program-${program.id}`)?.focus();
+    }
+  };
+
   return (
     <div className={styles.epg}>
       <div className={styles.timelineControl}>
-        <Button className={styles.timelineNowButton} variant="contained" label={t('now')} color="primary" onClick={onScrollToNow} size="small" />
+        <Button className={styles.timelineNowButton} variant="contained" label={t('now')} color="primary" onClick={onNowClick} size="small" />
         <IconButton className={styles.leftControl} aria-label={t('slide_left')} onClick={() => onScrollLeft()}>
           <Icon icon={ChevronLeft} />
         </IconButton>
