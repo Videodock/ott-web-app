@@ -41,6 +41,8 @@
       "last_name_too_long": "Por favor, limita el Apellido a 50 caracteres o menos.",
       "please_enter_valid_email": "Por favor, ingresa una dirección de correo electrónico válida.",
       "unknown_error": "Se produjo un error desconocido"
+      "unknown_error": "Se produjo un error desconocido",
+      "validation_error": "Corrija sus errores antes de continuar."
     },
     "export_data_body": "Exporte todos los datos de su cuenta personal a <strong>{{email}}</strong> como un archivo adjunto.",
     "export_data_error": "Ocurrió un error al exportar los datos de su cuenta.",
