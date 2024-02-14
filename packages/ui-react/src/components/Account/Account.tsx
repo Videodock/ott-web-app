@@ -166,6 +166,10 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
             formErrors.form = t('account.errors.email_update_not_supported');
             break;
           }
+          case 'Wrong email/password combination': {
+            formErrors.form = t('account.errors.wrong_combination');
+            break;
+          }
           default: {
             formErrors.form = t('account.errors.unknown_error');
             logDev('Unknown error', error);
@@ -269,9 +273,8 @@ const Account = ({ panelClassName, panelHeaderClassName, canUpdateEmail = true }
           formSection({
             label: t('account.email'),
             onSubmit: async (values) => {
-              if (!values.email && !values.confirmationPassword) {
-                // This is a workaround to make the form accessible when an empty form has been submitted
-                throw new Error('Invalid confirmationPassword');
+              if (!values.email || !values.confirmationPassword) {
+                throw new Error('Wrong email/password combination');
               }
               const response = await accountController.updateUser({
                 email: values.email || '',
