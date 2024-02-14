@@ -98,6 +98,7 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
               >
                 <input
                   aria-describedby="helper_text_1235_cardholdername"
+                  aria-invalid="false"
                   autocomplete="cc-name"
                   class="_input_e16c1b"
                   id="text-field_1235_cardholdername"
