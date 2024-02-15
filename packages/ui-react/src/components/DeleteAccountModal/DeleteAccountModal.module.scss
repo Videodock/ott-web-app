@@ -42,7 +42,7 @@
   color: variables.$gray-white;
   font-weight: 400;
   font-size: 20px;
-  line-height: 28px;
+  line-height: variables.$base-line-height;
   text-align: center;
 }
 
@@ -52,7 +52,7 @@
   padding: 0;
   color: variables.$gray-white;
   font-size: 14px;
-  line-height: 20px;
+  line-height: variables.$base-line-height;
   text-align: left;
 }
 
