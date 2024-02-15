@@ -4,12 +4,6 @@
 .formField {
   width: 100%;
   margin-bottom: 8px;
-
-  &.disabled {
-    .container {
-      opacity: 0.7;
-    }
-  }
 }
 
 .label {
@@ -19,13 +13,10 @@
   text-align: left;
 
   > span {
-    float: right;
-    color: rgba(variables.$white, 0.7);
+    margin-left: 4px;
+    font-family: Verdana, sans-serif;
     font-weight: normal;
+    font-size: 12px;
+    vertical-align: top;
   }
-}
-
-.control > div {
-  width: 48px;
-  height: 48px;
 }

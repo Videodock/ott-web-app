@@ -1,24 +1,21 @@
 import React from 'react';
 
-import { FormField } from '../FormField/FormField';
-import Select from '../Select/Select';
-import type { FieldProps } from '../../types/form-fields';
+import { FormField } from '../../FormField/FormField';
+import Select from '../../Select/Select';
+import type { FormControlProps } from '../../../types/form';
 
 type Props = {
   defaultLabel?: string;
   options?: (string | { value: string; label: string })[];
   optionsStyle?: string;
-  fullWidth?: boolean;
   onChange: React.ChangeEventHandler;
   helperText?: React.ReactNode;
-} & FieldProps;
+} & FormControlProps;
 
 const Dropdown: React.FC<Props> = ({
   name,
-  value,
   className,
   label,
-  fullWidth,
   error,
   helperText,
   editing = true,
@@ -26,7 +23,7 @@ const Dropdown: React.FC<Props> = ({
   size = 'medium',
   testId,
   lang,
-  ...rest
+  ...inputProps
 }) => {
   return (
     <FormField
@@ -39,11 +36,9 @@ const Dropdown: React.FC<Props> = ({
       testId={testId}
       name={name}
       size={size}
-    >
-      {({ helperTextId, id }) => (
-        <Select id={id} helperTextId={helperTextId} name={name} required={required} editing={editing} error={error} size={size} {...rest} />
-      )}
-    </FormField>
+      lang={lang}
+      renderInput={(fieldProps) => <Select name={name} required={required} editing={editing} error={error} size={size} {...fieldProps} {...inputProps} />}
+    />
   );
 };
 

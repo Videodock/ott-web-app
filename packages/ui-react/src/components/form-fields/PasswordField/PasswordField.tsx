@@ -5,10 +5,10 @@ import Visibility from '@jwp/ott-theme/assets/icons/visibility.svg?react';
 import VisibilityOff from '@jwp/ott-theme/assets/icons/visibility_off.svg?react';
 
 import TextField from '../TextField/TextField';
-import PasswordStrength from '../PasswordStrength/PasswordStrength';
-import IconButton from '../IconButton/IconButton';
-import Icon from '../Icon/Icon';
-import type { FieldProps } from '../../types/form-fields';
+import PasswordStrength from '../../PasswordStrength/PasswordStrength';
+import IconButton from '../../IconButton/IconButton';
+import Icon from '../../Icon/Icon';
+import type { FormControlProps } from '../../../types/form';
 
 type Props = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -16,7 +16,7 @@ type Props = {
   helperText?: React.ReactNode;
   showToggleView?: boolean;
   showHelperText?: boolean;
-} & FieldProps;
+} & FormControlProps;
 
 const PasswordField: React.FC<Props> = ({ value, showToggleView = true, helperText, showHelperText = true, ...props }: Props) => {
   const { t } = useTranslation('account');

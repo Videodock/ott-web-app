@@ -1,7 +1,7 @@
 import React, { type InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 
-import type { FieldProps } from '../../types/form-fields';
+import type { FormControlProps } from '../../types/form';
 
 import styles from './Select.module.scss';
 
@@ -13,7 +13,7 @@ type Props = HTMLSelectProps & {
   options?: (string | { value: string; label: string })[];
   optionsStyle?: string;
   defaultLabel?: string;
-} & FieldProps;
+} & FormControlProps;
 
 const Select = ({
   required,

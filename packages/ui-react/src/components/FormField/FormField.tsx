@@ -1,32 +1,36 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import useOpaqueId from '@jwp/ott-hooks-react/src/useOpaqueId';
 
 import HelperText from '../HelperText/HelperText';
-import type { FieldProps } from '../../types/form-fields';
+import type { FormControlProps } from '../../types/form';
 
 import styles from './FormField.module.scss';
 
-type Props = {
-  children: (inputProps: { helperTextId: string; id: string }) => React.ReactNode;
-  showOptionalLabel?: boolean;
-  helperText?: React.ReactNode;
-} & FieldProps;
+type RenderInputProps = {
+  helperTextId: string;
+  id: string;
+};
 
-export const FormField = ({ className, children, required, label, error, helperText, testId, name, editing = true, showOptionalLabel = true }: Props) => {
-  const { t } = useTranslation('common');
+type Props = {
+  helperText?: React.ReactNode;
+  renderInput: (fieldProps: RenderInputProps) => React.ReactElement;
+} & Omit<FormControlProps, 'value' | 'placeholder'>;
+
+export const FormField = ({ className, renderInput, required, label, error, helperText, testId, editing, name }: Props) => {
   const formFieldClassName = classNames(styles.formField, className);
   const id = useOpaqueId('text-field', name);
   const helperTextId = useOpaqueId('helper_text', name);
 
   return (
     <div className={formFieldClassName} data-testid={testId}>
-      <label htmlFor={id} className={styles.label}>
-        {label}
-        {!required && editing && showOptionalLabel ? <span>{t('optional')}</span> : null}
-      </label>
-      {children({ helperTextId, id })}
+      {label && (
+        <label htmlFor={id} className={styles.label}>
+          {label}
+          {required && editing ? <span role="presentation">*</span> : null}
+        </label>
+      )}
+      {renderInput({ helperTextId, id })}
       <HelperText id={helperTextId} error={error}>
         {helperText}
       </HelperText>

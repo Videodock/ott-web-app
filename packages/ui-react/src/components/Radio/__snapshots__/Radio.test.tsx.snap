@@ -9,9 +9,7 @@ exports[`<Radio> > renders and matches snapshot 1`] = `
       class="_label_86f2f5"
       for="text-field_1235_radio"
     >
-      <span>
-        optional
-      </span>
+      Choose a Value
     </label>
     <div
       class="_radio_d50e6e"
@@ -19,7 +17,6 @@ exports[`<Radio> > renders and matches snapshot 1`] = `
       <input
         aria-describedby="helper_text_1235_radio"
         checked=""
-        header="Choose a Value"
         id="text-field_1235_radio0"
         name="radio"
         type="radio"
@@ -36,7 +33,6 @@ exports[`<Radio> > renders and matches snapshot 1`] = `
     >
       <input
         aria-describedby="helper_text_1235_radio"
-        header="Choose a Value"
         id="text-field_1235_radio1"
         name="radio"
         type="radio"
@@ -53,7 +49,6 @@ exports[`<Radio> > renders and matches snapshot 1`] = `
     >
       <input
         aria-describedby="helper_text_1235_radio"
-        header="Choose a Value"
         id="text-field_1235_radio2"
         name="radio"
         type="radio"

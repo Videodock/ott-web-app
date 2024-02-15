@@ -3,7 +3,7 @@ import { createURL } from '@jwp/ott-common/src/utils/urlFormatting';
 import { CONFIG_QUERY_KEY } from '@jwp/ott-common/src/constants';
 import { jwDevEnvConfigs, testConfigs } from '@jwp/ott-testing/constants';
 
-import Dropdown from '../Dropdown/Dropdown';
+import Dropdown from '../form-fields/Dropdown/Dropdown';
 
 import styles from './DevConfigSelector.module.scss';
 

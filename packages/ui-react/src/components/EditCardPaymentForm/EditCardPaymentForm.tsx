@@ -10,10 +10,10 @@ import AccountController from '@jwp/ott-common/src/controllers/AccountController
 import useForm from '@jwp/ott-hooks-react/src/useForm';
 
 import Button from '../Button/Button';
-import CreditCardCVCField from '../CreditCardCVCField/CreditCardCVCField';
-import CreditCardExpiryField from '../CreditCardExpiryField/CreditCardExpiryField';
-import CreditCardNumberField from '../CreditCardNumberField/CreditCardNumberField';
-import TextField from '../TextField/TextField';
+import CreditCardCVCField from '../form-fields/CreditCardCVCField/CreditCardCVCField';
+import CreditCardExpiryField from '../form-fields/CreditCardExpiryField/CreditCardExpiryField';
+import CreditCardNumberField from '../form-fields/CreditCardNumberField/CreditCardNumberField';
+import TextField from '../form-fields/TextField/TextField';
 import { useAriaAnnouncer } from '../../containers/AnnouncementProvider/AnnoucementProvider';
 
 import styles from './EditCardPaymentForm.module.scss';

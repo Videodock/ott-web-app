@@ -1,8 +1,9 @@
 import type React from 'react';
 
-export type FieldProps = {
+export type FormControlProps = {
   name: string;
   label?: React.ReactNode;
+  placeholder?: string;
   className?: string;
   required?: boolean;
   error?: boolean;

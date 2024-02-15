@@ -19,7 +19,7 @@ exports[`<Payment> > renders and matches snapshot 1`] = `
     </div>
     <div>
       <div
-        class="_formField_86f2f5 _textField_e16c1b"
+        class="_formField_86f2f5 _textField_c799b0"
       >
         <label
           class="_label_86f2f5"
@@ -44,7 +44,7 @@ exports[`<Payment> > renders and matches snapshot 1`] = `
         class="_cardDetails_c57ff5"
       >
         <div
-          class="_formField_86f2f5 _textField_e16c1b"
+          class="_formField_86f2f5 _textField_c799b0"
         >
           <label
             class="_label_86f2f5"
@@ -65,7 +65,7 @@ exports[`<Payment> > renders and matches snapshot 1`] = `
           />
         </div>
         <div
-          class="_formField_86f2f5 _textField_e16c1b"
+          class="_formField_86f2f5 _textField_c799b0"
         >
           <label
             class="_label_86f2f5"

@@ -10,7 +10,7 @@ import { simultaneousLoginWarningKey } from '@jwp/ott-common/src/constants';
 import Visibility from '@jwp/ott-theme/assets/icons/visibility.svg?react';
 import VisibilityOff from '@jwp/ott-theme/assets/icons/visibility_off.svg?react';
 
-import TextField from '../TextField/TextField';
+import TextField from '../form-fields/TextField/TextField';
 import Button from '../Button/Button';
 import Link from '../Link/Link';
 import IconButton from '../IconButton/IconButton';

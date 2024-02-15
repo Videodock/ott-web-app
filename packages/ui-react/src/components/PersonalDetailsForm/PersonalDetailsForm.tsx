@@ -4,12 +4,12 @@ import type { FormErrors } from '@jwp/ott-common/types/form';
 import type { CleengCaptureField, CleengCaptureQuestionField, PersonalDetailsFormData } from '@jwp/ott-common/types/account';
 import { testId } from '@jwp/ott-common/src/utils/common';
 
-import TextField from '../TextField/TextField';
+import TextField from '../form-fields/TextField/TextField';
 import Button from '../Button/Button';
-import Dropdown from '../Dropdown/Dropdown';
-import Checkbox from '../Checkbox/Checkbox';
+import Dropdown from '../form-fields/Dropdown/Dropdown';
+import Checkbox from '../form-fields/Checkbox/Checkbox';
 import Radio from '../Radio/Radio';
-import DateField from '../DateField/DateField';
+import DateField from '../form-fields/DateField/DateField';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 import FormFeedback from '../FormFeedback/FormFeedback';
 
@@ -73,11 +73,11 @@ const PersonalDetailsForm: React.FC<Props> = ({
     if (values.length === 1 && values[0].value === '') {
       return <TextField value={values[0].value} label={question} {...props} />;
     } else if (values.length === 1) {
-      return <Checkbox checked={!!questionValues[key]} value={values[0].value} header={question} label={values[0].label} {...props} />;
+      return <Checkbox checked={!!questionValues[key]} value={values[0].value} label={question} checkboxLabel={values[0].label} {...props} />;
     } else if (values.length === 2) {
-      return <Radio values={values} value={questionValues[key]} header={question} {...props} />;
+      return <Radio values={values} value={questionValues[key]} label={question} {...props} />;
     } else if (values.length > 2) {
-      return <Dropdown options={values} value={questionValues[key]} label={question} defaultLabel={t('personal_details.select_answer')} {...props} fullWidth />;
+      return <Dropdown options={values} value={questionValues[key]} label={question} defaultLabel={t('personal_details.select_answer')} {...props} />;
     }
 
     return null;

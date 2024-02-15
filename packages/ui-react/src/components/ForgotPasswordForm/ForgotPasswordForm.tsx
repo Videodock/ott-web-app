@@ -5,7 +5,7 @@ import type { FormErrors } from '@jwp/ott-common/types/form';
 import { testId } from '@jwp/ott-common/src/utils/common';
 
 import Button from '../Button/Button';
-import TextField from '../TextField/TextField';
+import TextField from '../form-fields/TextField/TextField';
 import FormFeedback from '../FormFeedback/FormFeedback';
 
 import styles from './ForgotPasswordForm.module.scss';
@@ -24,7 +24,7 @@ const ForgotPasswordForm: React.FC<Props> = ({ onSubmit, onChange, value, errors
   const { t } = useTranslation('account');
 
   return (
-    <form onSubmit={onSubmit} data-testid={testId('forgot-password-form')} noValidate className={styles.forgotPasswordForm}>
+    <form onSubmit={onSubmit} data-testid={testId('forgot-password-form')} noValidate>
       <h2 className={styles.title}>{t('reset.forgot_password')}</h2>
       {errors.form ? <FormFeedback variant="error">{errors.form}</FormFeedback> : null}
       <p className={styles.text}>{t('reset.forgot_text')}</p>

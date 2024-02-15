@@ -1,6 +1,6 @@
 import React, { type InputHTMLAttributes } from 'react';
 
-import type { FieldProps } from '../../types/form-fields';
+import type { FormControlProps } from '../../types/form';
 import { FormField } from '../FormField/FormField';
 
 import styles from './Radio.module.scss';
@@ -11,12 +11,17 @@ type Props = HTMLRadioProps & {
   values: { value: string; label: string }[];
   helperText?: React.ReactNode;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-} & FieldProps;
+} & FormControlProps;
 
 const Radio: React.FC<Props> = ({ name, onChange, label, value, size, values, helperText, error, required, disabled, lang, ...rest }) => {
   return (
-    <FormField name={name} label={label} error={error} helperText={helperText} required={required}>
-      {({ id, helperTextId }) => (
+    <FormField
+      name={name}
+      label={label}
+      error={error}
+      helperText={helperText}
+      required={required}
+      renderInput={({ id, helperTextId }) => (
         <>
           {values.map(({ value: optionValue, label: optionLabel }, index) => (
             <div className={styles.radio} key={index} lang={lang}>
@@ -37,7 +42,7 @@ const Radio: React.FC<Props> = ({ name, onChange, label, value, size, values, he
           ))}
         </>
       )}
-    </FormField>
+    />
   );
 };
 

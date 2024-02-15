@@ -3,14 +3,10 @@
 exports[`<CustomRegisterField> > renders and matches snapshot <Checkbox> 1`] = `
 <div>
   <div
-    class="_formField_86f2f5 _checkbox_531f07"
+    class="_formField_86f2f5 _checkbox_a98c3a"
   >
-    <label
-      class="_label_86f2f5"
-      for="text-field_1235_name"
-    />
     <div
-      class="_row_531f07"
+      class="_row_a98c3a"
     >
       <input
         aria-describedby="helper_text_1235_name"
@@ -41,9 +37,6 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="co
       for="text-field_1235_name"
     >
       label
-      <span>
-        optional
-      </span>
     </label>
     <div
       class="_container_d97916"
@@ -83,30 +76,26 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="co
 exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="datepicker"> 1`] = `
 <div>
   <div
-    class="_dateField_eb6974"
+    class="_formField_86f2f5 _dateField_0addad"
     data-testid="crf-datepicker"
-    id="text-field_1235_name"
   >
     <label
-      class="_label_eb6974"
+      class="_label_86f2f5"
       for="text-field_1235_name"
     >
       label
-      <span>
-        optional
-      </span>
     </label>
     <div
-      class="_container_eb6974"
+      class="_container_0addad"
     >
       <input
         aria-describedby="helper_text_1235_name"
-        class="_hiddenInput_eb6974"
+        class="_hiddenInput_0addad"
         id="text-field_1235_name-hidden"
         name="name"
       />
       <input
-        class="_input_eb6974"
+        class="_input_0addad"
         id="text-field_1235_name-date"
         maxlength="2"
         name="date"
@@ -116,7 +105,7 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="da
       />
        / 
       <input
-        class="_input_eb6974"
+        class="_input_0addad"
         id="text-field_1235_name-month"
         maxlength="2"
         name="month"
@@ -126,7 +115,7 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="da
       />
        / 
       <input
-        class="_input_eb6974"
+        class="_input_0addad"
         id="text-field_1235_name-year"
         maxlength="4"
         name="year"
@@ -142,14 +131,10 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="da
 exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="randomstring"> 1`] = `
 <div>
   <div
-    class="_formField_86f2f5 _checkbox_531f07"
+    class="_formField_86f2f5 _checkbox_a98c3a"
   >
-    <label
-      class="_label_86f2f5"
-      for="text-field_1235_name"
-    />
     <div
-      class="_row_531f07"
+      class="_row_a98c3a"
     >
       <input
         aria-describedby="helper_text_1235_name"
@@ -180,9 +165,6 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="se
       for="text-field_1235_name"
     >
       label
-      <span>
-        optional
-      </span>
     </label>
     <div
       class="_container_d97916"
@@ -211,9 +193,6 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="us
       for="text-field_1235_name"
     >
       label
-      <span>
-        optional
-      </span>
     </label>
     <div
       class="_container_d97916"
@@ -254,24 +233,14 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Radio> 1`] = `
 <div>
   <div
     class="_formField_86f2f5"
-  >
-    <label
-      class="_label_86f2f5"
-      for="text-field_1235_name"
-    >
-      label
-      <span>
-        optional
-      </span>
-    </label>
-  </div>
+  />
 </div>
 `;
 
 exports[`<CustomRegisterField> > renders and matches snapshot <TextField> 1`] = `
 <div>
   <div
-    class="_formField_86f2f5 _textField_e16c1b"
+    class="_formField_86f2f5 _textField_c799b0"
     data-testid="crf-input"
   >
     <label
@@ -279,9 +248,6 @@ exports[`<CustomRegisterField> > renders and matches snapshot <TextField> 1`] = 
       for="text-field_1235_name"
     >
       label
-      <span>
-        optional
-      </span>
     </label>
     <div
       class="_container_859b20"

@@ -1,7 +1,7 @@
 import React, { type InputHTMLAttributes, type RefObject, type TextareaHTMLAttributes } from 'react';
 import classNames from 'classnames';
 
-import type { FieldProps } from '../../types/form-fields';
+import type { FormControlProps } from '../../types/form';
 
 import styles from './Input.module.scss';
 
@@ -11,7 +11,7 @@ type CommonProps = {
   leftControl?: React.ReactNode;
   rightControl?: React.ReactNode;
   multiline?: boolean;
-} & FieldProps;
+} & FormControlProps;
 
 type HTMLInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>;
 type HTMLTextAreaProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'>;

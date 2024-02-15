@@ -31,7 +31,7 @@ exports[`<LoginForm> > renders and matches snapshot 1`] = `
       login.sign_in
     </h2>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
       data-testid="login-email-input"
     >
       <label
@@ -39,6 +39,11 @@ exports[`<LoginForm> > renders and matches snapshot 1`] = `
         for="text-field_1235_email"
       >
         login.email
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20"
@@ -58,7 +63,7 @@ exports[`<LoginForm> > renders and matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
       data-testid="login-password-input"
     >
       <label
@@ -66,6 +71,11 @@ exports[`<LoginForm> > renders and matches snapshot 1`] = `
         for="text-field_1235_password"
       >
         login.password
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20 _rightControl_859b20"

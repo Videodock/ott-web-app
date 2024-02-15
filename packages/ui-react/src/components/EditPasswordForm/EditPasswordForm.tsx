@@ -4,8 +4,8 @@ import type { EditPasswordFormData } from '@jwp/ott-common/types/account';
 import type { FormErrors } from '@jwp/ott-common/types/form';
 import { testId } from '@jwp/ott-common/src/utils/common';
 
-import PasswordField from '../PasswordField/PasswordField';
-import TextField from '../TextField/TextField';
+import PasswordField from '../form-fields/PasswordField/PasswordField';
+import TextField from '../form-fields/TextField/TextField';
 import Button from '../Button/Button';
 import FormFeedback from '../FormFeedback/FormFeedback';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
@@ -41,7 +41,7 @@ const EditPasswordForm: React.FC<Props> = ({
 }: Props) => {
   const { t } = useTranslation(['account', 'user']);
   return (
-    <form onSubmit={onSubmit} data-testid={testId('forgot-password-form')} noValidate className={styles.forgotPasswordForm}>
+    <form onSubmit={onSubmit} data-testid={testId('forgot-password-form')} noValidate>
       {errors.form && <FormFeedback variant="error">{errors.form}</FormFeedback>}
       <h2 className={styles.title}>{showOldPasswordField && showResetTokenField ? t('user:account.add_password') : t('reset.password_reset')}</h2>
       {showOldPasswordField && showResetTokenField && (
@@ -99,6 +99,7 @@ const EditPasswordForm: React.FC<Props> = ({
         placeholder={t('reset.repeat_new_password')}
         error={!!errors.passwordConfirmation}
         name="passwordConfirmation"
+        showHelperText={false}
         required
       />
 

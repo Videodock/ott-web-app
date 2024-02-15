@@ -1,30 +1,45 @@
-import React, { type ReactNode, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 import useOpaqueId from '@jwp/ott-hooks-react/src/useOpaqueId';
 
-import HelperText from '../HelperText/HelperText';
+import { FormField } from '../../FormField/FormField';
+import type { FormControlProps } from '../../../types/form';
 
 import styles from './DateField.module.scss';
 
 type Props = {
-  className?: string;
-  label?: ReactNode;
-  name?: string;
-  value: string;
   format?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onFocus?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   helperText?: React.ReactNode;
-  error?: boolean;
-  required?: boolean;
-  testId?: string;
-};
+} & FormControlProps;
 
-const parseDateString = (dateString: string) => {
+const parseDateString = (dateString: string | undefined) => {
+  if (!dateString) return null;
+
   const date = new Date(dateString);
 
   return isNaN(date.getTime()) ? null : date;
+};
+
+const padLeft = (value: number) => {
+  return value > 0 && value < 10 ? `0${value}` : value.toString();
+};
+
+const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
+
+const parseBlurValue = (value: string, min: number, max: number) => {
+  const parsed = clamp(parseInt(value), min, max);
+  if (isNaN(parsed)) return '';
+
+  return value.length > 0 && parsed < 10 ? padLeft(parsed) : parsed.toString();
+};
+
+const parseInputValue = (value: string, min: number, max: number) => {
+  const parsed = clamp(parseInt(value), min, max);
+  if (isNaN(parsed)) return '';
+
+  return value.length > 1 && parsed < 10 ? padLeft(parsed) : parsed.toString();
 };
 
 const DateField: React.FC<Props> = ({
@@ -36,12 +51,12 @@ const DateField: React.FC<Props> = ({
   onChange,
   format = 'YYYY-MM-DD',
   name,
+  editing,
+  lang,
   required,
   onFocus,
   testId,
-  ...rest
 }: Props) => {
-  const { t } = useTranslation('common');
   const parsedDate = parseDateString(value);
 
   const [values, setValues] = useState({
@@ -55,7 +70,7 @@ const DateField: React.FC<Props> = ({
 
   const hiddenInputRef = useRef<HTMLInputElement>(null);
 
-  const DateFieldClassName = classNames(
+  const dateFieldClassName = classNames(
     styles.dateField,
     {
       [styles.error]: error,
@@ -78,26 +93,6 @@ const DateField: React.FC<Props> = ({
     if (!/^[0-9]$/.test(event.key) && event.key !== 'Tab' && event.key !== 'Backspace') {
       return event.preventDefault();
     }
-  };
-
-  const padLeft = (value: number) => {
-    return value > 0 && value < 10 ? `0${value}` : value.toString();
-  };
-
-  const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
-
-  const parseBlurValue = (value: string, min: number, max: number) => {
-    const parsed = clamp(parseInt(value), min, max);
-    if (isNaN(parsed)) return '';
-
-    return value.length > 0 && parsed < 10 ? padLeft(parsed) : parsed.toString();
-  };
-
-  const parseInputValue = (value: string, min: number, max: number) => {
-    const parsed = clamp(parseInt(value), min, max);
-    if (isNaN(parsed)) return '';
-
-    return value.length > 1 && parsed < 10 ? padLeft(parsed) : parsed.toString();
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -142,68 +137,72 @@ const DateField: React.FC<Props> = ({
   };
 
   return (
-    <div className={DateFieldClassName} {...rest} data-testid={testId} id={id}>
-      <label htmlFor={id} className={styles.label}>
-        {label}
-        {!required ? <span>{t('optional')}</span> : null}
-      </label>
-      <div className={styles.container}>
-        {/* don't be tempted to make it type="hidden", onChange will practically be ignored that way */}
-        <input
-          ref={hiddenInputRef}
-          id={`${id}-hidden`}
-          className={styles.hiddenInput}
-          name={name}
-          onChange={onChange}
-          aria-invalid={error}
-          aria-describedby={helperTextId}
-        />
-        <input
-          className={styles.input}
-          name="date"
-          placeholder="dd"
-          value={values.date}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          maxLength={2}
-          type="number"
-          id={`${id}-date`}
-        />
-        {' / '}
-        <input
-          className={styles.input}
-          name="month"
-          placeholder="mm"
-          value={values.month}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          maxLength={2}
-          type="number"
-          id={`${id}-month`}
-        />
-        {' / '}
-        <input
-          className={styles.input}
-          name="year"
-          placeholder="yyyy"
-          value={values.year}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          maxLength={4}
-          type="number"
-          id={`${id}-year`}
-        />
-      </div>
-      <HelperText id={helperTextId} error={error}>
-        {helperText}
-      </HelperText>
-    </div>
+    <FormField
+      className={dateFieldClassName}
+      name={name}
+      helperText={helperText}
+      error={error}
+      label={label}
+      editing={editing}
+      lang={lang}
+      required={required}
+      testId={testId}
+      renderInput={() => (
+        <div className={styles.container}>
+          {/* don't be tempted to make it type="hidden", onChange will practically be ignored that way */}
+          <input
+            ref={hiddenInputRef}
+            id={`${id}-hidden`}
+            className={styles.hiddenInput}
+            name={name}
+            onChange={onChange}
+            aria-invalid={error}
+            aria-describedby={helperTextId}
+          />
+          <input
+            className={styles.input}
+            name="date"
+            placeholder="dd"
+            value={values.date}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            maxLength={2}
+            type="number"
+            id={`${id}-date`}
+          />
+          {' / '}
+          <input
+            className={styles.input}
+            name="month"
+            placeholder="mm"
+            value={values.month}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            maxLength={2}
+            type="number"
+            id={`${id}-month`}
+          />
+          {' / '}
+          <input
+            className={styles.input}
+            name="year"
+            placeholder="yyyy"
+            value={values.year}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            maxLength={4}
+            type="number"
+            id={`${id}-year`}
+          />
+        </div>
+      )}
+    />
   );
 };
 

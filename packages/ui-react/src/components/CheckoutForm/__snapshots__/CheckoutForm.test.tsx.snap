@@ -85,13 +85,18 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
         >
           <div>
             <div
-              class="_formField_86f2f5 _textField_e16c1b"
+              class="_formField_86f2f5 _textField_c799b0"
             >
               <label
                 class="_label_86f2f5"
                 for="text-field_1235_cardholdername"
               >
                 checkout.card_holder_name
+                <span
+                  role="presentation"
+                >
+                  *
+                </span>
               </label>
               <div
                 class="_container_859b20"
@@ -113,13 +118,18 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
           </div>
           <div>
             <div
-              class="_formField_86f2f5 _textField_e16c1b directPostCreditCardNumber"
+              class="_formField_86f2f5 _textField_c799b0 directPostCreditCardNumber"
             >
               <label
                 class="_label_86f2f5"
                 for="text-field_1235_cardnumber"
               >
                 Card number
+                <span
+                  role="presentation"
+                >
+                  *
+                </span>
               </label>
               <div
                 class="_container_859b20"
@@ -145,13 +155,18 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
           >
             <div>
               <div
-                class="_formField_86f2f5 _textField_e16c1b directPostExpiryDate"
+                class="_formField_86f2f5 _textField_c799b0 directPostExpiryDate"
               >
                 <label
                   class="_label_86f2f5"
                   for="text-field_1235_cardexpiry"
                 >
                   Expiry date
+                  <span
+                    role="presentation"
+                  >
+                    *
+                  </span>
                 </label>
                 <div
                   class="_container_859b20"
@@ -174,13 +189,18 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
             </div>
             <div>
               <div
-                class="_formField_86f2f5 _textField_e16c1b directPostSecurityCode"
+                class="_formField_86f2f5 _textField_c799b0 directPostSecurityCode"
               >
                 <label
                   class="_label_86f2f5"
                   for="text-field_1235_cardcvc"
                 >
                   payment.security_code
+                  <span
+                    role="presentation"
+                  >
+                    *
+                  </span>
                 </label>
                 <div
                   class="_container_859b20"

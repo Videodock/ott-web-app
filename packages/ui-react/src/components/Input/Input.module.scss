@@ -1,5 +1,5 @@
-@use '../../../../../node_modules/@jwp/ott-ui-react/src/styles/variables';
-@use '../../../../../node_modules/@jwp/ott-ui-react/src/styles/theme';
+@use '@jwp/ott-ui-react/src/styles/variables';
+@use '@jwp/ott-ui-react/src/styles/theme';
 
 .container {
   display: flex;
@@ -11,11 +11,6 @@
   border: 1px solid theme.$text-field-resting-border-color;
   border-radius: 4px;
   transition: border 0.2s ease;
-
-  &:focus-within {
-    color: theme.$text-field-active-color;
-    border-color: theme.$text-field-active-border-color;
-  }
 
   &.error {
     border-color: theme.$text-field-error-color;
@@ -31,6 +26,11 @@
 
   &.rightControl .input {
     padding-right: 0;
+  }
+
+  &:focus-within {
+    color: theme.$text-field-active-color;
+    border-color: theme.$text-field-active-border-color;
   }
 
   &:hover {

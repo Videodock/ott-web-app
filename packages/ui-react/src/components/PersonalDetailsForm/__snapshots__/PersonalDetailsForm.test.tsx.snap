@@ -18,13 +18,18 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       This is a form error
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_firstname"
       >
         personal_details.fist_name
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20 _error_859b20"
@@ -51,13 +56,18 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_lastname"
       >
         personal_details.last_name
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20 _error_859b20"
@@ -84,16 +94,13 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_companyname"
       >
         personal_details.company_name
-        <span>
-          optional
-        </span>
       </label>
       <div
         class="_container_859b20 _error_859b20"
@@ -119,13 +126,18 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_address"
       >
         personal_details.address
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20 _error_859b20"
@@ -152,16 +164,13 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_address2"
       >
         personal_details.address2
-        <span>
-          optional
-        </span>
       </label>
       <div
         class="_container_859b20 _error_859b20"
@@ -187,13 +196,18 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_city"
       >
         personal_details.city
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20 _error_859b20"
@@ -220,13 +234,18 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_state"
       >
         personal_details.state
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20 _error_859b20"
@@ -253,13 +272,18 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_postcode"
       >
         personal_details.post_code
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20 _error_859b20"
@@ -286,13 +310,18 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_phonenumber"
       >
         personal_details.phone_number
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20 _error_859b20"
@@ -319,27 +348,26 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_dateField_eb6974 _error_eb6974"
-      id="text-field_1235_birthdate"
+      class="_formField_86f2f5 _dateField_0addad _error_0addad"
     >
       <label
-        class="_label_eb6974"
+        class="_label_86f2f5"
         for="text-field_1235_birthdate"
       >
         personal_details.birth_date
       </label>
       <div
-        class="_container_eb6974"
+        class="_container_0addad"
       >
         <input
           aria-describedby="helper_text_1235_birthdate"
           aria-invalid="true"
-          class="_hiddenInput_eb6974"
+          class="_hiddenInput_0addad"
           id="text-field_1235_birthdate-hidden"
           name="birthDate"
         />
         <input
-          class="_input_eb6974"
+          class="_input_0addad"
           id="text-field_1235_birthdate-date"
           maxlength="2"
           name="date"
@@ -349,7 +377,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
          / 
         <input
-          class="_input_eb6974"
+          class="_input_0addad"
           id="text-field_1235_birthdate-month"
           maxlength="2"
           name="month"
@@ -359,7 +387,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
          / 
         <input
-          class="_input_eb6974"
+          class="_input_0addad"
           id="text-field_1235_birthdate-year"
           maxlength="4"
           name="year"
@@ -384,6 +412,11 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         for="text-field_1235_key1"
       >
         Which number is 2?
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_d97916 _error_d97916"
@@ -439,16 +472,13 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         class="_label_86f2f5"
         for="text-field_1235_key2"
       >
-        <span>
-          optional
-        </span>
+        Is this a question?
       </label>
       <div
         class="_radio_d50e6e"
       >
         <input
           aria-describedby="helper_text_1235_key2"
-          header="Is this a question?"
           id="text-field_1235_key20"
           name="key2"
           type="radio"
@@ -466,7 +496,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         <input
           aria-describedby="helper_text_1235_key2"
           checked=""
-          header="Is this a question?"
           id="text-field_1235_key21"
           name="key2"
           type="radio"
@@ -487,7 +516,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _checkbox_531f07 _error_531f07"
+      class="_formField_86f2f5 _checkbox_a98c3a _error_a98c3a"
     >
       <label
         class="_label_86f2f5"
@@ -496,7 +525,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         Check this off.
       </label>
       <div
-        class="_row_531f07"
+        class="_row_a98c3a"
       >
         <input
           aria-describedby="helper_text_1235_ccc"
@@ -510,7 +539,11 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         <label
           for="text-field_1235_ccc"
         >
-          * 
+          <span
+            role="presentation"
+          >
+            *
+          </span>
           CheckMe
         </label>
       </div>
@@ -547,13 +580,18 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       personal_details.title
     </h2>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_firstname"
       >
         personal_details.fist_name
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20"
@@ -573,13 +611,18 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_lastname"
       >
         personal_details.last_name
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20"
@@ -599,16 +642,13 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_companyname"
       >
         personal_details.company_name
-        <span>
-          optional
-        </span>
       </label>
       <div
         class="_container_859b20"
@@ -627,13 +667,18 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_address"
       >
         personal_details.address
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20"
@@ -653,16 +698,13 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_address2"
       >
         personal_details.address2
-        <span>
-          optional
-        </span>
       </label>
       <div
         class="_container_859b20"
@@ -681,13 +723,18 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_city"
       >
         personal_details.city
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20"
@@ -707,13 +754,18 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_state"
       >
         personal_details.state
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20"
@@ -733,13 +785,18 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_postcode"
       >
         personal_details.post_code
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20"
@@ -759,13 +816,18 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _textField_e16c1b"
+      class="_formField_86f2f5 _textField_c799b0"
     >
       <label
         class="_label_86f2f5"
         for="text-field_1235_phonenumber"
       >
         personal_details.phone_number
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_859b20"
@@ -785,27 +847,26 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="_dateField_eb6974"
-      id="text-field_1235_birthdate"
+      class="_formField_86f2f5 _dateField_0addad"
     >
       <label
-        class="_label_eb6974"
+        class="_label_86f2f5"
         for="text-field_1235_birthdate"
       >
         personal_details.birth_date
       </label>
       <div
-        class="_container_eb6974"
+        class="_container_0addad"
       >
         <input
           aria-describedby="helper_text_1235_birthdate"
           aria-invalid="false"
-          class="_hiddenInput_eb6974"
+          class="_hiddenInput_0addad"
           id="text-field_1235_birthdate-hidden"
           name="birthDate"
         />
         <input
-          class="_input_eb6974"
+          class="_input_0addad"
           id="text-field_1235_birthdate-date"
           maxlength="2"
           name="date"
@@ -815,7 +876,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         />
          / 
         <input
-          class="_input_eb6974"
+          class="_input_0addad"
           id="text-field_1235_birthdate-month"
           maxlength="2"
           name="month"
@@ -825,7 +886,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         />
          / 
         <input
-          class="_input_eb6974"
+          class="_input_0addad"
           id="text-field_1235_birthdate-year"
           maxlength="4"
           name="year"
@@ -843,6 +904,11 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         for="text-field_1235_key1"
       >
         Which number is 2?
+        <span
+          role="presentation"
+        >
+          *
+        </span>
       </label>
       <div
         class="_container_d97916"
@@ -891,16 +957,13 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         class="_label_86f2f5"
         for="text-field_1235_key2"
       >
-        <span>
-          optional
-        </span>
+        Is this a question?
       </label>
       <div
         class="_radio_d50e6e"
       >
         <input
           aria-describedby="helper_text_1235_key2"
-          header="Is this a question?"
           id="text-field_1235_key20"
           name="key2"
           type="radio"
@@ -918,7 +981,6 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         <input
           aria-describedby="helper_text_1235_key2"
           checked=""
-          header="Is this a question?"
           id="text-field_1235_key21"
           name="key2"
           type="radio"
@@ -932,7 +994,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="_formField_86f2f5 _checkbox_531f07"
+      class="_formField_86f2f5 _checkbox_a98c3a"
     >
       <label
         class="_label_86f2f5"
@@ -941,7 +1003,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         Check this off.
       </label>
       <div
-        class="_row_531f07"
+        class="_row_a98c3a"
       >
         <input
           aria-describedby="helper_text_1235_ccc"
@@ -955,7 +1017,11 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         <label
           for="text-field_1235_ccc"
         >
-          * 
+          <span
+            role="presentation"
+          >
+            *
+          </span>
           CheckMe
         </label>
       </div>

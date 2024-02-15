@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { createURL } from '@jwp/ott-common/src/utils/urlFormatting';
 import { CONFIG_QUERY_KEY } from '@jwp/ott-common/src/constants';
 import ErrorPage from '@jwp/ott-ui-react/src/components/ErrorPage/ErrorPage';
-import TextField from '@jwp/ott-ui-react/src/components/TextField/TextField';
+import TextField from '@jwp/ott-ui-react/src/components/form-fields/TextField/TextField';
 import Button from '@jwp/ott-ui-react/src/components/Button/Button';
 import ConfirmationDialog from '@jwp/ott-ui-react/src/components/ConfirmationDialog/ConfirmationDialog';
 import LoadingOverlay from '@jwp/ott-ui-react/src/components/LoadingOverlay/LoadingOverlay';

@@ -7,14 +7,14 @@ import type { CustomFormField, RegistrationFormData } from '@jwp/ott-common/type
 import { testId } from '@jwp/ott-common/src/utils/common';
 import env from '@jwp/ott-common/src/env';
 
-import TextField from '../TextField/TextField';
+import TextField from '../form-fields/TextField/TextField';
 import Button from '../Button/Button';
 import CustomRegisterField from '../CustomRegisterField/CustomRegisterField';
 import FormFeedback from '../FormFeedback/FormFeedback';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 import Link from '../Link/Link';
 import { modalURLFromLocation } from '../../utils/location';
-import PasswordField from '../PasswordField/PasswordField';
+import PasswordField from '../form-fields/PasswordField/PasswordField';
 
 import styles from './RegistrationForm.module.scss';
 

@@ -13,7 +13,7 @@ import classNames from 'classnames';
 import { useAriaAnnouncer } from '../../containers/AnnouncementProvider/AnnoucementProvider';
 import { modalURLFromLocation } from '../../utils/location';
 import Button from '../Button/Button';
-import PasswordField from '../PasswordField/PasswordField';
+import PasswordField from '../form-fields/PasswordField/PasswordField';
 import useQueryParam from '../../hooks/useQueryParam';
 import FormFeedback from '../FormFeedback/FormFeedback';
 

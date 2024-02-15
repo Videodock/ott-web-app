@@ -22,19 +22,6 @@ $disabled-gradient: linear-gradient(to top, #ddd, $disabled-bg-color 33%);
   cursor: pointer;
   grid-template-areas: 'select';
 
-  &.error {
-    border-color: theme.$text-field-error-color;
-  }
-
-  &.medium {
-    height: 48px;
-
-    .select {
-      height: 46px;
-      padding: 14px 16px;
-    }
-  }
-
   // Custom arrow
   &::after {
     z-index: 1;
@@ -47,6 +34,19 @@ $disabled-gradient: linear-gradient(to top, #ddd, $disabled-bg-color 33%);
     -webkit-clip-path: polygon(100% 0%, 0 0%, 50% 100%); /* stylelint-disable-line */
     content: '';
     justify-self: end;
+  }
+
+  &.error {
+    border-color: theme.$text-field-error-color;
+  }
+
+  &.medium {
+    height: 48px;
+
+    .select {
+      height: 46px;
+      padding: 14px 16px;
+    }
   }
 
   .select {

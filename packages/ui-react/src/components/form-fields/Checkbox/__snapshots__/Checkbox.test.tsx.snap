@@ -3,14 +3,16 @@
 exports[`<Checkbox> > renders and matches snapshot 1`] = `
 <div>
   <div
-    class="_formField_86f2f5 _checkbox_531f07"
+    class="_formField_86f2f5 _checkbox_a98c3a"
   >
     <label
       class="_label_86f2f5"
       for="text-field_1235_name"
-    />
+    >
+      label
+    </label>
     <div
-      class="_row_531f07"
+      class="_row_a98c3a"
     >
       <input
         aria-describedby="helper_text_1235_name"
@@ -21,9 +23,7 @@ exports[`<Checkbox> > renders and matches snapshot 1`] = `
       />
       <label
         for="text-field_1235_name"
-      >
-        label
-      </label>
+      />
     </div>
   </div>
 </div>

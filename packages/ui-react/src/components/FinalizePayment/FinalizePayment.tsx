@@ -73,7 +73,7 @@ const FinalizePayment = () => {
           />
         </>
       ) : (
-        <div className={styles.loading}>
+        <div>
           <Spinner />
         </div>
       )}
