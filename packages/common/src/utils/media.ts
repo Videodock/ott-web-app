@@ -55,7 +55,7 @@ export const isLiveChannel = (item: PlaylistItem): item is RequiredProperties<Pl
 export const createVideoMetaArray = (media: PlaylistItem, episodesLabel?: string) => {
   const metaData = [];
 
-  if (media.pubdate) metaData.push(new Date(media.pubdate * 1000).getFullYear());
+  if (media.pubdate) metaData.push(String(new Date(media.pubdate * 1000).getFullYear()));
   if (!episodesLabel && media.duration) metaData.push(formatDuration(media.duration));
   if (episodesLabel) metaData.push(episodesLabel);
   if (media.genre) metaData.push(media.genre);
@@ -64,12 +64,12 @@ export const createVideoMetaArray = (media: PlaylistItem, episodesLabel?: string
   return metaData;
 };
 
-export const createPlaylistMetaArray = (media: Playlist, episodesLabel?: string) => {
+export const createPlaylistMetaArray = (playlist: Playlist, episodesLabel?: string) => {
   const metaData = [];
 
   if (episodesLabel) metaData.push(episodesLabel);
-  if (media.genre) metaData.push(media.genre);
-  if (media.rating) metaData.push(media.rating);
+  if (playlist.genre) metaData.push(playlist.genre as string);
+  if (playlist.rating) metaData.push(playlist.rating as string);
 
   return metaData;
 };

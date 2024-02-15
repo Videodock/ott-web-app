@@ -1,5 +1,5 @@
-export const formatDurationTag = (seconds: number): string | null => {
-  if (!seconds) return null;
+export const formatDurationTag = (seconds: number) => {
+  if (!seconds) return '';
 
   const minutes = Math.ceil(seconds / 60);
 
@@ -16,8 +16,8 @@ export const formatDurationTag = (seconds: number): string | null => {
  * @returns string, such as '2h 24m' or '31m'
  */
 
-export const formatDuration = (duration: number): string | null => {
-  if (!duration) return null;
+export const formatDuration = (duration: number) => {
+  if (!duration) return '';
 
   const hours = Math.floor(duration / 3600);
   const minutes = Math.round((duration - hours * 3600) / 60);
