@@ -50,11 +50,11 @@
 
 .price {
   font-size: 14px;
-    line-height: variables.$base-line-height;
+  line-height: variables.$base-line-height;
+
   > strong {
     font-weight: var(--body-font-weight-bold);
     font-size: 24px;
-    line-height: variables.$base-line-height;
   }
 }
 
