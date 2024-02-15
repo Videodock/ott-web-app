@@ -2,7 +2,7 @@ import React, { type FC, Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
-import Dropdown from '../form-fields/Dropdown/Dropdown';
+import Select from '../Select/Select';
 import Button from '../Button/Button';
 
 import styles from './Filter.module.scss';
@@ -48,7 +48,7 @@ const Filter: FC<Props> = ({ name, value, defaultLabel, options, setValue, force
         </div>
       ) : (
         <div className={styles.filterDropDown}>
-          <Dropdown
+          <Select
             className={styles.dropDown}
             size="small"
             options={options}
