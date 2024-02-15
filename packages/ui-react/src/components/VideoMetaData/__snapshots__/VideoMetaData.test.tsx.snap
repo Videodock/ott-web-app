@@ -12,7 +12,7 @@ exports[`<VideoMetaData> > renders and matches snapshot 1`] = `
     |
   </span>
   <span>
-    10m
+    Comedy
   </span>
   <span
     aria-hidden="true"
@@ -21,7 +21,7 @@ exports[`<VideoMetaData> > renders and matches snapshot 1`] = `
     |
   </span>
   <span>
-    Comedy
+    something
   </span>
 </div>
 `;

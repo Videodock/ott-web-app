@@ -13,7 +13,7 @@ export const formatDurationTag = (seconds: number) => {
  * Hours are only shown if at least 1
  * Minutes get rounded
  *
- * @returns string, such as '2h 24m' or '31m'
+ * @returns string, such as '2hrs 24min' or '31min'
  */
 
 export const formatDuration = (duration: number) => {
@@ -22,8 +22,8 @@ export const formatDuration = (duration: number) => {
   const hours = Math.floor(duration / 3600);
   const minutes = Math.round((duration - hours * 3600) / 60);
 
-  const hoursString = hours ? `${hours}h ` : '';
-  const minutesString = minutes ? `${minutes}m ` : '';
+  const hoursString = hours ? `${hours}hrs ` : '';
+  const minutesString = minutes ? `${minutes}min ` : '';
 
   return `${hoursString}${minutesString}`;
 };
