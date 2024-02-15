@@ -6,7 +6,7 @@ import { shallow } from '@jwp/ott-common/src/utils/compare';
 import type { PlaylistItem } from '@jwp/ott-common/types/playlist';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
-import { createVideoMetaArray } from '@jwp/ott-common/src/utils/media';
+import { createVideoMetadata } from '@jwp/ott-common/src/utils/media';
 import { mediaURL } from '@jwp/ott-common/src/utils/urlFormatting';
 import { generateMovieJSONLD } from '@jwp/ott-common/src/utils/structuredData';
 import useMedia from '@jwp/ott-hooks-react/src/useMedia';
@@ -80,7 +80,7 @@ const MediaMovie: ScreenComponent<PlaylistItem> = ({ data, isLoading }) => {
   const pageTitle = `${data.title} - ${siteName}`;
   const canonicalUrl = data ? `${window.location.origin}${mediaURL({ media: data })}` : window.location.href;
 
-  const primaryMetadata = <VideoMetaData attributes={createVideoMetaArray(data)} />;
+  const primaryMetadata = <VideoMetaData attributes={createVideoMetadata(data)} />;
   const shareButton = <ShareButton title={data.title} description={data.description} url={canonicalUrl} />;
   const startWatchingButton = <StartWatchingButton item={data} playUrl={mediaURL({ media: data, playlistId: feedId, play: true })} />;
 

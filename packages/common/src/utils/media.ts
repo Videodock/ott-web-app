@@ -52,7 +52,7 @@ export const getLegacySeriesPlaylistIdFromEpisodeTags = (item: PlaylistItem | un
 export const isLiveChannel = (item: PlaylistItem): item is RequiredProperties<PlaylistItem, 'contentType' | 'liveChannelsId'> =>
   item.contentType?.toLowerCase() === CONTENT_TYPE.liveChannel && !!item.liveChannelsId;
 
-export const createVideoMetaArray = (media: PlaylistItem, episodesLabel?: string) => {
+export const createVideoMetadata = (media: PlaylistItem, episodesLabel?: string) => {
   const metaData = [];
 
   if (media.pubdate) metaData.push(String(new Date(media.pubdate * 1000).getFullYear()));
@@ -64,7 +64,7 @@ export const createVideoMetaArray = (media: PlaylistItem, episodesLabel?: string
   return metaData;
 };
 
-export const createPlaylistMetaArray = (playlist: Playlist, episodesLabel?: string) => {
+export const createPlaylistMetadata = (playlist: Playlist, episodesLabel?: string) => {
   const metaData = [];
 
   if (episodesLabel) metaData.push(episodesLabel);
@@ -74,7 +74,7 @@ export const createPlaylistMetaArray = (playlist: Playlist, episodesLabel?: stri
   return metaData;
 };
 
-export const createLiveEventMetaArray = (media: PlaylistItem, locale: string) => {
+export const createLiveEventMetadata = (media: PlaylistItem, locale: string) => {
   const metaData = [];
   const scheduled = formatVideoSchedule(locale, media.scheduledStart, media.scheduledEnd);
 

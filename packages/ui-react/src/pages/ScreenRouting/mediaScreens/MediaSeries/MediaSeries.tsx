@@ -10,7 +10,7 @@ import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
 import { generateEpisodeJSONLD } from '@jwp/ott-common/src/utils/structuredData';
 import { getEpisodesInSeason, getFiltersFromSeries } from '@jwp/ott-common/src/utils/series';
-import { createVideoMetaArray } from '@jwp/ott-common/src/utils/media';
+import { createVideoMetadata } from '@jwp/ott-common/src/utils/media';
 import { formatSeriesMetaString } from '@jwp/ott-common/src/utils/formatting';
 import { buildLegacySeriesUrlFromMediaItem, mediaURL } from '@jwp/ott-common/src/utils/urlFormatting';
 import { VideoProgressMinMax } from '@jwp/ott-common/src/constants';
@@ -190,7 +190,7 @@ const MediaSeries: ScreenComponent<PlaylistItem> = ({ data: seriesMedia }) => {
   const pageTitle = `${selectedItem.title} - ${siteName}`;
   const canonicalUrl = `${window.location.origin}${mediaURL({ media: seriesMedia, episodeId: episode?.mediaid })}`;
 
-  const primaryMetadata = <VideoMetaData attributes={createVideoMetaArray(selectedItem, t('video:total_episodes', { count: series.episode_count }))} />;
+  const primaryMetadata = <VideoMetaData attributes={createVideoMetadata(selectedItem, t('video:total_episodes', { count: series.episode_count }))} />;
   const secondaryMetadata = episodeMetadata && episode && (
     <>
       <strong>{formatSeriesMetaString(episodeMetadata.seasonNumber, episodeMetadata.episodeNumber)}</strong> - {episode.title}
