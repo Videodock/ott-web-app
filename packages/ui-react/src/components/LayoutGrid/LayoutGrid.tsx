@@ -145,6 +145,12 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
               aria-colindex={columnIndex}
               className={styles.cell}
               style={{ width: `${Math.round(100 / columnCount)}%` }}
+              onClick={() => {
+                setSpatialNavigation(false);
+                setFocused(false);
+                setCurrentColumnIndex(0);
+                setCurrentRowIndex(0);
+              }}
             >
               {renderCell(item, currentRowIndex === rowIndex && currentColumnIndex === columnIndex ? 0 : -1)}
             </div>
