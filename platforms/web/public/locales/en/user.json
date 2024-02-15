@@ -40,9 +40,7 @@
       "invalid_password": "Password incorrect!",
       "last_name_too_long": "Please limit Last Name to 50 characters or fewer.",
       "please_enter_valid_email": "Please enter a valid email address.",
-      "unknown_error": "An unknown error occurred"
       "unknown_error": "An unknown error occurred",
-      "validation_error": "Please correct your mistakes before proceeding."
       "validation_error": "Please correct your mistakes before proceeding.",
       "wrong_combination": "Incorrect email/password combination"
     },
