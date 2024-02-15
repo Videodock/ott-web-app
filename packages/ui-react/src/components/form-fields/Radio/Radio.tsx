@@ -1,7 +1,7 @@
 import React, { type InputHTMLAttributes } from 'react';
 
-import type { FormControlProps } from '../../types/form';
-import { FormField } from '../FormField/FormField';
+import type { FormControlProps } from '../../../types/form';
+import { FormField } from '../../FormField/FormField';
 
 import styles from './Radio.module.scss';
 

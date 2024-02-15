@@ -12,7 +12,7 @@ exports[`<Radio> > renders and matches snapshot 1`] = `
       Choose a Value
     </label>
     <div
-      class="_radio_d50e6e"
+      class="_radio_854545"
     >
       <input
         aria-describedby="helper_text_1235_radio"
@@ -29,7 +29,7 @@ exports[`<Radio> > renders and matches snapshot 1`] = `
       </label>
     </div>
     <div
-      class="_radio_d50e6e"
+      class="_radio_854545"
     >
       <input
         aria-describedby="helper_text_1235_radio"
@@ -45,7 +45,7 @@ exports[`<Radio> > renders and matches snapshot 1`] = `
       </label>
     </div>
     <div
-      class="_radio_d50e6e"
+      class="_radio_854545"
     >
       <input
         aria-describedby="helper_text_1235_radio"

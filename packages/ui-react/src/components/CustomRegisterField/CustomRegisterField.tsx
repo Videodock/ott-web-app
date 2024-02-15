@@ -6,7 +6,7 @@ import { isTruthyCustomParamValue, testId } from '@jwp/ott-common/src/utils/comm
 
 import Checkbox from '../form-fields/Checkbox/Checkbox';
 import TextField from '../form-fields/TextField/TextField';
-import Radio from '../Radio/Radio';
+import Radio from '../form-fields/Radio/Radio';
 import Dropdown from '../form-fields/Dropdown/Dropdown';
 import DateField from '../form-fields/DateField/DateField';
 

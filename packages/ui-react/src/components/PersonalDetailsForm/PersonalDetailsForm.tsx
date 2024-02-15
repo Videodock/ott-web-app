@@ -8,7 +8,7 @@ import TextField from '../form-fields/TextField/TextField';
 import Button from '../Button/Button';
 import Dropdown from '../form-fields/Dropdown/Dropdown';
 import Checkbox from '../form-fields/Checkbox/Checkbox';
-import Radio from '../Radio/Radio';
+import Radio from '../form-fields/Radio/Radio';
 import DateField from '../form-fields/DateField/DateField';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 import FormFeedback from '../FormFeedback/FormFeedback';
