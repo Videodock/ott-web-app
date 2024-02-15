@@ -347,6 +347,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           name="birthDate"
         />
         <input
+          autocomplete="bday-day"
           class="_input_eb6974"
           id="text-field_1235_birthdate-date"
           maxlength="2"
@@ -357,6 +358,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
          / 
         <input
+          autocomplete="bday-month"
           class="_input_eb6974"
           id="text-field_1235_birthdate-month"
           maxlength="2"
@@ -367,6 +369,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
         />
          / 
         <input
+          autocomplete="bday-year"
           class="_input_eb6974"
           id="text-field_1235_birthdate-year"
           maxlength="4"
@@ -819,6 +822,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
           name="birthDate"
         />
         <input
+          autocomplete="bday-day"
           class="_input_eb6974"
           id="text-field_1235_birthdate-date"
           maxlength="2"
@@ -829,6 +833,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         />
          / 
         <input
+          autocomplete="bday-month"
           class="_input_eb6974"
           id="text-field_1235_birthdate-month"
           maxlength="2"
@@ -839,6 +844,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
         />
          / 
         <input
+          autocomplete="bday-year"
           class="_input_eb6974"
           id="text-field_1235_birthdate-year"
           maxlength="4"

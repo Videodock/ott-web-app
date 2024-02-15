@@ -66,7 +66,7 @@ const EditPasswordForm: React.FC<Props> = ({
           required
         />
       )}
-      {true && (
+      {showResetTokenField && (
         <TextField
           className={styles.textField}
           value={value.resetPasswordToken || ''}
