@@ -19,6 +19,7 @@ const scrollIntoViewThrottled = throttle(function (focusedElement: HTMLElement) 
 
 const LayoutGrid = <Item extends object>({ className, columnCount, data, renderCell }: Props<Item>) => {
   const [focused, setFocused] = useState(false);
+  const [spatialNavigation, setSpatialNavigation] = useState(false);
   const [currentRowIndex, setCurrentRowIndex] = useState(0);
   const [currentColumnIndex, setCurrentColumnIndex] = useState(0);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -39,6 +40,8 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
     const isOnLastRow = currentRowIndex === rowCount - 1;
     const maxRightLastRow = (data.length % columnCount || columnCount) - 1; // Never go beyond last item
     const maxRight = isOnLastRow ? maxRightLastRow : columnCount - 1;
+
+    setSpatialNavigation(true);
 
     switch (key) {
       case 'ArrowLeft':
@@ -112,9 +115,11 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
 
     if (!elementToFocus) return;
 
-    elementToFocus.focus();
-    scrollIntoViewThrottled(elementToFocus);
-  }, [focused, currentRowIndex, currentColumnIndex]);
+    if (spatialNavigation) {
+      elementToFocus.focus();
+      scrollIntoViewThrottled(elementToFocus);
+    }
+  }, [focused, spatialNavigation, currentRowIndex, currentColumnIndex]);
 
   // When the window size changes, correct indexes if necessary
   useEffect(() => {
