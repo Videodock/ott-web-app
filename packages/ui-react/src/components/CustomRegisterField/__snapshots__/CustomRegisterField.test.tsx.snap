@@ -233,7 +233,11 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Radio> 1`] = `
 <div>
   <div
     class="_formField_86f2f5"
-  />
+  >
+    <div
+      id="text-field_1235_name"
+    />
+  </div>
 </div>
 `;
 

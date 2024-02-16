@@ -14,7 +14,7 @@ export type CustomRegisterFieldCommonProps = {
   type?: CustomRegisterFieldVariant;
   name: string;
   value: string | boolean;
-  onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onChange: ChangeEventHandler;
 } & Partial<{
   label: ReactNode;
   placeholder: string;

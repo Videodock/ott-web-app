@@ -17,7 +17,7 @@ type Props = {
   renderInput: (fieldProps: RenderInputProps) => React.ReactElement;
 } & Omit<FormControlProps, 'value' | 'placeholder'>;
 
-export const FormField = ({ className, renderInput, required, label, error, helperText, testId, editing, name }: Props) => {
+export const FormField = ({ className, renderInput, required, label, error, helperText, testId, editing = true, name }: Props) => {
   const formFieldClassName = classNames(styles.formField, className);
   const id = useOpaqueId('text-field', name);
   const helperTextId = useOpaqueId('helper_text', name);
@@ -31,9 +31,11 @@ export const FormField = ({ className, renderInput, required, label, error, help
         </label>
       )}
       {renderInput({ helperTextId, id })}
-      <HelperText id={helperTextId} error={error}>
-        {helperText}
-      </HelperText>
+      {editing ? (
+        <HelperText id={helperTextId} error={error}>
+          {helperText}
+        </HelperText>
+      ) : null}
     </div>
   );
 };

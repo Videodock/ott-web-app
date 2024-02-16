@@ -28,20 +28,6 @@
     }
   }
 
-  .header {
-    display: inline-block;
-    width: 100%;
-    margin-bottom: 8px;
-    font-weight: var(--body-font-weight-bold);
-    text-align: left;
-
-    > span {
-      float: right;
-      color: rgba(variables.$white, 0.7);
-      font-weight: normal;
-    }
-  }
-
   input {
     display: inline-flex;
     flex-shrink: 0;
@@ -99,11 +85,4 @@
 .row {
   display: flex;
   align-items: center;
-}
-
-.helperTextError {
-  margin-top: -5px;
-  margin-left: 35px;
-  color: theme.$text-field-error-color;
-  font-size: 10px;
 }

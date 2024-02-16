@@ -1,23 +1,18 @@
 @use '@jwp/ott-ui-react/src/styles/variables';
 @use '@jwp/ott-ui-react/src/styles/theme';
 
-.header {
-  display: flex;
-  margin-bottom: 8px;
-  font-weight: var(--body-font-weight-bold);
-  text-align: left;
-
-  > span.note {
-    margin-left: auto;
-    color: rgba(variables.$white, 0.7);
-    font-weight: normal;
-  }
-}
-
 .radio {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+
+  &.error {
+    input {
+      &:not(:checked) {
+        border: 2px solid theme.$input-field-error-color;
+      }
+    }
+  }
 
   > label {
     margin-left: calc(#{variables.$base-spacing} / 2);

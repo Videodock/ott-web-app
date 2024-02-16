@@ -17,7 +17,7 @@ import styles from './PersonalDetailsForm.module.scss';
 
 type Props = {
   onSubmit: React.FormEventHandler<HTMLFormElement>;
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onChange: React.ChangeEventHandler;
   setValue: (key: keyof PersonalDetailsFormData, value: string) => void;
   error?: string;
   errors: FormErrors<PersonalDetailsFormData>;
@@ -25,7 +25,7 @@ type Props = {
   submitting: boolean;
   fields: Record<string, CleengCaptureField>;
   questions: CleengCaptureQuestionField[];
-  onQuestionChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onQuestionChange: React.ChangeEventHandler;
   questionValues: Record<string, string>;
   questionErrors: Record<string, string>;
 };

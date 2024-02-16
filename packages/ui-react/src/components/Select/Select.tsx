@@ -24,6 +24,7 @@ const Select = ({
   optionsStyle,
   editing = true,
   value,
+  onChange,
   id,
   name,
   error,
@@ -31,6 +32,13 @@ const Select = ({
   type,
   ...rest
 }: Props) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!editing) {
+      return event.preventDefault();
+    }
+    onChange?.(event);
+  };
+
   // Default to 'text' if 'type' property is absent, which occurs in textareas.
   const containerClassName = classNames(
     styles.container,
@@ -60,8 +68,8 @@ const Select = ({
   };
 
   return (
-    <div className={containerClassName}>
-      <select {...inputProps}>
+    <div className={classNames({ [containerClassName]: editing })}>
+      <select {...inputProps} onChange={handleChange}>
         {defaultLabel && (
           <option className={classNames(styles.option, optionsStyle)} value="" disabled={required}>
             {defaultLabel}

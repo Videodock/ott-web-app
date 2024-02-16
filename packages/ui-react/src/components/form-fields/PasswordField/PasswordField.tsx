@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type InputHTMLAttributes } from 'react';
 import { useTranslation } from 'react-i18next';
 import useToggle from '@jwp/ott-hooks-react/src/useToggle';
 import Visibility from '@jwp/ott-theme/assets/icons/visibility.svg?react';
@@ -10,9 +10,9 @@ import IconButton from '../../IconButton/IconButton';
 import Icon from '../../Icon/Icon';
 import type { FormControlProps } from '../../../types/form';
 
-type Props = {
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>;
+
+type Props = InputProps & {
   helperText?: React.ReactNode;
   showToggleView?: boolean;
   showHelperText?: boolean;

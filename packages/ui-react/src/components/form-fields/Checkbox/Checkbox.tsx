@@ -9,14 +9,32 @@ import styles from './Checkbox.module.scss';
 type HTMLCheckboxProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>;
 
 type Props = HTMLCheckboxProps & {
-  checked?: boolean;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
   checkboxLabel?: React.ReactNode;
   helperText?: React.ReactNode;
 } & FormControlProps;
 
-const Checkbox: React.FC<Props> = ({ className, label, checkboxLabel, name, onChange, editing, value, helperText, error, required, lang, size, ...rest }) => {
+const Checkbox: React.FC<Props> = ({
+  className,
+  label,
+  checkboxLabel,
+  name,
+  onChange,
+  editing = true,
+  value,
+  helperText,
+  error,
+  required,
+  lang,
+  size,
+  ...rest
+}) => {
   const fieldClassName = classNames(styles.checkbox, { [styles.error]: error }, className);
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    if (!editing) {
+      return event.preventDefault();
+    }
+    onChange?.(event);
+  };
 
   return (
     <FormField
@@ -29,7 +47,17 @@ const Checkbox: React.FC<Props> = ({ className, label, checkboxLabel, name, onCh
       helperText={helperText}
       renderInput={({ id, helperTextId }) => (
         <div className={styles.row}>
-          <input name={name} type="checkbox" id={id} value={value} onChange={onChange} aria-required={required} aria-describedby={helperTextId} {...rest} />
+          <input
+            name={name}
+            type="checkbox"
+            id={id}
+            value={value}
+            aria-required={required}
+            aria-describedby={helperTextId}
+            {...rest}
+            onChange={handleChange}
+            readOnly={!editing}
+          />
           <label htmlFor={id} lang={lang}>
             {required ? <span role="presentation">*</span> : ''}
             {checkboxLabel}

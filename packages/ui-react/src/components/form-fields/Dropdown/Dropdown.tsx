@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { type InputHTMLAttributes } from 'react';
 
 import { FormField } from '../../FormField/FormField';
 import Select from '../../Select/Select';
 import type { FormControlProps } from '../../../types/form';
 
-type Props = {
+type SelectProps = Omit<InputHTMLAttributes<HTMLSelectElement>, 'size'>;
+
+type Props = SelectProps & {
   defaultLabel?: string;
   options?: (string | { value: string; label: string })[];
   optionsStyle?: string;
-  onChange: React.ChangeEventHandler;
   helperText?: React.ReactNode;
 } & FormControlProps;
 

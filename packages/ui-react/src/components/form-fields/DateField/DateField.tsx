@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { type InputHTMLAttributes, useRef, useState } from 'react';
 import classNames from 'classnames';
 import useOpaqueId from '@jwp/ott-hooks-react/src/useOpaqueId';
 
@@ -7,10 +7,10 @@ import type { FormControlProps } from '../../../types/form';
 
 import styles from './DateField.module.scss';
 
-type Props = {
+type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>;
+
+type Props = InputProps & {
   format?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  onFocus?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   helperText?: React.ReactNode;
 } & FormControlProps;
 

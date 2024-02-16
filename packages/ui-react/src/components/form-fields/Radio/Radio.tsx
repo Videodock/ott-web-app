@@ -1,4 +1,5 @@
 import React, { type InputHTMLAttributes } from 'react';
+import classNames from 'classnames';
 
 import type { FormControlProps } from '../../../types/form';
 import { FormField } from '../../FormField/FormField';
@@ -10,10 +11,16 @@ type HTMLRadioProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>;
 type Props = HTMLRadioProps & {
   values: { value: string; label: string }[];
   helperText?: React.ReactNode;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
 } & FormControlProps;
 
-const Radio: React.FC<Props> = ({ name, onChange, label, value, size, values, helperText, error, required, disabled, lang, ...rest }) => {
+const Radio: React.FC<Props> = ({ name, onChange, label, value, editing = true, size, values, helperText, error, required, disabled, lang, ...rest }) => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    if (!editing) {
+      return event.preventDefault();
+    }
+    onChange?.(event);
+  };
+
   return (
     <FormField
       name={name}
@@ -22,15 +29,15 @@ const Radio: React.FC<Props> = ({ name, onChange, label, value, size, values, he
       helperText={helperText}
       required={required}
       renderInput={({ id, helperTextId }) => (
-        <>
+        <div id={id}>
           {values.map(({ value: optionValue, label: optionLabel }, index) => (
-            <div className={styles.radio} key={index} lang={lang}>
+            <div className={classNames(styles.radio, { [styles.error]: error })} key={index} lang={lang}>
               <input
                 value={optionValue}
                 name={name}
                 type="radio"
                 id={id + index}
-                onChange={onChange}
+                onChange={handleChange}
                 checked={value === optionValue}
                 required={required}
                 disabled={disabled}
@@ -40,7 +47,7 @@ const Radio: React.FC<Props> = ({ name, onChange, label, value, size, values, he
               <label htmlFor={id + index}>{optionLabel}</label>
             </div>
           ))}
-        </>
+        </div>
       )}
     />
   );
