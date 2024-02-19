@@ -54,16 +54,16 @@ $disabled-gradient: linear-gradient(to top, #ddd, $disabled-bg-color 33%);
     grid-area: select;
   }
 
-  & .disabled {
-    background-color: $disabled-bg-color;
-    background-image: $disabled-gradient;
+  &.disabled {
     cursor: not-allowed;
   }
 
   &:hover,
   &:focus-within {
-    border-color: $select-focus;
-    outline: none;
+    &:not(.disabled) {
+      border-color: $select-focus;
+      outline: none;
+    }
   }
 }
 

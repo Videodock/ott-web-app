@@ -28,16 +28,14 @@
     padding-right: 0;
   }
 
-  &:focus-within {
+  &:focus-within:not(.disabled) {
     color: theme.$text-field-active-color;
     border-color: theme.$text-field-active-border-color;
   }
 
-  &:hover {
-    &:not(.disabled) {
-      background-color: theme.$text-field-hover-bg-color;
-      border-color: theme.$text-field-hover-border-color;
-    }
+  &:hover:not(.disabled) {
+    background-color: theme.$text-field-hover-bg-color;
+    border-color: theme.$text-field-hover-border-color;
   }
 }
 

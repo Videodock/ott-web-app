@@ -26,12 +26,22 @@
     height: 20px;
     margin: 0;
     border-radius: 15px;
+    cursor: pointer;
     transition: all 0.1s;
     appearance: none;
 
+    &:disabled {
+      opacity: 0.6;
+      pointer-events: none;
+
+      + label {
+        pointer-events: none;
+      }
+    }
+
     &:not(:checked) {
       border: 2px solid theme.$input-resting-border-color;
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: theme.$input-hover-border-color;
       }
     }
