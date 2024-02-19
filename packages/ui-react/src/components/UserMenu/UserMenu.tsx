@@ -128,10 +128,7 @@ const UserMenu = ({
             />
           </li>
         )}
-        <li role="presentation">
-          <hr className={classNames(styles.divider, { [styles.small]: small })} />
-        </li>
-        <li>
+        <li className={classNames(styles.divider, { [styles.small]: small })}>
           <MenuButton small={small} onClick={onLogout} label={t('nav.logout')} startIcon={<Icon icon={Exit} />} tabIndex={tabIndex} />
         </li>
       </ul>
