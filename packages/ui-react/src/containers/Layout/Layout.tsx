@@ -216,11 +216,11 @@ const Layout = () => {
       <Sidebar isOpen={sideBarOpen} onClose={() => setSideBarOpen(false)}>
         <ul>
           <li>
-            <MenuButton label={t('home')} to="/" tabIndex={sideBarOpen ? 0 : -1} />
+            <MenuButton label={t('home')} to="/" />
           </li>
           {menu.map((item) => (
             <li key={item.contentId}>
-              <MenuButton label={item.label} to={playlistURL(item.contentId)} tabIndex={sideBarOpen ? 0 : -1} />
+              <MenuButton label={item.label} to={playlistURL(item.contentId)} />
             </li>
           ))}
         </ul>
