@@ -7,6 +7,7 @@ import IconButton from '../../components/IconButton/IconButton';
 import PlayerContainer from '../PlayerContainer/PlayerContainer';
 import Fade from '../../components/Animation/Fade/Fade';
 import Icon from '../../components/Icon/Icon';
+import Modal from '../../components/Modal/Modal';
 
 import styles from './Cinema.module.scss';
 
@@ -85,7 +86,7 @@ const Cinema: React.FC<Props> = ({
   }, [open]);
 
   return (
-    <Fade open={open} className={styles.fade}>
+    <Modal open={open}>
       <div className={styles.cinema}>
         <PlayerContainer
           item={item}
@@ -102,8 +103,7 @@ const Cinema: React.FC<Props> = ({
           liveFromBeginning={liveFromBeginning}
           liveStartDateTime={liveStartDateTime}
         />
-
-        <Fade open={!isPlaying || userActive}>
+        <Fade open={!isPlaying || userActive} keepMounted>
           <div className={styles.playerOverlay}>
             <div className={styles.playerContent}>
               <IconButton aria-label={t('common:back')} onClick={onClose} className={styles.backButton}>
@@ -120,7 +120,7 @@ const Cinema: React.FC<Props> = ({
           </div>
         </Fade>
       </div>
-    </Fade>
+    </Modal>
   );
 };
 
