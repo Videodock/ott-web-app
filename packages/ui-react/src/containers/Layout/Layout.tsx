@@ -224,7 +224,6 @@ const Layout = () => {
             </li>
           ))}
         </ul>
-        <hr className={styles.divider} />
         {renderUserActions(sideBarOpen)}
       </Sidebar>
     </div>
