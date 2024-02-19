@@ -26,7 +26,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         personal_details.fist_name
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -64,7 +64,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         personal_details.last_name
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -134,7 +134,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         personal_details.address
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -204,7 +204,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         personal_details.city
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -242,7 +242,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         personal_details.state
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -280,7 +280,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         personal_details.post_code
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -318,7 +318,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         personal_details.phone_number
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -356,7 +356,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         personal_details.birth_date
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -418,7 +418,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         Which number is 2?
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -533,7 +533,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         Check this off.
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -602,7 +602,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       >
         personal_details.fist_name
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -633,7 +633,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       >
         personal_details.last_name
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -689,7 +689,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       >
         personal_details.address
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -745,7 +745,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       >
         personal_details.city
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -776,7 +776,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       >
         personal_details.state
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -807,7 +807,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       >
         personal_details.post_code
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -838,7 +838,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       >
         personal_details.phone_number
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -869,7 +869,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       >
         personal_details.birth_date
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -924,7 +924,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       >
         Which number is 2?
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -1025,7 +1025,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
       >
         Check this off.
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>

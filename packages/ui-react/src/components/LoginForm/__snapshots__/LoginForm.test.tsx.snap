@@ -40,7 +40,7 @@ exports[`<LoginForm> > renders and matches snapshot 1`] = `
       >
         login.email
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -72,7 +72,7 @@ exports[`<LoginForm> > renders and matches snapshot 1`] = `
       >
         login.password
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>

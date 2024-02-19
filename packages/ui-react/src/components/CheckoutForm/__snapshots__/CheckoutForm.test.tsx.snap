@@ -93,7 +93,7 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
               >
                 checkout.card_holder_name
                 <span
-                  role="presentation"
+                  aria-hidden="true"
                 >
                   *
                 </span>
@@ -126,7 +126,7 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
               >
                 Card number
                 <span
-                  role="presentation"
+                  aria-hidden="true"
                 >
                   *
                 </span>
@@ -163,7 +163,7 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
                 >
                   Expiry date
                   <span
-                    role="presentation"
+                    aria-hidden="true"
                   >
                     *
                   </span>
@@ -197,7 +197,7 @@ exports[`<CheckoutForm> > renders and matches snapshot 1`] = `
                 >
                   payment.security_code
                   <span
-                    role="presentation"
+                    aria-hidden="true"
                   >
                     *
                   </span>

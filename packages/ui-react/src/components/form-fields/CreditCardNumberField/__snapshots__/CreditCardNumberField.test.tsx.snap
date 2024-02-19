@@ -11,7 +11,7 @@ exports[`<CreditCardNumberField> > renders and matches snapshot 1`] = `
     >
       Card number
       <span
-        role="presentation"
+        aria-hidden="true"
       >
         *
       </span>

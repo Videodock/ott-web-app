@@ -24,18 +24,18 @@ export const FormField = ({ className, renderInput, required, label, error, help
 
   return (
     <div className={formFieldClassName} data-testid={testId}>
-      {label && (
+      {!!label && (
         <label htmlFor={id} className={styles.label}>
           {label}
-          {required && editing ? <span role="presentation">*</span> : null}
+          {required && editing ? <span aria-hidden="true">*</span> : null}
         </label>
       )}
       {renderInput({ helperTextId, id })}
-      {editing ? (
+      {editing && (
         <HelperText id={helperTextId} error={error}>
           {helperText}
         </HelperText>
-      ) : null}
+      )}
     </div>
   );
 };

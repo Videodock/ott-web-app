@@ -11,7 +11,7 @@ exports[`<CreditCardCVCField> > renders and matches snapshot 1`] = `
     >
       payment.security_code
       <span
-        role="presentation"
+        aria-hidden="true"
       >
         *
       </span>

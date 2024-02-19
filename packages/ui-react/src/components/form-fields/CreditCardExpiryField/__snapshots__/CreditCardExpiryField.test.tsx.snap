@@ -11,7 +11,7 @@ exports[`<CreditCardExpiryField> > renders and matches snapshot 1`] = `
     >
       Expiry date
       <span
-        role="presentation"
+        aria-hidden="true"
       >
         *
       </span>

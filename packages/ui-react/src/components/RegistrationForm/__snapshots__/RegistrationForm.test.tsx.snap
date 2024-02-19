@@ -21,7 +21,7 @@ exports[`<RegistrationForm> > renders and matches snapshot 1`] = `
       >
         registration.email
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
@@ -52,7 +52,7 @@ exports[`<RegistrationForm> > renders and matches snapshot 1`] = `
       >
         registration.password
         <span
-          role="presentation"
+          aria-hidden="true"
         >
           *
         </span>
