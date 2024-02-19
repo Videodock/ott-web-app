@@ -75,14 +75,7 @@ const Cinema: React.FC<Props> = ({
 
   // effects
   useEffect(() => {
-    if (open) {
-      setUserActive(true);
-      document.body.style.overflowY = 'hidden';
-    }
-
-    return () => {
-      document.body.style.overflowY = '';
-    };
+    if (open) setUserActive(true);
   }, [open]);
 
   return (
