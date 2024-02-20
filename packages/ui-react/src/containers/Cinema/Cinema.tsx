@@ -79,23 +79,8 @@ const Cinema: React.FC<Props> = ({
   }, [open]);
 
   return (
-    <Modal open={open} animationContainerClassName={styles.cinemaContainer}>
+    <Modal open={open} animationContainerClassName={styles.cinemaContainer} onClose={onClose}>
       <div className={styles.cinema}>
-        <PlayerContainer
-          item={item}
-          seriesItem={seriesItem}
-          feedId={feedId}
-          autostart={true}
-          onPlay={handlePlay}
-          onPause={handlePause}
-          onComplete={handleComplete}
-          onUserActive={handleUserActive}
-          onUserInActive={handleUserInactive}
-          onNext={handleNext}
-          liveEndDateTime={liveEndDateTime}
-          liveFromBeginning={liveFromBeginning}
-          liveStartDateTime={liveStartDateTime}
-        />
         <Fade open={!isPlaying || userActive} keepMounted>
           <div className={styles.playerOverlay}>
             <div className={styles.playerContent}>
@@ -112,6 +97,21 @@ const Cinema: React.FC<Props> = ({
             </div>
           </div>
         </Fade>
+        <PlayerContainer
+          item={item}
+          seriesItem={seriesItem}
+          feedId={feedId}
+          autostart={true}
+          onPlay={handlePlay}
+          onPause={handlePause}
+          onComplete={handleComplete}
+          onUserActive={handleUserActive}
+          onUserInActive={handleUserInactive}
+          onNext={handleNext}
+          liveEndDateTime={liveEndDateTime}
+          liveFromBeginning={liveFromBeginning}
+          liveStartDateTime={liveStartDateTime}
+        />
       </div>
     </Modal>
   );
