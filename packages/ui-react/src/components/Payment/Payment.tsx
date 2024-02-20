@@ -341,7 +341,7 @@ const Payment = ({
                   <span>{transaction.transactionId}</span>
                 </p>
                 <div className={styles.transactionDetails}>
-                  <div className={styles.transationPrice}>
+                  <div className={styles.transactionPrice}>
                     {!isGrantedSubscription &&
                       t('user:payment.price_paid_with', {
                         price: formatPrice(parseFloat(transaction.transactionPriceInclTax), transaction.transactionCurrency, transaction.customerCountry),
