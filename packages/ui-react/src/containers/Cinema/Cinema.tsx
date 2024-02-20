@@ -79,7 +79,7 @@ const Cinema: React.FC<Props> = ({
   }, [open]);
 
   return (
-    <Modal open={open}>
+    <Modal open={open} animationContainerClassName={styles.cinemaContainer}>
       <div className={styles.cinema}>
         <PlayerContainer
           item={item}
