@@ -38,7 +38,7 @@ const MenuButton: React.FC<Props> = ({ label, to, onClick, onBlur, onFocus, tabI
   }
 
   return (
-    <div onBlur={onBlur} onFocus={onFocus} className={getClassName(active)} onClick={onClick} tabIndex={tabIndex} {...rest}>
+    <div role="button" onBlur={onBlur} onFocus={onFocus} className={getClassName(active)} onClick={onClick} tabIndex={tabIndex} {...rest}>
       {icon}
       <span className={styles.label}>{label}</span>
     </div>
