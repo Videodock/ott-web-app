@@ -11,6 +11,7 @@ import ExternalLink from '@jwp/ott-theme/assets/icons/external_link.svg?react';
 import PayPal from '@jwp/ott-theme/assets/icons/paypal.svg?react';
 import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 import useOpaqueId from '@jwp/ott-hooks-react/src/useOpaqueId';
+import classNames from 'classnames';
 
 import IconButton from '../IconButton/IconButton';
 import Alert from '../Alert/Alert';
@@ -316,7 +317,7 @@ const Payment = ({
                 />
               </div>
               <Button
-                className={`${canUpdatePaymentMethod ? styles.editCard : ''}`}
+                className={classNames({ [styles.editCard]: canUpdatePaymentMethod })}
                 label={t('account:payment.edit_card')}
                 variant="outlined"
                 onClick={onEditCardDetailsClick}
