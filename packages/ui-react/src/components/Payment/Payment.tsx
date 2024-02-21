@@ -315,7 +315,12 @@ const Payment = ({
                   autoComplete="cc-csc"
                 />
               </div>
-              <Button label={t('account:payment.edit_card')} variant="outlined" onClick={onEditCardDetailsClick} />
+              <Button
+                className={`${canUpdatePaymentMethod ? styles.editCard : ''}`}
+                label={t('account:payment.edit_card')}
+                variant="outlined"
+                onClick={onEditCardDetailsClick}
+              />
             </div>
           )
         ) : (
