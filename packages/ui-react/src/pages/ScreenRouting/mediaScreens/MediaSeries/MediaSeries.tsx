@@ -136,7 +136,12 @@ const MediaSeries: ScreenComponent<PlaylistItem> = ({ data: seriesMedia }) => {
   // Effects
   useEffect(() => {
     (document.scrollingElement || document.body).scroll({ top: 0 });
-    (document.querySelector('#video-details button') as HTMLElement)?.focus();
+
+    // Delay focusing on 'Start watching' button until scrolling completes,
+    // ensuring proper focus on screenreaders
+    setTimeout(() => {
+      (document.querySelector('#video-details button') as HTMLElement)?.focus();
+    }, 100);
   }, [episode]);
 
   useEffect(() => {
