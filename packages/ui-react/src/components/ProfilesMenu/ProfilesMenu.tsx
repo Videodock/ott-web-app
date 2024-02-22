@@ -1,4 +1,3 @@
-import type { UseMutateFunction } from 'react-query';
 import Plus from '@jwp/ott-theme/assets/icons/plus.svg?react';
 import type { Profile } from '@jwp/ott-common/types/profiles';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +15,7 @@ type ProfilesMenuProps = {
   currentProfile?: Profile | null;
   small?: boolean;
   selectingProfile: boolean;
-  selectProfile?: UseMutateFunction<unknown, unknown, { id: string; avatarUrl: string }, unknown>;
+  selectProfile?: ({ avatarUrl, id }: { avatarUrl: string; id: string }) => void;
   onButtonClick?: () => void;
 };
 
