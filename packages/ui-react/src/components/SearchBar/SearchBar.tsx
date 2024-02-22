@@ -18,25 +18,31 @@ export type Props = {
 
 const SearchBar: React.FC<Props> = ({ query, onQueryChange, onClearButtonClick, onClose, inputRef }: Props) => {
   const { t } = useTranslation('search');
+  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    inputRef?.current?.blur();
+  };
 
   return (
     <div className={styles.searchBar}>
       <Icon icon={Search} className={styles.icon} />
-      <input
-        className={styles.input}
-        type="search"
-        value={query}
-        onChange={onQueryChange}
-        onKeyDown={(event) => event.key === 'Escape' && onClose?.()}
-        aria-label={t('search_bar.search_label')}
-        placeholder={t('search_bar.search_placeholder')}
-        ref={inputRef}
-      />
-      {query ? (
-        <IconButton className={styles.clearButton} aria-label={t('search_bar.clear_search_label')} onClick={onClearButtonClick}>
-          <Icon icon={Cancel} />
-        </IconButton>
-      ) : null}
+      <form className={styles.searchForm} role="search" onSubmit={handleSubmit}>
+        <input
+          className={styles.input}
+          type="search"
+          value={query}
+          onChange={onQueryChange}
+          onKeyDown={(event) => event.key === 'Escape' && onClose?.()}
+          aria-label={t('search_bar.search_label')}
+          placeholder={t('search_bar.search_placeholder')}
+          ref={inputRef}
+        />
+        {query ? (
+          <IconButton className={styles.clearButton} aria-label={t('search_bar.clear_search_label')} onClick={onClearButtonClick}>
+            <Icon icon={Cancel} />
+          </IconButton>
+        ) : null}
+      </form>
     </div>
   );
 };
