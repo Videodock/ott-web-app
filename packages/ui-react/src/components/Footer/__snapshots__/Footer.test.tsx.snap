@@ -25,12 +25,11 @@ exports[`<Footer> > renders and matches snapshot with two links 1`] = `
       <li
         class="_markdown_e219e2"
       >
-        Two links 
+        Two links
       </li>
       <li
         class="_markdown_e219e2"
       >
-         
         <a
           href="https://www.jwplayer.com/"
           rel="noopener"
@@ -38,12 +37,10 @@ exports[`<Footer> > renders and matches snapshot with two links 1`] = `
         >
           jwplayer.com
         </a>
-         
       </li>
       <li
         class="_markdown_e219e2"
       >
-         
         <a
           href="https://www.jwplayer.com/"
           rel="noopener"
@@ -68,12 +65,12 @@ exports[`<Footer> > renders and matches snapshot without links 1`] = `
       <li
         class="_markdown_e219e2"
       >
-        Text one 
+        Text one
       </li>
       <li
         class="_markdown_e219e2"
       >
-         Text two
+        Text two
       </li>
     </ul>
   </footer>
