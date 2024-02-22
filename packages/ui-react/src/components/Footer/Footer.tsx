@@ -6,14 +6,11 @@ import MarkdownComponent from '../MarkdownComponent/MarkdownComponent';
 
 import styles from './Footer.module.scss';
 
-const MARKDOWN_LINK_REGEX = /\[([^[]+)]\(((https?:\/\/|www\.)?[^)]+)\)/gi;
-
 type Props = {
   text: string;
 };
 
 const Footer: React.FC<Props> = ({ text }) => {
-  const linkMatches = text.match(MARKDOWN_LINK_REGEX)?.length || 0;
   const chunks = text.split('|');
 
   return (
@@ -24,9 +21,7 @@ const Footer: React.FC<Props> = ({ text }) => {
           <MarkdownComponent key={index} markdownString={value} inline tag={chunks.length > 1 ? 'li' : 'div'} />
         ));
 
-        if (linkMatches > 0) {
-          return <nav>{chunks.length > 1 ? <ul className={styles.list}>{footerContent}</ul> : footerContent}</nav>;
-        } else if (chunks.length > 1) {
+        if (chunks.length > 1) {
           return <ul className={styles.list}>{footerContent}</ul>;
         } else {
           return footerContent;

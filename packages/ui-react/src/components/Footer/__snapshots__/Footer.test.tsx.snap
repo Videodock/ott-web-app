@@ -19,42 +19,40 @@ exports[`<Footer> > renders and matches snapshot with two links 1`] = `
   <footer
     class="_footer_33bf66 _testFixMargin_33bf66"
   >
-    <nav>
-      <ul
-        class="_list_33bf66"
+    <ul
+      class="_list_33bf66"
+    >
+      <li
+        class="_markdown_e219e2"
       >
-        <li
-          class="_markdown_e219e2"
+        Two links 
+      </li>
+      <li
+        class="_markdown_e219e2"
+      >
+         
+        <a
+          href="https://www.jwplayer.com/"
+          rel="noopener"
+          target="_blank"
         >
-          Two links 
-        </li>
-        <li
-          class="_markdown_e219e2"
+          jwplayer.com
+        </a>
+         
+      </li>
+      <li
+        class="_markdown_e219e2"
+      >
+         
+        <a
+          href="https://www.jwplayer.com/"
+          rel="noopener"
+          target="_blank"
         >
-           
-          <a
-            href="https://www.jwplayer.com/"
-            rel="noopener"
-            target="_blank"
-          >
-            jwplayer.com
-          </a>
-           
-        </li>
-        <li
-          class="_markdown_e219e2"
-        >
-           
-          <a
-            href="https://www.jwplayer.com/"
-            rel="noopener"
-            target="_blank"
-          >
-            jwplayer.com
-          </a>
-        </li>
-      </ul>
-    </nav>
+          jwplayer.com
+        </a>
+      </li>
+    </ul>
   </footer>
 </div>
 `;
