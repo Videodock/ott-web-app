@@ -19,9 +19,15 @@ exports[`<SearchBar> > renders and matches snapshot 1`] = `
       class="_searchForm_3bb1d7"
       role="search"
     >
+      <label
+        class="hidden"
+        for="searchbar-input"
+      >
+        search_bar.search_label
+      </label>
       <input
-        aria-label="search_bar.search_label"
         class="_input_3bb1d7"
+        id="searchbar-input"
         placeholder="search_bar.search_placeholder"
         type="search"
         value="My search query"

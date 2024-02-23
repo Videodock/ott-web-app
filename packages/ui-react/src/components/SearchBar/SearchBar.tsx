@@ -20,20 +20,24 @@ const SearchBar: React.FC<Props> = ({ query, onQueryChange, onClearButtonClick, 
   const { t } = useTranslation('search');
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    inputRef?.current?.blur();
+    inputRef?.current.focus(); // Force hide mobile keyboard
+    (document.querySelector('#content') as HTMLElement)?.focus();
   };
 
   return (
     <div className={styles.searchBar}>
       <Icon icon={Search} className={styles.icon} />
       <form className={styles.searchForm} role="search" onSubmit={handleSubmit}>
+        <label htmlFor="searchbar-input" className="hidden">
+          {t('search_bar.search_label')}
+        </label>
         <input
           className={styles.input}
+          id="searchbar-input"
           type="search"
           value={query}
           onChange={onQueryChange}
           onKeyDown={(event) => event.key === 'Escape' && onClose?.()}
-          aria-label={t('search_bar.search_label')}
           placeholder={t('search_bar.search_placeholder')}
           ref={inputRef}
         />
