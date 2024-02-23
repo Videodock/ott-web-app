@@ -25,6 +25,7 @@ type Props = {
 
 const LanguageMenu = ({ onClick, className, languages, currentLanguage, languageMenuOpen, closeLanguageMenu, openLanguageMenu }: Props) => {
   const { t } = useTranslation('menu');
+  const ariaAttributes: React.AriaAttributes = {};
 
   const handleLanguageSelect = (event: MouseEvent<HTMLElement>, code: string) => {
     event.preventDefault();
@@ -60,10 +61,12 @@ const LanguageMenu = ({ onClick, className, languages, currentLanguage, language
           <ul className={styles.menuItems}>
             {languages.map(({ code, displayName }) => {
               const menuItemClassname = classNames(styles.menuItem, { [styles.menuItemActive]: currentLanguage?.code === code });
-
+              if (currentLanguage?.code === code) {
+                ariaAttributes['aria-current'] = 'true';
+              }
               return (
                 <li key={code} className={menuItemClassname} onClick={(event) => handleLanguageSelect(event, code)}>
-                  <Link onFocus={openLanguageMenu} onBlur={closeLanguageMenu} href="#">
+                  <Link onFocus={openLanguageMenu} onBlur={closeLanguageMenu} href="#" {...ariaAttributes}>
                     {displayName}
                   </Link>
                 </li>
