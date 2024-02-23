@@ -19,12 +19,7 @@ const MediaHub: ScreenComponent<PlaylistItem> = ({ data }) => {
   // Effects
   useEffect(() => {
     (document.scrollingElement || document.body).scroll({ top: 0 });
-
-    // Delay focusing on 'Start watching' button until scrolling completes,
-    // ensuring proper focus on screenreaders
-    setTimeout(() => {
-      (document.querySelector('#video-details button') as HTMLElement)?.focus();
-    }, 100);
+    (document.querySelector('#video-details button') as HTMLElement)?.focus();
   }, [data]);
 
   return (
