@@ -24,5 +24,44 @@ exports[`<LanguageMenu> > renders and matches snapshot 1`] = `
       />
     </svg>
   </div>
+  <div
+    style="transition: transform 0.25s ease, opacity 0.25s ease; transform: translate(15px, 0); opacity: 0; z-index: 15; position: relative;"
+  >
+    <div
+      class="_popover_9be12f"
+    >
+      <div
+        class="_panel_505028"
+        id="language-panel"
+      >
+        <ul
+          class="_menuItems_0acc33"
+        >
+          <li
+            class="_menuItem_0acc33 _menuItemActive_0acc33"
+          >
+            <a
+              aria-current="true"
+              class="_link_a14c64"
+              href="#"
+            >
+              English
+            </a>
+          </li>
+          <li
+            class="_menuItem_0acc33"
+          >
+            <a
+              aria-current="false"
+              class="_link_a14c64"
+              href="#"
+            >
+              español
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 `;

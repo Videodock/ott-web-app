@@ -25,7 +25,6 @@ type Props = {
 
 const LanguageMenu = ({ onClick, className, languages, currentLanguage, languageMenuOpen, closeLanguageMenu, openLanguageMenu }: Props) => {
   const { t } = useTranslation('menu');
-  const ariaAttributes: React.AriaAttributes = {};
 
   const handleLanguageSelect = (event: MouseEvent<HTMLElement>, code: string) => {
     event.preventDefault();
@@ -56,17 +55,15 @@ const LanguageMenu = ({ onClick, className, languages, currentLanguage, language
       >
         <Icon icon={Language} />
       </IconButton>
-      <Popover isOpen={languageMenuOpen} onClose={closeLanguageMenu} aria-expanded={languageMenuOpen}>
+      <Popover isOpen={true} onClose={closeLanguageMenu} aria-expanded={languageMenuOpen}>
         <Panel id="language-panel">
           <ul className={styles.menuItems}>
             {languages.map(({ code, displayName }) => {
-              const menuItemClassname = classNames(styles.menuItem, { [styles.menuItemActive]: currentLanguage?.code === code });
-              if (currentLanguage?.code === code) {
-                ariaAttributes['aria-current'] = 'true';
-              }
+              const isActive = currentLanguage?.code === code;
+              const menuItemClassname = classNames(styles.menuItem, { [styles.menuItemActive]: isActive });
               return (
                 <li key={code} className={menuItemClassname} onClick={(event) => handleLanguageSelect(event, code)}>
-                  <Link onFocus={openLanguageMenu} onBlur={closeLanguageMenu} href="#" {...ariaAttributes}>
+                  <Link onFocus={openLanguageMenu} onBlur={closeLanguageMenu} href="#" aria-current={isActive}>
                     {displayName}
                   </Link>
                 </li>
