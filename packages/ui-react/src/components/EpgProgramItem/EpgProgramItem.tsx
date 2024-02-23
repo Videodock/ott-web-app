@@ -15,7 +15,7 @@ type Props = {
   isBaseTimeFormat: boolean;
 };
 
-const ProgramItem: React.VFC<Props> = ({ program, onClick, isActive, compact, disabled, isBaseTimeFormat }) => {
+const ProgramItem: React.VFC<Props> = ({ program, onClick, isActive, compact, disabled, isBaseTimeFormat, ...rest }) => {
   const {
     styles: { position },
     formatTime,
@@ -39,7 +39,7 @@ const ProgramItem: React.VFC<Props> = ({ program, onClick, isActive, compact, di
   const alt = ''; // intentionally empty for a11y, because adjacent text alternative
 
   return (
-    <div className={styles.epgProgramBox} style={position}>
+    <div className={styles.epgProgramBox} style={position} role="listitem" id={`program-${id}`}>
       <div
         className={classNames(styles.epgProgram, {
           [styles.selected]: isActive,
@@ -51,7 +51,7 @@ const ProgramItem: React.VFC<Props> = ({ program, onClick, isActive, compact, di
         onClick={() => onClick && onClick(program)}
         role="button"
         tabIndex={0}
-        id={`program-${id}`}
+        {...rest}
       >
         {showImage && <img className={styles.epgProgramImage} src={image} alt={alt} />}
         {showLiveTagInImage && <div className={styles.epgLiveTag}>{t('live')}</div>}

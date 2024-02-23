@@ -16,12 +16,12 @@ type Props = {
   title: string;
 };
 
-const EpgChannelItem: React.VFC<Props> = ({ channel, channelItemWidth, sidebarWidth, onClick, isActive, title }) => {
+const EpgChannelItem: React.VFC<Props> = ({ channel, channelItemWidth, sidebarWidth, onClick, isActive, title, ...rest }) => {
   const { position, uuid, channelLogoImage } = channel;
   const style = { top: position.top, height: position.height, width: sidebarWidth };
 
   return (
-    <div className={styles.epgChannelBox} style={style}>
+    <div className={styles.epgChannelBox} style={style} role="list" id={`channel-${channel.uuid}`} {...rest}>
       <div
         className={classNames(styles.epgChannel, { [styles.active]: isActive })}
         style={{ width: channelItemWidth }}

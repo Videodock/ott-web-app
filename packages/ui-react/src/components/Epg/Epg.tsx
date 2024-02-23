@@ -72,20 +72,25 @@ export default function Epg({ channels, selectedChannel, onChannelClick, onProgr
         <Layout
           {...getLayoutProps()}
           renderTimeline={(props) => <EpgTimeline {...props} />}
-          renderChannel={({ channel: epgChannel }) => (
-            <EpgChannelItem
-              key={epgChannel.uuid}
-              channel={epgChannel}
-              channelItemWidth={channelItemWidth}
-              sidebarWidth={sidebarWidth}
-              onClick={(toChannel) => {
-                onChannelClick(toChannel.uuid);
-                onScrollToNow();
-              }}
-              title={titlesDict[epgChannel.uuid] || ''}
-              isActive={selectedChannel?.id === epgChannel.uuid}
-            />
-          )}
+          renderChannel={({ channel: epgChannel }) => {
+            const currentChannel = channels.find((c) => c.id === epgChannel.uuid);
+            const owns = currentChannel?.programs.map((program) => `program-${program.id}`).join(' '); // Doesn't take virtualization in to account
+            return (
+              <EpgChannelItem
+                key={epgChannel.uuid}
+                channel={epgChannel}
+                channelItemWidth={channelItemWidth}
+                sidebarWidth={sidebarWidth}
+                onClick={(toChannel) => {
+                  onChannelClick(toChannel.uuid);
+                  onScrollToNow();
+                }}
+                title={titlesDict[epgChannel.uuid] || ''}
+                isActive={selectedChannel?.id === epgChannel.uuid}
+                aria-owns={owns}
+              />
+            );
+          }}
           renderProgram={({ program: programItem, isBaseTimeFormat }) => {
             const catchupHours = catchupHoursDict[programItem.data.channelUuid];
             const disabled = isBefore(new Date(programItem.data.since), subHours(new Date(), catchupHours));
