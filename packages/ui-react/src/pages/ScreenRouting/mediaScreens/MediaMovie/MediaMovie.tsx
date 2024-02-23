@@ -82,7 +82,13 @@ const MediaMovie: ScreenComponent<PlaylistItem> = ({ data, isLoading }) => {
 
   const primaryMetadata = <VideoMetaData attributes={createVideoMetadata(data)} />;
   const shareButton = <ShareButton title={data.title} description={data.description} url={canonicalUrl} />;
-  const startWatchingButton = <StartWatchingButton key={id} item={data} playUrl={mediaURL({ media: data, playlistId: feedId, play: true })} />;
+  const startWatchingButton = (
+    <StartWatchingButton
+      key={id} // necessary to fix autofocus on TalkBack
+      item={data}
+      playUrl={mediaURL({ media: data, playlistId: feedId, play: true })}
+    />
+  );
 
   const favoriteButton = isFavoritesEnabled && <FavoriteButton item={data} />;
   const trailerButton = (!!trailerItem || isTrailerLoading) && (
