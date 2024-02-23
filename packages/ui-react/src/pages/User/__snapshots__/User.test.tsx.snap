@@ -410,9 +410,7 @@ exports[`User Component tests > Favorites Page 1`] = `
           <div
             aria-rowcount="1"
             class="_container_7175d1 _cols-3_7175d1"
-            id="layout_grid"
             role="grid"
-            tabindex="-1"
           >
             <div
               aria-rowindex="0"
