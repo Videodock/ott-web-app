@@ -25,6 +25,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, children }) => {
 
   useEffect(() => {
     if (isOpen) {
+      // Before inert on the body is applied in Layout, we need to set this ref
+      lastFocusedElementRef.current = document.activeElement as HTMLElement;
+
       // When opened, adjust the margin-right to accommodate for the scrollbar width to prevent UI shifts in background
       document.body.style.marginRight = `${scrollbarSize()}px`;
       document.body.style.overflowY = 'hidden';
@@ -66,13 +69,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, children }) => {
   }, [isOpen]);
 
   useEffect(() => {
-    lastFocusedElementRef.current = document.activeElement as HTMLElement;
-
     if (visible) {
       sidebarRef.current?.querySelectorAll('a')[0]?.focus({ preventScroll: true });
     } else {
       lastFocusedElementRef.current?.focus({ preventScroll: true });
-      setVisible(false);
     }
   }, [visible]);
 
