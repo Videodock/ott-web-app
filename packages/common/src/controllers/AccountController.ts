@@ -334,7 +334,7 @@ export default class AccountController {
 
     if (response.errors.length > 0) throw new Error(response.errors[0]);
 
-    await this.reloadSubscriptions({ delay: 2000 });
+    await this.reloadSubscriptions({ retry: 5 });
 
     return response?.responseData;
   };
@@ -386,7 +386,7 @@ export default class AccountController {
     return !!responseData?.accessGranted;
   };
 
-  reloadSubscriptions = async ({ delay }: { delay: number } = { delay: 0 }): Promise<unknown> => {
+  reloadSubscriptions = async ({ delay, retry }: { delay?: number; retry?: number } = { delay: 0, retry: 0 }): Promise<unknown> => {
     useAccountStore.setState({ loading: true });
 
     const { getAccountInfo } = useAccountStore.getState();
@@ -395,7 +395,7 @@ export default class AccountController {
 
     // The subscription data takes a few seconds to load after it's purchased,
     // so here's a delay mechanism to give it time to process
-    if (delay > 0) {
+    if (delay && delay > 0) {
       return new Promise((resolve: (value?: unknown) => void) => {
         setTimeout(() => {
           this.reloadSubscriptions().finally(resolve);
@@ -417,6 +417,10 @@ export default class AccountController {
     ]);
 
     let pendingOffer: Offer | null = null;
+
+    if (!activeSubscription && retry) {
+      return await this.reloadSubscriptions({ delay: delay || 1000, retry: retry - 1 });
+    }
 
     // resolve and fetch the pending offer after upgrade/downgrade
     try {
