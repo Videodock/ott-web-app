@@ -9,7 +9,8 @@
 // --------------------------------
 
 .header {
-  height: variables.$header-height;
+  min-height: variables.$header-height;
+  margin-bottom: -12px;
   padding: 10px calc(#{variables.$base-spacing} * 2);
   color: var(--header-contrast-color, variables.$white);
   background: var(--header-background, transparent);
@@ -65,7 +66,7 @@
 // Header brand
 //
 .brand {
-  align-self: center;
+  align-self: flex-start;
   margin-right: variables.$base-spacing;
 }
 
@@ -80,7 +81,7 @@
   > a {
     height: 36px;
     min-height: 36px;
-    margin: 0 6px;
+    margin: 0 6px 12px 6px;
     padding: 0 calc(#{variables.$base-spacing} / 2);
     font-weight: var(--body-font-weight-bold);
     font-size: 18px;
