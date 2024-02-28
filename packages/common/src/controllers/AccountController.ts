@@ -398,7 +398,7 @@ export default class AccountController {
     if (delay && delay > 0) {
       return new Promise((resolve: (value?: unknown) => void) => {
         setTimeout(() => {
-          this.reloadSubscriptions().finally(resolve);
+          this.reloadSubscriptions({ retry }).finally(resolve);
         }, delay);
       });
     }
@@ -418,8 +418,10 @@ export default class AccountController {
 
     let pendingOffer: Offer | null = null;
 
-    if (!activeSubscription && retry) {
-      return await this.reloadSubscriptions({ delay: delay || 1000, retry: retry - 1 });
+    if (!activeSubscription && retry && retry > 0) {
+      const retryDelay = 1500;
+
+      return await this.reloadSubscriptions({ delay: retryDelay, retry: retry - 1 });
     }
 
     // resolve and fetch the pending offer after upgrade/downgrade

@@ -34,7 +34,7 @@ const useOffers = () => {
   const switchSubscription = useMutation({
     mutationKey: ['switchSubscription'],
     mutationFn: checkoutController.switchSubscription,
-    onSuccess: () => accountController.reloadSubscriptions({ delay: 3000, retry: 3 }),
+    onSuccess: () => accountController.reloadSubscriptions({ delay: 3000, retry: 5 }),
   });
 
   useEffect(() => {
