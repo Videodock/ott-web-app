@@ -43,7 +43,7 @@ const EditPasswordForm: React.FC<Props> = ({
 }: Props) => {
   const { t } = useTranslation(['account', 'user']);
   return (
-    <form onSubmit={onSubmit} data-testid={testId('forgot-password-form')} noValidate className={styles.forgotPasswordForm}>
+    <form onSubmit={onSubmit} data-testid={testId('forgot-password-form')} noValidate>
       {errors.form && (
         <FormFeedback variant="error" visible={!validationError}>
           {errors.form}
@@ -69,6 +69,7 @@ const EditPasswordForm: React.FC<Props> = ({
           name="oldPassword"
           showToggleView={false}
           showHelperText={false}
+          autoComplete="current-password"
           required
         />
       )}
@@ -95,6 +96,7 @@ const EditPasswordForm: React.FC<Props> = ({
         placeholder={t('reset.password')}
         error={!!errors.password}
         name="password"
+        autoComplete="new-password"
         required
       />
 
@@ -106,6 +108,7 @@ const EditPasswordForm: React.FC<Props> = ({
         placeholder={t('reset.repeat_new_password')}
         error={!!errors.passwordConfirmation}
         name="passwordConfirmation"
+        autoComplete="new-password"
         required
       />
 
