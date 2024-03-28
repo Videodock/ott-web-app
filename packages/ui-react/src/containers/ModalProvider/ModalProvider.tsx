@@ -1,5 +1,6 @@
 import { createContext, type PropsWithChildren, type RefObject, useCallback, useEffect, useMemo, useState } from 'react';
 import useEventCallback from '@jwp/ott-hooks-react/src/useEventCallback';
+import { logDev } from '@jwp/ott-common/src/utils/common';
 
 import scrollbarSize from '../../utils/dom';
 
@@ -48,6 +49,10 @@ const focusModal = (openedModal: Modal, targetElement?: Element | null) => {
     // find the first interactive element
     const interactiveElement = modalRef.current.querySelectorAll('input, a, button, [tabindex]')[0] as HTMLElement | null;
 
+    if (!interactiveElement) {
+      logDev('Failed to focus modal contents', { openedModal, targetElement });
+    }
+
     interactiveElement?.focus();
   });
 };
@@ -77,6 +82,7 @@ const restoreFocus = (closedModal: Modal, activeModals: Modal[]) => {
     } else if (elementIsFocusable(originFocus)) {
       originFocus.focus({ preventScroll: true });
     } else if (document.activeElement instanceof HTMLElement) {
+      logDev('Failed to restore focus', { closedModal, originFocus });
       document.activeElement.blur();
       window.focus();
     }
@@ -84,27 +90,18 @@ const restoreFocus = (closedModal: Modal, activeModals: Modal[]) => {
 };
 
 let originFocusElement: HTMLElement | null = null;
-let modalInertElements: HTMLElement[] = [];
 
-const handleInert = (activeModals: Modal[]) => {
+const getInertTarget = (modal: Modal) => {
   const appView = document.querySelector('#root') as HTMLDivElement | null;
+  return modal.containerRef?.current || appView;
+};
 
-  modalInertElements.forEach((element) => {
-    element.inert = false;
-  });
+const handleInert = (targetModal: Modal, activeModals: Modal[]) => {
+  const inertTarget = getInertTarget(targetModal);
 
-  modalInertElements = [];
-
-  if (appView) {
-    appView.inert = activeModals.some((modal) => !modal.containerRef);
+  if (inertTarget) {
+    inertTarget.inert = activeModals.some((modal) => getInertTarget(modal) === inertTarget);
   }
-
-  activeModals.forEach((modal) => {
-    if (modal.containerRef?.current) {
-      modalInertElements.push(modal.containerRef.current);
-      modal.containerRef.current.inert = true;
-    }
-  });
 };
 
 const handleBodyScrolling = (activeModals: Modal[]) => {
@@ -135,7 +132,6 @@ const ModalProvider = ({ children }: PropsWithChildren) => {
   }, [keyDownEventHandler]);
 
   useEffect(() => {
-    handleInert(modals);
     handleBodyScrolling(modals);
 
     // keep track of the origin focus element in case we stack multiple modals, for example, sidebar -> account modal
@@ -155,33 +151,48 @@ const ModalProvider = ({ children }: PropsWithChildren) => {
       lastFocus: document.activeElement,
     };
 
-    focusModal(modal);
-    setModals((current) => [...current, modal]);
+    setModals((current) => {
+      const newModals = [...current, modal];
+      focusModal(modal);
+      handleInert(modal, newModals);
+
+      return newModals;
+    });
   }, []);
 
   const closeModal = useCallback(
     (modalId: string, notify = true) => {
       const modal = modals.find(byId(modalId));
-      const newModals = modals.filter(notById(modalId));
 
-      if (modal) {
-        if (notify) modal.onClose?.();
+      if (!modal) return;
+      if (notify) modal.onClose?.();
+
+      setModals((current) => {
+        const newModals = current.filter(notById(modalId));
+
         restoreFocus(modal, newModals);
-      }
+        handleInert(modal, newModals);
 
-      setModals(newModals);
+        return newModals;
+      });
     },
     [modals],
   );
 
   const closeAllModals = useCallback(
     (notify = true) => {
-      // first modal opened has the lastFocus
-      const modal = modals[0];
+      // the first modal opened has the correct lastFocus
+      const firstModal = modals[0];
 
-      if (notify) modals.forEach((modal) => modal.onClose?.());
+      modals.forEach((modal) => {
+        if (notify) modal.onClose?.();
+        handleInert(modal, []);
+      });
 
-      restoreFocus(modal, []);
+      if (firstModal) {
+        restoreFocus(firstModal, []);
+      }
+
       setModals([]);
     },
     [modals],
