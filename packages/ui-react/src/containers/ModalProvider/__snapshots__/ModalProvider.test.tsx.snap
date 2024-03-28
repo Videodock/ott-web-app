@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<ModalProvider /> > renders provider with test modal 1`] = `
+<div>
+  <div
+    aria-hidden="true"
+    data-testid="root"
+    id="root"
+    inert=""
+  >
+    <button
+      tabindex="-1"
+    >
+      last focus
+    </button>
+  </div>
+  <div
+    data-testid="modal-modal-1"
+  >
+    <button>
+      close 
+      modal-1
+    </button>
+  </div>
+</div>
+`;

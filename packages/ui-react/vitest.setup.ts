@@ -2,6 +2,7 @@ import 'vi-fetch/setup';
 import 'reflect-metadata';
 import '@testing-library/jest-dom'; // Including this for the expect extensions
 import 'react-app-polyfill/stable';
+import 'wicg-inert';
 import type { ComponentType } from 'react';
 
 const country = {

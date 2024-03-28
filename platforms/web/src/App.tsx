@@ -4,6 +4,7 @@ import QueryProvider from '@jwp/ott-ui-react/src/containers/QueryProvider/QueryP
 import { ErrorPageWithoutTranslation } from '@jwp/ott-ui-react/src/components/ErrorPage/ErrorPage';
 import LoadingOverlay from '@jwp/ott-ui-react/src/components/LoadingOverlay/LoadingOverlay';
 import { AriaAnnouncerProvider } from '@jwp/ott-ui-react/src/containers/AnnouncementProvider/AnnoucementProvider';
+import ModalProvider from '@jwp/ott-ui-react/src/containers/ModalProvider/ModalProvider';
 
 import initI18n from './i18n/config';
 import Root from './containers/Root/Root';
@@ -44,7 +45,9 @@ export default function App() {
     <QueryProvider>
       <BrowserRouter>
         <AriaAnnouncerProvider>
-          <Root />
+          <ModalProvider>
+            <Root />
+          </ModalProvider>
         </AriaAnnouncerProvider>
       </BrowserRouter>
     </QueryProvider>

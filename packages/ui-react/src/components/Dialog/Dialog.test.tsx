@@ -1,11 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+
+import { renderWithRouter } from '../../../test/utils';
 
 import Dialog from './Dialog';
 
 describe('<Dialog>', () => {
   test('renders and matches snapshot', () => {
-    const { baseElement } = render(
+    const { baseElement } = renderWithRouter(
       <>
         <span>Some content</span>
         <Dialog onClose={vi.fn()} open={true} role="dialog">
@@ -19,7 +20,7 @@ describe('<Dialog>', () => {
   });
 
   test('Should ensure Dialog is properly marked as a modal and has role "dialog"', () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderWithRouter(
       <>
         <span>Some content</span>
         <Dialog onClose={vi.fn()} open={true} role="dialog" data-testid="dialog">

@@ -32,6 +32,7 @@ const Layout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation('common');
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { config, accessModel, supportedLanguages } = useConfigStore(
     ({ config, accessModel, supportedLanguages }) => ({ config, accessModel, supportedLanguages }),
@@ -147,8 +148,6 @@ const Layout = () => {
     );
   };
 
-  const containerProps = { inert: sideBarOpen ? '' : undefined }; // inert is not yet officially supported in react
-
   return (
     <div className={styles.layout}>
       <Helmet>
@@ -159,7 +158,7 @@ const Layout = () => {
         <meta name="twitter:title" content={siteName} />
         <meta name="twitter:description" content={metaDescription} />
       </Helmet>
-      <div {...containerProps}>
+      <div ref={containerRef}>
         <Header
           onMenuButtonClick={() => setSideBarOpen(true)}
           logoSrc={banner}
@@ -207,7 +206,7 @@ const Layout = () => {
         </main>
         {!!footerText && <Footer text={footerText} />}
       </div>
-      <Sidebar isOpen={sideBarOpen} onClose={() => setSideBarOpen(false)}>
+      <Sidebar isOpen={sideBarOpen} onClose={() => setSideBarOpen(false)} containerRef={containerRef}>
         <ul>
           <li>
             <MenuButton label={t('home')} to="/" />

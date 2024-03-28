@@ -1,11 +1,13 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
+
+import { renderWithRouter } from '../../../test/utils';
 
 import Modal from './Modal';
 
 describe('<Modal>', () => {
   test('renders and matches snapshot', () => {
-    const { container } = render(
+    const { container } = renderWithRouter(
       <Modal open={true} onClose={vi.fn()}>
         <p>Test modal</p>
       </Modal>,
@@ -16,7 +18,7 @@ describe('<Modal>', () => {
 
   test('calls the onClose function when clicking the backdrop', () => {
     const onClose = vi.fn();
-    const { getByTestId } = render(<Modal open={true} onClose={onClose} />);
+    const { getByTestId } = renderWithRouter(<Modal open={true} onClose={onClose} />);
 
     fireEvent.click(getByTestId('backdrop'));
 
@@ -25,7 +27,7 @@ describe('<Modal>', () => {
 
   test('Should add inert attribute on the root div when open', () => {
     const onClose = vi.fn();
-    const { getByTestId, rerender } = render(
+    const { getByTestId, rerender } = renderWithRouter(
       <div id="root" data-testid="root">
         <Modal open={true} onClose={onClose} />
       </div>,
@@ -44,7 +46,7 @@ describe('<Modal>', () => {
 
   test('should add overflowY hidden on the body element when open', () => {
     const onClose = vi.fn();
-    const { container, rerender } = render(<Modal open={true} onClose={onClose} />);
+    const { container, rerender } = renderWithRouter(<Modal open={true} onClose={onClose} />);
 
     expect(container.parentNode).toHaveStyle({ overflowY: 'hidden' });
 

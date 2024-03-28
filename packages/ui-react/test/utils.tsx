@@ -1,10 +1,11 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import React, { type ReactElement, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { render, act, type RenderOptions } from '@testing-library/react';
+import { act, render, type RenderOptions } from '@testing-library/react';
 
 import QueryProvider from '../src/containers/QueryProvider/QueryProvider';
 import { AriaAnnouncerProvider } from '../src/containers/AnnouncementProvider/AnnoucementProvider';
+import ModalProvider from '../src/containers/ModalProvider/ModalProvider';
 
 interface WrapperProps {
   children?: ReactNode;
@@ -29,7 +30,9 @@ export const createWrapper = () => {
 export const wrapper = ({ children }: WrapperProps) => (
   <QueryProvider>
     <AriaAnnouncerProvider>
-      <Router>{children as ReactElement}</Router>
+      <ModalProvider>
+        <Router>{children as ReactElement}</Router>
+      </ModalProvider>
     </AriaAnnouncerProvider>
   </QueryProvider>
 );
