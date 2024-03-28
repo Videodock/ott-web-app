@@ -1,5 +1,4 @@
-import { useMutation } from 'react-query';
-import { useEffect } from 'react';
+import { useMutation, useQuery } from 'react-query';
 import { shallow } from '@jwp/ott-common/src/utils/compare';
 import { getModule } from '@jwp/ott-common/src/modules/container';
 import { useCheckoutStore } from '@jwp/ott-common/src/stores/CheckoutStore';
@@ -21,9 +20,9 @@ const useOffers = () => {
     shallow,
   );
 
-  const { mutate: initialise, isLoading: isInitialisationLoading } = useMutation<void>({
-    mutationKey: ['initialiseOffers', requestedMediaOffers],
-    mutationFn: checkoutController.initialiseOffers,
+  const { isLoading: isInitialisationLoading } = useQuery<void>({
+    queryKey: ['initialiseOffers', requestedMediaOffers],
+    queryFn: checkoutController.initialiseOffers,
   });
 
   const chooseOffer = useMutation({
@@ -36,10 +35,6 @@ const useOffers = () => {
     mutationFn: checkoutController.switchSubscription,
     onSuccess: () => accountController.reloadSubscriptions({ delay: 7500 }), // @todo: Is there a better way to wait?
   });
-
-  useEffect(() => {
-    initialise();
-  }, [requestedMediaOffers, initialise]);
 
   const hasMediaOffers = mediaOffers.length > 0;
   const hasSubscriptionOffers = subscriptionOffers.length > 0;

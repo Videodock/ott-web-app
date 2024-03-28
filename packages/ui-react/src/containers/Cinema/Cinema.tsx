@@ -80,8 +80,8 @@ const Cinema: React.FC<Props> = ({
   }, [open]);
 
   return (
-    <Modal open={open} animationContainerClassName={styles.cinemaContainer} onClose={onClose}>
-      <div className={styles.cinema} aria-modal="true" role="dialog" aria-label={t('videoplayer')}>
+    <Modal open={open} animationContainerClassName={styles.cinemaContainer} onClose={onClose} aria-label={t('videoplayer')}>
+      <div className={styles.cinema}>
         <Fade className={styles.overlayFade} open={!isPlaying || userActive || overlayHasFocus} keepMounted>
           <div className={styles.playerOverlay} onFocus={() => setOverlayHasFocus(true)} onBlur={() => setOverlayHasFocus(false)}>
             <div className={styles.playerContent}>

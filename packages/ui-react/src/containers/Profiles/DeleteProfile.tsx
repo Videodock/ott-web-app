@@ -47,7 +47,7 @@ const DeleteProfile = () => {
   if (view !== 'delete-profile') return null;
   return (
     <div>
-      <Dialog open={!!viewParam} onClose={closeHandler} role="dialog" aria-labelledby="delete-profile-heading">
+      <Dialog open={!!viewParam} onClose={closeHandler} aria-labelledby="delete-profile-heading">
         {isDeleting && <LoadingOverlay />}
         <div className={styles.deleteModal}>
           <div>

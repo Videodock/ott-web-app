@@ -87,7 +87,11 @@ describe('User Component tests', () => {
       })),
     });
     mockService(FavoritesController, { clear: vi.fn() });
-    mockService(CheckoutController, { getSubscriptionSwitches: vi.fn(), getSubscriptionOfferIds: vi.fn().mockReturnValue([]) });
+    mockService(CheckoutController, {
+      initialiseOffers: vi.fn().mockResolvedValue([]),
+      getSubscriptionSwitches: vi.fn(),
+      getSubscriptionOfferIds: vi.fn().mockReturnValue([]),
+    });
     mockService(ProfileController, { listProfiles: vi.fn(), isEnabled: vi.fn().mockReturnValue(false) });
 
     useConfigStore.setState({
@@ -109,15 +113,17 @@ describe('User Component tests', () => {
     expect(container).toMatchSnapshot();
   });
 
-  test('Payments Page', () => {
+  test('Payments Page', async () => {
     act(() => {
       useAccountStore.setState(data);
       mockWindowLocation('u/payments');
     });
-    const { container } = renderWithRouter(
-      <Routes>
-        <Route path="/u/*" element={<User />} />
-      </Routes>,
+    const { container } = await act(() =>
+      renderWithRouter(
+        <Routes>
+          <Route path="/u/*" element={<User />} />
+        </Routes>,
+      ),
     );
 
     expect(container).toMatchSnapshot();
