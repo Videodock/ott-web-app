@@ -6,6 +6,7 @@ import ApiService from '@jwp/ott-common/src/services/ApiService';
 import GenericEntitlementService from '@jwp/ott-common/src/services/GenericEntitlementService';
 import JWPEntitlementService from '@jwp/ott-common/src/services/JWPEntitlementService';
 import WatchHistoryController from '@jwp/ott-common/src/controllers/WatchHistoryController';
+import { act } from '@testing-library/react';
 
 import { renderWithRouter } from '../../../test/utils';
 
@@ -38,17 +39,19 @@ describe('<Cinema>', () => {
       tracks: [],
     } as PlaylistItem;
 
-    const { baseElement } = renderWithRouter(
-      <Cinema
-        item={item}
-        onPlay={() => null}
-        onPause={() => null}
-        open
-        title={item.title}
-        primaryMetadata="Primary metadata"
-        onClose={vi.fn()}
-        onNext={vi.fn()}
-      />,
+    const { baseElement } = await act(() =>
+      renderWithRouter(
+        <Cinema
+          item={item}
+          onPlay={() => null}
+          onPause={() => null}
+          open
+          title={item.title}
+          primaryMetadata="Primary metadata"
+          onClose={vi.fn()}
+          onNext={vi.fn()}
+        />,
+      ),
     );
 
     expect(baseElement).toMatchSnapshot();
