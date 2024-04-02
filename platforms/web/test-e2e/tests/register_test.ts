@@ -66,9 +66,15 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
     I.dontSeeElement(constants.loginFormSelector);
   });
 
-  Scenario(`The Sign up modal will invalidate when directly pressing submit - ${providerName}`, async ({ I }) => {
+  Scenario(`The Sign up modal will invalidate upon submit only if a value is inputted - ${providerName}`, async ({ I }) => {
     I.click('Continue');
     I.seeElementInDOM('div[class*=formFeedback]'); // This element can be visually hidden through CSS
+    I.seeAttributesOnElements('input[name="email"]', { 'aria-invalid': 'false' });
+    I.seeAttributesOnElements('input[name="password"]', { 'aria-invalid': 'false' });
+
+    I.fillField('Email', 'test');
+    I.fillField('Password', 'test');
+    I.click('Continue');
     I.seeAttributesOnElements('input[name="email"]', { 'aria-invalid': 'true' });
     I.seeAttributesOnElements('input[name="password"]', { 'aria-invalid': 'true' });
   });
