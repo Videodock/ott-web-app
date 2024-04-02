@@ -75,7 +75,7 @@ export default function AdyenInitialPayment({ setUpdatingOrder, type, paymentSuc
           handleAction(result.action);
         }
 
-        await accountController.reloadSubscriptions({ delay: 2000 });
+        await accountController.reloadSubscriptions({ retry: 10 });
         announce(t('account:checkout.payment_success'), 'success');
         navigate(paymentSuccessUrl, { replace: true });
       } catch (error: unknown) {

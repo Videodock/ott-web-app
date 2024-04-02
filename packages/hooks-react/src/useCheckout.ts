@@ -47,7 +47,7 @@ const useCheckout = ({ onUpdateOrderSuccess, onSubmitPaymentWithoutDetailsSucces
     mutationKey: ['submitPaymentWithoutDetails'],
     mutationFn: checkoutController.paymentWithoutDetails,
     onSuccess: async () => {
-      await accountController.reloadSubscriptions({ delay: 1000 });
+      await accountController.reloadSubscriptions({ retry: 10 });
       onSubmitPaymentWithoutDetailsSuccess();
     },
   });
