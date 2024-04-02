@@ -195,6 +195,7 @@
     "password_reset_success": "Password reset successful",
     "password_strength": "Although your password meets the criteria for a strong password, it includes elements that are not advisable, such as prohibited phrases or repeated words. Please modify it to ensure account safety.",
     "passwords_do_not_match": "Passwords do not match",
+    "old_password_does_not_match": "Old password does not match",
     "repeat_new_password": "Repeat new password",
     "reset_password": "Edit Password",
     "reset_password_token": "Token",

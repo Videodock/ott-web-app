@@ -205,6 +205,7 @@
     "password_reset_success": "Contraseña restablecida",
     "password_strength": "Aunque tu contraseña cumple con los criterios de una contraseña segura, incluye elementos que no son recomendables, como frases prohibidas o palabras repetidas. Por favor, modifícala para garantizar la seguridad de tu cuenta.",
     "passwords_do_not_match": "Las contraseñas no coinciden",
+    "old_password_does_not_match": "La contraseña antigua no coincide",
     "repeat_new_password": "Repetir nueva contraseña",
     "reset_password": "Editar contraseña",
     "reset_password_token": "Token",

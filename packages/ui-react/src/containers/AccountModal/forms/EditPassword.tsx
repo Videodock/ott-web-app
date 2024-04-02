@@ -59,6 +59,8 @@ const ResetPassword = ({ type }: { type?: 'add' }) => {
           setErrors({ form: t('reset.invalid_reset_link') });
         } else if (error.message.includes('score does not match standards')) {
           setErrors({ form: t('reset.password_strength') });
+        } else if (error.message.includes('old password does not match')) {
+          setErrors({ form: t('reset.old_password_does_not_match') });
         } else if (error.message.includes('password could not be set')) {
           setErrors({ form: t('reset.invalid_token') });
         }
