@@ -9,7 +9,7 @@ import PasswordStrength from '../PasswordStrength/PasswordStrength';
 import IconButton from '../IconButton/IconButton';
 import Icon from '../Icon/Icon';
 
-type Props = {
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   error?: boolean;
