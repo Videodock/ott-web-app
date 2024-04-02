@@ -34,7 +34,7 @@ const useOffers = () => {
   const switchSubscription = useMutation({
     mutationKey: ['switchSubscription'],
     mutationFn: checkoutController.switchSubscription,
-    onSuccess: () => accountController.reloadSubscriptions({ delay: 7500 }), // @todo: Is there a better way to wait?
+    onSuccess: () => accountController.reloadSubscriptions({ delay: 3000, retry: 10 }), // A subscription switch usually takes at least 3 secs
   });
 
   useEffect(() => {
