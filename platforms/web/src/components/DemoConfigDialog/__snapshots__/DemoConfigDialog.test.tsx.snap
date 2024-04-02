@@ -65,7 +65,7 @@ exports[`<DemoConfigDialog> > renders and matches snapshot error dialog 1`] = `
               >
                 <input
                   aria-describedby="helper_text_1235_app-config"
-                  aria-invalid="false"
+                  aria-invalid="true"
                   autocapitalize="none"
                   class="_input_25c745"
                   id="text-field_1235_app-config"

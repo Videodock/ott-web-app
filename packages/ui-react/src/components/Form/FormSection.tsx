@@ -94,7 +94,7 @@ export function FormSection<TData extends GenericFormValues>({
 
         try {
           setFormState((s) => {
-            return { ...s, isBusy: true };
+            return { ...s, isBusy: true, errors: [] };
           });
           response = await onSubmit(values);
         } catch (error: unknown) {
