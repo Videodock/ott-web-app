@@ -13,7 +13,7 @@ type Props = AriaAttributes & {
 
 const IconButton: React.FC<Props> = ({ children, onClick, tabIndex = 0, className, ...ariaProps }: Props) => {
   return (
-    <div
+    <button
       className={classNames(styles.iconButton, className)}
       onClick={onClick}
       role="button"
@@ -27,7 +27,7 @@ const IconButton: React.FC<Props> = ({ children, onClick, tabIndex = 0, classNam
       {...ariaProps}
     >
       {children}
-    </div>
+    </button>
   );
 };
 
