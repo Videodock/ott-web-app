@@ -68,7 +68,7 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
   Scenario(`I can return to the video detail screen - ${providerName}`, async ({ I }) => {
     await playBigBuckBunny(I);
 
-    I.click('div[aria-label="Back"]');
+    I.click('button[aria-label="Back"]');
 
     await I.checkPlayerClosed();
     I.see(constants.startWatchingButton);
@@ -126,7 +126,7 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
 
     await I.waitForPlayerPlaying(constants.elephantsDreamTitle);
 
-    I.click('div[aria-label="Back"]');
+    I.click('button[aria-label="Back"]');
 
     await I.checkPlayerClosed();
   });
@@ -150,7 +150,7 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
 
     await I.waitForPlayerPlaying(constants.elephantsDreamTitle);
 
-    I.click('div[aria-label="Back"]');
+    I.click('button[aria-label="Back"]');
 
     await I.checkPlayerClosed();
   });
