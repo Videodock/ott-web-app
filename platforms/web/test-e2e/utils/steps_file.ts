@@ -278,13 +278,13 @@ const stepsObj = {
     return isMobile;
   },
   openMenuDrawer: function (this: CodeceptJS.I) {
-    this.click('div[aria-label="Open menu"]');
+    this.click('button[aria-label="Open menu"]');
   },
   openUserMenu: function (this: CodeceptJS.I) {
-    this.click('div[aria-label="Open user menu"]');
+    this.click('button[aria-label="Open user menu"]');
   },
   clickCloseButton: function (this: CodeceptJS.I) {
-    this.click('div[aria-label="Close panel"]');
+    this.click('button[aria-label="Close panel"]');
   },
   seeAll: function (this: CodeceptJS.I, allStrings: string[]) {
     allStrings.forEach((s) => this.see(s));
