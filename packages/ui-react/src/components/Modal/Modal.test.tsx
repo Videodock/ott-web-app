@@ -25,7 +25,7 @@ describe('<Modal>', () => {
     expect(onClose).toBeCalledTimes(1);
   });
 
-  test('Should add inert attribute on the root div when open', () => {
+  test('add the inert attribute on the root div when open', () => {
     const onClose = vi.fn();
     const { getByTestId, rerender } = renderWithRouter(
       <div id="root" data-testid="root">
@@ -44,7 +44,7 @@ describe('<Modal>', () => {
     expect(getByTestId('root')).toHaveProperty('inert', false);
   });
 
-  test('should add overflowY hidden on the body element when open', () => {
+  test('add overflowY hidden on the body element when open', () => {
     const onClose = vi.fn();
     const { container, rerender } = renderWithRouter(<Modal open={true} onClose={onClose} />);
 
