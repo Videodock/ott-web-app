@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { shallow } from '@jwp/ott-common/src/utils/compare';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
@@ -17,6 +17,7 @@ import WaitingForPayment from '../../components/WaitingForPayment/WaitingForPaym
 import UpgradeSubscription from '../../components/UpgradeSubscription/UpgradeSubscription';
 import DeleteAccountPasswordWarning from '../../components/DeleteAccountPasswordWarning/DeleteAccountPasswordWarning';
 import UpdatePaymentMethod from '../UpdatePaymentMethod/UpdatePaymentMethod';
+import { ModalContext } from '../ModalProvider/ModalProvider';
 
 import EditCardDetails from './forms/EditCardDetails';
 import EditPassword from './forms/EditPassword';
@@ -64,10 +65,11 @@ export type AccountModals = {
 };
 
 const AccountModal = () => {
+  const { focusActiveModal } = useContext(ModalContext);
   const navigate = useNavigate();
   const location = useLocation();
   const viewParam = useQueryParam('u');
-  const [view, setView] = useState(viewParam);
+  const viewParamRef = useRef(viewParam);
   const message = useQueryParam('message');
   const { loading, user } = useAccountStore(({ loading, user }) => ({ loading, user }), shallow);
   const config = useConfigStore((s) => s.config);
@@ -81,9 +83,10 @@ const AccountModal = () => {
     navigate(modalURLFromLocation(location, 'login'));
   });
 
-  useEffect(() => {
-    // make sure the last view is rendered even when the modal gets closed
-    if (viewParam) setView(viewParam);
+  // make sure the last view is rendered even when the modal gets closed
+  const view = useMemo(() => {
+    if (viewParam) viewParamRef.current = viewParam;
+    return viewParamRef.current;
   }, [viewParam]);
 
   useEffect(() => {
@@ -91,6 +94,11 @@ const AccountModal = () => {
       toLogin();
     }
   }, [viewParam, loading, isPublicView, user, toLogin]);
+
+  // focus the active modal because the content changes when the viewParam changes
+  useEffect(() => {
+    if (viewParam) focusActiveModal();
+  }, [viewParam, focusActiveModal]);
 
   const closeHandler = useEventCallback(() => {
     navigate(createURLFromLocation(location, { u: null, message: null }));

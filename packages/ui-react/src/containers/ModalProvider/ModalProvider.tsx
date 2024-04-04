@@ -16,6 +16,7 @@ type ModalContextValue = {
   openModal: (modalId: string, modalRef: RefObject<HTMLElement>, onClose?: () => void, containerRef?: RefObject<HTMLElement>) => void;
   closeModal: (modalId: string, notify?: boolean) => void;
   closeAllModals: (notify?: boolean) => void;
+  focusActiveModal: () => void;
   modals: Modal[];
 };
 
@@ -27,6 +28,9 @@ export const ModalContext = createContext<ModalContextValue>({
     throw new Error('Not implemented');
   },
   closeAllModals() {
+    throw new Error('Not implemented');
+  },
+  focusActiveModal() {
     throw new Error('Not implemented');
   },
   modals: [],
@@ -198,14 +202,21 @@ const ModalProvider = ({ children }: PropsWithChildren) => {
     [modals],
   );
 
+  const focusActiveModal = useCallback(() => {
+    const modal = modals[modals.length - 1];
+
+    if (modal) focusModal(modal);
+  }, [modals]);
+
   const value = useMemo(
     () => ({
       openModal,
       closeModal,
       closeAllModals,
+      focusActiveModal,
       modals,
     }),
-    [closeAllModals, closeModal, modals, openModal],
+    [closeAllModals, closeModal, focusActiveModal, modals, openModal],
   );
 
   return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
