@@ -1,33 +1,20 @@
 import classNames from 'classnames';
-import React, { type AriaAttributes } from 'react';
+import React, { type ButtonHTMLAttributes } from 'react';
 
 import styles from './IconButton.module.scss';
 
-type Props = AriaAttributes & {
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   onClick?: () => void;
   onBlur?: () => void;
   children: JSX.Element;
-  tabIndex?: number;
   className?: string;
 };
 
-const IconButton: React.FC<Props> = ({ children, onClick, tabIndex = 0, className, ...ariaProps }: Props) => {
+const IconButton: React.FC<Props> = ({ children, onClick, className, ...ariaProps }: Props) => {
   return (
-    <div
-      className={classNames(styles.iconButton, className)}
-      onClick={onClick}
-      role="button"
-      tabIndex={tabIndex}
-      onKeyDown={(event: React.KeyboardEvent) => {
-        if ((event.key === 'Enter' || event.key === ' ') && tabIndex >= 0 && onClick) {
-          onClick();
-          event.preventDefault(); // prevent click being called when this component unmounts
-        }
-      }}
-      {...ariaProps}
-    >
+    <button className={classNames(styles.iconButton, className)} onClick={onClick} {...ariaProps}>
       {children}
-    </div>
+    </button>
   );
 };
 

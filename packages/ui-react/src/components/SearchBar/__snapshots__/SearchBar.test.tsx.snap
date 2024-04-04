@@ -32,11 +32,9 @@ exports[`<SearchBar> > renders and matches snapshot 1`] = `
         type="search"
         value="My search query"
       />
-      <div
+      <button
         aria-label="search_bar.clear_search_label"
         class="_iconButton_0fef65 _clearButton_3bb1d7"
-        role="button"
-        tabindex="0"
       >
         <svg
           aria-hidden="true"
@@ -48,7 +46,7 @@ exports[`<SearchBar> > renders and matches snapshot 1`] = `
             d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm4 10.87L11.87 13 9 10.13 6.13 13 5 11.87 7.87 9 5 6.13 6.13 5 9 7.87 11.87 5 13 6.13 10.13 9 13 11.87z"
           />
         </svg>
-      </div>
+      </button>
     </form>
   </div>
 </div>

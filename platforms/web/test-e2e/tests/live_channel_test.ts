@@ -100,7 +100,7 @@ Scenario.skip('I can watch the current live program on the live channel screen',
   // to make sure the back button is visible and can be clicked on
   I.click('video');
 
-  I.click('div[aria-label="Back"]');
+  I.click('button[aria-label="Back"]');
   await I.checkPlayerClosed();
 });
 

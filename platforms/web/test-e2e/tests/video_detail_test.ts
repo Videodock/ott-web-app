@@ -46,20 +46,20 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
       I.seeCssPropertiesOnElements(`text="${constants.agent327Description}"`, { 'max-height': height });
     }
 
-    I.seeElement('div[aria-label="Expand"]');
-    I.dontSeeElement('div[aria-label="Collapse"]');
+    I.seeElement('button[aria-label="Expand"]');
+    I.dontSeeElement('button[aria-label="Collapse"]');
     checkHeight('60px');
 
-    I.click('div[aria-label="Expand"]');
+    I.click('button[aria-label="Expand"]');
 
-    I.seeElement('div[aria-label="Collapse"]');
-    I.dontSeeElement('div[aria-label="Expand"]');
+    I.seeElement('button[aria-label="Collapse"]');
+    I.dontSeeElement('button[aria-label="Expand"]');
     checkHeight('216px');
 
-    I.click('div[aria-label="Collapse"]');
+    I.click('button[aria-label="Collapse"]');
 
-    I.seeElement('div[aria-label="Expand"]');
-    I.dontSeeElement('div[aria-label="Collapse"]');
+    I.seeElement('button[aria-label="Expand"]');
+    I.dontSeeElement('button[aria-label="Collapse"]');
     checkHeight('60px');
   });
 
@@ -68,7 +68,7 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
   Scenario(`I can return to the video detail screen - ${providerName}`, async ({ I }) => {
     await playBigBuckBunny(I);
 
-    I.click('div[aria-label="Back"]');
+    I.click('button[aria-label="Back"]');
 
     await I.checkPlayerClosed();
     I.see(constants.startWatchingButton);
@@ -103,7 +103,7 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
     await I.checkPlayerClosed();
     I.waitForText('Email', normalTimeout);
     I.see('Password');
-    I.click('div[aria-label="Close panel"]');
+    I.click('button[aria-label="Close panel"]');
 
     I.click('Trailer');
     await I.waitForPlayerPlaying(`${constants.elephantsDreamTitle} - Trailer`);
@@ -126,7 +126,7 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
 
     await I.waitForPlayerPlaying(constants.elephantsDreamTitle);
 
-    I.click('div[aria-label="Back"]');
+    I.click('button[aria-label="Back"]');
 
     await I.checkPlayerClosed();
   });
@@ -150,7 +150,7 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
 
     await I.waitForPlayerPlaying(constants.elephantsDreamTitle);
 
-    I.click('div[aria-label="Back"]');
+    I.click('button[aria-label="Back"]');
 
     await I.checkPlayerClosed();
   });
