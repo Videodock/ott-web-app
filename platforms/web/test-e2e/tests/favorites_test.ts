@@ -15,7 +15,6 @@ Before(({ I }) => {
 const favoritesTitle = 'Favorites';
 
 Scenario('I can add a video to my favorites', async ({ I }) => {
-  //eslint-disable-line
   await addVideoToFavorites(I);
 
   const savedFavorites = await I.executeScript(function () {
