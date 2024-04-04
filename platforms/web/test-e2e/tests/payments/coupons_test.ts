@@ -57,7 +57,7 @@ function runTestSuite(props: ProviderProps, providerName: string) {
     I.seeElement('input[name="couponCode"]');
     I.see('Apply');
 
-    I.click('div[aria-label="Close coupon form"]');
+    I.click('button[aria-label="Close coupon form"]');
     I.dontSee('Coupon code');
 
     I.click('Redeem coupon');

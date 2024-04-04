@@ -2,11 +2,9 @@
 
 exports[`<ModalCloseButton> > renders and matches snapshot 1`] = `
 <div>
-  <div
+  <button
     aria-label="close_modal"
     class="_iconButton_0fef65 _modalCloseButton_b92d69"
-    role="button"
-    tabindex="0"
   >
     <svg
       aria-hidden="true"
@@ -22,6 +20,6 @@ exports[`<ModalCloseButton> > renders and matches snapshot 1`] = `
         fill="none"
       />
     </svg>
-  </div>
+  </button>
 </div>
 `;

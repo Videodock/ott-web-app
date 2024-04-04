@@ -13,11 +13,9 @@ exports[`<SideBar /> > renders sideBar closed 1`] = `
     <div
       class="_heading_577f70"
     >
-      <div
+      <button
         aria-label="close_menu"
         class="_iconButton_0fef65"
-        role="button"
-        tabindex="0"
       >
         <svg
           aria-hidden="true"
@@ -33,7 +31,7 @@ exports[`<SideBar /> > renders sideBar closed 1`] = `
             fill="none"
           />
         </svg>
-      </div>
+      </button>
     </div>
     <nav
       class="_group_577f70"
@@ -64,11 +62,9 @@ exports[`<SideBar /> > renders sideBar opened 1`] = `
     <div
       class="_heading_577f70"
     >
-      <div
+      <button
         aria-label="close_menu"
         class="_iconButton_0fef65"
-        role="button"
-        tabindex="0"
       >
         <svg
           aria-hidden="true"
@@ -84,7 +80,7 @@ exports[`<SideBar /> > renders sideBar opened 1`] = `
             fill="none"
           />
         </svg>
-      </div>
+      </button>
     </div>
     <nav
       class="_group_577f70"

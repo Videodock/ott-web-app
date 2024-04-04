@@ -13,12 +13,12 @@ async function testPasswordToggling(I: CodeceptJS.I, name = 'password') {
 
   await checkPasswordType(I, name, 'password');
 
-  I.click(`input[name="${name}"]+div div[aria-label="View password"]`);
+  I.click(`input[name="${name}"]+div button[aria-label="View password"]`);
   await checkPasswordType(I, name, 'text');
 
   await I.writeClipboard('dummy');
 
-  I.click(`input[name="${name}"]+div div[aria-label="View password"]`);
+  I.click(`input[name="${name}"]+div button[aria-label="View password"]`);
   await checkPasswordType(I, name, 'password');
 }
 

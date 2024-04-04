@@ -4,11 +4,11 @@ import { testConfigs } from '@jwp/ott-testing/constants';
 
 import constants from '#utils/constants';
 
-const openSearchLocator = { css: 'div[aria-label="Open search"]' };
+const openSearchLocator = { css: 'button[aria-label="Open search"]' };
 const searchBarLocator = 'input[type="search"]';
 const emptySearchPrompt = 'Type something in the search box to start searching';
-const clearSearchLocator = { css: 'div[aria-label="Clear search"]' };
-const closeSearchLocator = { css: 'div[aria-label="Close search"]' };
+const clearSearchLocator = { css: 'button[aria-label="Clear search"]' };
+const closeSearchLocator = { css: 'button[aria-label="Close search"]' };
 
 Feature('search').retry(Number(process.env.TEST_RETRY_COUNT) || 0);
 

@@ -48,14 +48,14 @@ const LanguageMenu = ({ onClick, className, languages, currentLanguage, language
         aria-controls="language-panel"
         aria-expanded={languageMenuOpen}
         aria-haspopup="menu"
-        className={classNames(styles.iconButton, className)}
+        className={classNames(className)}
         aria-label={t('language_menu')}
         onClick={handleMenuToggle}
         onBlur={closeLanguageMenu}
       >
         <Icon icon={Language} />
       </IconButton>
-      <Popover isOpen={languageMenuOpen} onClose={closeLanguageMenu} aria-expanded={languageMenuOpen}>
+      <Popover isOpen={languageMenuOpen} onClose={closeLanguageMenu}>
         <Panel id="language-panel">
           <ul className={styles.menuItems}>
             {languages.map(({ code, displayName }) => {
