@@ -35,11 +35,9 @@ exports[`<Dialog> > renders and matches snapshot 1`] = `
             role="dialog"
           >
             Dialog contents
-            <div
+            <button
               aria-label="close_modal"
               class="_iconButton_0fef65 _modalCloseButton_b92d69"
-              role="button"
-              tabindex="0"
             >
               <svg
                 aria-hidden="true"
@@ -55,7 +53,7 @@ exports[`<Dialog> > renders and matches snapshot 1`] = `
                   fill="none"
                 />
               </svg>
-            </div>
+            </button>
           </div>
         </div>
       </div>
