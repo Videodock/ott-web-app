@@ -21,14 +21,12 @@ exports[`<Layout /> > renders layout 1`] = `
           <div
             class="_menu_f4f7a7"
           >
-            <div
+            <button
               aria-controls="sidebar"
               aria-expanded="false"
               aria-haspopup="true"
               aria-label="open_menu"
               class="_iconButton_0fef65 _iconButton_f4f7a7"
-              role="button"
-              tabindex="0"
             >
               <svg
                 aria-hidden="true"
@@ -44,7 +42,7 @@ exports[`<Layout /> > renders layout 1`] = `
                   d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
                 />
               </svg>
-            </div>
+            </button>
           </div>
           <nav
             class="_nav_f4f7a7"
@@ -85,11 +83,9 @@ exports[`<Layout /> > renders layout 1`] = `
       <div
         class="_heading_577f70"
       >
-        <div
+        <button
           aria-label="close_menu"
           class="_iconButton_0fef65"
-          role="button"
-          tabindex="0"
         >
           <svg
             aria-hidden="true"
@@ -105,7 +101,7 @@ exports[`<Layout /> > renders layout 1`] = `
               fill="none"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <nav
         class="_group_577f70"
