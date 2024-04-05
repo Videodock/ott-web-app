@@ -51,6 +51,7 @@ type Props = {
   currentLanguage: LanguageDefinition | undefined;
   onLanguageClick: (code: string) => void;
   favoritesEnabled?: boolean;
+  siteName?: string;
 
   profilesData?: {
     currentProfile: Profile | null;
@@ -87,6 +88,7 @@ const Header: React.FC<Props> = ({
   currentLanguage,
   onLanguageClick,
   favoritesEnabled,
+  siteName,
   profilesData: { currentProfile, profiles, profilesEnabled, selectProfile, isSelectingProfile } = {},
 }) => {
   const { t } = useTranslation('menu');
@@ -215,7 +217,7 @@ const Header: React.FC<Props> = ({
         </div>
         {logoSrc && (
           <div className={styles.brand}>
-            <Logo src={logoSrc} onLoad={() => setLogoLoaded(true)} />
+            <Logo alt={t('logo_alt', { siteName })} src={logoSrc} onLoad={() => setLogoLoaded(true)} />
           </div>
         )}
         <nav className={styles.nav}>{logoLoaded || !logoSrc ? children : null}</nav>

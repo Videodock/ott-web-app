@@ -189,6 +189,7 @@ const Layout = () => {
           canLogin={canLogin}
           showPaymentsMenuItem={accessModel !== ACCESS_MODEL.AVOD}
           favoritesEnabled={favoritesEnabled}
+          siteName={siteName}
           profilesData={{
             currentProfile: profile,
             profiles,

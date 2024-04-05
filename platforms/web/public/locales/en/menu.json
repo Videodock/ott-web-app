@@ -1,6 +1,7 @@
 {
   "close_menu": "Close menu",
   "language_menu": "Open language menu",
+  "logo_alt": "Homepage of {{siteName}}",
   "open_menu": "Open menu",
   "open_user_menu": "Open user menu",
   "profile_icon": "Profile icon",
