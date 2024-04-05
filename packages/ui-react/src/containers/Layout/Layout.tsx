@@ -147,6 +147,8 @@ const Layout = () => {
     );
   };
 
+  const navItems = [{ label: t('home'), to: '/' }, ...menu.map((item) => ({ label: item.label, to: playlistURL(item.contentId) }))];
+
   const containerProps = { inert: sideBarOpen ? '' : undefined }; // inert is not yet officially supported in react
 
   return (
@@ -197,12 +199,8 @@ const Layout = () => {
             selectProfile: ({ avatarUrl, id }) => selectProfile.mutate({ id, avatarUrl }),
             isSelectingProfile: selectProfile.isLoading,
           }}
-        >
-          <Button activeClassname={styles.headerButton} label={t('home')} to="/" variant="text" />
-          {menu.map((item) => (
-            <Button activeClassname={styles.headerButton} key={item.contentId} label={item.label} to={playlistURL(item.contentId)} variant="text" />
-          ))}
-        </Header>
+          navItems={navItems}
+        />
         <main id="content" className={styles.main} tabIndex={-1}>
           <Outlet />
         </main>

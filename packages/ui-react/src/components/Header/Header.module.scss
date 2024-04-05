@@ -77,7 +77,17 @@
   flex: 1;
   align-items: center;
 
-  > a {
+  > ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      float: left;
+    }
+  }
+
+  a {
     height: 36px;
     min-height: 36px;
     margin: 0 6px;
@@ -174,6 +184,28 @@
 .brandCentered {
   .brand {
     text-align: center;
+  }
+}
+
+.navButton {
+  overflow: visible;
+
+  &::after {
+    position: absolute;
+    bottom: calc(((variables.$header-height - 36px) / 2) * -1);
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: variables.$white;
+    content: '';
+  }
+
+  body:global(.is-tabbing) & {
+    &:focus {
+      &::after {
+        display: none;
+      }
+    }
   }
 }
 
