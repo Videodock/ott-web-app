@@ -200,12 +200,8 @@
     content: '';
   }
 
-  body:global(.is-tabbing) & {
-    &:focus {
-      &::after {
-        display: none;
-      }
-    }
+  body:global(.is-tabbing) &:focus::after {
+    display: none;
   }
 }
 
