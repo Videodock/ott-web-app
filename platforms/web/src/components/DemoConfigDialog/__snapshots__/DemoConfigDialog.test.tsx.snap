@@ -37,6 +37,7 @@ exports[`<DemoConfigDialog> > renders and matches snapshot error dialog 1`] = `
           src="/images/logo.png"
         />
         <h1
+          aria-live="polite"
           class="_title_d73633"
         >
           app_config_not_found
