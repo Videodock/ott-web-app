@@ -56,6 +56,14 @@ const Search = () => {
     };
   }, []);
 
+  const title = isFetching
+    ? t('heading')
+    : !query
+    ? t('start_typing')
+    : playlist?.playlist.length
+    ? t('title', { count: playlist.playlist.length, query })
+    : t('no_results_heading', { query });
+
   if ((error || !playlist) && !isFetching) {
     return (
       <ErrorPage title={t('error_heading')}>
@@ -66,19 +74,26 @@ const Search = () => {
   }
 
   if (!query) {
-    return <ErrorPage title={t('start_typing')} />;
+    return <ErrorPage title={title} />;
   }
 
   if (!playlist?.playlist.length) {
     return (
-      <ErrorPage title={t('no_results_heading', { query })}>
-        <h2 className={styles.subHeading}>{t('suggestions')}</h2>
-        <ul>
-          <li>{t('tip_one')}</li>
-          <li>{t('tip_two')}</li>
-          <li>{t('tip_three')}</li>
-        </ul>
-      </ErrorPage>
+      <>
+        <Helmet>
+          <title>
+            {title} - {siteName}
+          </title>
+        </Helmet>
+        <ErrorPage title={title}>
+          <h2 className={styles.subHeading}>{t('suggestions')}</h2>
+          <ul>
+            <li>{t('tip_one')}</li>
+            <li>{t('tip_two')}</li>
+            <li>{t('tip_three')}</li>
+          </ul>
+        </ErrorPage>
+      </>
     );
   }
 
@@ -86,11 +101,13 @@ const Search = () => {
     <div className={styles.search}>
       <Helmet>
         <title>
-          {t('title', { count: playlist.playlist.length, query })} - {siteName}
+          {title} - {siteName}
         </title>
       </Helmet>
       <header className={styles.header}>
-        <h2 id={headingId}>{t('heading')}</h2>
+        <h2 id={headingId} aria-live={isFetching ? undefined : 'polite'}>
+          {title}
+        </h2>
       </header>
       <CardGrid
         aria-labelledby={headingId}
