@@ -44,7 +44,7 @@ Scenario('I can slide within the featured shelf', async ({ I }) => {
 
   async function slide(swipeText: string) {
     if (isDesktop) {
-      I.click({ css: 'div[aria-label="Next slide"]' });
+      I.click({ css: 'button[aria-label="Next slide"]' });
     } else {
       await I.swipeLeft({ text: swipeText });
     }
@@ -79,7 +79,7 @@ Scenario('I can slide within non-featured shelves', async ({ I }) => {
 
   async function slideRight(swipeText) {
     if (isDesktop) {
-      I.click({ css: 'div[aria-label="Next slide"]' }, makeShelfXpath(ShelfId.allFilms));
+      I.click({ css: 'button[aria-label="Next slide"]' }, makeShelfXpath(ShelfId.allFilms));
     } else {
       await I.swipeLeft({ text: swipeText });
     }
@@ -87,7 +87,7 @@ Scenario('I can slide within non-featured shelves', async ({ I }) => {
 
   async function slideLeft(swipeText) {
     if (isDesktop) {
-      I.click({ css: 'div[aria-label="Previous slide"]' }, makeShelfXpath(ShelfId.allFilms));
+      I.click({ css: 'button[aria-label="Previous slide"]' }, makeShelfXpath(ShelfId.allFilms));
     } else {
       await I.swipeRight({ text: swipeText });
     }
