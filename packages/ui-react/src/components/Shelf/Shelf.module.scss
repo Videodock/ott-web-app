@@ -1,3 +1,5 @@
+@use '@jwp/ott-ui-react/src/styles/mixins/responsive';
+@use '@jwp/ott-ui-react/src/styles/variables';
 @use '@jwp/ott-ui-react/src/styles/theme';
 
 .shelf {
@@ -6,13 +8,9 @@
   font-family: var(--body-alt-font-family);
 
   &:hover,
-  &:focus-within
-  {
-    .chevron {
+  &:focus-within {
+    .chevron:not(:disabled) {
       opacity: 1;
-      &.disabled {
-        opacity: 0.3;
-      }
     }
   }
 }
@@ -23,7 +21,7 @@
   margin-bottom: 12px;
   background-color: theme.$card-loading-bg-color;
   border-radius: 5px;
-};
+}
 
 .title {
   width: 100%;
@@ -38,6 +36,26 @@
   text-overflow: ellipsis;
 }
 
+.slider {
+  position: static;
+  overflow: visible;
+
+  li > a {
+    white-space: initial;
+  }
+
+  @include responsive.tablet-and-larger() {
+    li {
+      opacity: 1;
+      transition: opacity 0.2s ease;
+
+      &:global(.TileSlider--hidden) {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
 .chevron {
   display: flex;
   flex-wrap: wrap;
@@ -47,21 +65,31 @@
   height: 44px;
   outline-color: var(--highlight-color, white);
   cursor: pointer;
+  filter: drop-shadow(1px 1px 2px variables.$black);
   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  appearance: none;
 
   > svg {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
   }
-  &.disabled {
-    cursor: default;
-    &:hover {
-      transform: none;
-    }
+
+  &:disabled {
+    opacity: 0.3;
+    pointer-events: none;
   }
+
   &:hover {
     transform: scale(1.2);
   }
+}
+
+.dots {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 12px;
 }
 
 .dot {
@@ -72,6 +100,7 @@
   background-color: rgba(254, 254, 254, 0.2);
   border-radius: 50%;
   transition: all 200ms ease;
+  will-change: transform;
 
   &.active {
     background-color: var(--primary-color);

@@ -1,5 +1,4 @@
-import React from 'react';
-import classNames from 'classnames';
+import React, { useEffect, useState } from 'react';
 import { createURL } from '@jwp/ott-common/src/utils/urlFormatting';
 
 import styles from './Image.module.scss';
@@ -16,14 +15,47 @@ const setWidth = (url: string, width: number) => {
   return createURL(url, { width });
 };
 
+const cache = new Map();
+
+const resolveImageURL = async (imgUrl: string, width: number) => {
+  const requestUrl = setWidth(imgUrl, width);
+  let url = requestUrl;
+
+  if (cache.has(requestUrl)) {
+    return cache.get(requestUrl);
+  }
+
+  const response = await fetch(requestUrl);
+
+  // if redirected, cache and return resolved URL
+  if (response.redirected) {
+    url = response.url.replace('-1920', `-${width}`);
+  }
+
+  cache.set(requestUrl, url);
+
+  return url;
+};
+
 const Image = ({ className, image, onLoad, alt = '', width = 640 }: Props) => {
-  const handleLoad = () => {
-    if (onLoad) onLoad();
-  };
+  const [src, setSrc] = useState<string | null>(null);
 
-  if (!image) return null;
+  useEffect(() => {
+    if (!image) return;
 
-  return <img className={classNames(className, styles.image)} src={setWidth(image, width)} onLoad={handleLoad} alt={alt} />;
+    const loadImage = async () => {
+      const resolvedImage = await resolveImageURL(image, width);
+
+      setSrc(resolvedImage);
+      onLoad?.();
+    };
+
+    loadImage();
+  }, [image, width, onLoad]);
+
+  if (!src) return null;
+
+  return <img className={`${className} ${styles.image}`} src={src} alt={alt} />;
 };
 
 export default React.memo(Image);

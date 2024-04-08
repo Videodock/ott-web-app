@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -57,7 +57,6 @@ function Card({
   } = useTranslation(['common', 'video']);
   // t('play_item')
 
-  const [imageLoaded, setImageLoaded] = useState(false);
   const cardClassName = classNames(styles.card, {
     [styles.featured]: featured,
     [styles.disabled]: disabled,
@@ -66,16 +65,13 @@ function Card({
   const posterClassNames = classNames(styles.poster, aspectRatioClass, {
     [styles.current]: isCurrent,
   });
-  const posterImageClassNames = classNames(styles.posterImage, {
-    [styles.visible]: imageLoaded,
-  });
 
   const isSeriesItem = isSeries(item);
   const isLive = mediaStatus === MediaStatus.LIVE || isLiveChannel(item);
   const isScheduled = mediaStatus === MediaStatus.SCHEDULED;
 
   const renderTag = () => {
-    if (loading || disabled || !title) return null;
+    if (loading || !title) return null;
 
     if (isSeriesItem) {
       return <div className={styles.tag}>{t('video:series')}</div>;
@@ -107,7 +103,7 @@ function Card({
       tabIndex={disabled ? -1 : tabIndex}
       data-testid={testId(title)}
     >
-      {!featured && !disabled && (
+      {!featured && (
         <div className={styles.titleContainer}>
           {heading}
           {!!scheduledStart && isLiveEvent(item) && (
@@ -116,10 +112,10 @@ function Card({
         </div>
       )}
       <div className={posterClassNames}>
-        <Image className={posterImageClassNames} image={image} width={featured ? 640 : 320} onLoad={() => setImageLoaded(true)} alt="" />
+        <Image className={styles.posterImage} image={image} width={featured ? 640 : 320} alt="" />
         {!loading && (
           <div className={styles.meta}>
-            {featured && !disabled && heading}
+            {featured && heading}
             <div className={styles.tags}>
               {isLocked && (
                 <div className={classNames(styles.tag, styles.lock)} aria-label={t('card_lock')} role="img">

@@ -3447,6 +3447,11 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
+"@videodock/tile-slider@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@videodock/tile-slider/-/tile-slider-2.0.0.tgz#f8fb6aaa266106ba43e1c52b6a48ae4a6f4aac5c"
+  integrity sha512-EYItAF5dMiRA1E12c3vNtymr1sFFZyJBjAkxyxuaoQsVBkRfzoIN2MBnwAov/H5eHasVt4Jtn2DA0JCFZ5/PLQ==
+
 "@vite-pwa/assets-generator@^0.2.4":
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/@vite-pwa/assets-generator/-/assets-generator-0.2.4.tgz#ffd5dee762f6e98eaff9938fd52591cb04d8dbc7"
