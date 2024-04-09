@@ -54,33 +54,36 @@ Scenario('Closing search return to original page (@mobile-only)', async ({ I }) 
 });
 
 Scenario('I can type a search phrase in the search bar', async ({ I }) => {
+  const searchTerm = 'Caminandes';
   await openSearch(I);
-  I.fillField(searchBarLocator, 'Caminandes');
+  I.fillField(searchBarLocator, searchTerm);
   I.seeElement(clearSearchLocator);
 
-  checkSearchResults(I, ['Caminandes 1', 'Caminandes 2', 'Caminandes 3']);
+  checkSearchResults(I, searchTerm, 3, ['Caminandes 1', 'Caminandes 2', 'Caminandes 3']);
 
   I.click(clearSearchLocator);
   assert.strictEqual('', await I.grabValueFrom(searchBarLocator));
 
-  checkSearchResults(I, []);
+  I.dontSee('Search results');
   I.see(emptySearchPrompt);
 });
 
 Scenario('I can search by partial match', async ({ I }) => {
+  const searchTerm = 'ani';
   await openSearch(I);
-  I.fillField(searchBarLocator, 'ani');
+  I.fillField(searchBarLocator, searchTerm);
   I.seeElement(clearSearchLocator);
 
-  checkSearchResults(I, ['Minecraft Animation Workshop', 'Animating the Throw', 'Primitive Animals']);
+  checkSearchResults(I, searchTerm, 5, ['Minecraft Animation Workshop', 'Animating the Throw', 'Primitive Animals']);
 });
 
 Scenario('I get empty search results when no videos match', async ({ I }) => {
+  const searchTerm = 'Axdfsdfgfgfd';
   await openSearch(I);
-  I.fillField(searchBarLocator, 'Axdfsdfgfgfd');
+  I.fillField(searchBarLocator, searchTerm);
   I.seeElement(clearSearchLocator);
 
-  checkSearchResults(I, []);
+  checkSearchResults(I, searchTerm, 0, []);
 
   I.see('No results found for "Axdfsdfgfgfd"');
   I.see('Suggestions:');
@@ -124,17 +127,17 @@ Scenario('I can clear the search phrase manually', async ({ I }) => {
   I.dontSee('Suggestions:');
 });
 
-function checkSearchResults(I: CodeceptJS.I, expectedResults: string[]) {
+function checkSearchResults(I: CodeceptJS.I, searchTerm: string, expectedResults: number, searchMatches: string[]) {
   I.dontSee('Blender Channel');
   I.dontSee('All Films');
 
-  if (expectedResults.length > 0) {
-    I.see('Search results');
+  if (expectedResults > 0) {
+    I.see(`${expectedResults} results for "${searchTerm}"`, 'h2');
     I.dontSee(emptySearchPrompt);
     I.dontSee('No results found');
-    expectedResults.forEach((result) => I.see(result));
+    searchMatches.forEach((result) => I.see(result));
   } else {
-    I.dontSee('Search results');
+    I.see(`No results found for "${searchTerm}"`, 'h1');
     I.dontSeeElement('div[class*="cell"]');
     I.dontSeeElement('div[class*="card"]');
     I.dontSeeElement('div[class*="poster"]');
