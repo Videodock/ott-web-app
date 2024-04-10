@@ -15,6 +15,7 @@
     "coupon_applied": "Your coupon code has been applied",
     "coupon_discount": "Coupon discount",
     "coupon_not_valid": "Coupon code is not valid",
+    "coupon_not_valid_for_offer": "Coupon code is not valid for this offer",
     "credit_card": "Credit card",
     "credit_card_name": "Credit card name",
     "days_trial_one": "You will be charged tomorrow.",

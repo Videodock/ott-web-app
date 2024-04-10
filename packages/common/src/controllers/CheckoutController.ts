@@ -103,6 +103,8 @@ export default class CheckoutController {
           useCheckoutStore.getState().setOrder(null);
         } else if (error.message === 'Invalid coupon code') {
           throw new FormValidationError({ couponCode: [i18next.t('account:checkout.coupon_not_valid')] });
+        } else if (error.message === 'Invalid coupon code for this offer') {
+          throw new FormValidationError({ couponCode: [i18next.t('account:checkout.coupon_not_valid_for_offer')] });
         }
       }
 
