@@ -12,7 +12,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const IconButton: React.FC<Props> = ({ children, onClick, className, ...ariaProps }: Props) => {
   return (
-    <button className={classNames(styles.iconButton, className)} onClick={onClick} {...ariaProps}>
+    <button className={classNames(styles.iconButton, className)} type="button" onClick={onClick} {...ariaProps}>
       {children}
     </button>
   );
