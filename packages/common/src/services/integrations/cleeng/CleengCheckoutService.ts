@@ -97,6 +97,10 @@ export default class CleengCheckoutService extends CheckoutService {
       if (response.errors[0].includes(`Coupon ${payload.couponCode} not found`)) {
         throw new Error('Invalid coupon code');
       }
+
+      if (response.errors[0].includes(`Coupon ${payload.couponCode} cannot be applied on this offer`)) {
+        throw new Error('Invalid coupon code for this offer');
+      }
     }
 
     return response;
