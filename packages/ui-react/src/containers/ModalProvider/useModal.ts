@@ -15,31 +15,35 @@ export const useModal = ({ open, onClose, modalRef, containerRef }: Params) => {
   const { openModal, closeModal, modals } = useContext(ModalContext);
   const isOpen = modals.some((modal) => modal.modalId === modalId);
 
-  const onCloseCallback = useEventCallback(onClose);
-
-  useEffect(() => {
+  // replace with React `useEffectEvent` when stable: https://react.dev/reference/react/experimental_useEffectEvent
+  const openModalEvent = useEventCallback(() => {
     if (open) {
-      openModal(modalId, modalRef, onCloseCallback, containerRef);
+      openModal(modalId, modalRef, onClose, containerRef);
     } else if (isOpen) {
       closeModal(modalId, false);
     }
-    // only react to `open` changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  });
+  const closeModalEvent = useEventCallback(() => {
+    if (isOpen) {
+      closeModal(modalId, false);
+    }
+  });
+
+  useEffect(() => {
+    // react when the `open` prop changes
+    openModalEvent();
+  }, [open, openModalEvent]);
 
   useEffect(() => {
     return () => {
-      isOpen && closeModal(modalId, false);
+      // cleanup open modal when this component unmounts (without the `open` prop to false)
+      closeModalEvent();
     };
-    // unmount only to unregister the modal when it was open
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const close = () => closeModal(modalId);
+  }, [closeModalEvent]);
 
   return {
     isOpen,
-    closeModal: close,
+    closeModal: closeModalEvent,
     open,
   };
 };
