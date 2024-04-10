@@ -103,7 +103,7 @@ const Checkout = () => {
   const cancelUrl = modalURLFromWindowLocation('payment-cancelled');
   const waitingUrl = modalURLFromWindowLocation('waiting-for-payment', { offerId: selectedOffer?.offerId });
   const errorUrl = modalURLFromWindowLocation('payment-error');
-  const successUrlPaypal = offerType === 'svod' ? waitingUrl : closeModalUrl;
+  const successUrlPaypal = offerType === 'svod' ? waitingUrl : modalURLFromWindowLocation(null);
   const referrer = window.location.href;
 
   const paymentMethod = paymentMethods?.find((method) => method.id === parseInt(paymentMethodId));
