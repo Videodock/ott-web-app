@@ -41,6 +41,7 @@ exports[`<Cinema> > renders and matches snapshot 1`] = `
                   <button
                     aria-label="common:back"
                     class="_iconButton_0fef65 _backButton_555f3c"
+                    type="button"
                   >
                     <svg
                       aria-hidden="true"

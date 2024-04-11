@@ -38,6 +38,7 @@ exports[`<Dialog> > renders and matches snapshot 1`] = `
             <button
               aria-label="close_modal"
               class="_iconButton_0fef65 _modalCloseButton_b92d69"
+              type="button"
             >
               <svg
                 aria-hidden="true"

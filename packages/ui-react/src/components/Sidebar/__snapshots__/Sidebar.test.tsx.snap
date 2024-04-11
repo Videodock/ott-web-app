@@ -16,6 +16,7 @@ exports[`<SideBar /> > renders sideBar closed 1`] = `
       <button
         aria-label="close_menu"
         class="_iconButton_0fef65"
+        type="button"
       >
         <svg
           aria-hidden="true"
@@ -65,6 +66,7 @@ exports[`<SideBar /> > renders sideBar opened 1`] = `
       <button
         aria-label="close_menu"
         class="_iconButton_0fef65"
+        type="button"
       >
         <svg
           aria-hidden="true"

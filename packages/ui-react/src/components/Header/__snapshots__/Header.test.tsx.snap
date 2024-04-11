@@ -23,6 +23,7 @@ exports[`<Header /> > renders header 1`] = `
           aria-haspopup="true"
           aria-label="open_menu"
           class="_iconButton_0fef65 _iconButton_f4f7a7"
+          type="button"
         >
           <svg
             aria-hidden="true"
@@ -51,6 +52,7 @@ exports[`<Header /> > renders header 1`] = `
         <button
           aria-label="Open search"
           class="_iconButton_0fef65 _iconButton_f4f7a7 _actionButton_f4f7a7"
+          type="button"
         >
           <svg
             aria-hidden="true"
