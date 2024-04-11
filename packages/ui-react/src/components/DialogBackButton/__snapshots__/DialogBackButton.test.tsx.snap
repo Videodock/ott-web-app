@@ -5,6 +5,7 @@ exports[`<DialogBackButton> > renders and matches snapshot 1`] = `
   <button
     aria-label="common:back"
     class="_iconButton_0fef65 _dialogBackButton_248199"
+    type="button"
   >
     <svg
       aria-hidden="true"
