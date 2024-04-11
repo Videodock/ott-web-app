@@ -35,6 +35,7 @@ exports[`<SearchBar> > renders and matches snapshot 1`] = `
       <button
         aria-label="search_bar.clear_search_label"
         class="_iconButton_0fef65 _clearButton_3bb1d7"
+        type="button"
       >
         <svg
           aria-hidden="true"

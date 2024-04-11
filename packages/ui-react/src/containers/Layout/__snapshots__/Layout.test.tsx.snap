@@ -27,6 +27,7 @@ exports[`<Layout /> > renders layout 1`] = `
               aria-haspopup="true"
               aria-label="open_menu"
               class="_iconButton_0fef65 _iconButton_f4f7a7"
+              type="button"
             >
               <svg
                 aria-hidden="true"
@@ -86,6 +87,7 @@ exports[`<Layout /> > renders layout 1`] = `
         <button
           aria-label="close_menu"
           class="_iconButton_0fef65"
+          type="button"
         >
           <svg
             aria-hidden="true"

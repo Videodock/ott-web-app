@@ -9,6 +9,7 @@ exports[`<LanguageMenu> > renders and matches snapshot 1`] = `
     aria-label="language_menu"
     class="_iconButton_0fef65"
     data-testid="language-menu-button"
+    type="button"
   >
     <svg
       aria-hidden="true"
