@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { shallow } from '@jwp/ott-common/src/utils/compare';
 import type { PlaylistItem } from '@jwp/ott-common/types/playlist';
@@ -15,6 +15,10 @@ const MediaStaticPage: ScreenComponent<PlaylistItem> = ({ data }) => {
   const { siteName } = config;
   const pageTitle = `${data.title} - ${siteName}`;
   const canonicalUrl = data ? `${window.location.origin}${mediaURL({ media: data })}` : window.location.href;
+
+  useEffect(() => {
+    (document.scrollingElement || document.body).scroll({ top: 0 });
+  }, [data]);
 
   return (
     <>
