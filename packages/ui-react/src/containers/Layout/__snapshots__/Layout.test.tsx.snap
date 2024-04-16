@@ -120,6 +120,9 @@ exports[`<Layout /> > renders layout 1`] = `
             </a>
           </li>
         </ul>
+        <hr
+          class="_separator_e15dbc"
+        />
       </nav>
     </div>
   </div>

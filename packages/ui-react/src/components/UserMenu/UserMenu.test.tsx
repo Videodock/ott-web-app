@@ -1,20 +1,27 @@
 import React from 'react';
-import AccountController from '@jwp/ott-common/src/controllers/AccountController';
-import { mockService } from '@jwp/ott-common/test/mockService';
-import { DEFAULT_FEATURES } from '@jwp/ott-common/src/constants';
 
 import { renderWithRouter } from '../../../test/utils';
 
 import UserMenu from './UserMenu';
 
 describe('<UserMenu>', () => {
-  beforeEach(() => {
-    // TODO: Remove AccountController from component
-    mockService(AccountController, { getFeatures: () => DEFAULT_FEATURES });
-  });
-
   test('renders and matches snapshot', () => {
-    const { container } = renderWithRouter(<UserMenu focusable={true} showPaymentsItem={true} />);
+    const { container } = renderWithRouter(
+      <UserMenu
+        open={false}
+        onOpen={vi.fn()}
+        onClose={vi.fn()}
+        favoritesEnabled
+        isLoggedIn
+        onLoginButtonClick={vi.fn()}
+        onSelectProfile={vi.fn()}
+        profile={null}
+        onSignUpButtonClick={vi.fn()}
+        profilesEnabled={true}
+        profileLoading={false}
+        profiles={[]}
+      />,
+    );
 
     expect(container).toMatchSnapshot();
   });

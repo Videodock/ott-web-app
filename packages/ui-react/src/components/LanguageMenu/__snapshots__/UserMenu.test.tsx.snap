@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`<UserMenu> > renders and matches snapshot 1`] = `
+exports[`<UserMenuNav> > renders and matches snapshot 1`] = `
 <div>
   <ul
     class="_menuItems_457528"

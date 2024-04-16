@@ -6,16 +6,6 @@
   z-index: 0;
 }
 
-.buttonContainer {
-  display: flex;
-  flex-direction: column;
-  padding: 0 variables.$base-spacing;
-
-  > button:first-child {
-    margin-bottom: calc(#{variables.$base-spacing} / 2);
-  }
-}
-
 .main {
   height: 100%;
 }

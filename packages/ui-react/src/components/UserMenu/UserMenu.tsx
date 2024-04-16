@@ -1,104 +1,89 @@
-import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
-import { getModule } from '@jwp/ott-common/src/modules/container';
-import AccountController from '@jwp/ott-common/src/controllers/AccountController';
 import AccountCircle from '@jwp/ott-theme/assets/icons/account_circle.svg?react';
-import Favorite from '@jwp/ott-theme/assets/icons/favorite.svg?react';
-import BalanceWallet from '@jwp/ott-theme/assets/icons/balance_wallet.svg?react';
-import Exit from '@jwp/ott-theme/assets/icons/exit.svg?react';
-import { userProfileURL } from '@jwp/ott-common/src/utils/urlFormatting';
-import { PATH_USER_ACCOUNT, PATH_USER_FAVORITES, PATH_USER_PAYMENTS } from '@jwp/ott-common/src/paths';
 import type { Profile } from '@jwp/ott-common/types/profiles';
 
-import MenuButton from '../MenuButton/MenuButton';
 import Icon from '../Icon/Icon';
 import ProfileCircle from '../ProfileCircle/ProfileCircle';
+import Popover from '../Popover/Popover';
+import Panel from '../Panel/Panel';
+import ProfilesMenu from '../ProfilesMenu/ProfilesMenu';
+import Button from '../Button/Button';
+import UserMenuNav from '../UserMenuNav/UserMenuNav';
+import HeaderActionButton from '../Header/HeaderActionButton';
 
 import styles from './UserMenu.module.scss';
 
 type Props = {
-  small?: boolean;
-  focusable: boolean;
-  showPaymentsItem: boolean;
-  onButtonClick?: () => void;
-  titleId?: string;
-  currentProfile?: Profile | null;
-  favoritesEnabled?: boolean;
+  open: boolean;
+  onClose: () => void;
+  onOpen: () => void;
+  onLoginButtonClick: () => void;
+  onSignUpButtonClick: () => void;
+  isLoggedIn: boolean;
+  favoritesEnabled: boolean;
+  profilesEnabled: boolean;
+  profile: Profile | null;
+  profiles: Profile[] | null;
+  profileLoading: boolean;
+  onSelectProfile: (params: { id: string; avatarUrl: string }) => void;
 };
 
-const UserMenu = ({ showPaymentsItem, small = false, onButtonClick, currentProfile, favoritesEnabled, focusable, titleId }: Props) => {
-  const { t } = useTranslation('user');
-  const navigate = useNavigate();
-  const accountController = getModule(AccountController);
-  const tabIndex = focusable ? 0 : -1;
+const UserMenu = ({
+  isLoggedIn,
+  favoritesEnabled,
+  open,
+  onClose,
+  onOpen,
+  onLoginButtonClick,
+  onSignUpButtonClick,
+  profilesEnabled,
+  profile,
+  profiles,
+  profileLoading,
+  onSelectProfile,
+}: Props) => {
+  const { t } = useTranslation('menu');
 
-  const onLogout = useCallback(async () => {
-    if (onButtonClick) {
-      onButtonClick();
-    }
-
-    await accountController.logout();
-    navigate('/', { replace: true });
-  }, [onButtonClick, navigate, accountController]);
+  if (!isLoggedIn) {
+    return (
+      <div className={styles.buttonContainer}>
+        <Button onClick={onLoginButtonClick} label={t('sign_in')} aria-haspopup="dialog" />
+        <Button variant="contained" color="primary" onClick={onSignUpButtonClick} label={t('sign_up')} aria-haspopup="dialog" />
+      </div>
+    );
+  }
 
   return (
-    <>
-      <h2 className={styles.sectionHeader} id={titleId}>
-        {t('nav.settings')}
-      </h2>
-      <ul className={styles.menuItems}>
-        {currentProfile && (
-          <li>
-            <MenuButton
-              small={small}
-              onClick={onButtonClick}
-              to={userProfileURL(currentProfile.id ?? '')}
-              label={t('nav.profile')}
-              startIcon={<ProfileCircle src={currentProfile?.avatar_url} alt={currentProfile?.name ?? ''} />}
-            />
-          </li>
-        )}
-        <li>
-          <MenuButton
-            small={small}
-            onClick={onButtonClick}
-            to={PATH_USER_ACCOUNT}
-            label={t('nav.account')}
-            startIcon={<Icon icon={AccountCircle} />}
-            tabIndex={tabIndex}
-          />
-        </li>
-        {favoritesEnabled && (
-          <li>
-            <MenuButton
-              small={small}
-              onClick={onButtonClick}
-              to={PATH_USER_FAVORITES}
-              label={t('nav.favorites')}
-              startIcon={<Icon icon={Favorite} />}
-              tabIndex={tabIndex}
-            />
-          </li>
-        )}
-        {showPaymentsItem && (
-          <li>
-            <MenuButton
-              small={small}
-              onClick={onButtonClick}
-              to={PATH_USER_PAYMENTS}
-              label={t('nav.payments')}
-              startIcon={<Icon icon={BalanceWallet} />}
-              tabIndex={tabIndex}
-            />
-          </li>
-        )}
-        <li className={classNames(styles.divider, { [styles.small]: small })}>
-          <MenuButton small={small} onClick={onLogout} label={t('nav.logout')} startIcon={<Icon icon={Exit} />} tabIndex={tabIndex} />
-        </li>
-      </ul>
-    </>
+    <div>
+      <HeaderActionButton
+        aria-label={t('open_user_menu')}
+        aria-controls="menu_panel"
+        aria-expanded={open}
+        aria-haspopup="menu"
+        onClick={onOpen}
+        onBlur={onClose}
+      >
+        {profilesEnabled && profile ? <ProfileCircle src={profile.avatar_url} alt={profile.name || t('profile_icon')} /> : <Icon icon={AccountCircle} />}
+      </HeaderActionButton>
+      <Popover className={styles.popover} isOpen={open} onClose={onClose}>
+        <Panel id="menu_panel">
+          <div onFocus={onOpen} onBlur={onClose}>
+            {profilesEnabled && (
+              <ProfilesMenu
+                onButtonClick={onClose}
+                profiles={profiles ?? []}
+                currentProfile={profile}
+                selectingProfile={profileLoading}
+                selectProfile={onSelectProfile}
+                small
+              />
+            )}
+            <UserMenuNav focusable={open} onButtonClick={onClose} showPaymentItems={true} currentProfile={profile} favoritesEnabled={favoritesEnabled} small />
+          </div>
+        </Panel>
+      </Popover>
+    </div>
   );
 };
 

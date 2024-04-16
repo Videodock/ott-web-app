@@ -3,7 +3,7 @@ import React, { type ButtonHTMLAttributes } from 'react';
 
 import styles from './IconButton.module.scss';
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+export type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   onClick?: () => void;
   onBlur?: () => void;
   children: JSX.Element;

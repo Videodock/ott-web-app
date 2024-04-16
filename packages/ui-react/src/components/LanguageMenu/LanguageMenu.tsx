@@ -1,15 +1,15 @@
 import type { LanguageDefinition } from '@jwp/ott-common/types/i18n';
 import classNames from 'classnames';
-import { Fragment, type MouseEvent } from 'react';
+import { type MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { testId } from '@jwp/ott-common/src/utils/common';
 import Language from '@jwp/ott-theme/assets/icons/language.svg?react';
 
-import IconButton from '../IconButton/IconButton';
 import Link from '../Link/Link';
 import Panel from '../Panel/Panel';
 import Popover from '../Popover/Popover';
 import Icon from '../Icon/Icon';
+import HeaderActionButton from '../Header/HeaderActionButton';
 
 import styles from './LanguageMenu.module.scss';
 
@@ -42,19 +42,19 @@ const LanguageMenu = ({ onClick, className, languages, currentLanguage, language
   };
 
   return (
-    <Fragment>
-      <IconButton
+    <div>
+      <HeaderActionButton
         data-testid={testId('language-menu-button')}
         aria-controls="language-panel"
         aria-expanded={languageMenuOpen}
         aria-haspopup="menu"
-        className={classNames(className)}
+        className={className}
         aria-label={t('language_menu')}
         onClick={handleMenuToggle}
         onBlur={closeLanguageMenu}
       >
         <Icon icon={Language} />
-      </IconButton>
+      </HeaderActionButton>
       <Popover isOpen={languageMenuOpen} onClose={closeLanguageMenu}>
         <Panel id="language-panel">
           <ul className={styles.menuItems}>
@@ -72,7 +72,7 @@ const LanguageMenu = ({ onClick, className, languages, currentLanguage, language
           </ul>
         </Panel>
       </Popover>
-    </Fragment>
+    </div>
   );
 };
 

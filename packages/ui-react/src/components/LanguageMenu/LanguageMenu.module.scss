@@ -2,6 +2,10 @@
 @use '@jwp/ott-ui-react/src/styles/variables';
 @use '@jwp/ott-ui-react/src/styles/theme';
 
+.popover {
+  top: 10px;
+}
+
 .menuItems {
   margin: 0;
   padding: 0;

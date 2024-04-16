@@ -10,6 +10,7 @@ import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
 import ProfileController from '@jwp/ott-common/src/controllers/ProfileController';
 import AccountController from '@jwp/ott-common/src/controllers/AccountController';
 import { logDev } from '@jwp/ott-common/src/utils/common';
+import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 
 export const useSelectProfile = (options?: { onSuccess: () => void; onError: () => void }) => {
   const accountController = getModule(AccountController, false);
@@ -94,7 +95,9 @@ export const useProfileErrorHandler = () => {
 };
 
 export const useProfiles = (options?: UseQueryOptions<ListProfilesResponse | undefined, unknown, ListProfilesResponse | undefined, string[]>) => {
-  const { user } = useAccountStore();
+  const user = useAccountStore((state) => state.user);
+  const accessModel = useConfigStore((state) => state.accessModel);
+  const { profile } = useProfileStore();
   const isLoggedIn = !!user;
 
   const profileController = getModule(ProfileController);
@@ -106,8 +109,11 @@ export const useProfiles = (options?: UseQueryOptions<ListProfilesResponse | und
     enabled: isLoggedIn && profilesEnabled,
   });
 
+  const shouldManageProfiles = !!user && profilesEnabled && query.data?.canManageProfiles && !profile && (accessModel === 'SVOD' || accessModel === 'AUTHVOD');
+
   return {
     query,
+    shouldManageProfiles,
     profilesEnabled: !!query.data?.canManageProfiles,
   };
 };

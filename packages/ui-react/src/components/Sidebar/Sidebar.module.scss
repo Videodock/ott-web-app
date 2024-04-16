@@ -37,9 +37,8 @@
 
   ul {
     margin: 0;
-    padding: 0 0 calc(#{variables.$base-spacing} / 2) 0;
+    padding: 0;
     list-style-type: none;
-    border-bottom: 1px solid rgba(variables.$white, 0.12);
   }
 }
 
@@ -50,6 +49,7 @@
 
 .group {
   display: flex;
+  gap: variables.$base-spacing;
   flex-direction: column;
   max-height: 100%;
   padding: variables.$base-spacing 0;

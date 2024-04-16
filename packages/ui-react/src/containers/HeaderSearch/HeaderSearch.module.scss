@@ -1,0 +1,22 @@
+@use '@jwp/ott-ui-react/src/styles/variables';
+@use '@jwp/ott-ui-react/src/styles/theme';
+@use '@jwp/ott-ui-react/src/styles/accessibility';
+@use '@jwp/ott-ui-react/src/styles/mixins/responsive';
+@use '@jwp/ott-ui-react/src/styles/mixins/utils';
+
+.searchContainer {
+  position: absolute;
+  left: -#{variables.$search-bar-width-desktop};
+  display: flex;
+  width: variables.$search-bar-width-desktop;
+
+  > div:first-child {
+    flex: 1;
+  }
+
+  @include responsive.mobile-and-tablet() {
+    right: 0;
+    left: 0;
+    width: auto;
+  }
+}
