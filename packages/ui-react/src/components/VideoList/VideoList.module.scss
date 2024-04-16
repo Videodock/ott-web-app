@@ -8,11 +8,10 @@
 }
 
 .content {
-  
   @include responsive.desktop-only() {
     height: 100%;
     padding: 16px 24px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 }
 
