@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import path from 'path';
 
 import { defineConfig, loadEnv } from 'vite';
@@ -9,6 +11,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import svgr from 'vite-plugin-svgr';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import legacy, { type Options as LegacyOptions } from '@vitejs/plugin-legacy';
 
 import { basePath, favIconSizes, appleIconSizes } from './pwa-assets.config';
 import {
@@ -49,8 +52,18 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
   const bodyAltFontsString = bodyAltFonts.map((font) => font.fontFamily).join(', ');
   const favicons = generateIconTags(basePath, favIconSizes, appleIconSizes);
 
+  const legacyOptions: LegacyOptions = {
+    targets: 'chrome>= 68',
+  };
+
+  if (process.env.LEGACY_DEBUG) {
+    legacyOptions.modernTargets = legacyOptions.targets as string; // Duplicate
+    legacyOptions.modernPolyfills = true; // Enforce loading polyfills (needed for testing purposes in Chromium)
+  }
+
   return defineConfig({
     plugins: [
+      legacy(legacyOptions),
       react({
         // This is needed to do decorator transforms for ioc resolution to work for classes
         babel: { plugins: ['babel-plugin-transform-typescript-metadata', ['@babel/plugin-proposal-decorators', { legacy: true }]] },
