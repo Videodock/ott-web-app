@@ -18,7 +18,7 @@ const MediaStaticPage: ScreenComponent<PlaylistItem> = ({ data }) => {
 
   useEffect(() => {
     (document.scrollingElement || document.body).scroll({ top: 0 });
-  }, [data]);
+  }, [data.mediaid]);
 
   return (
     <>
