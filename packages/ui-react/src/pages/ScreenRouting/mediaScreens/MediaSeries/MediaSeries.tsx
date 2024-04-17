@@ -136,7 +136,6 @@ const MediaSeries: ScreenComponent<PlaylistItem> = ({ data: seriesMedia }) => {
   // Effects
   useEffect(() => {
     (document.scrollingElement || document.body).scroll({ top: 0 });
-    (document.querySelector('#video-details button') as HTMLElement)?.focus();
   }, [episode]);
 
   useEffect(() => {
@@ -165,14 +164,13 @@ const MediaSeries: ScreenComponent<PlaylistItem> = ({ data: seriesMedia }) => {
   const startWatchingButton = useMemo(
     () => (
       <StartWatchingButton
-        key={episodeId} // necessary to fix autofocus on TalkBack
         item={episode || firstEpisode}
         onClick={() => {
           setSearchParams({ ...searchParams, e: (episode || firstEpisode).mediaid, r: feedId || '', play: '1' }, { replace: true });
         }}
       />
     ),
-    [episodeId, episode, firstEpisode, setSearchParams, searchParams, feedId],
+    [episode, firstEpisode, setSearchParams, searchParams, feedId],
   );
 
   // UI

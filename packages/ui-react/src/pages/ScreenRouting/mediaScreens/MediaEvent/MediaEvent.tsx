@@ -84,7 +84,6 @@ const MediaEvent: ScreenComponent<PlaylistItem> = ({ data: media, isLoading }) =
   // Effects
   useEffect(() => {
     (document.scrollingElement || document.body).scroll({ top: 0 });
-    (document.querySelector('#video-details button') as HTMLElement)?.focus();
   }, [id]);
 
   // UI
@@ -99,14 +98,7 @@ const MediaEvent: ScreenComponent<PlaylistItem> = ({ data: media, isLoading }) =
   );
 
   const shareButton = <ShareButton title={media.title} description={media.description} url={canonicalUrl} />;
-  const startWatchingButton = (
-    <StartWatchingButton
-      key={id} // necessary to fix autofocus on TalkBack
-      item={media}
-      playUrl={mediaURL({ media, playlistId, play: true })}
-      disabled={!liveEvent.isPlayable}
-    />
-  );
+  const startWatchingButton = <StartWatchingButton item={media} playUrl={mediaURL({ media, playlistId, play: true })} disabled={!liveEvent.isPlayable} />;
 
   const favoriteButton = isFavoritesEnabled && <FavoriteButton item={media} />;
   const trailerButton = (!!trailerItem || isTrailerLoading) && (

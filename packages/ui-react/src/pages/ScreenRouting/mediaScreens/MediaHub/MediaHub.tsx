@@ -19,7 +19,6 @@ const MediaHub: ScreenComponent<PlaylistItem> = ({ data }) => {
   // Effects
   useEffect(() => {
     (document.scrollingElement || document.body).scroll({ top: 0 });
-    (document.querySelector('#video-details button') as HTMLElement)?.focus();
   }, [data]);
 
   return (
