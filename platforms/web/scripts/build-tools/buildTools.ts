@@ -82,10 +82,10 @@ export const getGoogleFontTags = (fonts: ExternalFont[]): HtmlTagDescriptor[] =>
 
 export const generateIconTags = (basePath: string, favIconSizes: number[], appleIconSizes: number[]) => {
   const favIconTags = favIconSizes.map((size) => {
-    return `<link rel="icon" type="image/png" sizes="${size}x${size}" href="${basePath}/favicon-${size}x${size}.png">`;
+    return `<link rel="icon" type="image/png" sizes="${size}x${size}" href="${basePath}pwa-${size}x${size}.png">`;
   });
   const appleIconTags = appleIconSizes.map((size) => {
-    return `<link rel="apple-touch-icon" href="${basePath}/apple-touch-icon-${size}x${size}.png">`;
+    return `<link rel="apple-touch-icon" href="${basePath}apple-touch-icon-${size}x${size}.png">`;
   });
   return [...favIconTags, ...appleIconTags].join('\n');
 };

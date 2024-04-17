@@ -1,11 +1,25 @@
 import { testConfigs } from '@jwp/ott-testing/constants';
 
+import { favIconSizes, appleIconSizes } from './../../pwa-assets.config';
+
 import constants from '#utils/constants';
 
 Feature('seo').retry(Number(process.env.TEST_RETRY_COUNT) || 0);
 
 Before(({ I }) => {
   I.useConfig(testConfigs.basicNoAuth);
+});
+
+Scenario('It renders all favicons correcty', ({ I }) => {
+  I.seeAttributesOnElements('link[sizes="any"]', { href: `${constants.baseUrl}images/icons/favicon.ico`, rel: 'icon', type: 'image/x-icon' });
+  for (const size of favIconSizes) {
+    const sizes = `${size}x${size}`;
+    I.seeAttributesOnElements(`link[sizes="${sizes}"]`, { href: `${constants.baseUrl}images/icons/pwa-${sizes}.png`, rel: 'icon', type: 'image/png' });
+  }
+  for (const size of appleIconSizes) {
+    const sizes = `${size}x${size}`;
+    I.seeElementInDOM(`link[rel="apple-touch-icon"][href="/images/icons/apple-touch-icon-${sizes}.png"]`);
+  }
 });
 
 Scenario('It renders the correct meta tags for the home screen', ({ I }) => {
