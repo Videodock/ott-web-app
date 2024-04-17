@@ -9,6 +9,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import svgr from 'vite-plugin-svgr';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import legacy from '@vitejs/plugin-legacy';
 
 import { basePath, favIconSizes, appleIconSizes } from './pwa-assets.config';
 import {
@@ -51,6 +52,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
 
   return defineConfig({
     plugins: [
+      legacy(),
       react({
         // This is needed to do decorator transforms for ioc resolution to work for classes
         babel: { plugins: ['babel-plugin-transform-typescript-metadata', ['@babel/plugin-proposal-decorators', { legacy: true }]] },
