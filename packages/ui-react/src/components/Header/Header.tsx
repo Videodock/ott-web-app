@@ -226,14 +226,7 @@ const Header: React.FC<Props> = ({
           {t('skip_to_content')}
         </a>
         <div className={styles.menu}>
-          <IconButton
-            className={styles.iconButton}
-            aria-label={sideBarOpen ? t('close_menu') : t('open_menu')}
-            aria-controls="sidebar"
-            aria-haspopup="true"
-            aria-expanded={sideBarOpen}
-            onClick={() => onMenuButtonClick()}
-          >
+          <IconButton className={styles.iconButton} aria-label={t('open_menu')} aria-expanded={sideBarOpen} onClick={() => onMenuButtonClick()}>
             <Icon icon={Menu} />
           </IconButton>
         </div>

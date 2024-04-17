@@ -18,9 +18,7 @@ exports[`<Header /> > renders header 1`] = `
         class="_menu_f4f7a7"
       >
         <button
-          aria-controls="sidebar"
           aria-expanded="false"
-          aria-haspopup="true"
           aria-label="open_menu"
           class="_iconButton_0fef65 _iconButton_f4f7a7"
           type="button"
@@ -111,9 +109,7 @@ exports[`<Header /> > renders header with nav buttons 1`] = `
         class="_menu_f4f7a7"
       >
         <button
-          aria-controls="sidebar"
           aria-expanded="false"
-          aria-haspopup="true"
           aria-label="open_menu"
           class="_iconButton_0fef65 _iconButton_f4f7a7"
           type="button"
