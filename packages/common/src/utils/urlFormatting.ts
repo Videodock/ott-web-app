@@ -5,8 +5,16 @@ import { getLegacySeriesPlaylistIdFromEpisodeTags, getSeriesPlaylistIdFromCustom
 
 export type QueryParamsArg = { [key: string]: string | number | string[] | undefined | null };
 
-// Creates a new URL from a url string (could include search params) and an object to add and remove query params
-// For example: createURL(window.location.pathname, { foo: 'bar' });
+/**
+ * Creates a new URL from an url string (preserving the search params) and an object to add and remove query params
+ *
+ * @example
+ * createURL('/m/123456?play=1', { foo: 'bar' }) === '/m/123456?play=6&foo=bar'
+ * createURL('/m/123456?play=1', { play: null }) === '/m/123456'
+ *
+ * // works with absolute URLs
+ * createURL('https://jwplayer.com/m/123456?play=1', { play: null }) === 'https://jwplayer.com/m/123456'
+ */
 export const createURL = (url: string, queryParams: QueryParamsArg) => {
   const [baseUrl, urlQueryString = ''] = url.split('?');
   const urlSearchParams = new URLSearchParams(urlQueryString);
