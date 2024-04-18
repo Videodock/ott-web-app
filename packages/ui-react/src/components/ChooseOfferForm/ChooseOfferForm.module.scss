@@ -22,7 +22,7 @@
   margin-bottom: 24px;
 
   > input  {
-    &:checked + .label {
+    &:checked + .offerDescription {
       border-radius: 4px;
       transform: scale(1.02);
     }
@@ -38,7 +38,7 @@
   flex: 1;
   margin: 0 4px;
 
-  &:focus-within .label {
+  &:focus-within .offerDescription {
     @include accessibility.accessibleOutlineContrast;
     transform: scale(1.03);
   }
@@ -53,14 +53,14 @@
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
 
-  &:checked + .label {
+  &:checked + .offerDescription {
     color: variables.$black;
     background-color: variables.$white;
     border-color: variables.$white;
   }
 }
 
-.label {
+.offerDescription {
   display: flex;
   flex-direction: column;
   height: 100%;
