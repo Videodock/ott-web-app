@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -34,7 +34,19 @@ const Search = () => {
   // User
   const { user, subscription } = useAccountStore(({ user, subscription }) => ({ user, subscription }), shallow);
 
-  const getURL = (playlistItem: PlaylistItem) => mediaURL({ media: playlistItem, playlistId: features?.searchPlaylist });
+  const getURL = (playlistItem: PlaylistItem) =>
+    mediaURL({
+      media: playlistItem,
+      playlistId: features?.searchPlaylist,
+    });
+
+  const title = useMemo(() => {
+    if (isFetching) return t('heading');
+    if (!query) return t('start_typing');
+    if (!playlist?.playlist.length) return t('no_results_heading', { query });
+
+    return t('title', { count: playlist.playlist.length, query });
+  }, [isFetching, playlist?.playlist.length, query, t]);
 
   // Update the search bar query to match the route param on mount
   useEffect(() => {
@@ -55,14 +67,6 @@ const Search = () => {
       });
     };
   }, []);
-
-  const title = isFetching
-    ? t('heading')
-    : !query
-    ? t('start_typing')
-    : playlist?.playlist.length
-    ? t('title', { count: playlist.playlist.length, query })
-    : t('no_results_heading', { query });
 
   if ((error || !playlist) && !isFetching) {
     return (
