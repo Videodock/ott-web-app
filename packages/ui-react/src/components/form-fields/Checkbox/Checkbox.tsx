@@ -59,7 +59,13 @@ const Checkbox: React.FC<Props> = ({
             readOnly={!editing}
           />
           <label htmlFor={id} lang={lang}>
-            {required ? <span role="presentation">*</span> : ''}
+            {required ? (
+              <span role="presentation" aria-hidden="true">
+                *
+              </span>
+            ) : (
+              ''
+            )}
             {checkboxLabel}
           </label>
         </div>

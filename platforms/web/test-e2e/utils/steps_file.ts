@@ -129,7 +129,7 @@ const stepsObj = {
     const requiredTextInputNames: string[] = await this.executeScript(
       ([container, crfFieldSelector]: [string, string]) =>
         Array.from(document.querySelectorAll(`${container} ${crfFieldSelector}`))
-          .filter((element) => !element.querySelector('label')?.innerText.includes('(Optional)'))
+          .filter((element) => element.querySelector('label')?.innerText.includes('*'))
           .map((element) => (element.querySelector('input[type="text"]') as HTMLInputElement)?.name),
       [container, constants.customRegFields.crfTextInput],
     );
@@ -146,7 +146,7 @@ const stepsObj = {
     const requiredRadioValues: string[] = await this.executeScript(
       ([container, crfFieldSelector]: [string, string]) =>
         Array.from(document.querySelectorAll(`${container} ${crfFieldSelector}`))
-          .filter((element) => !(element.querySelector('[data-testid="radio-header"]') as HTMLElement)?.innerText.includes('(Optional)'))
+          .filter((element) => (element.querySelector('[data-testid="radio-header"]') as HTMLElement)?.innerText.includes('*'))
           .map((element) => (element.querySelector('input[type="radio"]') as HTMLInputElement)?.value),
       [container, constants.customRegFields.crfRadioBox],
     );
@@ -164,7 +164,7 @@ const stepsObj = {
       const querySelector = ['crf-select', 'crf-country', 'crf-us_state'].map((testId) => `${container} [data-testid="${testId}"]`).join(', ');
 
       return Array.from(document.querySelectorAll(querySelector))
-        .filter((element) => !element.querySelector('label')?.innerText.includes('(Optional)'))
+        .filter((element) => element.querySelector('label')?.innerText.includes('*'))
         .map((element) => element.querySelector('select')?.name);
     }, container);
 
@@ -185,7 +185,7 @@ const stepsObj = {
     const requiredDatepickerIds: string[] = await this.executeScript(
       ([container, crfFieldSelector]: [string, string]) =>
         Array.from(document.querySelectorAll(`${container} ${crfFieldSelector}`))
-          .filter((element) => !element.querySelector('label')?.innerText.includes('(Optional)'))
+          .filter((element) => element.querySelector('label')?.innerText.includes('*'))
           .map((element) => element.id),
       [container, constants.customRegFields.crfDateField],
     );

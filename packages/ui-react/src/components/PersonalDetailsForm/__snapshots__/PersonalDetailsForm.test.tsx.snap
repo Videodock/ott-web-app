@@ -487,6 +487,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           for="text-field_1235_ccc"
         >
           <span
+            aria-hidden="true"
             role="presentation"
           >
             *
@@ -989,6 +990,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
           for="text-field_1235_ccc"
         >
           <span
+            aria-hidden="true"
             role="presentation"
           >
             *
