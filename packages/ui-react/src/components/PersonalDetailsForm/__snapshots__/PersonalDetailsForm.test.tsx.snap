@@ -12,13 +12,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       personal_details.title
     </h2>
     <div
-      aria-live="assertive"
-      class="_formFeedback_99f247 _error_99f247"
-    >
-      This is a form error
-    </div>
-    <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
     >
       <label
         class="_label_e16c1b"
@@ -31,7 +25,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         <input
           aria-describedby="helper_text_1235_firstname"
-          aria-invalid="true"
+          aria-invalid="false"
           autocomplete="given-name"
           class="_input_e16c1b"
           id="text-field_1235_firstname"
@@ -42,15 +36,9 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="Vince"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_firstname"
-      >
-        this is wrong
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
     >
       <label
         class="_label_e16c1b"
@@ -63,7 +51,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         <input
           aria-describedby="helper_text_1235_lastname"
-          aria-invalid="true"
+          aria-invalid="false"
           autocomplete="family-name"
           class="_input_e16c1b"
           id="text-field_1235_lastname"
@@ -74,15 +62,9 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="Guy"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_lastname"
-      >
-        also this
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
     >
       <label
         class="_label_e16c1b"
@@ -98,7 +80,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         <input
           aria-describedby="helper_text_1235_companyname"
-          aria-invalid="true"
+          aria-invalid="false"
           autocomplete="organization"
           class="_input_e16c1b"
           id="text-field_1235_companyname"
@@ -108,15 +90,9 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="JW Player"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_companyname"
-      >
-        So much errors
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
     >
       <label
         class="_label_e16c1b"
@@ -129,7 +105,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         <input
           aria-describedby="helper_text_1235_address"
-          aria-invalid="true"
+          aria-invalid="false"
           autocomplete="address-line1"
           class="_input_e16c1b"
           id="text-field_1235_address"
@@ -140,15 +116,9 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="123 Nowhere St."
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_address"
-      >
-        Do you know where you live
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
     >
       <label
         class="_label_e16c1b"
@@ -164,7 +134,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         <input
           aria-describedby="helper_text_1235_address2"
-          aria-invalid="true"
+          aria-invalid="false"
           autocomplete="address-line2"
           class="_input_e16c1b"
           id="text-field_1235_address2"
@@ -174,15 +144,9 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="Apt 1W"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_address2"
-      >
-        Come on
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
     >
       <label
         class="_label_e16c1b"
@@ -195,7 +159,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         <input
           aria-describedby="helper_text_1235_city"
-          aria-invalid="true"
+          aria-invalid="false"
           autocomplete="address-level2"
           class="_input_e16c1b"
           id="text-field_1235_city"
@@ -206,15 +170,9 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="Chicago"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_city"
-      >
-        stop it
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
     >
       <label
         class="_label_e16c1b"
@@ -227,7 +185,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         <input
           aria-describedby="helper_text_1235_state"
-          aria-invalid="true"
+          aria-invalid="false"
           autocomplete="address-level1"
           class="_input_e16c1b"
           id="text-field_1235_state"
@@ -238,15 +196,9 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="IL"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_state"
-      >
-        Confusion
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
     >
       <label
         class="_label_e16c1b"
@@ -259,7 +211,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         <input
           aria-describedby="helper_text_1235_postcode"
-          aria-invalid="true"
+          aria-invalid="false"
           autocomplete="postal-code"
           class="_input_e16c1b"
           id="text-field_1235_postcode"
@@ -270,15 +222,9 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="60601"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_postcode"
-      >
-        Post Code should be 5 centimeters
-      </div>
     </div>
     <div
-      class="_textField_e16c1b _error_e16c1b"
+      class="_textField_e16c1b"
     >
       <label
         class="_label_e16c1b"
@@ -291,7 +237,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         <input
           aria-describedby="helper_text_1235_phonenumber"
-          aria-invalid="true"
+          aria-invalid="false"
           class="_input_e16c1b"
           id="text-field_1235_phonenumber"
           name="phoneNumber"
@@ -301,15 +247,9 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           value="+1 555 555 5555"
         />
       </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_phonenumber"
-      >
-        Invalid
-      </div>
     </div>
     <div
-      class="_dateField_eb6974 _error_eb6974"
+      class="_dateField_eb6974"
       id="text-field_1235_birthdate"
     >
       <label
@@ -323,7 +263,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
       >
         <input
           aria-describedby="helper_text_1235_birthdate"
-          aria-invalid="true"
+          aria-invalid="false"
           class="_hiddenInput_eb6974"
           id="text-field_1235_birthdate-hidden"
           name="birthDate"
@@ -360,12 +300,6 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           type="number"
           value="1985"
         />
-      </div>
-      <div
-        class="_helperText_da58e0 _error_da58e0"
-        id="helper_text_1235_birthdate"
-      >
-        February 30th? Really?
       </div>
     </div>
     <div

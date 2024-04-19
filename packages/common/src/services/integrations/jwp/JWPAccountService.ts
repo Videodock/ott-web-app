@@ -393,15 +393,18 @@ export default class JWPAccountService extends AccountService {
     return data;
   };
 
-  getCaptureStatus: GetCaptureStatus = async ({ customer }) => {
+  getCaptureStatus: GetCaptureStatus = async ({ customer: { firstName, lastName } }) => {
+    const firstNameTrimmed = firstName?.trim() || '';
+    const lastNameTrimmed = lastName?.trim() || '';
+
     return {
       isCaptureEnabled: true,
-      shouldCaptureBeDisplayed: true,
+      shouldCaptureBeDisplayed: !firstNameTrimmed || !lastNameTrimmed,
       settings: [
         {
           answer: {
-            firstName: customer.firstName || null,
-            lastName: customer.lastName || null,
+            firstName: firstNameTrimmed || null,
+            lastName: lastNameTrimmed || null,
           },
           enabled: true,
           key: 'firstNameLastName',

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { getModule } from '@jwp/ott-common/src/modules/container';
 import AccountController from '@jwp/ott-common/src/controllers/AccountController';
@@ -7,14 +8,20 @@ export type SocialLoginURLs = Record<string, string>;
 export default function useSocialLoginUrls(url: string) {
   const accountController = getModule(AccountController);
 
-  const urls = useQuery(['socialUrls'], () => accountController.getSocialLoginUrls(url), {
+  const { data, error } = useQuery(['socialUrls', url], () => accountController.getSocialLoginUrls(url), {
     enabled: accountController.getFeatures().hasSocialURLs,
     retry: false,
   });
 
-  if (urls.error || !urls.data) {
+  const urls = useMemo(() => {
+    if (!data) return null;
+
+    return data.reduce((acc, url) => ({ ...acc, ...url }), {} as SocialLoginURLs);
+  }, [data]);
+
+  if (error || !urls) {
     return null;
   }
 
-  return urls.data.reduce((acc, url) => ({ ...acc, ...url }), {} as SocialLoginURLs);
+  return urls;
 }

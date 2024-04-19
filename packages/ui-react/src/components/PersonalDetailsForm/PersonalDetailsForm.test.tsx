@@ -5,7 +5,7 @@ import PersonalDetailsForm from './PersonalDetailsForm';
 const noop = () => {
   /**/
 };
-const values = {
+const initialValues = {
   firstName: 'Vince',
   lastName: 'Guy',
   birthDate: '27-Feb-1985',
@@ -86,12 +86,8 @@ describe('<PersonalDetailsForm>', () => {
   test('Renders without crashing', () => {
     const { container } = render(
       <PersonalDetailsForm
+        initialValues={initialValues}
         onSubmit={noop}
-        onChange={noop}
-        setValue={noop}
-        errors={{}}
-        values={values}
-        submitting={false}
         fields={fields}
         questions={questions}
         onQuestionChange={noop}
@@ -106,25 +102,8 @@ describe('<PersonalDetailsForm>', () => {
   test('Renders with errors', () => {
     const { container } = render(
       <PersonalDetailsForm
+        initialValues={initialValues}
         onSubmit={noop}
-        onChange={noop}
-        setValue={noop}
-        errors={{
-          firstName: 'this is wrong',
-          lastName: 'also this',
-          address: 'Do you know where you live',
-          address2: 'Come on',
-          city: 'stop it',
-          companyName: 'So much errors',
-          country: 'usa is an error',
-          birthDate: 'February 30th? Really?',
-          phoneNumber: 'Invalid',
-          state: 'Confusion',
-          postCode: 'Post Code should be 5 centimeters',
-          form: 'This is a form error',
-        }}
-        values={values}
-        submitting={false}
         fields={fields}
         questions={questions}
         onQuestionChange={noop}

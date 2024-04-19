@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import type { FormErrors } from '@jwp/ott-common/types/form';
 import type { CleengCaptureField, CleengCaptureQuestionField, PersonalDetailsFormData } from '@jwp/ott-common/types/account';
 import { testId } from '@jwp/ott-common/src/utils/common';
+import useForm, { type UseFormOnSubmitHandler } from '@jwp/ott-hooks-react/src/useForm';
 
 import TextField from '../TextField/TextField';
 import Button from '../Button/Button';
@@ -16,14 +16,9 @@ import FormFeedback from '../FormFeedback/FormFeedback';
 import styles from './PersonalDetailsForm.module.scss';
 
 type Props = {
-  onSubmit: React.FormEventHandler<HTMLFormElement>;
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  setValue: (key: keyof PersonalDetailsFormData, value: string) => void;
+  initialValues: PersonalDetailsFormData;
+  onSubmit: UseFormOnSubmitHandler<PersonalDetailsFormData>;
   error?: string;
-  errors: FormErrors<PersonalDetailsFormData>;
-  validationError?: boolean;
-  values: PersonalDetailsFormData;
-  submitting: boolean;
   fields: Record<string, CleengCaptureField>;
   questions: CleengCaptureQuestionField[];
   onQuestionChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
@@ -31,21 +26,14 @@ type Props = {
   questionErrors: Record<string, string>;
 };
 
-const PersonalDetailsForm: React.FC<Props> = ({
-  onSubmit,
-  onChange,
-  setValue,
-  validationError,
-  values,
-  errors,
-  submitting,
-  fields,
-  questions,
-  onQuestionChange,
-  questionValues,
-  questionErrors,
-}: Props) => {
+const PersonalDetailsForm: React.FC<Props> = ({ initialValues, onSubmit, fields, questions, onQuestionChange, questionValues, questionErrors }: Props) => {
   const { t } = useTranslation('account');
+
+  const { setValue, handleSubmit, handleChange, values, errors, validationSchemaError, submitting } = useForm<PersonalDetailsFormData>({
+    initialValues,
+    onSubmit,
+  });
+
   const renderQuestion = ({ value, key, question, required, enabled }: CleengCaptureQuestionField) => {
     if (!enabled) {
       return null;
@@ -86,10 +74,10 @@ const PersonalDetailsForm: React.FC<Props> = ({
   };
 
   return (
-    <form onSubmit={onSubmit} data-testid={testId('personal_details-form')} noValidate>
+    <form onSubmit={handleSubmit} data-testid={testId('personal_details-form')} noValidate>
       <h2 className={styles.title}>{t('personal_details.title')}</h2>
       {errors.form ? (
-        <FormFeedback variant="error" visible={!validationError}>
+        <FormFeedback variant="error" visible={!validationSchemaError}>
           {errors.form}
         </FormFeedback>
       ) : null}
@@ -97,7 +85,7 @@ const PersonalDetailsForm: React.FC<Props> = ({
         <React.Fragment>
           <TextField
             value={values.firstName}
-            onChange={onChange}
+            onChange={handleChange}
             label={t('personal_details.fist_name')}
             placeholder={t('personal_details.fist_name')}
             error={!!errors.firstName}
@@ -108,7 +96,7 @@ const PersonalDetailsForm: React.FC<Props> = ({
           />
           <TextField
             value={values.lastName}
-            onChange={onChange}
+            onChange={handleChange}
             label={t('personal_details.last_name')}
             placeholder={t('personal_details.last_name')}
             error={!!errors.lastName}
@@ -122,7 +110,7 @@ const PersonalDetailsForm: React.FC<Props> = ({
       {fields.companyName?.enabled ? (
         <TextField
           value={values.companyName}
-          onChange={onChange}
+          onChange={handleChange}
           label={t('personal_details.company_name')}
           placeholder={t('personal_details.company_name')}
           error={!!errors.companyName}
@@ -136,7 +124,7 @@ const PersonalDetailsForm: React.FC<Props> = ({
         <React.Fragment>
           <TextField
             value={values.address}
-            onChange={onChange}
+            onChange={handleChange}
             label={t('personal_details.address')}
             placeholder={t('personal_details.address')}
             error={!!errors.address}
@@ -147,7 +135,7 @@ const PersonalDetailsForm: React.FC<Props> = ({
           />
           <TextField
             value={values.address2}
-            onChange={onChange}
+            onChange={handleChange}
             label={t('personal_details.address2')}
             placeholder={t('personal_details.address2')}
             error={!!errors.address2}
@@ -157,7 +145,7 @@ const PersonalDetailsForm: React.FC<Props> = ({
           />
           <TextField
             value={values.city}
-            onChange={onChange}
+            onChange={handleChange}
             label={t('personal_details.city')}
             placeholder={t('personal_details.city')}
             error={!!errors.city}
@@ -168,7 +156,7 @@ const PersonalDetailsForm: React.FC<Props> = ({
           />
           <TextField
             value={values.state}
-            onChange={onChange}
+            onChange={handleChange}
             label={t('personal_details.state')}
             placeholder={t('personal_details.state')}
             error={!!errors.state}
@@ -179,7 +167,7 @@ const PersonalDetailsForm: React.FC<Props> = ({
           />
           <TextField
             value={values.postCode}
-            onChange={onChange}
+            onChange={handleChange}
             label={t('personal_details.post_code')}
             placeholder={t('personal_details.post_code')}
             error={!!errors.postCode}
@@ -193,7 +181,7 @@ const PersonalDetailsForm: React.FC<Props> = ({
       {fields.phoneNumber?.enabled ? (
         <TextField
           value={values.phoneNumber}
-          onChange={onChange}
+          onChange={handleChange}
           label={t('personal_details.phone_number')}
           placeholder={t('personal_details.phone_number')}
           error={!!errors.phoneNumber}
