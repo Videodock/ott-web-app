@@ -18,8 +18,6 @@ import styles from './PersonalDetailsForm.module.scss';
 type Props = {
   initialValues: PersonalDetailsFormData;
   onSubmit: UseFormOnSubmitHandler<PersonalDetailsFormData>;
-  onChange: React.ChangeEventHandler;
-  setValue: (key: keyof PersonalDetailsFormData, value: string) => void;
   error?: string;
   fields: Record<string, CleengCaptureField>;
   questions: CleengCaptureQuestionField[];

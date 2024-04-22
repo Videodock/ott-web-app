@@ -320,7 +320,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           type="number"
           value="27"
         />
-         /
+         / 
         <input
           autocomplete="bday-month"
           class="_input_0addad"
@@ -331,7 +331,7 @@ exports[`<PersonalDetailsForm> > Renders with errors 1`] = `
           type="number"
           value="2"
         />
-         /
+         / 
         <input
           autocomplete="bday-year"
           class="_input_0addad"
@@ -835,7 +835,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
           type="number"
           value="27"
         />
-         /
+         / 
         <input
           autocomplete="bday-month"
           class="_input_0addad"
@@ -846,7 +846,7 @@ exports[`<PersonalDetailsForm> > Renders without crashing 1`] = `
           type="number"
           value="2"
         />
-         /
+         / 
         <input
           autocomplete="bday-year"
           class="_input_0addad"

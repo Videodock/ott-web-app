@@ -135,7 +135,7 @@ exports[`<RegistrationForm> > renders and matches snapshot 1`] = `
       class="_bottom_a472a0"
     >
       registration.already_account
-
+       
       <a
         class="_link_a14c64"
         href="/?u=login"
