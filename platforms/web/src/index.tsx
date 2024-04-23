@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import 'wicg-inert';
 import { registerSW } from 'virtual:pwa-register';
 import { configureEnv } from '@jwp/ott-common/src/env';
+import 'core-js/es/array/flat-map';
+import 'core-js/es/object/from-entries.js';
 
 import './modules/register';
 
