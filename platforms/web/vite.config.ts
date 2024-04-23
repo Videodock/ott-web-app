@@ -114,6 +114,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       cssCodeSplit: false,
       sourcemap: true,
       minify: true,
+      target: ['es2020', 'edge88', 'firefox78', 'chrome68', 'safari14'],
       rollupOptions: {
         output: {
           manualChunks: (id) => {
@@ -129,6 +130,9 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
             }
             if (id.includes('/node_modules/@inplayer')) {
               return 'inplayer';
+            }
+            if (id.includes('/node_modules/core-js')) {
+              return 'polyfills';
             }
             if (id.includes('/node_modules/')) {
               return 'vendor';
