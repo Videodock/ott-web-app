@@ -22,7 +22,7 @@
   margin-bottom: 24px;
 
   > input  {
-    &:checked + .offerDescription {
+    &:checked + .label {
       border-radius: 4px;
       transform: scale(1.02);
     }
@@ -38,7 +38,7 @@
   flex: 1;
   margin: 0 4px;
 
-  &:focus-within .offerDescription {
+  &:focus-within .label {
     @include accessibility.accessibleOutlineContrast;
     transform: scale(1.03);
   }
@@ -53,14 +53,14 @@
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
 
-  &:checked + .offerDescription {
+  &:checked + .label {
     color: variables.$black;
     background-color: variables.$white;
     border-color: variables.$white;
   }
 }
 
-.offerDescription {
+.label {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -136,3 +136,4 @@
     font-size: 12px;
   }
 }
+

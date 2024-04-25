@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type FC, type SVGProps } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import type { FormErrors } from '@jwp/ott-common/types/form';
@@ -40,8 +40,7 @@ const OfferBox: React.FC<OfferBoxProps> = ({ offer, selected, onChange }: OfferB
     return null;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const renderListItem = (text: string, icon: any) => (
+  const renderListItem = (text: string, icon: FC<SVGProps<SVGSVGElement>>) => (
     <li>
       <Icon icon={icon} />
       {text}
@@ -50,7 +49,7 @@ const OfferBox: React.FC<OfferBoxProps> = ({ offer, selected, onChange }: OfferB
   );
 
   const renderOption = ({ title, periodString, secondBenefit }: { title: string; periodString?: string; secondBenefit?: string }) => (
-    <div className={styles.offer} role="option" aria-labelledby={`title-${offer.offerId}`} aria-describedby={`desc-${offer.offerId}`}>
+    <div className={styles.offer} aria-labelledby={`title-${offer.offerId}`}>
       <input
         className={styles.radio}
         onChange={onChange}
@@ -61,15 +60,13 @@ const OfferBox: React.FC<OfferBoxProps> = ({ offer, selected, onChange }: OfferB
         checked={selected}
         data-testid={testId(offer.offerId)}
       />
-      {/* @TODO: only when label is clicked, the styling such as white background gets applied */}
-      <div className={styles.offerDescription}>
+      <div className={styles.label}>
         <label htmlFor={offer.offerId}>
           <h2 className={styles.offerTitle} id={`title-${offer.offerId}`}>
             {title}
           </h2>
-        </label>
-        <div id={`desc-${offer.offerId}`}>
-          <hr className={styles.offerDivider} />
+          <span className="hidden">.</span>
+          <hr className={styles.offerDivider} aria-hidden={true} />
           <ul className={styles.offerBenefits}>
             {offer.freeDays || offer.freePeriods ? renderListItem(getFreeTrialText(offer) || '', CheckCircle) : null}
             {!!secondBenefit && renderListItem(secondBenefit, CheckCircle)}
@@ -79,7 +76,7 @@ const OfferBox: React.FC<OfferBoxProps> = ({ offer, selected, onChange }: OfferB
           <div className={styles.offerPrice}>
             {getOfferPrice(offer)} {!!periodString && <small>/{periodString}</small>}
           </div>
-        </div>
+        </label>
       </div>
     </div>
   );
