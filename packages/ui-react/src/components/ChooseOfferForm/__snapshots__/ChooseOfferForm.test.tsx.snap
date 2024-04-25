@@ -28,7 +28,7 @@ exports[`<OffersForm> > renders and matches snapshot 1`] = `
         value="svod"
       />
       <label
-        class="_offerGroupLabel_f7961f"
+        class="_label_f7961f _offerGroupLabel_f7961f"
         for="svod"
       >
         choose_offer.subscription
@@ -41,7 +41,7 @@ exports[`<OffersForm> > renders and matches snapshot 1`] = `
         value="tvod"
       />
       <label
-        class="_offerGroupLabel_f7961f"
+        class="_label_f7961f _offerGroupLabel_f7961f"
         for="tvod"
       >
         choose_offer.one_time_only
@@ -51,10 +51,8 @@ exports[`<OffersForm> > renders and matches snapshot 1`] = `
       class="_offers_f7961f"
     >
       <div
-        aria-describedby="desc-S916977979_NL"
         aria-labelledby="title-S916977979_NL"
         class="_offer_f7961f"
-        role="option"
       >
         <input
           checked=""
@@ -66,7 +64,7 @@ exports[`<OffersForm> > renders and matches snapshot 1`] = `
           value="S916977979_NL"
         />
         <div
-          class="_offerDescription_f7961f"
+          class="_label_f7961f"
         >
           <label
             for="S916977979_NL"
@@ -77,11 +75,13 @@ exports[`<OffersForm> > renders and matches snapshot 1`] = `
             >
               choose_offer.monthly
             </h2>
-          </label>
-          <div
-            id="desc-S916977979_NL"
-          >
+            <span
+              class="hidden"
+            >
+              .
+            </span>
             <hr
+              aria-hidden="true"
               class="_offerDivider_f7961f"
             />
             <ul
@@ -155,14 +155,12 @@ exports[`<OffersForm> > renders and matches snapshot 1`] = `
                 periods.month
               </small>
             </div>
-          </div>
+          </label>
         </div>
       </div>
       <div
-        aria-describedby="desc-S345569153_NL"
         aria-labelledby="title-S345569153_NL"
         class="_offer_f7961f"
-        role="option"
       >
         <input
           class="_radio_f7961f"
@@ -173,7 +171,7 @@ exports[`<OffersForm> > renders and matches snapshot 1`] = `
           value="S345569153_NL"
         />
         <div
-          class="_offerDescription_f7961f"
+          class="_label_f7961f"
         >
           <label
             for="S345569153_NL"
@@ -184,11 +182,13 @@ exports[`<OffersForm> > renders and matches snapshot 1`] = `
             >
               choose_offer.yearly
             </h2>
-          </label>
-          <div
-            id="desc-S345569153_NL"
-          >
+            <span
+              class="hidden"
+            >
+              .
+            </span>
             <hr
+              aria-hidden="true"
               class="_offerDivider_f7961f"
             />
             <ul
@@ -262,7 +262,7 @@ exports[`<OffersForm> > renders and matches snapshot 1`] = `
                 periods.year
               </small>
             </div>
-          </div>
+          </label>
         </div>
       </div>
     </div>
@@ -306,7 +306,7 @@ exports[`<OffersForm> > renders and matches snapshot 2`] = `
         value="svod"
       />
       <label
-        class="_offerGroupLabel_f7961f"
+        class="_label_f7961f _offerGroupLabel_f7961f"
         for="svod"
       >
         choose_offer.subscription
@@ -320,7 +320,7 @@ exports[`<OffersForm> > renders and matches snapshot 2`] = `
         value="tvod"
       />
       <label
-        class="_offerGroupLabel_f7961f"
+        class="_label_f7961f _offerGroupLabel_f7961f"
         for="tvod"
       >
         choose_offer.one_time_only
@@ -330,10 +330,8 @@ exports[`<OffersForm> > renders and matches snapshot 2`] = `
       class="_offers_f7961f"
     >
       <div
-        aria-describedby="desc-R892134629_NL"
         aria-labelledby="title-R892134629_NL"
         class="_offer_f7961f"
-        role="option"
       >
         <input
           checked=""
@@ -345,7 +343,7 @@ exports[`<OffersForm> > renders and matches snapshot 2`] = `
           value="R892134629_NL"
         />
         <div
-          class="_offerDescription_f7961f"
+          class="_label_f7961f"
         >
           <label
             for="R892134629_NL"
@@ -356,11 +354,13 @@ exports[`<OffersForm> > renders and matches snapshot 2`] = `
             >
               One Time - TVOD offer
             </h2>
-          </label>
-          <div
-            id="desc-R892134629_NL"
-          >
+            <span
+              class="hidden"
+            >
+              .
+            </span>
             <hr
+              aria-hidden="true"
               class="_offerDivider_f7961f"
             />
             <ul
@@ -394,7 +394,7 @@ exports[`<OffersForm> > renders and matches snapshot 2`] = `
               € 2,90
                
             </div>
-          </div>
+          </label>
         </div>
       </div>
     </div>
