@@ -144,7 +144,7 @@ $large-button-height: 40px;
 }
 
 .hidden {
-  visibility: hidden;
+  opacity: 0.001; // ensure the label is still accessible for screen readers
 }
 
 .centerAbsolute {

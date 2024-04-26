@@ -28,7 +28,6 @@ type Props = {
   disabled?: boolean;
   busy?: boolean;
   id?: string;
-  as?: 'button' | 'a';
   activeClassname?: string;
 } & React.AriaAttributes;
 
@@ -45,7 +44,6 @@ const Button: React.FC<Props> = ({
   busy,
   type = 'button',
   to,
-  as = 'button',
   onClick,
   className,
   activeClassname = '',
@@ -64,7 +62,7 @@ const Button: React.FC<Props> = ({
   const content = (
     <>
       {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
-      {<span className={classNames(styles.buttonLabel, { [styles.hidden]: busy }) || undefined}>{label}</span>}
+      {<span className={classNames({ [styles.hidden]: busy }) || undefined}>{label}</span>}
       {children}
       {busy && <Spinner className={styles.centerAbsolute} size={'small'} />}
     </>
