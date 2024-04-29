@@ -1,6 +1,9 @@
 import * as assert from 'assert';
 
 import { TestConfig } from '@jwp/ott-testing/constants';
+import { type ElementContext } from 'axe-core';
+import { injectAxe, checkA11y } from 'axe-playwright';
+import { AxeOptions } from 'axe-playwright/dist/types';
 
 import { randomDate } from './randomizers';
 
@@ -540,6 +543,12 @@ const stepsObj = {
   },
   clickHome: function (this: CodeceptJS.I) {
     this.click('a[href="/"]');
+  },
+  checkA11y: function (context?: ElementContext, axeOptions?: AxeOptions) {
+    this.usePlaywrightTo('Run accessibility tests', async ({ page }) => {
+      await injectAxe(page);
+      await checkA11y(page, context, axeOptions);
+    });
   },
 };
 declare global {

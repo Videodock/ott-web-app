@@ -13,7 +13,8 @@
       "@testing-library/jest-dom",
       "@types/jwplayer",
       "vite-plugin-pwa/client",
-      "reflect-metadata"
+      "reflect-metadata",
+      "axe-playwright"
     ]
   },
   "include": [
