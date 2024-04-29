@@ -1,4 +1,6 @@
 import React from 'react';
+import { axe } from 'vitest-axe';
+import { render } from '@testing-library/react';
 
 import { renderWithRouter } from '../../../test/utils';
 
@@ -9,5 +11,11 @@ describe('<ConfirmationDialog>', () => {
     const { container } = renderWithRouter(<ConfirmationDialog body="Body" title="Title" open={true} onConfirm={vi.fn()} onClose={vi.fn()} />);
 
     expect(container).toMatchSnapshot();
+  });
+
+  test('WCAG 2.1 (AA) compliant', async () => {
+    const { container } = render(<ConfirmationDialog body="Body" title="Title" open={true} onConfirm={vi.fn()} onClose={vi.fn()} />);
+
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
   });
 });

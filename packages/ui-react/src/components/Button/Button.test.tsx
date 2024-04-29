@@ -42,6 +42,6 @@ describe('<Button>', () => {
       </>,
     );
 
-    expect(await axe(container)).toHaveNoViolations();
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
   });
 });

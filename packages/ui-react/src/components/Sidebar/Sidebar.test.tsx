@@ -1,5 +1,6 @@
 import React from 'react';
 import { act } from '@testing-library/react';
+import { axe } from 'vitest-axe';
 
 import { renderWithRouter } from '../../../test/utils';
 import Button from '../Button/Button';
@@ -59,5 +60,15 @@ describe('<SideBar />', () => {
 
     expect(onClose).toHaveBeenCalled();
     expect(container.parentNode).not.toHaveStyle({ overflowY: 'hidden' });
+  });
+
+  test('WCAG 2.1 (AA) compliant', async () => {
+    const { container } = renderWithRouter(
+      <Sidebar isOpen={false} onClose={vi.fn()}>
+        {playlistMenuItems}
+      </Sidebar>,
+    );
+
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
   });
 });

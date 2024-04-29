@@ -1,5 +1,7 @@
 import React from 'react';
 import { act } from '@testing-library/react';
+import { axe } from 'vitest-axe';
+import { render } from '@testing-library/react';
 
 import { renderWithRouter } from '../../../test/utils';
 
@@ -38,5 +40,15 @@ describe('<Modal>', () => {
 
     expect(onClose).toHaveBeenCalled();
     expect(container.parentNode).not.toHaveStyle({ overflowY: 'hidden' });
+  });
+
+  test('WCAG 2.1 (AA) compliant', async () => {
+    const { container } = render(
+      <Modal open={true} onClose={vi.fn()}>
+        <p>Test modal</p>
+      </Modal>,
+    );
+
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
   });
 });

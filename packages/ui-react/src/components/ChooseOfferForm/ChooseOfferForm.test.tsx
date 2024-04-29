@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'vitest-axe';
 import { fireEvent, render } from '@testing-library/react';
 import type { Offer } from '@jwp/ott-common/types/checkout';
 import monthlyOffer from '@jwp/ott-testing/fixtures/monthlyOffer.json';
@@ -127,5 +128,21 @@ describe('<OffersForm>', () => {
     fireEvent.submit(getByTestId('choose-offer-form'));
 
     expect(onSubmit).toBeCalled();
+  });
+
+  test('WCAG 2.1 (AA) compliant', async () => {
+    const { container } = render(
+      <ChooseOfferForm
+        values={{ selectedOfferId: 'S916977979_NL', selectedOfferType: 'svod' }}
+        errors={{}}
+        onChange={vi.fn()}
+        onSubmit={vi.fn()}
+        submitting={false}
+        offers={svodOffers}
+        showOfferTypeSwitch
+      />,
+    );
+
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
   });
 });

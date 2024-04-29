@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'vitest-axe';
 import { render } from '@testing-library/react';
 
 import CustomRegisterField from './CustomRegisterField';
@@ -51,5 +52,21 @@ describe('<CustomRegisterField>', () => {
     const { container } = render(<CustomRegisterField type="randomstring" label="label" name="name" value="value" onChange={vi.fn()} />);
 
     expect(container).toMatchSnapshot();
+  });
+
+  test('WCAG 2.1 (AA) compliant', async () => {
+    const { container } = render(
+      <>
+        <CustomRegisterField type="checkbox" label="label" name="name" value="value" onChange={vi.fn()} />
+        <CustomRegisterField type="input" label="label" name="name" value="value" onChange={vi.fn()} />
+        <CustomRegisterField type="radio" label="label" name="name" value="value" onChange={vi.fn()} />
+        <CustomRegisterField type="select" label="label" name="name" value="value" onChange={vi.fn()} />
+        <CustomRegisterField type="country" label="label" name="name" value="value" onChange={vi.fn()} />
+        <CustomRegisterField type="us_state" label="label" name="name" value="value" onChange={vi.fn()} />
+        <CustomRegisterField type="datepicker" label="label" name="name" value="value" onChange={vi.fn()} />
+      </>,
+    );
+
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
   });
 });

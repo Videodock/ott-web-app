@@ -1,4 +1,6 @@
 import React from 'react';
+import { axe } from 'vitest-axe';
+import { render } from '@testing-library/react';
 
 import { renderWithRouter } from '../../../test/utils';
 
@@ -8,5 +10,11 @@ describe('<Alert>', () => {
   test('renders and matches snapshot', () => {
     const { container } = renderWithRouter(<Alert message="Body" open={true} onClose={vi.fn()} />);
     expect(container).toMatchSnapshot();
+  });
+
+  test('WCAG 2.1 (AA) compliant', async () => {
+    const { container } = render(<Alert message="Body" open={true} onClose={vi.fn()} />);
+
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
   });
 });

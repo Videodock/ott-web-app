@@ -1,4 +1,5 @@
 import React from 'react';
+import { axe } from 'vitest-axe';
 import ProfileController from '@jwp/ott-common/src/controllers/ProfileController';
 import AccountController from '@jwp/ott-common/src/controllers/AccountController';
 import { mockService } from '@jwp/ott-common/test/mockService';
@@ -18,5 +19,11 @@ describe('<Layout />', () => {
     const { container } = renderWithRouter(<Layout />);
 
     expect(container).toMatchSnapshot();
+  });
+
+  test('WCAG 2.1 (AA) compliant', async () => {
+    const { container } = renderWithRouter(<Layout />);
+
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
   });
 });

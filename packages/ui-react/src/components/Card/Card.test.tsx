@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { axe } from 'vitest-axe';
 import { fireEvent } from '@testing-library/react';
 import type { PlaylistItem } from '@jwp/ott-common/types/playlist';
 
@@ -40,5 +41,11 @@ describe('<Card>', () => {
   it('should render anchor tag', () => {
     const { container } = renderWithRouter(<Card item={itemWithImage} url="https://test.dummy.jwplayer.com" />);
     expect(container).toMatchSnapshot();
+  });
+
+  test('WCAG 2.1 (AA) compliant', async () => {
+    const { container } = renderWithRouter(<Card item={itemWithImage} url="https://test.dummy.jwplayer.com" />);
+
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
   });
 });
