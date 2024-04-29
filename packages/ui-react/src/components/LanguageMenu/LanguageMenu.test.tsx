@@ -52,9 +52,9 @@ describe('<LanguageMenu>', () => {
     expect(onClickCb).toHaveBeenCalledWith(languages[0].code);
   });
 
-  test('WCAG 2.1 (AA) compliant', async () => {
+  test('WCAG 2.2 (AA) compliant', async () => {
     const { container } = renderLanguageMenu(languages[0], false);
 
-    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa', 'wcag22aa'] })).toHaveNoViolations();
   });
 });

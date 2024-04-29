@@ -42,13 +42,13 @@ describe('<Modal>', () => {
     expect(container.parentNode).not.toHaveStyle({ overflowY: 'hidden' });
   });
 
-  test('WCAG 2.1 (AA) compliant', async () => {
+  test('WCAG 2.2 (AA) compliant', async () => {
     const { container } = render(
       <Modal open={true} onClose={vi.fn()}>
         <p>Test modal</p>
       </Modal>,
     );
 
-    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa', 'wcag22aa'] })).toHaveNoViolations();
   });
 });

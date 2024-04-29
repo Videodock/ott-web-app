@@ -38,13 +38,13 @@ describe('<Dialog>', () => {
     expect(dialogElement).toHaveAttribute('role', 'dialog');
   });
 
-  test('WCAG 2.1 (AA) compliant', async () => {
+  test('WCAG 2.2 (AA) compliant', async () => {
     const { container } = render(
       <Dialog onClose={vi.fn()} open={true} role="dialog">
         Dialog contents
       </Dialog>,
     );
 
-    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa', 'wcag22aa'] })).toHaveNoViolations();
   });
 });

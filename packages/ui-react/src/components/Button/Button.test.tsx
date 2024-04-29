@@ -27,7 +27,7 @@ describe('<Button>', () => {
     expect(container).toMatchSnapshot();
   });
 
-  test('WCAG 2.1 (AA) compliant', async () => {
+  test('WCAG 2.2 (AA) compliant', async () => {
     const { container } = renderWithRouter(
       <>
         <Button label="Default button" />
@@ -42,6 +42,6 @@ describe('<Button>', () => {
       </>,
     );
 
-    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa', 'wcag22aa'] })).toHaveNoViolations();
   });
 });

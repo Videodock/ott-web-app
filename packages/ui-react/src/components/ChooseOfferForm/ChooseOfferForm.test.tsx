@@ -130,7 +130,7 @@ describe('<OffersForm>', () => {
     expect(onSubmit).toBeCalled();
   });
 
-  test('WCAG 2.1 (AA) compliant', async () => {
+  test('WCAG 2.2 (AA) compliant', async () => {
     const { container } = render(
       <ChooseOfferForm
         values={{ selectedOfferId: 'S916977979_NL', selectedOfferType: 'svod' }}
@@ -143,6 +143,6 @@ describe('<OffersForm>', () => {
       />,
     );
 
-    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa', 'wcag22aa'] })).toHaveNoViolations();
   });
 });

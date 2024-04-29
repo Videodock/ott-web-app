@@ -46,7 +46,7 @@ describe('<VideoDetails>', () => {
     expect(image).toHaveAttribute('src', 'http://image.jpg?width=1280');
   });
 
-  test('WCAG 2.1 (AA) compliant', async () => {
+  test('WCAG 2.2 (AA) compliant', async () => {
     const { container } = render(
       <VideoDetails
         title="Test video"
@@ -63,6 +63,6 @@ describe('<VideoDetails>', () => {
       </VideoDetails>,
     );
 
-    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa', 'wcag22aa'] })).toHaveNoViolations();
   });
 });

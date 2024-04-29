@@ -54,7 +54,7 @@ describe('<CustomRegisterField>', () => {
     expect(container).toMatchSnapshot();
   });
 
-  test('WCAG 2.1 (AA) compliant', async () => {
+  test('WCAG 2.2 (AA) compliant', async () => {
     const { container } = render(
       <>
         <CustomRegisterField type="checkbox" label="label" name="name" value="value" onChange={vi.fn()} />
@@ -67,6 +67,6 @@ describe('<CustomRegisterField>', () => {
       </>,
     );
 
-    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa'] })).toHaveNoViolations();
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa', 'wcag22aa'] })).toHaveNoViolations();
   });
 });
