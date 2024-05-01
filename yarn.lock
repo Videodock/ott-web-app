@@ -2871,10 +2871,10 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@videodock/tile-slider@^2.0.0-rc.6":
-  version "2.0.0-rc.6"
-  resolved "https://registry.yarnpkg.com/@videodock/tile-slider/-/tile-slider-2.0.0-rc.6.tgz#096421f61b09399944e8a286d5d820192562dd00"
-  integrity sha512-Ke54nfrkzzFwFcIicWV0NbwkJyU2NA1XcR5FhvxhLY+HdjMpMp3e3UcBR/q7XqKxyCKHRsy0Ii/mLG4E0wpFFA==
+"@videodock/tile-slider@2.0.0-rc.3":
+  version "2.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/@videodock/tile-slider/-/tile-slider-2.0.0-rc.3.tgz#6b773b78320bab374ee250f430e21d55ddd27fe5"
+  integrity sha512-3MnPWdc4/xdAiVjHv+3cyRjX0Vw4MqkuFiYnJBFAcM76TEapnka6L3mpttZYLWgd7GfDfZ2mepMLykRjhvdEJw==
 
 "@vite-pwa/assets-generator@^0.2.3":
   version "0.2.4"
