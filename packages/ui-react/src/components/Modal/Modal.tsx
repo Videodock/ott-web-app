@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes, type KeyboardEventHandler, type ReactEventHandler, useEffect, useRef } from 'react';
+import React, { type HTMLAttributes, type KeyboardEventHandler, type ReactEventHandler, useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import useEventCallback from '@jwp/ott-hooks-react/src/useEventCallback';
 import classNames from 'classnames';
@@ -76,6 +76,10 @@ const Modal: React.FC<Props> = ({
     }
   };
 
+  const onCloseAnimationEnd = useCallback(() => {
+    modalRef.current?.close();
+  }, []);
+
   useEffect(() => {
     if (open) {
       openModalEvent();
@@ -93,7 +97,7 @@ const Modal: React.FC<Props> = ({
       role={role}
       {...ariaAttributes}
     >
-      <AnimationComponent open={open} duration={300} className={animationContainerClassName} onCloseAnimationEnd={() => modalRef.current?.close()}>
+      <AnimationComponent open={open} duration={300} className={animationContainerClassName} onCloseAnimationEnd={onCloseAnimationEnd}>
         {children}
       </AnimationComponent>
     </dialog>,
