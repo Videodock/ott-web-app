@@ -88,11 +88,20 @@ const Modal: React.FC<Props> = ({
     }
   }, [openModalEvent, closeModalEvent, open]);
 
+  const clickHandler: ReactEventHandler<HTMLDialogElement> = (event) => {
+    // Backdrop click (the dialog itself) will close the modal
+    if (event.target === modalRef.current) {
+      onClose?.();
+      handleClose();
+    }
+  };
+
   return ReactDOM.createPortal(
     <dialog
       className={classNames(className, { [styles.centered]: centered })}
       onKeyDown={keyDownHandler}
       onClose={closeHandler}
+      onClick={clickHandler}
       ref={modalRef}
       role={role}
       {...ariaAttributes}
