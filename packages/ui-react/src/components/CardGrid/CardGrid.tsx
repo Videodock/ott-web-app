@@ -73,7 +73,13 @@ function CardGrid({
   }, [playlist.feedid]);
 
   return (
-    <InfiniteScroll pageStart={0} loadMore={loadMore ?? defaultLoadMore} hasMore={hasMore ?? defaultHasMore} loader={<InfiniteScrollLoader key="loader" />}>
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={loadMore ?? defaultLoadMore}
+      hasMore={hasMore ?? defaultHasMore}
+      loader={<InfiniteScrollLoader key="loader" />}
+      useWindow={false}
+    >
       <LayoutGrid
         className={classNames(styles.container, styles[`cols-${visibleTiles}`])}
         data={loadMore ? playlist.playlist : playlist.playlist.slice(0, rowCount * visibleTiles)}
