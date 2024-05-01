@@ -307,12 +307,12 @@ const stepsObj = {
 
       const points =
         args.direction === 'left'
-          ? { x1: 100, y1: 1, x2: 50, y2: 1 }
+          ? { x1: 50, y1: 1, x2: 0, y2: 1 }
           : args.direction === 'right'
           ? {
-              x1: 50,
+              x1: 0,
               y1: 1,
-              x2: 100,
+              x2: 50,
               y2: 1,
             }
           : args.points;
@@ -337,19 +337,38 @@ const stepsObj = {
         }),
       );
 
-      element.dispatchEvent(
-        new TouchEvent('touchend', {
-          bubbles: true,
-          changedTouches: [
-            new Touch({
-              identifier: Date.now() + 1,
-              target: element,
-              clientX: points.x2,
-              clientY: points.y2,
+      return new Promise<void>((resolve) => {
+        setTimeout(() => {
+          element.dispatchEvent(
+            new TouchEvent('touchmove', {
+              bubbles: true,
+              changedTouches: [
+                new Touch({
+                  identifier: Date.now() + 1,
+                  target: element,
+                  clientX: points.x2,
+                  clientY: points.y2,
+                }),
+              ],
             }),
-          ],
-        }),
-      );
+          );
+
+          element.dispatchEvent(
+            new TouchEvent('touchend', {
+              bubbles: true,
+              changedTouches: [
+                new Touch({
+                  identifier: Date.now() + 2,
+                  target: element,
+                  clientX: points.x2,
+                  clientY: points.y2,
+                }),
+              ],
+            }),
+          );
+          resolve();
+        }, 16);
+      });
     }, args);
   },
   waitForPlayerPlaying: async function (title: string, tries = 10) {
@@ -512,7 +531,7 @@ const stepsObj = {
           direction: scrollToTheRight ? 'left' : 'right',
         });
       } else {
-        this.click({ css: `div[aria-label="${scrollToTheRight ? 'Next slide' : 'Previous slide'}"]` }, shelfLocator);
+        this.click({ css: `button[aria-label="${scrollToTheRight ? 'Next slide' : 'Previous slide'}"]` }, shelfLocator);
       }
 
       this.wait(1);

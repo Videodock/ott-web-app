@@ -4,13 +4,9 @@
   font-family: var(--body-alt-font-family);
 
   &:hover,
-  &:focus-within
-  {
-    .chevron {
+  &:focus-within {
+    .chevron:not(:disabled) {
       opacity: 1;
-      &.disabled {
-        opacity: 0.3;
-      }
     }
   }
 }
@@ -28,6 +24,26 @@
   text-overflow: ellipsis;
 }
 
+.slider {
+  position: static;
+  overflow: visible;
+
+  :global(.TileSlider-list) {
+    li > a {
+      white-space: initial;
+    }
+
+    li {
+      opacity: 1;
+      transition: opacity 0.1s ease;
+
+      &:global(.TileSlider--hidden) {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
 .chevron {
   display: flex;
   flex-wrap: wrap;
@@ -38,20 +54,29 @@
   outline-color: var(--highlight-color, white);
   cursor: pointer;
   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  appearance: none;
 
   > svg {
     width: 30px;
     height: 30px;
   }
-  &.disabled {
-    cursor: default;
-    &:hover {
-      transform: none;
-    }
+
+  &:disabled {
+    opacity: 0.3;
+    pointer-events: none;
   }
+
   &:hover {
     transform: scale(1.2);
   }
+}
+
+.dots {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 12px;
 }
 
 .dot {
