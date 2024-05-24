@@ -1,6 +1,7 @@
 ![JW OTT Webapp](docs/_images/homepage-screenshot.png)
 
 > Do GH actions work from this fork? :-D
+> A small change later
 
 The JW OTT Webapp is an open-source, dynamically generated video website built around JW Player and JW Platform
 services. It enables you to easily publish your JW Player-hosted video content with no coding and minimal configuration.
