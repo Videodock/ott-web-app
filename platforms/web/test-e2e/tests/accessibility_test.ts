@@ -16,14 +16,19 @@ Scenario('Video detail page WCAG compliant', async ({ I }) => {
 
 Scenario('Playlist page WCAG compliant', async ({ I }) => {
   await I.amOnPage('/p/dGSUzs9o/'); // "Films" page
-  I.checkA11y();
+  I.checkA11y(null, {
+    ignore: [
+      // { selector: 'html', id: 'document-title' },
+      // { id: 'aria-valid-attr-value', selector: '[role="gridcell"]' },
+    ],
+  });
 });
 
 Scenario('Video detail inline page WCAG compliant', async ({ I }) => {
   // Fails because of role="image" with aria-label
   I.useConfig(testConfigs.inlinePlayer);
   I.amOnPage('/m/awWEFyPu/big-buck-bunny');
-  I.checkA11y(undefined, { verbose: true, detailedReport: true, detailedReportOptions: { html: true } }); // Debug error
+  I.checkA11y();
 });
 
 // Scenario('Signup modal WCAG compliant', async ({ I }) => {
