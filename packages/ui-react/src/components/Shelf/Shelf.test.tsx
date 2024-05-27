@@ -109,7 +109,7 @@ describe('Shelf Component tests', () => {
           enableCardTitles
           enableTitle
         />
-        ,<h2>Featured shelf</h2>
+        <h2>Featured shelf</h2>
         <Shelf
           title="Featured Shelf"
           type={'playlist'}
