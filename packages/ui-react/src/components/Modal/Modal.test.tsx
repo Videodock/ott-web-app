@@ -1,21 +1,12 @@
 import React from 'react';
-import { act } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { axe } from 'vitest-axe';
-import { render } from '@testing-library/react';
 
 import { renderWithRouter } from '../../../test/utils';
 
 import Modal from './Modal';
 
 describe('<Modal>', () => {
-  beforeAll(() => {
-    vi.useFakeTimers();
-  });
-
-  afterAll(() => {
-    vi.useRealTimers();
-  });
-
   test('renders and matches snapshot', () => {
     const { container } = renderWithRouter(
       <Modal open={true} onClose={vi.fn()}>
@@ -29,6 +20,7 @@ describe('<Modal>', () => {
   test('add overflowY hidden on the body element when open', async () => {
     const onClose = vi.fn();
     const { container, rerender } = await act(() => renderWithRouter(<Modal open={true} onClose={onClose} />));
+    vi.useFakeTimers();
 
     expect(container.parentNode).toHaveStyle({ overflowY: 'hidden' });
 
@@ -37,12 +29,14 @@ describe('<Modal>', () => {
     });
 
     await act(() => vi.runAllTimers()); // wait for close animation
+    vi.useRealTimers();
 
     expect(onClose).toHaveBeenCalled();
     expect(container.parentNode).not.toHaveStyle({ overflowY: 'hidden' });
   });
 
   test('WCAG 2.2 (AA) compliant', async () => {
+    vi.useRealTimers(); // Use real timers for this specific test
     const { container } = render(
       <Modal open={true} onClose={vi.fn()}>
         <p>Test modal</p>

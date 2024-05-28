@@ -63,6 +63,7 @@ describe('<SideBar />', () => {
   });
 
   test('WCAG 2.2 (AA) compliant', async () => {
+    vi.useRealTimers(); // Use real timers for this specific test
     const { container } = renderWithRouter(
       <Sidebar isOpen={false} onClose={vi.fn()}>
         {playlistMenuItems}
