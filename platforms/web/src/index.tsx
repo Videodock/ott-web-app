@@ -1,5 +1,4 @@
-import 'core-js/es/array/flat-map';
-import 'core-js/es/object/from-entries';
+import 'virtual:polyfills';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import 'wicg-inert';

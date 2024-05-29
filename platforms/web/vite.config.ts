@@ -11,6 +11,7 @@ import svgr from 'vite-plugin-svgr';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 import { basePath, favIconSizes, appleIconSizes } from './pwa-assets.config';
+import { legacyBrowserPlugin } from './scripts/build-tools/plugins';
 import {
   extractExternalFonts,
   getFileCopyTargets,
@@ -51,6 +52,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
 
   return defineConfig({
     plugins: [
+      legacyBrowserPlugin(!!process.env.APP_LEGACY_BUILD),
       react({
         // This is needed to do decorator transforms for ioc resolution to work for classes
         babel: { plugins: ['babel-plugin-transform-typescript-metadata', ['@babel/plugin-proposal-decorators', { legacy: true }]] },
@@ -114,7 +116,6 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       cssCodeSplit: false,
       sourcemap: true,
       minify: true,
-      target: ['es2020', 'edge88', 'firefox78', 'chrome68', 'safari14'],
       rollupOptions: {
         output: {
           manualChunks: (id) => {

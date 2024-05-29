@@ -37,12 +37,13 @@ const config: KnipConfig = {
         '@babel/core', // Required peer dependency for babel plugins
         '@types/luxon', // Used in tests
         'babel-plugin-transform-typescript-metadata', // Used to build with decorators for ioc resolution
+        'core-js', // Conditionally imported at build time
         'eslint-plugin-codeceptjs', // Used by apps/web/test-e2e/.eslintrc.cjs
         'luxon', // Used in tests
         'playwright', // Used in test configs
         'sharp', // Requirement for @vite-pwa/assets-generator
         'tsconfig-paths', // Used for e2e test setup
-        'virtual:pwa-register', // Service Worker code is injected at build time,
+        'virtual:pwa-register', // Service Worker code is injected at build time
       ],
     },
     'configs/eslint-config-jwp': {

@@ -92,6 +92,7 @@
     "@jwp/ott-theme": "*",
     "@jwp/ott-ui-react": "*",
     "eslint-config-jwp": "*",
-    "postcss-config-jwp": "*"
+    "postcss-config-jwp": "*",
+    "virtual:polyfills": "*"
   }
 }
