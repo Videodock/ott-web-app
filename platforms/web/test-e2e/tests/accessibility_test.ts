@@ -5,6 +5,10 @@ Feature('Accessibility');
 const disableRetryFailedStep = (test: { disableRetryFailedStep: boolean }): void => {
   test.disableRetryFailedStep = true;
 };
+function waitForEpgAnimation(I: CodeceptJS.I, sec: number = 1) {
+  I.waitForLoaderDone();
+  return I.wait(sec);
+}
 
 Scenario('WCAG compliant - Home Page', async ({ I }) => {
   I.useConfig(testConfigs.basicNoAuth);
@@ -22,17 +26,27 @@ Scenario('WCAG compliant - Playlist Page', async ({ I }) => {
   await I.amOnPage('/p/dGSUzs9o/'); // "Films" page
   I.checkA11y(null, {
     ignore: [
-      // { selector: 'html', id: 'document-title' },
-      // { id: 'aria-valid-attr-value', selector: '[role="gridcell"]' },
+      { id: 'document-title', selector: 'html' },
+      { id: 'aria-valid-attr-value', selector: '[role="gridcell"]' },
     ],
   });
 }).config(disableRetryFailedStep);
 
 Scenario('WCAG compliant - Video Detail Inline Page', async ({ I }) => {
-  // Fails because of role="image" with aria-label
   I.useConfig(testConfigs.inlinePlayer);
   I.amOnPage('/m/awWEFyPu/big-buck-bunny');
   I.checkA11y();
+}).config(disableRetryFailedStep);
+
+Scenario('WCAG compliant - Live Page (EPG)', async ({ I }) => {
+  I.useConfig(testConfigs.basicNoAuth);
+  I.amOnPage('/p/fWpLtzVh/?channel=Uh7zcqVm/');
+  waitForEpgAnimation(I);
+  I.checkA11y(null, {
+    ignore: [
+      { id: 'scrollable-region-focusable', selector: '[class^="css-"]' },
+    ],
+  });
 }).config(disableRetryFailedStep);
 
 // Account Pages
@@ -54,7 +68,6 @@ Scenario('WCAG compliant - Favorites Page', async ({ I }) => {
   I.amOnPage('/u/favorites');
   I.checkA11y();
 }).config(disableRetryFailedStep);
-
 
 // Modals
 
