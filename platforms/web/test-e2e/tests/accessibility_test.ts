@@ -92,14 +92,59 @@ Scenario('WCAG compliant - Favorites Page', async ({ I }) => {
 
 // Modals
 
-// Scenario('Signup - Modal - WCAG compliant', async ({ I }) => {
-//   I.useConfig(testConfigs.jwpAuth);
-//   I.amOnPage('/?u=create-account');
-//   I.checkA11y();
-// });
+Scenario('WCAG compliant - Signup Modal - CLEENG', async ({ I }) => {
+  I.useConfig(testConfigs.cleengAuthvod);
+  I.amOnPage('/?u=create-account');
+  I.wait(0.3); // we need to wait for the modal to be fully loaded (I.seeElement was not sufficient)
+  I.checkA11y();
+}).config(disableRetryFailedStep);
 
-// Scenario('Signin modal WCAG compliant', async ({ I }) => {
-//   I.useConfig(testConfigs.jwpAuth);
-//   I.amOnPage('/?u=login');
-//   I.checkA11y();
-// });
+Scenario('WCAG compliant - Sign in Modal - CLEENG', async ({ I }) => {
+  I.useConfig(testConfigs.cleengAuthvod);
+  I.amOnPage('/?u=login');
+  I.wait(0.3);
+  I.checkA11y();
+}).config(disableRetryFailedStep);
+
+Scenario('WCAG compliant - Signup Modal - JWP', async ({ I }) => {
+  I.useConfig(testConfigs.jwpAuth);
+  I.amOnPage('/?u=create-account');
+  I.wait(0.3);
+  I.checkA11y({
+    ignore: [
+      // All form elements have an associated label.
+      // Custom fields may lack labels if they are not provided. Therefore we need this ignore
+      { id: 'label-title-only', selector: '[data-testid="crsf-input"] input' },
+    ],
+  });
+}).config(disableRetryFailedStep);
+
+Scenario('WCAG compliant - Sign in Modal - JWP', async ({ I }) => {
+  I.useConfig(testConfigs.jwpAuth);
+  I.amOnPage('/?u=login');
+  I.wait(0.3);
+  I.checkA11y();
+}).config(disableRetryFailedStep);
+
+const loginContext: LoginContext = {
+  email: passwordUtils.createRandomEmail(),
+  password: passwordUtils.createRandomPassword(),
+};
+
+Scenario.skip('WCAG compliant - Choose Offer Modal', async ({ I }) => {
+  I.useConfig(testConfigs.cleengAuthvod);
+  I.amOnPage('/?u=create-account');
+
+  await I.fillRegisterForm(loginContext);
+  I.wait(10);
+  I.seeElement('[role="dialog"]');
+
+  I.checkA11y({
+    ignore: [
+      // We are of the opinion that a heading 2 is descriptive enough for the Dialogs and think that
+      // adding an aria-label etc, is redundant
+      { id: 'aria-dialog-name', selector: 'div[role="dialog"]' }
+    ],
+  });
+}).config(disableRetryFailedStep);
+

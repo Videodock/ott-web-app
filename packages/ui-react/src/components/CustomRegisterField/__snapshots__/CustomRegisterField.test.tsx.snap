@@ -41,6 +41,10 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="co
     <div
       class="_container_d97916"
     >
+      <label
+        class="hidden"
+        for="text-field_1235_name"
+      />
       <select
         aria-describedby="helper_text_1235_name"
         aria-invalid="false"
@@ -172,6 +176,10 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="se
     <div
       class="_container_d97916"
     >
+      <label
+        class="hidden"
+        for="text-field_1235_name"
+      />
       <select
         aria-describedby="helper_text_1235_name"
         aria-invalid="false"
@@ -200,6 +208,10 @@ exports[`<CustomRegisterField> > renders and matches snapshot <Dropdown type="us
     <div
       class="_container_d97916"
     >
+      <label
+        class="hidden"
+        for="text-field_1235_name"
+      />
       <select
         aria-describedby="helper_text_1235_name"
         aria-invalid="false"
