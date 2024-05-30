@@ -31,12 +31,12 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
   });
 
   Scenario(`I can close the modal by clicking outside - ${providerName}`, async ({ I }) => {
-    I.forceClick('div[data-testid="backdrop"]');
+    I.forceClick('dialog[open]');
 
     I.dontSee('Email');
     I.dontSee('Password');
     I.dontSeeElement(constants.loginFormSelector);
-  });
+  }).tag('@desktop-only');
 
   Scenario(`I can toggle to view password - ${providerName}`, async ({ I }) => {
     await passwordUtils.testPasswordToggling(I);

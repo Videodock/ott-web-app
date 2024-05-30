@@ -146,7 +146,7 @@ const Shelf = ({
 
   return (
     <div className={classNames(styles.shelf)}>
-      <h2 className={classNames(styles.title, { hidden: featured })}>{title || playlist.title}</h2>
+      {loading ? <div className={styles.loadingTitle} /> : <h2 className={classNames(styles.title, { hidden: featured })}>{title || playlist.title}</h2>}
       <TileDock<PlaylistItem>
         items={playlist.playlist}
         tilesToShow={tilesToShow}

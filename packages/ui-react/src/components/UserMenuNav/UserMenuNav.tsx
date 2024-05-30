@@ -12,11 +12,10 @@ import { userProfileURL } from '@jwp/ott-common/src/utils/urlFormatting';
 import { PATH_USER_ACCOUNT, PATH_USER_FAVORITES, PATH_USER_PAYMENTS } from '@jwp/ott-common/src/paths';
 import type { Profile } from '@jwp/ott-common/types/profiles';
 
+import styles from '../UserMenu/UserMenu.module.scss'; // TODO inherit styling
 import MenuButton from '../MenuButton/MenuButton';
 import Icon from '../Icon/Icon';
 import ProfileCircle from '../ProfileCircle/ProfileCircle';
-
-import styles from './UserMenuNav.module.scss';
 
 type Props = {
   small?: boolean;

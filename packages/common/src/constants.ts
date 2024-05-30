@@ -75,8 +75,6 @@ export const DEFAULT_FEATURES = {
   watchListSizeLimit: MAX_WATCHLIST_ITEMS_COUNT,
 };
 
-export const simultaneousLoginWarningKey = 'simultaneous_logins';
-
 export const EPG_TYPE = {
   jwp: 'jwp',
   viewNexa: 'viewnexa',

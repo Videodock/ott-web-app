@@ -59,9 +59,10 @@ const ShelfList = ({ rows }: Props) => {
         loadMore={() => setRowsToLoad((current) => current + ROWS_TO_LOAD_STEP)}
         hasMore={rowsToLoad < rows.length}
         loader={<InfiniteScrollLoader key="loader" />}
+        useWindow={false}
       >
         {rows.slice(0, rowsToLoad).map(({ type, featured, title }, index) => {
-          const { data: playlist, isLoading, error } = playlists[index];
+          const { data: playlist, isPlaceholderData, error } = playlists[index];
 
           if (!playlist?.playlist?.length) return null;
 
@@ -76,7 +77,7 @@ const ShelfList = ({ rows }: Props) => {
               aria-label={title || playlist?.title}
             >
               <Shelf
-                loading={isLoading}
+                loading={isPlaceholderData}
                 error={error}
                 type={type}
                 playlist={playlist}

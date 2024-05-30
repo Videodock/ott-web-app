@@ -95,9 +95,7 @@
     "sign_in": "Iniciar sesión",
     "sign_in_success": "Has iniciado sesión correctamente.",
     "sign_up": "Registrarse",
-    "simultaneous_logins": "Se ha alcanzado el número máximo de sesiones activas para esta cuenta. Iniciar sesión aquí lo cerrará en otra sesión o dispositivo.",
     "twitter": "Inicia sesión con Twitter",
-    "unexpected_error": "Ocurrió un error inesperado.",
     "view_password": "Ver contraseña",
     "wrong_combination": "Combinación de correo electrónico/contraseña incorrecta",
     "wrong_email": "Por favor, verifica tu correo electrónico e intenta nuevamente."
@@ -156,7 +154,6 @@
     "field_required": "Este campo es obligatorio",
     "invalid_password": "Utiliza un mínimo de 8 caracteres (distingue entre mayúsculas y minúsculas) con al menos un número",
     "password": "Contraseña",
-    "password_helper_text": "Utiliza un mínimo de 8 caracteres (distingue entre mayúsculas y minúsculas) con al menos un número",
     "password_strength": {
       "fair": "Regular",
       "invalid": "",
@@ -170,8 +167,7 @@
     "terms_and_conditions": "Términos y condiciones",
     "terms_consent": "Acepto los {{termsLink}}.",
     "terms_consent_jwplayer": "Acepto los {{termsLink}} de JW Player.",
-    "user_exists": "Ya existe un usuario con esta dirección de correo electrónico",
-    "view_password": "Ver contraseña"
+    "user_exists": "Ya existe un usuario con esta dirección de correo electrónico"
   },
   "renew_subscription": {
     "explanation": "Al hacer clic en el botón de abajo, puedes renovar tu plan.",

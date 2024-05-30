@@ -2,7 +2,23 @@ import 'vi-fetch/setup';
 import 'reflect-metadata';
 import '@testing-library/jest-dom'; // Including this for the expect extensions
 import 'react-app-polyfill/stable';
+import 'wicg-inert';
 import type { ComponentType } from 'react';
+import { fireEvent } from '@testing-library/react';
+
+beforeAll(() => {
+  // these methods don't exist in JSDOM: https://github.com/jsdom/jsdom/issues/3294
+  HTMLDialogElement.prototype.show = vi.fn().mockImplementation(function (this: HTMLDialogElement) {
+    this.setAttribute('open', '');
+  });
+  HTMLDialogElement.prototype.showModal = vi.fn().mockImplementation(function (this: HTMLDialogElement) {
+    this.setAttribute('open', '');
+  });
+  HTMLDialogElement.prototype.close = vi.fn().mockImplementation(function (this: HTMLDialogElement) {
+    this.removeAttribute('open');
+    fireEvent(this, new Event('close'));
+  });
+});
 
 const country = {
   af: 'Afghanistan',

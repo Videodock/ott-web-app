@@ -13,11 +13,7 @@ import type { LoginFormData } from '@jwp/ott-common/types/account';
 import LoginForm from '../../../components/LoginForm/LoginForm';
 import { useAriaAnnouncer } from '../../AnnouncementProvider/AnnoucementProvider';
 
-type Props = {
-  messageKey: string | null;
-};
-
-const Login: React.FC<Props> = ({ messageKey }: Props) => {
+const Login = () => {
   const accountController = getModule(AccountController);
 
   const { siteName } = useConfigStore((s) => s.config);
@@ -53,7 +49,6 @@ const Login: React.FC<Props> = ({ messageKey }: Props) => {
       submitting={submitting}
       siteName={siteName}
       socialLoginURLs={socialLoginURLs}
-      messageKey={messageKey}
       onSubmit={handleSubmit}
       onChange={handleChange}
     />

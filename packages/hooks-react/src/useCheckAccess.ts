@@ -31,7 +31,7 @@ const useCheckAccess = () => {
         const hasAccess = await accountController.checkEntitlements(offerId);
 
         if (hasAccess) {
-          await accountController.reloadSubscriptions({ delay: 2000 }); // Delay needed for backend processing (Cleeng API returns empty subscription, even after accessGranted from entitlements call
+          await accountController.reloadSubscriptions({ retry: 10, delay: 2000 });
           callback?.(true);
         } else if (--iterations === 0) {
           window.clearInterval(intervalRef.current);

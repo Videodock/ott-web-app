@@ -1,3 +1,15 @@
+## [6.1.2](https://github.com/jwplayer/ott-web-app/compare/v6.1.1...v6.1.2) (2024-05-21)
+
+
+### Bug Fixes
+
+* **a11y:** improve accessibility of offers modal ([af654ec](https://github.com/jwplayer/ott-web-app/commit/af654ecc9b481353522b8e08a2d8078a7b91aa2a))
+* **home:** broken home skeleton ([#523](https://github.com/jwplayer/ott-web-app/issues/523)) ([35cd2db](https://github.com/jwplayer/ott-web-app/commit/35cd2db26ed3ffee65a6e2edf38447bce7957c7f))
+* **menu:** reintroduce profile menu styling ([39fd840](https://github.com/jwplayer/ott-web-app/commit/39fd840019405797069e84f7dbfd9d10a746b534))
+* **project:** alignment of password toggle button ([642068d](https://github.com/jwplayer/ott-web-app/commit/642068dc4babba8e9660e9bfee6acf16931aa8aa))
+* **project:** favicon paths ([7acf234](https://github.com/jwplayer/ott-web-app/commit/7acf234446d8dc62e3f43b13f49c3b2ad3c72a8a))
+* remove simultaneous logins ([9aa4a71](https://github.com/jwplayer/ott-web-app/commit/9aa4a71d8c12865bdf13fadf3d93b420343bd672))
+
 ## [6.1.1](https://github.com/jwplayer/ott-web-app/compare/v6.1.0...v6.1.1) (2024-04-23)
 
 

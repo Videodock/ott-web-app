@@ -107,7 +107,7 @@ describe('<OffersForm>', () => {
 
     fireEvent.click(getByTestId('S345569153_NL'));
 
-    expect(onChange).toBeCalled();
+    expect(onChange).toHaveBeenCalled();
   });
 
   test('calls the onSubmit callback when submitting the form', () => {

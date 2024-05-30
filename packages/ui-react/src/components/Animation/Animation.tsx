@@ -1,4 +1,5 @@
 import React, { type CSSProperties, useEffect, useRef, useState } from 'react';
+import useEventCallback from '@jwp/ott-hooks-react/src/useEventCallback';
 
 type Props = {
   className?: string;
@@ -27,35 +28,42 @@ const Animation: React.FC<Props> = ({
 }) => {
   const [status, setStatus] = useState<Status>('closed');
   const [hasOpenedBefore, setHasOpenedBefore] = useState<boolean>(false);
-  const seconds = duration / 1000;
-  const transition = `transform ${seconds}s ease-out`; // todo: -webkit-transform;
 
   const timeout = useRef<number>();
   const timeout2 = useRef<number>();
 
-  useEffect(() => {
-    if (timeout.current) clearTimeout(timeout.current);
-    if (timeout2.current) clearTimeout(timeout2.current);
-    if (open) {
-      setHasOpenedBefore(true);
-      timeout.current = window.setTimeout(() => setStatus('opening'), delay);
-      timeout2.current = window.setTimeout(() => {
-        setStatus('open');
-        onOpenAnimationEnd && onOpenAnimationEnd();
-      }, duration + delay);
-    } else if (hasOpenedBefore) {
+  // use event callbacks to ignore reactive dependencies
+  const openEvent = useEventCallback(() => {
+    setHasOpenedBefore(true);
+    timeout.current = window.setTimeout(() => setStatus('opening'), delay);
+    timeout2.current = window.setTimeout(() => {
+      setStatus('open');
+      onOpenAnimationEnd && onOpenAnimationEnd();
+    }, duration + delay);
+  });
+
+  const closeEvent = useEventCallback(() => {
+    if (hasOpenedBefore) {
       timeout.current = window.setTimeout(() => setStatus('closing'), delay);
       timeout2.current = window.setTimeout(() => {
         setStatus('closed');
         onCloseAnimationEnd && onCloseAnimationEnd();
       }, duration + delay);
     }
+  });
+
+  useEffect(() => {
+    if (open) {
+      openEvent();
+    } else {
+      closeEvent();
+    }
 
     return () => {
       clearTimeout(timeout.current);
       clearTimeout(timeout2.current);
     };
-  }, [duration, delay, transition, open, onOpenAnimationEnd, onCloseAnimationEnd, hasOpenedBefore, setHasOpenedBefore]);
+  }, [open, openEvent, closeEvent]);
 
   if (!open && status === 'closed' && !keepMounted) {
     return null;

@@ -40,7 +40,6 @@ describe('<LoginForm>', () => {
         errors={{}}
         socialLoginURLs={socialLoginURLs}
         submitting={false}
-        messageKey={null}
       />,
       { wrapper: createWrapper() },
     );
@@ -62,7 +61,6 @@ describe('<LoginForm>', () => {
         errors={{}}
         socialLoginURLs={null}
         submitting={false}
-        messageKey={null}
       />,
       { wrapper: createWrapper() },
     );
@@ -85,7 +83,6 @@ describe('<LoginForm>', () => {
         errors={{ email: 'Email error', password: 'Password error', form: 'Form error' }}
         socialLoginURLs={null}
         submitting={false}
-        messageKey={null}
       />,
       { wrapper: createWrapper() },
     );
@@ -109,7 +106,6 @@ describe('<LoginForm>', () => {
         errors={{}}
         socialLoginURLs={null}
         submitting={true}
-        messageKey={null}
       />,
       { wrapper: createWrapper() },
     );
@@ -133,7 +129,6 @@ describe('<LoginForm>', () => {
         errors={{}}
         socialLoginURLs={null}
         submitting={true}
-        messageKey={null}
       />,
       { wrapper: createWrapper() },
     );
@@ -161,7 +156,6 @@ describe('<LoginForm>', () => {
         errors={{}}
         socialLoginURLs={null}
         submitting={true}
-        messageKey={null}
       />,
       { wrapper: createWrapper() },
     );

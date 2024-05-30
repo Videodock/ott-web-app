@@ -66,6 +66,7 @@ function runTestSuite(props: ProviderProps, providerName: string) {
     I.amOnPage(constants.paymentsUrl);
 
     I.click('Complete subscription');
+    I.waitForLoaderDone();
     I.see('Choose plan');
     I.see('Watch this on JW OTT Web App');
 
@@ -92,6 +93,7 @@ function runTestSuite(props: ProviderProps, providerName: string) {
     paidLoginContext = await I.registerOrLogin(paidLoginContext);
 
     I.amOnPage(constants.offersUrl);
+    I.waitForLoaderDone();
 
     I.click(props.monthlyOffer.label);
     I.seeCssPropertiesOnElements(props.monthlyOffer.label, { color: '#000000' });
