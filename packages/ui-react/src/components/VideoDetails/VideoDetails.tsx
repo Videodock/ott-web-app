@@ -3,8 +3,9 @@ import classNames from 'classnames';
 import { testId } from '@jwp/ott-common/src/utils/common';
 import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
-import CollapsibleText from '../CollapsibleText/CollapsibleText';
+import TruncatedText from '../TruncatedText/TruncatedText';
 import Image from '../Image/Image';
+import CollapsibleText from '../CollapsibleText/CollapsibleText';
 
 import styles from './VideoDetails.module.scss';
 
@@ -49,8 +50,11 @@ const VideoDetails: React.VFC<Props> = ({
               <div className={styles.primaryMetadata}>{primaryMetadata}</div>
               {secondaryMetadata && <div className={styles.secondaryMetadata}>{secondaryMetadata}</div>}
             </div>
-            <CollapsibleText text={description} className={styles.description} maxHeight={isMobile ? 60 : 'none'} />
-
+            {isMobile ? (
+              <CollapsibleText text={description} className={styles.description} />
+            ) : (
+              <TruncatedText text={description} maximumLines={12} className={styles.description} />
+            )}
             <div className={styles.buttonBar}>
               {startWatchingButton}
               {trailerButton}

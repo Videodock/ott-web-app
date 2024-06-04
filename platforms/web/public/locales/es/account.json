@@ -144,7 +144,7 @@
   },
   "registration": {
     "already_account": "¿Ya tienes una cuenta?",
-    "consent_required": "Este campo es obligatorio, por favor completa {{field}} para continuar.",
+    "consent_required": "Se requiere consentimiento, marque la casilla para continuar.",
     "consents_error": "Acepte todos los consentimientos necesarios para continuar.",
     "continue": "Continuar",
     "email": "Correo electrónico",

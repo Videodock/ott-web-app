@@ -1,20 +1,19 @@
 import classNames from 'classnames';
 import React, { useEffect, useRef, useState } from 'react';
 import ChevronRight from '@jwp/ott-theme/assets/icons/chevron_right.svg?react';
-import useBreakpoint from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
 import IconButton from '../IconButton/IconButton';
 import Icon from '../Icon/Icon';
+import useBreakpoint from '../../hooks/useBreakpoint';
 
 import styles from './CollapsibleText.module.scss';
 
 type Props = {
   text: string;
   className?: string;
-  maxHeight?: 'none' | number;
 };
 
-const CollapsibleText: React.FC<Props> = ({ text, className, maxHeight = 'none' }: Props) => {
+const CollapsibleText: React.FC<Props> = ({ text, className }: Props) => {
   const divRef = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLDivElement>;
   const breakpoint = useBreakpoint();
   const [doesFlowOver, setDoesFlowOver] = useState(false);
@@ -23,12 +22,10 @@ const CollapsibleText: React.FC<Props> = ({ text, className, maxHeight = 'none' 
   const ariaLabel = expanded ? 'Collapse' : 'Expand';
 
   const clippablePixels = 4;
+  const maxHeight = 60;
 
   useEffect(() => {
-    divRef.current &&
-      setDoesFlowOver(
-        divRef.current.scrollHeight > divRef.current.offsetHeight + clippablePixels || (maxHeight !== 'none' && maxHeight < divRef.current.offsetHeight),
-      );
+    divRef.current && setDoesFlowOver(divRef.current.scrollHeight > divRef.current.offsetHeight + clippablePixels || maxHeight < divRef.current.offsetHeight);
   }, [maxHeight, text, breakpoint]);
 
   return (

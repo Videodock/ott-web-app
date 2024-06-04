@@ -1,7 +1,11 @@
 import 'react-app-polyfill/stable';
-import '@testing-library/jest-dom'; // Including this for the expect extensions
+import '@testing-library/jest-dom/vitest'; // Including this for the expect extensions
 import 'vi-fetch/setup';
 import 'reflect-metadata';
+import * as matchers from 'vitest-axe/matchers';
+import { expect } from 'vitest';
+
+expect.extend(matchers);
 
 // a really simple BroadcastChannel stub. Normally, a Broadcast channel would not call event listeners on the same
 // instance. But for testing purposes, that really doesn't matter...

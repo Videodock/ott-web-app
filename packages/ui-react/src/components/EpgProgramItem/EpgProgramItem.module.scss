@@ -59,7 +59,7 @@
 .epgLiveTag {
   position: absolute;
   bottom: 20px;
-  left: 68px;
+  left: 20px;
   display: flex;
   align-items: center;
   padding: 2px 6px;
@@ -76,8 +76,8 @@
     bottom: initial;
     left: initial;
     justify-content: center;
-    width: 35px;
-    padding: initial;
+    align-self: flex-start;
+    padding: 0 6px;
     font-size: 10px;
   }
 }

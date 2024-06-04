@@ -3,6 +3,7 @@ import { testId } from '@jwp/ott-common/src/utils/common';
 import useBreakpoint, { Breakpoint } from '@jwp/ott-ui-react/src/hooks/useBreakpoint';
 
 import CollapsibleText from '../CollapsibleText/CollapsibleText';
+import TruncatedText from '../TruncatedText/TruncatedText';
 
 import styles from './VideoDetailsInline.module.scss';
 
@@ -31,7 +32,11 @@ const VideoDetailsInline: React.FC<Props> = ({ title, description, primaryMetada
         {favoriteButton}
         {shareButton}
       </div>
-      <CollapsibleText text={description} className={styles.description} maxHeight={isMobile ? 60 : 'none'} />
+      {isMobile ? (
+        <CollapsibleText text={description} className={styles.description} />
+      ) : (
+        <TruncatedText text={description} maximumLines={12} className={styles.description} />
+      )}
     </div>
   );
 };

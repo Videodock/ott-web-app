@@ -134,7 +134,7 @@
   },
   "registration": {
     "already_account": "Already have an account?",
-    "consent_required": "This field is required, please fill in {{field}} to continue.",
+    "consent_required": "Consent required, please check the box to continue.",
     "consents_error": "Please accept all required consents to continue.",
     "continue": "Continue",
     "email": "Email",

@@ -4,6 +4,7 @@ import React from 'react';
 import useBreakpoint, { Breakpoint } from '../../hooks/useBreakpoint';
 import CollapsibleText from '../CollapsibleText/CollapsibleText';
 import Image from '../Image/Image';
+import TruncatedText from '../TruncatedText/TruncatedText';
 
 import styles from './Hero.module.scss';
 
@@ -24,7 +25,11 @@ const Hero = ({ title, description, image }: Props) => {
       <div className={styles.posterFade} />
       <div className={styles.info}>
         <h1 className={styles.title}>{title}</h1>
-        <CollapsibleText text={description} className={styles.description} maxHeight={isMobile ? 60 : 'none'} />
+        {isMobile ? (
+          <CollapsibleText text={description} className={styles.description} />
+        ) : (
+          <TruncatedText text={description} maximumLines={8} className={styles.description} />
+        )}
       </div>
     </div>
   );

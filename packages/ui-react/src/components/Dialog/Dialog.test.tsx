@@ -1,4 +1,6 @@
 import React from 'react';
+import { axe } from 'vitest-axe';
+import { render } from '@testing-library/react';
 
 import { renderWithRouter } from '../../../test/utils';
 
@@ -17,5 +19,15 @@ describe('<Dialog>', () => {
     );
 
     expect(baseElement).toMatchSnapshot();
+  });
+
+  test('WCAG 2.2 (AA) compliant', async () => {
+    const { container } = render(
+      <Dialog onClose={vi.fn()} open={true} role="dialog">
+        Dialog contents
+      </Dialog>,
+    );
+
+    expect(await axe(container, { runOnly: ['wcag21a', 'wcag21aa', 'wcag22aa'] })).toHaveNoViolations();
   });
 });
