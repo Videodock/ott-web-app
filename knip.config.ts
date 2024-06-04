@@ -44,6 +44,7 @@ const config: KnipConfig = {
         'sharp', // Requirement for @vite-pwa/assets-generator
         'tsconfig-paths', // Used for e2e test setup
         'virtual:pwa-register', // Service Worker code is injected at build time
+        'virtual:polyfills', // Polyfills are conditionally injected
       ],
     },
     'configs/eslint-config-jwp': {
