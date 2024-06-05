@@ -1,6 +1,10 @@
 import * as assert from 'assert';
 
 import { TestConfig } from '@jwp/ott-testing/constants';
+import { type ElementContext, type RunOptions } from 'axe-core';
+import { injectAxe, getViolations, reportViolations } from 'axe-playwright';
+import DefaultTerminalReporter from 'axe-playwright/dist/reporter/defaultTerminalReporter';
+import { JSDOM } from 'jsdom';
 
 import { randomDate } from './randomizers';
 
@@ -12,6 +16,8 @@ const loaderElement = '[class*=_loadingOverlay]';
 
 type SwipeTarget = { text: string } | { xpath: string };
 type SwipeDirection = { direction: 'left' | 'right' } | { points: { x1: number; y1: number; x2: number; y2: number } };
+type IgnoreRule = { id: string; selector: string };
+type AccessbilityOptions = { ignore?: IgnoreRule[] } & RunOptions;
 
 const stepsObj = {
   useConfig: function (this: CodeceptJS.I, config: TestConfig) {
@@ -540,6 +546,24 @@ const stepsObj = {
   },
   clickHome: function (this: CodeceptJS.I) {
     this.click('a[href="/"]');
+  },
+  checkA11y: function (context?: ElementContext | null, options: AccessbilityOptions = {}) {
+    const debug = process.argv.includes('--debug');
+    this.wait(2); // We wait to ensure the page is fully loaded so we don't get flaky a11y violations
+    this.usePlaywrightTo('Run accessibility tests', async ({ page }) => {
+      await injectAxe(page);
+      const violations = await getViolations(page, context || undefined);
+      const impactedViolations = violations.filter((violation) => {
+        const domDocuments = violation.nodes.map((node) => new JSDOM(node.html).window.document);
+        return !options.ignore?.some((rule) => {
+          return violation.id === rule.id && domDocuments.every((document) => !!document.querySelector(rule.selector));
+        });
+      });
+      if (impactedViolations.length > 0) {
+        reportViolations(impactedViolations, new DefaultTerminalReporter(debug, false, debug));
+        assert.fail(`Failed WCAG check with ${impactedViolations.length} violation(s)`);
+      }
+    });
   },
 };
 declare global {
