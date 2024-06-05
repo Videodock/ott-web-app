@@ -549,6 +549,7 @@ const stepsObj = {
   },
   checkA11y: function (context?: ElementContext | null, options: AccessbilityOptions = {}) {
     const debug = process.argv.includes('--debug');
+    this.wait(2); // We wait to ensure the page is fully loaded so we don't get flaky a11y violations
     this.usePlaywrightTo('Run accessibility tests', async ({ page }) => {
       await injectAxe(page);
       const violations = await getViolations(page, context || undefined);

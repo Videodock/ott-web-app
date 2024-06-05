@@ -69,7 +69,9 @@ const Select = ({
 
   return (
     <div className={classNames({ [containerClassName]: editing })}>
-      <label htmlFor={id} className="hidden">{defaultLabel}</label>
+      <label htmlFor={id} className="hidden">
+        {defaultLabel}
+      </label>
       <select id={id} {...inputProps} onChange={handleChange}>
         {defaultLabel && (
           <option className={classNames(styles.option, optionsStyle)} value="" disabled={required}>
