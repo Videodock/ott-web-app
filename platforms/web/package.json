@@ -78,7 +78,7 @@
     "stylelint-config-jwp": "*",
     "tsconfig-paths": "^4.1.0",
     "vi-fetch": "^0.8.0",
-    "vite": "^5.1.5",
+    "vite": "^5.1.7",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-html": "^3.2.2",
     "vite-plugin-pwa": "^0.19.2",
@@ -91,7 +91,7 @@
     "workbox-window": "^6.5.4"
   },
   "optionalDependencies": {
-    "gh-pages": "^3.2.3",
+    "gh-pages": "^5.0.0",
     "lighthouse": "^9.6.7",
     "sharp": "^0.33.2"
   }
