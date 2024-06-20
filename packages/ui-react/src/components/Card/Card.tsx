@@ -57,7 +57,6 @@ function Card({
   } = useTranslation(['common', 'video']);
   // t('play_item')
 
-  const [imageLoaded, setImageLoaded] = useState(false);
   const cardClassName = classNames(styles.card, {
     [styles.featured]: featured,
     [styles.disabled]: disabled,
@@ -65,9 +64,6 @@ function Card({
   const aspectRatioClass = posterAspect ? styles[`aspect${posterAspect.replace(':', '') as PosterAspectRatioClass}`] : undefined;
   const posterClassNames = classNames(styles.poster, aspectRatioClass, {
     [styles.current]: isCurrent,
-  });
-  const posterImageClassNames = classNames(styles.posterImage, {
-    [styles.visible]: imageLoaded,
   });
 
   const isSeriesItem = isSeries(item);
@@ -116,7 +112,7 @@ function Card({
         </div>
       )}
       <div className={posterClassNames}>
-        <Image className={posterImageClassNames} image={image} width={featured ? 640 : 320} onLoad={() => setImageLoaded(true)} alt="" />
+        <Image className={styles.posterImage} image={image} width={featured ? 640 : 320} alt="" />
         {!loading && (
           <div className={styles.meta}>
             {featured && !disabled && heading}
