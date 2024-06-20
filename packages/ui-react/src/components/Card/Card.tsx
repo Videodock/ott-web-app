@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -71,7 +71,7 @@ function Card({
   const isScheduled = mediaStatus === MediaStatus.SCHEDULED;
 
   const renderTag = () => {
-    if (loading || disabled || !title) return null;
+    if (loading || !title) return null;
 
     if (isSeriesItem) {
       return <div className={styles.tag}>{t('video:series')}</div>;
@@ -103,7 +103,7 @@ function Card({
       tabIndex={disabled ? -1 : tabIndex}
       data-testid={testId(title)}
     >
-      {!featured && !disabled && (
+      {!featured && (
         <div className={styles.titleContainer}>
           {heading}
           {!!scheduledStart && isLiveEvent(item) && (
@@ -115,7 +115,7 @@ function Card({
         <Image className={styles.posterImage} image={image} width={featured ? 640 : 320} alt="" />
         {!loading && (
           <div className={styles.meta}>
-            {featured && !disabled && heading}
+            {featured && heading}
             <div className={styles.tags}>
               {isLocked && (
                 <div className={classNames(styles.tag, styles.lock)} aria-label={t('card_lock')} role="img">
