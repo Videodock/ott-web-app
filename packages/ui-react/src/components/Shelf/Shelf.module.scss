@@ -64,7 +64,7 @@
     opacity: 0.3;
     pointer-events: none;
   }
-
+  
   &:hover {
     transform: scale(1.2);
   }
@@ -86,6 +86,7 @@
   background-color: rgba(254, 254, 254, 0.2);
   border-radius: 50%;
   transition: all 200ms ease;
+  will-change: transform;
 
   &.active {
     background-color: var(--primary-color);
