@@ -38,19 +38,8 @@
   position: static;
   overflow: visible;
 
-  :global(.TileSlider-list) {
-    li > a {
-      white-space: initial;
-    }
-
-    li {
-      opacity: 1;
-      transition: opacity 0.1s ease;
-
-      &:global(.TileSlider--hidden) {
-        opacity: 0.5;
-      }
-    }
+  :global(.TileSlider-list) >li > a {
+    white-space: initial;
   }
 }
 
