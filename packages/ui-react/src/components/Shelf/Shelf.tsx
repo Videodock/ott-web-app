@@ -135,7 +135,7 @@ const Shelf = ({
   return (
     <div className={classNames(styles.shelf)}>
       {featured ? null : loading ? <div className={styles.loadingTitle} /> : <h2 className={classNames(styles.title)}>{title || playlist.title}</h2>}
-      <TileDock<PlaylistItem>
+      <TileSlider<PlaylistItem>
         className={styles.slider}
         items={playlist.playlist}
         tilesToShow={tilesToShow}
