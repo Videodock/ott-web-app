@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { createURL } from '@jwp/ott-common/src/utils/urlFormatting';
-import { logDev } from '@jwp/ott-common/src/utils/common';
 
 import styles from './Image.module.scss';
 
@@ -16,32 +15,42 @@ const setWidth = (url: string, width: number) => {
   return createURL(url, { width });
 };
 
-const imageCache = new Map();
+const cache = new Map();
+
+const resolveImageURL = async (imgUrl: string, width: number) => {
+  let url = setWidth(imgUrl, width);
+
+  if (cache.has(url)) {
+    return cache.get(url);
+  }
+
+  const response = await fetch(url);
+
+  // if redirected, cache and return resolved URL
+  if (response.redirected) {
+    if (response.url.indexOf('-1920') > -1) {
+      const response2 = await fetch(response.url.replace('-1920', `-${width}`));
+
+      url = response2.url || response.url;
+    }
+  }
+
+  cache.set(url, url);
+
+  return url;
+};
 
 const Image = ({ className, image, onLoad, alt = '', width = 640 }: Props) => {
-  const [src, setSrc] = useState<string | undefined>(undefined);
+  const [src, setSrc] = useState<string | null>(null);
 
   useEffect(() => {
     if (!image) return;
 
-    const cachedSrc = imageCache.get(image);
-    if (cachedSrc) {
-      setSrc(cachedSrc);
-      onLoad?.();
-      return;
-    }
-
     const loadImage = async () => {
-      try {
-        const response = await fetch(setWidth(image, width));
-        const blob = await response.blob();
-        const objectURL = URL.createObjectURL(blob);
-        imageCache.set(image, objectURL);
-        setSrc(objectURL);
-        onLoad?.();
-      } catch (error) {
-        logDev('Failed to load image:', error);
-      }
+      const resolvedImage = await resolveImageURL(image, width);
+
+      setSrc(resolvedImage);
+      onLoad?.();
     };
 
     loadImage();
