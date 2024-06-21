@@ -28,11 +28,7 @@ const resolveImageURL = async (imgUrl: string, width: number) => {
 
   // if redirected, cache and return resolved URL
   if (response.redirected) {
-    if (response.url.indexOf('-1920') > -1) {
-      const response2 = await fetch(response.url.replace('-1920', `-${width}`));
-
-      url = response2.url || response.url;
-    }
+    url = response.url.replace('-1920', `-${width}`);
   }
 
   cache.set(url, url);
