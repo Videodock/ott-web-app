@@ -18,20 +18,21 @@ const setWidth = (url: string, width: number) => {
 const cache = new Map();
 
 const resolveImageURL = async (imgUrl: string, width: number) => {
-  let url = setWidth(imgUrl, width);
+  const requestUrl = setWidth(imgUrl, width);
+  let url = requestUrl;
 
-  if (cache.has(url)) {
-    return cache.get(url);
+  if (cache.has(requestUrl)) {
+    return cache.get(requestUrl);
   }
 
-  const response = await fetch(url);
+  const response = await fetch(requestUrl);
 
   // if redirected, cache and return resolved URL
   if (response.redirected) {
     url = response.url.replace('-1920', `-${width}`);
   }
 
-  cache.set(url, url);
+  cache.set(requestUrl, url);
 
   return url;
 };
