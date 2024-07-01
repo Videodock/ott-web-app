@@ -29,7 +29,7 @@ export async function checkField(I: CodeceptJS.I, field, error: string | boolean
     const helperId = await I.grabAttributeFrom(`input[name="${field}"]`, 'aria-describedby');
     I.see(error, `[data-testid=login-${field}-input]`);
     I.seeElement(`#${helperId}[class*=helperText]`);
-    I.seeAttributesOnElements(`[name="${field}"]`, { 'aria-invalid': 'true' });
+    I.seeAttributesOnElements(`[name="${field}"]`, { 'aria-invalid': true });
     I.seeCssPropertiesOnElements(`[data-testid="login-${field}-input"] [class*=helperText]`, { color: '#FF3535' });
   } else {
     I.dontSeeElement(`[class*=helperText] [data-testid="${field}-input"]`);
