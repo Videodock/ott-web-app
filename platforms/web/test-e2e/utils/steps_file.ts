@@ -29,7 +29,8 @@ const stepsObj = {
     this.fillField('email', email);
     this.waitForElement('input[name=password]', normalTimeout);
     this.fillField('password', password);
-    this.submitForm(15);
+    this.click('button[type="submit"]');
+    this.waitForInvisible(loaderElement, 20);
 
     this.dontSee('Incorrect email/password combination');
     this.dontSee(constants.loginFormSelector);
@@ -200,10 +201,6 @@ const stepsObj = {
       });
     });
   },
-  submitForm: function (this: CodeceptJS.I, loaderTimeout: number | false = normalTimeout) {
-    this.click('button[type="submit"]');
-    this.waitForLoaderDone(loaderTimeout);
-  },
   payWithCreditCard: async function (
     this: CodeceptJS.I,
     creditCardFieldName: string,
@@ -237,13 +234,8 @@ const stepsObj = {
       await locator.getByLabel(label).fill(value);
     });
   },
-  waitForLoaderDone: function (this: CodeceptJS.I, timeout: number | false = normalTimeout) {
-    // Specify false when the loader is NOT expected to be shown at all
-    if (timeout === false) {
-      this.dontSeeElement(loaderElement);
-    } else {
-      this.waitForInvisible(loaderElement, timeout);
-    }
+  waitForLoaderDone: function (this: CodeceptJS.I) {
+    this.dontSeeElement(loaderElement);
   },
   openSignUpModal: async function (this: CodeceptJS.I) {
     const { isMobile } = await this.openSignInMenu();

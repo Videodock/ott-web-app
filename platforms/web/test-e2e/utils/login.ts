@@ -1,5 +1,6 @@
 export function tryToSubmitForm(I: CodeceptJS.I) {
-  I.submitForm(false);
+  I.click('button[type="submit"]');
+  I.waitForLoaderDone();
   I.seeElementInDOM('div[class*=formFeedback]'); // This element can be visually hidden through CSS
   I.dontSee('Unknown error');
   I.dontSee('Incorrect email/password combination');

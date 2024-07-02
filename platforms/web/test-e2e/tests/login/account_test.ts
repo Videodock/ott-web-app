@@ -108,7 +108,8 @@ function runTestSuite(config: typeof testConfigs.svod, providerName: string) {
     I.fillField('email', 'danny@email.com');
     I.fillField('password', 'Password');
 
-    I.submitForm();
+    I.click('button[type="submit"]');
+    I.waitForLoaderDone();
 
     I.see(incorrectLogin);
 
