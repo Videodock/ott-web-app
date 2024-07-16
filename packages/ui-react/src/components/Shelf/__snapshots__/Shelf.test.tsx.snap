@@ -53,9 +53,20 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
                 <div
                   class="_meta_d75732"
                 >
+                  <h3
+                    class="_title_d75732"
+                  >
+                    Last playlist item
+                  </h3>
                   <div
                     class="_tags_d75732"
-                  />
+                  >
+                    <div
+                      class="_tag_d75732"
+                    >
+                      21 min
+                    </div>
+                  </div>
                 </div>
               </div>
             </a>
@@ -114,9 +125,20 @@ exports[`Shelf Component tests > Featured shelf 1`] = `
                 <div
                   class="_meta_d75732"
                 >
+                  <h3
+                    class="_title_d75732"
+                  >
+                    Movie 2
+                  </h3>
                   <div
                     class="_tags_d75732"
-                  />
+                  >
+                    <div
+                      class="_tag_d75732"
+                    >
+                      1 min
+                    </div>
+                  </div>
                 </div>
               </div>
             </a>

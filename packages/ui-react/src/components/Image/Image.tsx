@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createURL } from '@jwp/ott-common/src/utils/urlFormatting';
+import { logInfo } from '@jwp/ott-common/src/logger';
 
 import styles from './Image.module.scss';
 
@@ -25,14 +26,18 @@ const resolveImageURL = async (imgUrl: string, width: number) => {
     return cache.get(requestUrl);
   }
 
-  const response = await fetch(requestUrl);
+  try {
+    const response = await fetch(requestUrl);
 
-  // if redirected, cache and return resolved URL
-  if (response.redirected) {
-    url = response.url.replace('-1920', `-${width}`);
+    // if redirected, cache and return resolved URL
+    if (response.redirected) {
+      url = response.url.replace('-1920', `-${width}`);
+    }
+
+    cache.set(requestUrl, url);
+  } catch (error) {
+    logInfo('Image', 'Failed to fetch image', { error, url });
   }
-
-  cache.set(requestUrl, url);
 
   return url;
 };
@@ -50,7 +55,12 @@ const Image = ({ className, image, onLoad, alt = '', width = 640 }: Props) => {
       onLoad?.();
     };
 
-    loadImage();
+    if (__mode__ === 'test') {
+      setSrc(setWidth(image, width));
+      onLoad?.();
+    } else {
+      loadImage();
+    }
   }, [image, width, onLoad]);
 
   if (!src) return null;

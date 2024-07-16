@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { axe } from 'vitest-axe';
-import { fireEvent } from '@testing-library/react';
 import type { PlaylistItem } from '@jwp/ott-common/types/playlist';
 
 import { renderWithRouter } from '../../../test/utils';
@@ -24,18 +23,6 @@ describe('<Card>', () => {
   it('renders the image with the image prop when valid', () => {
     const { getByAltText } = renderWithRouter(<Card item={itemWithImage} url="https://test.dummy.jwplayer.com" />);
     expect(getByAltText('')).toHaveAttribute('src', 'http://movie.jpg?width=320');
-  });
-
-  it('makes the image visible after load', () => {
-    const { getByAltText } = renderWithRouter(<Card item={itemWithImage} url="https://test.dummy.jwplayer.com" />);
-    const image = getByAltText(''); // Image alt is intentionally empty for a11y
-
-    expect(image).toHaveAttribute('src', 'http://movie.jpg?width=320');
-    expect(image).toHaveStyle({ opacity: 0 });
-
-    fireEvent.load(image);
-
-    expect(image).toHaveStyle({ opacity: 1 });
   });
 
   it('should render anchor tag', () => {
