@@ -299,12 +299,12 @@ const stepsObj = {
 
       const points =
         args.direction === 'left'
-          ? { x1: 50, y1: 1, x2: 0, y2: 1 }
+          ? { x1: 25, y1: 1, x2: 0, y2: 1 }
           : args.direction === 'right'
           ? {
               x1: 0,
               y1: 1,
-              x2: 50,
+              x2: 25,
               y2: 1,
             }
           : args.points;
