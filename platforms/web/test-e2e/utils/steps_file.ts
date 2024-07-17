@@ -11,7 +11,7 @@ const configFileQueryKey = 'app-config';
 const loaderElement = '[class*=_loadingOverlay]';
 
 type SwipeTarget = { text: string } | { xpath: string };
-type SwipeDirection = { direction: 'left' | 'right' } | { points: { x1: number; y1: number; x2: number; y2: number } };
+type SwipeDirection = { direction: 'left' | 'right'; delta?: number } | { points: { x1: number; y1: number; x2: number; y2: number } };
 
 const stepsObj = {
   useConfig: function (this: CodeceptJS.I, config: TestConfig) {
@@ -296,15 +296,16 @@ const stepsObj = {
   swipe: async function (this: CodeceptJS.I, args: SwipeTarget & SwipeDirection) {
     await this.executeScript((args) => {
       const xpath = args.xpath || `//*[text() = "${args.text}"]`;
+      const delta = args.delta || 25;
 
       const points =
         args.direction === 'left'
-          ? { x1: 25, y1: 1, x2: 0, y2: 1 }
+          ? { x1: delta, y1: 1, x2: 0, y2: 1 }
           : args.direction === 'right'
           ? {
               x1: 0,
               y1: 1,
-              x2: 25,
+              x2: delta,
               y2: 1,
             }
           : args.points;
@@ -521,6 +522,7 @@ const stepsObj = {
         await this.swipe({
           xpath: shelfLocator ? `${shelfLocator}//*[@tabindex=0]` : `${cardLocator}/ancestor::ul/li/a[@tabindex=0]`,
           direction: scrollToTheRight ? 'left' : 'right',
+          delta: 15, // slow swipe to prevent sliding over
         });
       } else {
         this.click({ css: `button[aria-label="${scrollToTheRight ? 'Next slide' : 'Previous slide'}"]` }, shelfLocator);
