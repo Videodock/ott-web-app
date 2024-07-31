@@ -3,6 +3,7 @@ import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 import ApiService from '@jwp/ott-common/src/services/ApiService';
 import { getModule } from '@jwp/ott-common/src/modules/container';
 import { createURL } from '@jwp/ott-common/src/utils/urlFormatting';
+import type { AdSchedule } from '@jwp/ott-common/types/ad-schedule';
 
 const CACHE_TIME = 60 * 1000 * 20;
 
@@ -33,12 +34,12 @@ export const useAds = ({ mediaId }: { mediaId: string }) => {
 
   const { data: adSchedule, isLoading: isAdScheduleLoading } = useLegacyStandaloneAds({ adScheduleId, enabled: !!adScheduleId });
   const adConfig = useAdConfigFlow
-    ? {
+    ? ({
         client: 'vast',
         schedule: createURL(adScheduleUrls?.xml || '', {
           media_id: mediaId,
         }),
-      }
+      } as AdSchedule)
     : undefined;
 
   return {

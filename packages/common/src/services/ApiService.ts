@@ -8,7 +8,7 @@ import { filterMediaOffers } from '../utils/entitlements';
 import { useConfigStore as ConfigStore } from '../stores/ConfigStore';
 import type { GetPlaylistParams, Playlist, PlaylistItem } from '../../types/playlist';
 import type { ContentList, GetContentSearchParams } from '../../types/content-list';
-import type { AdSchedule } from '../../types/ad-schedule';
+import type { DeliveryAdSchedule } from '../../types/ad-schedule';
 import type { EpisodeInSeries, EpisodesRes, EpisodesWithPagination, GetSeriesParams, Series } from '../../types/series';
 import env from '../env';
 import { logError } from '../logger';
@@ -255,7 +255,7 @@ export default class ApiService {
     return this.transformEpisodes(episodesRes, seasonNumber);
   };
 
-  getAdSchedule = async (id: string | undefined | null): Promise<AdSchedule | undefined> => {
+  getAdSchedule = async (id: string | undefined | null): Promise<DeliveryAdSchedule | undefined> => {
     if (!id) {
       throw new Error('Ad Schedule ID is required');
     }
@@ -263,7 +263,7 @@ export default class ApiService {
     const url = env.APP_API_BASE_URL + `/v2/advertising/schedules/${id}.json`;
     const response = await fetch(url, { credentials: 'omit' });
 
-    return (await getDataOrThrow(response)) as AdSchedule;
+    return (await getDataOrThrow(response)) as DeliveryAdSchedule;
   };
 
   /**

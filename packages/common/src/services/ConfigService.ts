@@ -7,8 +7,6 @@ import { AppError } from '../utils/error';
 import type { Config } from '../../types/config';
 import env from '../env';
 
-import ApiService from './ApiService';
-
 /**
  * Set config setup changes in both config.service.ts and config.d.ts
  * */
@@ -34,12 +32,6 @@ export default class ConfigService {
     },
     features: {},
   };
-
-  private readonly apiService: ApiService;
-
-  constructor(apiService: ApiService) {
-    this.apiService = apiService;
-  }
 
   private enrichConfig = (config: Config): Config => {
     const { content, siteName } = config;
@@ -68,10 +60,6 @@ export default class ConfigService {
     }
 
     return source;
-  };
-
-  loadAdSchedule = async (adScheduleId: string | undefined | null) => {
-    return this.apiService.getAdSchedule(adScheduleId);
   };
 
   loadConfig = async (configLocation: string | undefined) => {

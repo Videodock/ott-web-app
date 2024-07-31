@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import type { AdSchedule } from '@jwp/ott-common/types/ad-schedule';
+import type { AdSchedule, DeliveryAdSchedule } from '@jwp/ott-common/types/ad-schedule';
 import type { PlaylistItem } from '@jwp/ott-common/types/playlist';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 import { deepCopy } from '@jwp/ott-common/src/utils/collection';
@@ -20,7 +20,7 @@ type Props = {
   item: PlaylistItem;
   startTime?: number;
   autostart?: boolean;
-  adsData?: AdSchedule;
+  adsData?: AdSchedule | DeliveryAdSchedule;
   onReady?: (player?: JWPlayer) => void;
   onPlay?: () => void;
   onPause?: () => void;
