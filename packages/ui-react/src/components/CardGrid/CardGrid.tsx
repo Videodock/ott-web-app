@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import InfiniteScroll from 'react-infinite-scroller';
 import type { Playlist, PlaylistItem } from '@jwp/ott-common/types/playlist';
@@ -46,6 +46,8 @@ export type CardGridProps = {
   getUrl: (item: PlaylistItem) => string;
 };
 
+const getCellKey = (item: PlaylistItem) => item.mediaid;
+
 function CardGrid({
   playlist,
   watchHistory,
@@ -75,6 +77,25 @@ function CardGrid({
     setRowCount(INITIAL_ROW_COUNT);
   }, [playlist.feedid]);
 
+  const renderCell = useCallback(
+    (playlistItem: PlaylistItem, tabIndex: number) => (
+      <Card
+        tabIndex={tabIndex}
+        progress={watchHistory ? watchHistory[playlistItem.mediaid] : undefined}
+        url={getUrl(playlistItem)}
+        onHover={typeof onCardHover === 'function' ? () => onCardHover(playlistItem) : undefined}
+        loading={isLoading}
+        isCurrent={currentCardItem && currentCardItem.mediaid === playlistItem.mediaid}
+        currentLabel={currentCardLabel}
+        isLocked={isLocked(accessModel, isLoggedIn, hasSubscription, playlistItem)}
+        posterAspect={posterAspect}
+        item={playlistItem}
+        headingLevel={headingLevel}
+      />
+    ),
+    [accessModel, currentCardItem, currentCardLabel, getUrl, hasSubscription, headingLevel, isLoading, isLoggedIn, onCardHover, posterAspect, watchHistory],
+  );
+
   return (
     <InfiniteScroll
       pageStart={0}
@@ -87,21 +108,8 @@ function CardGrid({
         className={classNames(styles.container, styles[`cols-${visibleTiles}`])}
         data={loadMore ? playlist.playlist : playlist.playlist.slice(0, rowCount * visibleTiles)}
         columnCount={visibleTiles}
-        renderCell={(playlistItem: PlaylistItem, tabIndex: number) => (
-          <Card
-            tabIndex={tabIndex}
-            progress={watchHistory ? watchHistory[playlistItem.mediaid] : undefined}
-            url={getUrl(playlistItem)}
-            onHover={typeof onCardHover === 'function' ? () => onCardHover(playlistItem) : undefined}
-            loading={isLoading}
-            isCurrent={currentCardItem && currentCardItem.mediaid === playlistItem.mediaid}
-            currentLabel={currentCardLabel}
-            isLocked={isLocked(accessModel, isLoggedIn, hasSubscription, playlistItem)}
-            posterAspect={posterAspect}
-            item={playlistItem}
-            headingLevel={headingLevel}
-          />
-        )}
+        renderCell={renderCell}
+        getCellKey={getCellKey}
       />
     </InfiniteScroll>
   );
