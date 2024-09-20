@@ -3410,10 +3410,10 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@videodock/tile-slider@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@videodock/tile-slider/-/tile-slider-2.0.0.tgz#f8fb6aaa266106ba43e1c52b6a48ae4a6f4aac5c"
-  integrity sha512-EYItAF5dMiRA1E12c3vNtymr1sFFZyJBjAkxyxuaoQsVBkRfzoIN2MBnwAov/H5eHasVt4Jtn2DA0JCFZ5/PLQ==
+"@videodock/tile-slider@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@videodock/tile-slider/-/tile-slider-2.0.1.tgz#9f7304ec1f3562b22a2a3a163f5e4a399590a705"
+  integrity sha512-t9IT5z023p/yc7StV3PxmNJlBg1+HPyTYhb2ZQxY+/9IPnARwAUryvnKCgg3j6fP6o7PswrLV0twXRkko59H4A==
 
 "@vite-pwa/assets-generator@^0.2.4":
   version "0.2.4"
@@ -10652,7 +10652,7 @@ playwright-core@1.47.1:
   resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.47.1.tgz#bb45bdfb0d48412c535501aa3805867282857df8"
   integrity sha512-i1iyJdLftqtt51mEk6AhYFaAJCDx0xQ/O5NU8EKaWFgMjItPVma542Nh/Aq8aLCjIJSzjaiEQGW/nyqLkGF1OQ==
 
-playwright@^1.47.0:
+playwright@^1.45.0:
   version "1.47.1"
   resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.47.1.tgz#cdc1116f5265b8d2ff7be0d8942d49900634dc6c"
   integrity sha512-SUEKi6947IqYbKxRiqnbUobVZY4bF1uu+ZnZNJX9DfU1tlf2UhWfvVjLf01pQx9URsOr18bFVUKXmanYWhbfkw==

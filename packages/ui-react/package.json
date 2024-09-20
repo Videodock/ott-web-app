@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@adyen/adyen-web": "^5.68.1",
-    "@videodock/tile-slider": "^2.0.0",
+    "@videodock/tile-slider": "^2.0.1",
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
     "dompurify": "^3.1.6",
