@@ -90,8 +90,8 @@ export const getRelatedApplications = ({
   appleAppId,
   googleAppId,
 }: {
-  appleAppId?: string | undefined;
-  googleAppId?: string | undefined;
+  appleAppId?: string;
+  googleAppId?: string;
 } = {}): ManifestOptions['related_applications'] => {
   const relatedApplications = [];
 
