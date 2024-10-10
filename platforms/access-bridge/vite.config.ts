@@ -50,9 +50,14 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       globals: true,
       environment: 'node',
       setupFiles: 'test/vitest.setup.ts',
+      testTimeout: 10000,
       chaiConfig: {
         truncateThreshold: 1000,
       },
+      // Switching to 'forks' fixes memory allocation issues and ensures worker processes terminate correctly.
+      // This is especially useful to avoid errors like SIGSEGV (segmentation faults) during tests.
+      // For more details, see: https://vitest.dev/guide/common-errors.html#failed-to-terminate-worker
+      pool: 'forks',
     },
   });
 };

@@ -59,6 +59,7 @@ export class Middleware {
     if (err instanceof Stripe.errors.StripeError) {
       const accessBridgeError = handleStripeError(err);
       sendErrors(res, accessBridgeError);
+      return;
     }
 
     if (isJWError(err)) {

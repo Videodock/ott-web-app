@@ -24,13 +24,22 @@ class Logger {
     if (SENTRY_DSN) {
       Sentry.init({
         dsn: SENTRY_DSN,
-        integrations: [nodeProfilingIntegration()],
+        integrations: this.getSentryIntegrations(),
         environment: process.env.MODE || 'development',
         release: process.env.APP_VERSION,
         tracesSampleRate: SENTRY_TRACE_RATE,
         profilesSampleRate: SENTRY_TRACE_RATE,
       });
     }
+  }
+
+  // Include nodeProfilingIntegration only in production mode
+  private getSentryIntegrations() {
+    if (process.env.NODE_ENV === 'production') {
+      return [nodeProfilingIntegration()];
+    }
+
+    return [];
   }
 
   /**

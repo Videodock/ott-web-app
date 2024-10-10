@@ -53,8 +53,9 @@ export class PassportService {
     const now = new Date();
     const token = jwt.sign(
       {
-        // Sets expiration 3.6 seconds from now, rounded up to align with the next 300 ms interval for consistency.
-        exp: Math.ceil((now.getTime() + 3600) / 300) * 300,
+        // Sets expiration time to 3600 seconds (1 hour)
+        // The rounding is done to increase cacheability at the CDN level
+        exp: Math.ceil((now.getTime() / 1000 + 3600) / 300) * 300,
         resource: path,
       },
       API_SECRET,

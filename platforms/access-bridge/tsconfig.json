@@ -13,6 +13,6 @@
         "noUnusedLocals": true,
         "types": ["vitest/globals"],
     },
-    "include": ["test/**/*", "src/**/*", "instrument.mjs"],
+    "include": ["test/**/*", "src/**/*"],
     "exclude": ["node_modules", "build"],
 }
