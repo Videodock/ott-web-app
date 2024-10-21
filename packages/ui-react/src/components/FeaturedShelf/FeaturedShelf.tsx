@@ -3,20 +3,17 @@ import type { PosterAspectRatio } from '@jwp/ott-common/src/utils/collection';
 import type { AccessModel } from '@jwp/ott-common/types/config';
 import type { Playlist, PlaylistItem } from '@jwp/ott-common/types/playlist';
 import classNames from 'classnames';
-import { mediaURL } from '@jwp/ott-common/src/utils/urlFormatting';
 import { useTranslation } from 'react-i18next';
 import ChevronLeft from '@jwp/ott-theme/assets/icons/chevron_left.svg?react';
 import ChevronRight from '@jwp/ott-theme/assets/icons/chevron_right.svg?react';
-import { useNavigate } from 'react-router';
 
 import { useScrolledDown } from '../../hooks/useScrolledDown';
-import TruncatedText from '../TruncatedText/TruncatedText';
-import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
-import Image from '../Image/Image';
-import StartWatchingButton from '../../containers/StartWatchingButton/StartWatchingButton';
 
 import styles from './FeaturedShelf.module.scss';
+import FeaturedMetadata from './FeaturedMetadata';
+import FeaturedBackground from './FeaturedBackground';
+import FeaturedPagination from './FeaturedPagination';
 
 type Props = {
   playlist: Playlist;
@@ -35,46 +32,7 @@ type Props = {
   visibleTilesDelta?: number;
 };
 
-const FeaturedBackground = ({ item, style }: { item: PlaylistItem; style: CSSProperties }) => {
-  const image = item.images.find((img) => img.width === 1920)?.src || item?.backgroundImage;
-
-  if (!item) return null;
-
-  return (
-    <div style={style}>
-      <Image className={styles.image} image={image} width={1920} alt={item?.title} />
-    </div>
-  );
-};
-
-const FeaturedMetadata = ({
-  item,
-  loading,
-  playlistId,
-  style,
-}: {
-  item: PlaylistItem;
-  loading: boolean;
-  playlistId: string | undefined;
-  style: CSSProperties;
-}) => {
-  const navigate = useNavigate();
-
-  return (
-    <div className={styles.metadata} style={style}>
-      <h2 className={classNames(loading ? styles.loadingTitle : styles.title)}>{!loading && item?.title}</h2>
-      <TruncatedText text={item?.description} maximumLines={3} className={styles.description} />
-      <div>
-        <StartWatchingButton item={item} playUrl={mediaURL({ id: item.mediaid, title: item.title, playlistId, play: true })} />
-        <Button
-          label={'More like this'}
-          onClick={() => !!item && navigate(mediaURL({ id: item.mediaid, title: item.title, playlistId }))}
-          startIcon={<Icon icon={ChevronRight} />}
-        />
-      </div>
-    </div>
-  );
-};
+export type Animating = 'left' | 'left-end' | 'right' | 'right-end' | false;
 
 const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
   const [index, setIndex] = useState(0);
@@ -86,7 +44,7 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
   const nextItem = playlist.playlist[index + 1 < playlist.playlist.length ? index + 1 : 0];
 
   const scrolledDown = useScrolledDown(500);
-  const [animating, setAnimating] = useState<'left' | 'left-end' | 'right' | 'right-end' | false>(false);
+  const [animating, setAnimating] = useState<Animating>(false);
 
   const handleLeftClick = () => {
     if (animating) return;
@@ -144,7 +102,7 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
   // Metadata animation
   const transitionMetadataIn = animating ? 'opacity 0.2s ease-out, left 0.2s ease-out, right 0.2s ease-out' : 'none';
   const transitionMetadataOut = animating ? 'opacity 0.1s ease-out, left 0.1s ease-out, right 0.1s ease-out' : 'none';
-  const distanceMetadata = 50;
+  const distanceMetadata = 70;
   const metadataPrevStyle: CSSProperties = {
     left: animating === 'left' || animating === 'left-end' ? 0 : -distanceMetadata,
     opacity: animating === 'left' || animating === 'left-end' ? 1 : 0,
@@ -197,25 +155,15 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
       >
         <Icon icon={ChevronRight} />
       </button>
-      <div className={classNames(styles.dots, styles.undimmed, { [styles.dimmed]: scrolledDown })}>
-        {playlist.playlist.map((current, itemIndex) => (
-          <button
-            className={classNames(
-              styles.dot,
-              animating &&
-                playlist.playlist.findIndex(({ mediaid }) => mediaid === (['left', 'left-end'].includes(animating) ? prevItem : nextItem).mediaid) ===
-                  itemIndex &&
-                styles.dotActive,
-              !animating && itemIndex === index && styles.dotActive,
-            )}
-            aria-label={`Show item ${index + 1} of ${playlist.playlist.length}`}
-            key={current.mediaid}
-            onClick={() => setIndex(itemIndex)}
-          >
-            <div />
-          </button>
-        ))}
-      </div>
+      <FeaturedPagination
+        playlist={playlist}
+        dimmed={scrolledDown}
+        index={index}
+        setIndex={setIndex}
+        prevItem={prevItem}
+        nextItem={nextItem}
+        animating={animating}
+      />
     </div>
   );
 };
