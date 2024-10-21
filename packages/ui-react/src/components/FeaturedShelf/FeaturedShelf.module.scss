@@ -1,0 +1,266 @@
+@use '@jwp/ott-ui-react/src/styles/mixins/responsive';
+@use '@jwp/ott-ui-react/src/styles/variables';
+@use '@jwp/ott-ui-react/src/styles/theme';
+
+.shelf {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  width: 100%;
+  height: 60vh;
+  margin: 0 0;
+  padding: 100px 56px;
+
+  color: var(--primary-color);
+  font-family: var(--body-alt-font-family);
+  font-size: 18px;
+  line-height: 1.5em;
+  letter-spacing: 0.5px;
+
+  &:hover .chevron:not(:disabled) {
+    opacity: 0.8;
+  }
+
+  @include responsive.mobile-and-small-tablet() {
+    height: 75vh;
+  }
+}
+
+.loadingTitle {
+  width: 35%;
+  min-height: 28px;
+  margin-bottom: 12px;
+  background-color: theme.$card-loading-bg-color;
+  border-radius: 5px;
+}
+
+.title {
+  width: 100%;
+  min-height: 28px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  color: var(--card-color);
+  font-family: var(--body-alt-font-family);
+  font-weight: var(--body-font-weight-bold);
+  font-size: 24px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.poster {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  height: calc(60vh + 56px);
+
+  @include responsive.mobile-and-small-tablet() {
+    height: calc(75vh + 56px);
+  }
+}
+
+.undimmed {
+  opacity: 1;
+  transition: opacity ease-out 0.3s;
+}
+
+.dimmed {
+  opacity: 0.01;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(60vh + 56px);
+  justify-self: flex-end;
+
+  -webkit-mask-image: linear-gradient(to right, #0000 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 80%);
+    mask-image: linear-gradient(to right, #0000 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 80%);
+
+  > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+
+  }
+
+  @include responsive.mobile-and-small-tablet() {
+    height: calc(75vh + 56px);
+    -webkit-mask-image: linear-gradient(to top, #0000 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 80%);
+    mask-image: linear-gradient(to top, #0000 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 80%);
+  }
+}
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.fade {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.6) 95%, rgba(0, 0, 0, 1) 100%);
+}
+
+.fade2 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0.15) 100%);
+  @include responsive.mobile-and-small-tablet() {
+    background: linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.3) 100%);
+  }
+}
+
+.metadata {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 46%;
+  margin-top: 5%;
+  padding-left: 56px;
+
+  > h2 {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1em;
+    letter-spacing: 0.25px;
+  }
+  > div {
+
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    line-height: 1.5em;
+    letter-spacing: 0.15px;
+    gap: 12px;
+    
+    > button {
+      max-width: 230px;
+    }
+  }
+
+  @include responsive.mobile-and-small-tablet() {
+    bottom: 0;
+    align-items: center;
+    max-width: 100%;
+    padding: 56px 24px;
+    gap: 20px;
+
+    > h2 {
+      font-size: 24px;
+    }
+    > div {
+      font-size: 14px;
+
+      > button:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+}
+
+.error {
+  color: var(--card-color);
+  font-family: var(--body-alt-font-family);
+}
+
+.chevron {
+  position: fixed;
+  top: 30%;
+  width: 44px;
+  height: 44px;
+  outline-color: var(--highlight-color, white);
+  cursor: pointer;
+  opacity: 0;
+  filter: drop-shadow(1px 1px 2px variables.$black);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  appearance: none;
+
+  > svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  &:focus-visible {
+    opacity: 0.8;
+  }
+  &:hover {
+    transform: scale(1.2);
+  }
+  @include responsive.mobile-and-small-tablet() {
+    &:not(.dimmed) {
+      opacity: 1;
+    }
+  }
+}
+
+.chevronLeft {
+  left: 8px;
+  z-index: 1;
+}
+.chevronRight {
+  right: 8px;
+}
+
+.dots {
+  position: fixed;
+  top: calc(60vh + 24px);
+  left: 50%;
+  display: flex;
+  gap: 12px;
+  transform: translateX(-50%);
+
+  @include responsive.mobile-and-small-tablet() {
+    top: calc(75vh + 24px);
+  }
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  transition: width 150ms ease-out;
+  
+  > div {
+    width: 100%;
+    height: 100%;
+    background-color: var(--card-color);
+    border-radius: 10px;
+    opacity: 0.6;
+  }
+
+  &:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 4px;
+  }
+}
+
+.dotActive {
+  width: 20px;
+}
+
+.dotActive > div {
+  background-color: var(--primary-color);
+  opacity: 1;
+}

@@ -17,6 +17,7 @@ import Shelf from '../../components/Shelf/Shelf';
 import InfiniteScrollLoader from '../../components/InfiniteScrollLoader/InfiniteScrollLoader';
 import ErrorPage from '../../components/ErrorPage/ErrorPage';
 import Fade from '../../components/Animation/Fade/Fade';
+import FeaturedShelf from '../../components/FeaturedShelf/FeaturedShelf';
 
 import styles from './ShelfList.module.scss';
 
@@ -70,6 +71,8 @@ const ShelfList = ({ rows }: Props) => {
           const posterAspect = parseAspectRatio(playlist.cardImageAspectRatio || playlist.shelfImageAspectRatio);
           const visibleTilesDelta = parseTilesDelta(posterAspect);
 
+          const ShelfComponent = featured ? FeaturedShelf : Shelf;
+
           return (
             <section
               key={`${index}_${playlist.id}`}
@@ -78,7 +81,7 @@ const ShelfList = ({ rows }: Props) => {
               aria-label={title || playlist?.title}
             >
               <Fade duration={250} delay={index * 33} open>
-                <Shelf
+                <ShelfComponent
                   loading={isPlaceholderData}
                   error={error}
                   type={type}
