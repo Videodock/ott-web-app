@@ -18,17 +18,19 @@ const FeaturedMetadata = ({
   loading,
   playlistId,
   style,
+  hidden,
 }: {
   item: PlaylistItem;
   loading: boolean;
   playlistId: string | undefined;
   style: CSSProperties;
+  hidden?: boolean;
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation('common');
 
   return (
-    <div className={styles.metadata} style={style}>
+    <div className={styles.metadata} style={{ ...style, visibility: hidden ? 'hidden' : undefined }} aria-hidden={hidden ? 'true' : undefined}>
       <h2 className={classNames(loading ? styles.loadingTitle : styles.title)}>{!loading && item?.title}</h2>
       <TruncatedText text={item?.description} maximumLines={3} className={styles.description} />
       <div>

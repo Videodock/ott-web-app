@@ -28,5 +28,6 @@
   "slide_next": "Next slide",
   "slide_previous": "Previous slide",
   "slide_right": "Slide right",
+  "slide_to": "Slide to page {{page}} of {{pages}}",
   "videoplayer": "Video player"
 }

@@ -28,5 +28,6 @@
   "slide_next": "Siguiente diapositiva",
   "slide_previous": "Diapositiva anterior",
   "slide_right": "Deslizar hacia la derecha",
+  "slide_to": "Desliza a la página {{page}} de {{pages}}",
   "videoplayer": "Reproductor de video"
 }

@@ -36,24 +36,34 @@ export type Animating = 'left' | 'left-end' | 'right' | 'right-end' | false;
 
 const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
   const [index, setIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(0);
   const { t } = useTranslation('common');
   const isTransitioningRef = useRef(false);
 
   const item = playlist.playlist[index];
-  const prevItem = playlist.playlist[index - 1 >= 0 ? index - 1 : playlist.playlist.length - 1];
-  const nextItem = playlist.playlist[index + 1 < playlist.playlist.length ? index + 1 : 0];
+  const leftItem = playlist.playlist[index - 1 >= 0 ? index - 1 : playlist.playlist.length - 1];
+  const rightItem = playlist.playlist[index + 1 < playlist.playlist.length ? index + 1 : 0];
 
   const scrolledDown = useScrolledDown(500);
   const [animating, setAnimating] = useState<Animating>(false);
 
+  const slideTo = (toIndex: number) => {
+    if (animating) return;
+    setAnimating(toIndex <= index ? 'left' : 'right');
+    setNextIndex(toIndex);
+    isTransitioningRef.current = true;
+  };
+
   const handleLeftClick = () => {
     if (animating) return;
     setAnimating('left');
+    setNextIndex(index - 1 >= 0 ? index - 1 : playlist.playlist.length - 1);
     isTransitioningRef.current = true;
   };
   const handleRightClick = () => {
     if (animating) return;
     setAnimating('right');
+    setNextIndex(index + 1 < playlist.playlist.length ? index + 1 : 0);
     isTransitioningRef.current = true;
   };
 
@@ -63,18 +73,14 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
 
     if (animating === 'left') {
       setAnimating('left-end');
-      setTimeout(() => {
-        setIndex((cur) => (cur === 0 ? playlist.playlist.length - 1 : cur - 1));
-        setAnimating(false);
-      }, 200); // Should cover the time between shortest and longest animation
     }
     if (animating === 'right') {
       setAnimating('right-end');
-      setTimeout(() => {
-        setIndex((cur) => (cur === playlist.playlist.length - 1 ? 0 : cur + 1));
-        setAnimating(false);
-      }, 200); // Should cover the time between shortest and longest animation
     }
+    setTimeout(() => {
+      setIndex(nextIndex);
+      setAnimating(false);
+    }, 200); // Should cover the time between shortest and longest animation
   };
 
   if (error || !playlist?.playlist) return <h2 className={styles.error}>Could not load items</h2>;
@@ -126,9 +132,9 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
     <div className={classNames(styles.shelf)}>
       <div className={classNames(styles.poster, styles.undimmed, { [styles.dimmed]: scrolledDown })}>
         <div className={styles.background} onTransitionEnd={handleAnimationEnd}>
-          <FeaturedBackground item={prevItem} style={backgroundPrevStyle} />
-          <FeaturedBackground item={animating === 'left-end' ? prevItem : animating === 'right-end' ? nextItem : item} style={backgroundCurrentStyle} />
-          <FeaturedBackground item={nextItem} style={backgroundNextStyle} />
+          <FeaturedBackground item={leftItem} style={backgroundPrevStyle} hidden />
+          <FeaturedBackground item={animating === 'left-end' ? leftItem : animating === 'right-end' ? rightItem : item} style={backgroundCurrentStyle} />
+          <FeaturedBackground item={rightItem} style={backgroundNextStyle} hidden />
           <div className={styles.fade} />
         </div>
         <div className={styles.fade2} />
@@ -136,33 +142,34 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
       <button
         className={classNames(styles.chevron, styles.chevronLeft, styles.undimmed, { [styles.dimmed]: scrolledDown })}
         aria-label={t('slide_previous')}
+        disabled={index === 0}
         onClick={handleLeftClick}
       >
         <Icon icon={ChevronLeft} />
       </button>
-      <FeaturedMetadata item={prevItem} loading={loading} playlistId={playlist.feedid} style={metadataPrevStyle} />
+      <FeaturedMetadata item={leftItem} loading={loading} playlistId={playlist.feedid} style={metadataPrevStyle} hidden={!animating} />
       <FeaturedMetadata
-        item={animating === 'left-end' ? prevItem : animating === 'right-end' ? nextItem : item}
+        item={animating === 'left-end' ? leftItem : animating === 'right-end' ? rightItem : item}
         loading={loading}
         playlistId={playlist.feedid}
         style={metadataCurrentStyle}
       />
-      <FeaturedMetadata item={nextItem} loading={loading} playlistId={playlist.feedid} style={metadataNextStyle} />
+      <FeaturedMetadata item={rightItem} loading={loading} playlistId={playlist.feedid} style={metadataNextStyle} hidden={!animating} />
       <button
         className={classNames(styles.chevron, styles.chevronRight, styles.undimmed, { [styles.dimmed]: scrolledDown })}
         aria-label={t('slide_next')}
+        disabled={index === playlist.playlist.length - 1}
         onClick={handleRightClick}
       >
         <Icon icon={ChevronRight} />
       </button>
       <FeaturedPagination
+        className={scrolledDown ? styles.dimmed : undefined}
         playlist={playlist}
-        dimmed={scrolledDown}
         index={index}
-        setIndex={setIndex}
-        prevItem={prevItem}
-        nextItem={nextItem}
-        animating={animating}
+        setIndex={slideTo}
+        nextIndex={nextIndex}
+        animating={!animating ? false : ['left', 'left-end'].includes(animating) ? 'left' : ['right', 'right-end'].includes(animating) ? 'right' : false}
       />
     </div>
   );

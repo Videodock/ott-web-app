@@ -240,7 +240,7 @@
   width: 10px;
   height: 10px;
   border-radius: 10px;
-  transition: width 150ms ease-out;
+  cursor: pointer;
   
   > div {
     width: 100%;
@@ -253,6 +253,10 @@
   &:focus {
     outline: 2px solid var(--primary-color);
     outline-offset: 4px;
+
+    @media (hover: hover) and (pointer: fine) {
+      outline: none;
+    }
   }
 }
 
