@@ -9,11 +9,13 @@ import ChevronRight from '@jwp/ott-theme/assets/icons/chevron_right.svg?react';
 
 import { useScrolledDown } from '../../hooks/useScrolledDown';
 import Icon from '../Icon/Icon';
+import useBreakpoint, { Breakpoint } from '../../hooks/useBreakpoint';
 
 import styles from './FeaturedShelf.module.scss';
 import FeaturedMetadata from './FeaturedMetadata';
 import FeaturedBackground from './FeaturedBackground';
 import FeaturedPagination from './FeaturedPagination';
+import FeaturedMetadataMobile from './FeaturedMetadataMobile';
 
 type Props = {
   playlist: Playlist;
@@ -40,9 +42,12 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
   const { t } = useTranslation('common');
   const isTransitioningRef = useRef(false);
 
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint <= Breakpoint.sm;
+
   const item = playlist.playlist[index];
-  const leftItem = playlist.playlist[index - 1 >= 0 ? index - 1 : playlist.playlist.length - 1];
-  const rightItem = playlist.playlist[index + 1 < playlist.playlist.length ? index + 1 : 0];
+  const leftItem = index - 1 >= 0 ? playlist.playlist[index - 1] : null;
+  const rightItem = index + 1 < playlist.playlist.length ? playlist.playlist[index + 1] : null;
 
   const scrolledDown = useScrolledDown(500);
   const [animating, setAnimating] = useState<Animating>(false);
@@ -54,13 +59,13 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
     isTransitioningRef.current = true;
   };
 
-  const handleLeftClick = () => {
+  const slideLeft = () => {
     if (animating) return;
     setAnimating('left');
     setNextIndex(index - 1 >= 0 ? index - 1 : playlist.playlist.length - 1);
     isTransitioningRef.current = true;
   };
-  const handleRightClick = () => {
+  const slideRight = () => {
     if (animating) return;
     setAnimating('right');
     setNextIndex(index + 1 < playlist.playlist.length ? index + 1 : 0);
@@ -142,24 +147,38 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
       <button
         className={classNames(styles.chevron, styles.chevronLeft, styles.undimmed, { [styles.dimmed]: scrolledDown })}
         aria-label={t('slide_previous')}
-        disabled={index === 0}
-        onClick={handleLeftClick}
+        disabled={!leftItem}
+        onClick={slideLeft}
       >
         <Icon icon={ChevronLeft} />
       </button>
-      <FeaturedMetadata item={leftItem} loading={loading} playlistId={playlist.feedid} style={metadataPrevStyle} hidden={!animating} />
-      <FeaturedMetadata
-        item={animating === 'left-end' ? leftItem : animating === 'right-end' ? rightItem : item}
-        loading={loading}
-        playlistId={playlist.feedid}
-        style={metadataCurrentStyle}
-      />
-      <FeaturedMetadata item={rightItem} loading={loading} playlistId={playlist.feedid} style={metadataNextStyle} hidden={!animating} />
+      {isMobile ? (
+        <FeaturedMetadataMobile
+          loading={loading}
+          item={item}
+          rightItem={rightItem}
+          leftItem={leftItem}
+          playlistId={playlist.feedid}
+          onSlideLeft={slideLeft}
+          onSlideRight={slideRight}
+        />
+      ) : (
+        <>
+          <FeaturedMetadata item={leftItem} loading={loading} playlistId={playlist.feedid} style={metadataPrevStyle} hidden={!animating} />
+          <FeaturedMetadata
+            item={animating === 'left-end' ? leftItem : animating === 'right-end' ? rightItem : item}
+            loading={loading}
+            playlistId={playlist.feedid}
+            style={metadataCurrentStyle}
+          />
+          <FeaturedMetadata item={rightItem} loading={loading} playlistId={playlist.feedid} style={metadataNextStyle} hidden={!animating} />
+        </>
+      )}
       <button
         className={classNames(styles.chevron, styles.chevronRight, styles.undimmed, { [styles.dimmed]: scrolledDown })}
         aria-label={t('slide_next')}
-        disabled={index === playlist.playlist.length - 1}
-        onClick={handleRightClick}
+        disabled={!rightItem}
+        onClick={slideRight}
       >
         <Icon icon={ChevronRight} />
       </button>

@@ -20,14 +20,16 @@ const FeaturedMetadata = ({
   style,
   hidden,
 }: {
-  item: PlaylistItem;
+  item: PlaylistItem | null;
   loading: boolean;
   playlistId: string | undefined;
-  style: CSSProperties;
+  style?: CSSProperties;
   hidden?: boolean;
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation('common');
+
+  if (!item) return null;
 
   return (
     <div className={styles.metadata} style={{ ...style, visibility: hidden ? 'hidden' : undefined }} aria-hidden={hidden ? 'true' : undefined}>
