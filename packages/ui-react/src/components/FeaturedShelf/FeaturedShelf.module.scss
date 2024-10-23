@@ -17,6 +17,7 @@
   font-size: 18px;
   line-height: 1.5em;
   letter-spacing: 0.5px;
+  background-color:var(--featured-shelf-background-color);
 
   &:hover .chevron:not(:disabled) {
     opacity: 0.8;
@@ -54,7 +55,7 @@
   top: 0;
   right: 0;
   left: 0;
-  z-index: -1;
+  z-index: 0;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -85,8 +86,8 @@
   height: calc(60vh + 56px);
   justify-self: flex-end;
 
-  -webkit-mask-image: linear-gradient(to right, #0000 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 80%);
-    mask-image: linear-gradient(to right, #0000 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 80%);
+  -webkit-mask-image: linear-gradient(to right, #0000 0, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.8) 80%);
+  mask-image: linear-gradient(to right, #0000 0, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.8) 80%);
 
   > div {
     position: absolute;
@@ -117,7 +118,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.6) 95%, rgba(0, 0, 0, 1) 100%);
+  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0.8) 95%, rgba(0, 0, 0, 1) 100%);
 }
 
 .fade2 {
@@ -212,6 +213,11 @@
   &:hover {
     transform: scale(1.2);
   }
+  &:disabled {
+    cursor: default;
+    opacity: 0;
+    transition: none;
+  }
   @include responsive.mobile-and-small-tablet() {
     &:not(.dimmed) {
       opacity: 1;
@@ -262,6 +268,10 @@
       outline: none;
     }
   }
+
+  &:disabled {
+    cursor: default;
+  }
 }
 
 .dotActive {
@@ -271,4 +281,9 @@
 .dotActive > div {
   background-color: var(--primary-color);
   opacity: 1;
+}
+
+.dotPlaceholder {
+  width: 10px;
+  height: 10px;
 }

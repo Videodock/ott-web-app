@@ -1,4 +1,4 @@
-import React, { useRef, useState, type CSSProperties } from 'react';
+import React, { useState, type CSSProperties, type TransitionEventHandler } from 'react';
 import type { PosterAspectRatio } from '@jwp/ott-common/src/utils/collection';
 import type { AccessModel } from '@jwp/ott-common/types/config';
 import type { Playlist, PlaylistItem } from '@jwp/ott-common/types/playlist';
@@ -34,112 +34,103 @@ type Props = {
   visibleTilesDelta?: number;
 };
 
-export type Animating = 'left' | 'left-end' | 'right' | 'right-end' | false;
+type Animation = {
+  direction?: 'left' | 'right';
+  phase?: 'initial' | 'start' | 'end';
+};
 
 const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
   const [index, setIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(0);
   const { t } = useTranslation('common');
-  const isTransitioningRef = useRef(false);
-
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint <= Breakpoint.sm;
+  const scrolledDown = useScrolledDown(500);
+  const [animation, setAnimation] = useState<Animation | null>(null);
+
+  const slideTo = (toIndex: number) => {
+    if (animation) return;
+
+    const direction = toIndex > index ? 'right' : 'left';
+
+    setNextIndex(toIndex);
+    setAnimation({ direction, phase: 'initial' });
+    setTimeout(() => setAnimation({ direction, phase: 'start' }), 1); // After next render
+  };
+
+  const slideLeft = () => slideTo(index - 1);
+  const slideRight = () => slideTo(index + 1);
+
+  // Background animation takes longest, so it leads our animation flow
+  const handleBackgroundAnimationEnd: TransitionEventHandler = () => {
+    if (animation?.phase != 'start') return;
+
+    setAnimation((current) => ({ ...current, phase: 'end' }));
+    setTimeout(() => {
+      setAnimation(null);
+      setIndex(nextIndex);
+    }, 300); // Duration of end phase
+  };
 
   const item = playlist.playlist[index];
   const leftItem = index - 1 >= 0 ? playlist.playlist[index - 1] : null;
   const rightItem = index + 1 < playlist.playlist.length ? playlist.playlist[index + 1] : null;
 
-  const scrolledDown = useScrolledDown(500);
-  const [animating, setAnimating] = useState<Animating>(false);
-
-  const slideTo = (toIndex: number) => {
-    if (animating) return;
-    setAnimating(toIndex <= index ? 'left' : 'right');
-    setNextIndex(toIndex);
-    isTransitioningRef.current = true;
-  };
-
-  const slideLeft = () => {
-    if (animating) return;
-    setAnimating('left');
-    setNextIndex(index - 1 >= 0 ? index - 1 : playlist.playlist.length - 1);
-    isTransitioningRef.current = true;
-  };
-  const slideRight = () => {
-    if (animating) return;
-    setAnimating('right');
-    setNextIndex(index + 1 < playlist.playlist.length ? index + 1 : 0);
-    isTransitioningRef.current = true;
-  };
-
-  const handleAnimationEnd = () => {
-    if (!isTransitioningRef.current) return;
-    isTransitioningRef.current = false;
-
-    if (animating === 'left') {
-      setAnimating('left-end');
-    }
-    if (animating === 'right') {
-      setAnimating('right-end');
-    }
-    setTimeout(() => {
-      setIndex(nextIndex);
-      setAnimating(false);
-    }, 200); // Should cover the time between shortest and longest animation
-  };
-
-  if (error || !playlist?.playlist) return <h2 className={styles.error}>Could not load items</h2>;
-
   // Background animation
-  const transitionBackgroundIn = animating ? 'opacity 0.3s ease-out, transform 0.3s ease-out' : 'none';
-  const transitionBackgroundOut = animating ? 'opacity 0.1s ease-out, transform 0.1s ease-out' : 'none';
-  const distanceBackground = 50;
-  const backgroundPrevStyle: CSSProperties = {
-    transform: `scale(1.2) translateX(${animating === 'left' || animating === 'left-end' ? 0 : -distanceBackground}px)`,
-    opacity: animating === 'left' || animating === 'left-end' ? 1 : 0,
-    transition: transitionBackgroundIn,
+  const isAnimating = animation?.phase === 'start' || animation?.phase === 'end';
+
+  const backgroundX = {
+    left: 50,
+    right: -50,
   };
+  const transitionBackground = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+  const translateX = isAnimating && animation?.direction ? backgroundX[animation.direction] : 0;
   const backgroundCurrentStyle: CSSProperties = {
-    transform: `scale(1.2) translateX(${animating === 'left' ? distanceBackground : animating === 'right' ? -distanceBackground : 0}px)`,
-    opacity: animating ? 0 : 1,
-    transition: transitionBackgroundOut,
+    transform: `scale(1.2) translateX(${translateX}px)`,
+    opacity: isAnimating ? 0 : 1,
+    transition: isAnimating ? transitionBackground : 'none',
   };
-  const backgroundNextStyle: CSSProperties = {
-    transform: `scale(1.2) translateX(${animating === 'right' || animating === 'right-end' ? 0 : distanceBackground}px)`,
-    opacity: animating === 'right' || animating === 'right-end' ? 1 : 0,
-    transition: transitionBackgroundIn,
+  const translateXAlt = animation?.direction === 'left' ? -50 : animation?.direction === 'right' ? 50 : 0;
+  const backgroundAltStyle: CSSProperties = {
+    transform: `scale(1.2) translateX(${animation?.phase === 'initial' ? translateXAlt : 0}px)`,
+    opacity: isAnimating ? 1 : 0,
+    transition: isAnimating ? transitionBackground : 'none',
   };
 
   // Metadata animation
-  const transitionMetadataIn = animating ? 'opacity 0.2s ease-out, left 0.2s ease-out, right 0.2s ease-out' : 'none';
-  const transitionMetadataOut = animating ? 'opacity 0.1s ease-out, left 0.1s ease-out, right 0.1s ease-out' : 'none';
+  const metadataX = {
+    left: 70,
+    right: -70,
+  };
   const distanceMetadata = 70;
-  const metadataPrevStyle: CSSProperties = {
-    left: animating === 'left' || animating === 'left-end' ? 0 : -distanceMetadata,
-    opacity: animating === 'left' || animating === 'left-end' ? 1 : 0,
-    transition: transitionMetadataIn,
-    pointerEvents: 'none',
-  };
+  const defaultTransition = 'opacity 0.2s ease-out, left 0.2s ease-out, right 0.2s ease-out';
+  const left = isAnimating && animation?.direction ? metadataX[animation.direction] : 0;
   const metadataCurrentStyle: CSSProperties = {
-    left: animating === 'left' ? distanceMetadata : animating === 'right' ? -distanceMetadata : 0,
-    opacity: animating ? 0 : 1,
-    transition: transitionMetadataOut,
-    pointerEvents: animating ? 'none' : 'initial',
+    left: left,
+    opacity: isAnimating ? 0 : 1,
+    transition: isAnimating ? defaultTransition : 'none',
+    pointerEvents: isAnimating ? 'none' : 'initial',
   };
-  const metadataNextStyle: CSSProperties = {
-    left: animating === 'right' || animating === 'right-end' ? 0 : distanceMetadata,
-    opacity: animating === 'right' || animating === 'right-end' ? 1 : 0,
-    transition: transitionMetadataIn,
+
+  const distanceAlt = animation?.direction === 'left' ? -distanceMetadata : animation?.direction === 'right' ? distanceMetadata : 0;
+  const metadataAltStyle: CSSProperties = {
+    left: animation?.phase === 'initial' ? distanceAlt : 0,
+    opacity: isAnimating ? 1 : 0,
+    transition: isAnimating ? defaultTransition : 'none',
     pointerEvents: 'none',
   };
+
+  const renderedItem = animation?.phase !== 'end' ? item : animation?.direction === 'right' ? rightItem : leftItem;
+  const altItem = animation?.direction === 'right' ? rightItem : leftItem;
+
+  if (error || !playlist?.playlist) return <h2 className={styles.error}>Could not load items</h2>;
 
   return (
     <div className={classNames(styles.shelf)}>
       <div className={classNames(styles.poster, styles.undimmed, { [styles.dimmed]: scrolledDown })}>
-        <div className={styles.background} onTransitionEnd={handleAnimationEnd}>
-          <FeaturedBackground item={leftItem} style={backgroundPrevStyle} hidden />
-          <FeaturedBackground item={animating === 'left-end' ? leftItem : animating === 'right-end' ? rightItem : item} style={backgroundCurrentStyle} />
-          <FeaturedBackground item={rightItem} style={backgroundNextStyle} hidden />
+        <div className={styles.background} id="background">
+          <FeaturedBackground item={renderedItem} style={backgroundCurrentStyle} id="main_background" onTransitionEnd={handleBackgroundAnimationEnd} />
+          <FeaturedBackground item={altItem} style={backgroundAltStyle} hidden={!animation} />
           <div className={styles.fade} />
         </div>
         <div className={styles.fade2} />
@@ -148,7 +139,7 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
         className={classNames(styles.chevron, styles.chevronLeft, styles.undimmed, { [styles.dimmed]: scrolledDown })}
         aria-label={t('slide_previous')}
         disabled={!leftItem}
-        onClick={slideLeft}
+        onClick={leftItem ? slideLeft : undefined}
       >
         <Icon icon={ChevronLeft} />
       </button>
@@ -164,21 +155,15 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
         />
       ) : (
         <>
-          <FeaturedMetadata item={leftItem} loading={loading} playlistId={playlist.feedid} style={metadataPrevStyle} hidden={!animating} />
-          <FeaturedMetadata
-            item={animating === 'left-end' ? leftItem : animating === 'right-end' ? rightItem : item}
-            loading={loading}
-            playlistId={playlist.feedid}
-            style={metadataCurrentStyle}
-          />
-          <FeaturedMetadata item={rightItem} loading={loading} playlistId={playlist.feedid} style={metadataNextStyle} hidden={!animating} />
+          <FeaturedMetadata item={renderedItem} loading={loading} playlistId={playlist.feedid} style={metadataCurrentStyle} />
+          <FeaturedMetadata item={altItem} loading={loading} playlistId={playlist.feedid} style={metadataAltStyle} hidden={!animation} />
         </>
       )}
       <button
         className={classNames(styles.chevron, styles.chevronRight, styles.undimmed, { [styles.dimmed]: scrolledDown })}
         aria-label={t('slide_next')}
         disabled={!rightItem}
-        onClick={slideRight}
+        onClick={rightItem ? slideRight : undefined}
       >
         <Icon icon={ChevronRight} />
       </button>
@@ -188,7 +173,7 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
         index={index}
         setIndex={slideTo}
         nextIndex={nextIndex}
-        animating={!animating ? false : ['left', 'left-end'].includes(animating) ? 'left' : ['right', 'right-end'].includes(animating) ? 'right' : false}
+        direction={animation?.direction || false}
       />
     </div>
   );

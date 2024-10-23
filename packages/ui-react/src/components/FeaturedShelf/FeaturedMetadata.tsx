@@ -31,12 +31,14 @@ const FeaturedMetadata = ({
 
   if (!item) return null;
 
+  const hasVideo = item.sources.find((source) => source.file.indexOf('.m3u8') > -1 || source.file.indexOf('.mp4') > -1);
+
   return (
     <div className={styles.metadata} style={{ ...style, visibility: hidden ? 'hidden' : undefined }} aria-hidden={hidden ? 'true' : undefined}>
       <h2 className={classNames(loading ? styles.loadingTitle : styles.title)}>{!loading && item?.title}</h2>
       <TruncatedText text={item?.description} maximumLines={3} className={styles.description} />
       <div>
-        <StartWatchingButton item={item} playUrl={mediaURL({ id: item.mediaid, title: item.title, playlistId, play: true })} />
+        {hasVideo && <StartWatchingButton item={item} playUrl={mediaURL({ id: item.mediaid, title: item.title, playlistId, play: true })} />}
         <Button
           label={t('common:more_info')}
           onClick={() => !!item && navigate(mediaURL({ id: item.mediaid, title: item.title, playlistId }))}
