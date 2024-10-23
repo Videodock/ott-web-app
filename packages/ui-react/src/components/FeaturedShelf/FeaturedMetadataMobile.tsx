@@ -11,21 +11,24 @@ type Props = {
   rightItem: PlaylistItem | null;
   playlistId: string | undefined;
   loading: boolean;
+  isAnimating: boolean;
   onSlideLeft: () => void;
   onSlideRight: () => void;
 };
 
-const FeaturedMetadataMobile = ({ item, leftItem, rightItem, playlistId, loading, onSlideLeft, onSlideRight }: Props) => {
+const FeaturedMetadataMobile = ({ item, leftItem, rightItem, playlistId, loading, isAnimating, onSlideLeft, onSlideRight }: Props) => {
   const movementRef = useRef({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [swipeAction, setSwipeAction] = useState<'slide' | 'scroll' | null>(null);
 
   const handleTouchStart = useEventCallback((event: TouchEvent) => {
+    if (isAnimating) return;
     movementRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY };
     setSwipeAction(null);
   });
 
   const handleTouchMove = useEventCallback((event: TouchEvent) => {
+    if (isAnimating) return;
     if (!containerRef.current) return;
     if (swipeAction === 'scroll') return;
 

@@ -43,6 +43,7 @@ const FeaturedMetadata = ({
           label={t('common:more_info')}
           onClick={() => !!item && navigate(mediaURL({ id: item.mediaid, title: item.title, playlistId }))}
           startIcon={<Icon icon={ChevronRight} />}
+          size="large"
         />
       </div>
     </div>

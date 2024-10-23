@@ -64,7 +64,7 @@ const ShelfList = ({ rows }: Props) => {
         useWindow={false}
       >
         {rows.slice(0, rowsToLoad).map(({ type, featured, title }, index) => {
-          const { data: playlist, isPlaceholderData, error } = playlists[featured ? 5 : index];
+          const { data: playlist, isPlaceholderData, error } = playlists[index];
 
           if (!playlist?.playlist?.length) return null;
 

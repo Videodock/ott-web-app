@@ -69,7 +69,7 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
     setTimeout(() => {
       setAnimation(null);
       setIndex(nextIndex);
-    }, 300); // Duration of end phase
+    }, 100); // Duration of end phase
   };
 
   const item = playlist.playlist[index];
@@ -150,6 +150,7 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
           rightItem={rightItem}
           leftItem={leftItem}
           playlistId={playlist.feedid}
+          isAnimating={isAnimating}
           onSlideLeft={slideLeft}
           onSlideRight={slideRight}
         />

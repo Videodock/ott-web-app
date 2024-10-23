@@ -153,15 +153,10 @@
   }
   > div {
     display: flex;
-    flex-direction: column;
     font-size: 18px;
     line-height: 1.5em;
     letter-spacing: 0.15px;
     gap: 12px;
-    
-    > button {
-      max-width: 230px;
-    }
   }
 
   @include responsive.mobile-and-small-tablet() {
