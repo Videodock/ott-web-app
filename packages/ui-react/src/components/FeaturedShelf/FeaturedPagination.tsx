@@ -97,7 +97,6 @@ const FeaturedPagination = ({
             style={{ transform, transition }}
             aria-label={ariaLabel}
             aria-hidden={hidden ? 'true' : undefined}
-            disabled={hidden}
             aria-current={isCurrent ? 'true' : undefined}
             onClick={hidden || isCurrent ? undefined : () => setIndex(itemIndex - placeholderCount)}
           >
