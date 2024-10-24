@@ -88,7 +88,7 @@ const FeaturedPagination = ({
 
         const isCurrent = itemIndex === index;
         const hidden = size !== 1;
-        const ariaLabel = hidden ? undefined : t('slide_to', { page: itemIndex - placeholderCount + 1, pages: playlist.playlist.length });
+        const ariaLabel = hidden ? undefined : t('slide_to', { item: itemIndex - placeholderCount + 1, items: playlist.playlist.length });
 
         return (
           <button
