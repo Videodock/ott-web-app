@@ -17,13 +17,13 @@ type Props = {
 };
 
 const FeaturedMetadataMobile = ({ item, leftItem, rightItem, playlistId, loading, isAnimating, onSlideLeft, onSlideRight }: Props) => {
-  const movementRef = useRef({ x: 0, y: 0 });
+  const movementRef = useRef({ x: 0, y: 0, start: Date.now() });
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [swipeAction, setSwipeAction] = useState<'slide' | 'scroll' | null>(null);
 
   const handleTouchStart = useEventCallback((event: TouchEvent) => {
     if (isAnimating) return;
-    movementRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+    movementRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY, start: Date.now() };
     setSwipeAction(null);
   });
 
@@ -52,16 +52,20 @@ const FeaturedMetadataMobile = ({ item, leftItem, rightItem, playlistId, loading
   });
 
   const handleTouchEnd = useEventCallback((event: TouchEvent) => {
+    if (isAnimating) return;
     if (!containerRef.current) return;
     if (swipeAction === 'scroll') return;
 
     const movementX = movementRef.current.x - event.changedTouches[0].clientX;
     containerRef.current.style.transition = 'transform 0.2s ease-out';
 
-    if (movementX > window.innerWidth / 3 && rightItem) {
+    const velocity = Math.round((movementX / (Date.now() - movementRef.current.start)) * 100);
+    const velocityTreshold = 80;
+
+    if (rightItem && (movementX > window.innerWidth / 2 || velocity > velocityTreshold)) {
       containerRef.current.style.transform = `translateX(-100%)`;
       onSlideRight();
-    } else if (movementX < -window.innerWidth / 3 && leftItem) {
+    } else if (leftItem && (movementX < -window.innerWidth / 2 || velocity < -velocityTreshold)) {
       containerRef.current.style.transform = `translateX(100%)`;
       onSlideLeft();
     } else {
