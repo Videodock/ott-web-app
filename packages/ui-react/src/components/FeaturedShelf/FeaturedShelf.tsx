@@ -45,7 +45,7 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
   const { t } = useTranslation('common');
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint <= Breakpoint.sm;
-  const scrolledDown = useScrolledDown(500);
+  const scrolledDown = useScrolledDown(500, 200);
   const [animation, setAnimation] = useState<Animation | null>(null);
 
   const slideTo = (toIndex: number) => {

@@ -60,52 +60,53 @@ const FeaturedPagination = ({
   }, [playlist.playlist, placeholderCount]);
 
   return (
-    <div className={classNames(styles.dots, styles.undimmed, className)}>
+    <nav className={classNames(styles.dots, styles.undimmed, className)}>
       <div aria-live="polite" className="hidden">
         {t('slide_indicator', { page: indexIn + 1, pages: playlist.playlist.length })}
       </div>
-      {playlistWithPlaceholders.map((current, itemIndex) => {
-        if (itemIndex < index - range - 1 || itemIndex > index + range + 1) {
-          return null;
-        }
-        if (!current) {
-          return <div className={classNames(styles.dotPlaceholder)} key={itemIndex} aria-hidden="true" />;
-        }
+      <ul className={styles.dotsList}>
+        {playlistWithPlaceholders.map((current, itemIndex) => {
+          if (itemIndex < index - range - 1 || itemIndex > index + range + 1) {
+            return null;
+          }
+          if (!current) {
+            return <div className={classNames(styles.dotPlaceholder)} key={itemIndex} aria-hidden="true" />;
+          }
 
-        const movementBase = 22; // dot width (10) + gap(12)
-        const movementTotal = Math.abs(index - nextIndex) * movementBase;
-        const movement = direction === 'left' ? movementTotal : direction === 'right' ? 0 - movementTotal : 0;
-        const transform = `translateX(${movement}px)`;
-        const transition = direction
-          ? `transform ${animationDuration}ms ease-out ${animationDuration / 3}ms, width ${animationDuration / 2}ms ease-out ${animationDuration / 3}ms`
-          : '';
+          const movementBase = 22; // dot width (10) + gap(12)
+          const movementTotal = Math.abs(index - nextIndex) * movementBase;
+          const movement = direction === 'left' ? movementTotal : direction === 'right' ? 0 - movementTotal : 0;
+          const transform = `translateX(${movement}px)`;
+          const transition = direction
+            ? `transform ${animationDuration}ms ease-out ${animationDuration / 3}ms, width ${animationDuration / 2}ms ease-out ${animationDuration / 3}ms`
+            : '';
 
-        const size = calculateDotSize(direction, itemIndex, index, range, 0.6);
-        const transformDiv = `scale(${size})`;
-        const transitionDiv = direction
-          ? `width ${animationDuration}ms ease-out, height ${animationDuration}ms ease-out, transform ${animationDuration}ms ease-out`
-          : '';
+          const size = calculateDotSize(direction, itemIndex, index, range, 0.6);
+          const transformDiv = `scale(${size})`;
+          const transitionDiv = direction
+            ? `width ${animationDuration}ms ease-out, height ${animationDuration}ms ease-out, transform ${animationDuration}ms ease-out`
+            : '';
 
-        const isCurrent = itemIndex === index;
-        const hidden = size !== 1;
-        const ariaLabel = hidden ? undefined : t('slide_to', { page: itemIndex - placeholderCount + 1, pages: playlist.playlist.length });
+          const isCurrent = itemIndex === index;
+          const hidden = size !== 1;
+          const ariaLabel = hidden ? undefined : t('slide_to', { item: itemIndex - placeholderCount + 1, items: playlist.playlist.length });
 
-        return (
-          <button
-            key={current?.mediaid}
-            className={classNames(styles.dot, itemIndex === nextIndex && styles.dotActive, !direction && itemIndex === index && styles.dotActive)}
-            style={{ transform, transition }}
-            aria-label={ariaLabel}
-            aria-hidden={hidden ? 'true' : undefined}
-            disabled={hidden}
-            aria-current={isCurrent ? 'true' : undefined}
-            onClick={hidden || isCurrent ? undefined : () => setIndex(itemIndex - placeholderCount)}
-          >
-            <div style={{ transform: transformDiv, transition: transitionDiv }} />
-          </button>
-        );
-      })}
-    </div>
+          return (
+            <button
+              key={current?.mediaid}
+              className={classNames(styles.dot, itemIndex === nextIndex && styles.dotActive, !direction && itemIndex === index && styles.dotActive)}
+              style={{ transform, transition }}
+              aria-label={ariaLabel}
+              aria-hidden={hidden ? 'true' : undefined}
+              aria-current={isCurrent ? 'true' : undefined}
+              onClick={hidden || isCurrent ? undefined : () => setIndex(itemIndex - placeholderCount)}
+            >
+              <div style={{ transform: transformDiv, transition: transitionDiv }} />
+            </button>
+          );
+        })}
+      </ul>
+    </nav>
   );
 };
 
