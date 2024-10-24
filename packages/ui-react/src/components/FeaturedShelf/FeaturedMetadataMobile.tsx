@@ -1,6 +1,6 @@
 import type { PlaylistItem } from '@jwp/ott-common/types/playlist';
 import useEventCallback from '@jwp/ott-hooks-react/src/useEventCallback';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import FeaturedMetadata from './FeaturedMetadata';
 import styles from './FeaturedShelf.module.scss';
@@ -73,7 +73,7 @@ const FeaturedMetadataMobile = ({ item, leftItem, rightItem, playlistId, loading
     }
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!containerRef.current) return;
     containerRef.current.style.transform = 'translateX(0)';
     containerRef.current.style.transition = 'none';

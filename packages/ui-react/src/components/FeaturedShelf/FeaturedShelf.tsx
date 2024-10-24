@@ -61,15 +61,20 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
   const slideLeft = () => slideTo(index - 1);
   const slideRight = () => slideTo(index + 1);
 
+  const transitioningRef = React.useRef(false);
+
   // Background animation takes longest, so it leads our animation flow
   const handleBackgroundAnimationEnd: TransitionEventHandler = () => {
-    if (animation?.phase != 'start') return;
+    if (transitioningRef.current) return;
+    if (animation?.phase !== 'start') return;
 
+    transitioningRef.current = true;
     setAnimation((current) => ({ ...current, phase: 'end' }));
     setTimeout(() => {
       setAnimation(null);
       setIndex(nextIndex);
-    }, 100); // Duration of end phase
+      transitioningRef.current = false;
+    }, 1); // Next render
   };
 
   const item = playlist.playlist[index];
@@ -83,18 +88,17 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
     left: 50,
     right: -50,
   };
-  const transitionBackground = 'opacity 0.3s ease-out, transform 0.3s ease-out';
   const translateX = isAnimating && animation?.direction ? backgroundX[animation.direction] : 0;
   const backgroundCurrentStyle: CSSProperties = {
     transform: `scale(1.2) translateX(${translateX}px)`,
     opacity: isAnimating ? 0 : 1,
-    transition: isAnimating ? transitionBackground : 'none',
+    transition: isAnimating ? 'opacity 0.3s ease-out, transform 0.3s ease-out' : 'none',
   };
   const translateXAlt = animation?.direction === 'left' ? -50 : animation?.direction === 'right' ? 50 : 0;
   const backgroundAltStyle: CSSProperties = {
     transform: `scale(1.2) translateX(${animation?.phase === 'initial' ? translateXAlt : 0}px)`,
     opacity: isAnimating ? 1 : 0,
-    transition: isAnimating ? transitionBackground : 'none',
+    transition: isAnimating ? 'opacity 0.3s ease-out, transform 0.3s ease-out' : 'none',
   };
 
   // Metadata animation

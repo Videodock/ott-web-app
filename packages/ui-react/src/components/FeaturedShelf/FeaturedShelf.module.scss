@@ -220,7 +220,7 @@
     transition: none;
   }
   @include responsive.mobile-and-small-tablet() {
-    top: calc(68vh - 30px);
+    top: 35%;
     &:hover {
       transform: translateY(-50%); // No scale on mobile
     }
