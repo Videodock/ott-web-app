@@ -30,18 +30,17 @@ const FeaturedMetadataMobile = ({ item, leftItem, rightItem, playlistId, loading
   const handleTouchMove = useEventCallback((event: TouchEvent) => {
     if (isAnimating) return;
     if (!containerRef.current) return;
-    if (swipeAction === 'scroll') return;
+
+    const movementX: number = event.changedTouches[0].clientX - movementRef.current.x;
+    const movementY: number = event.changedTouches[0].clientY - movementRef.current.y;
+    const currentSwipeAction = Math.abs(movementX) > Math.abs(movementY) ? 'slide' : 'scroll';
+
+    if (!swipeAction) setSwipeAction(currentSwipeAction);
+    if (currentSwipeAction === 'scroll' || swipeAction === 'scroll') return;
 
     // Prevent scrolling while sliding
     event.preventDefault();
     event.stopPropagation();
-
-    const movementX: number = event.changedTouches[0].clientX - movementRef.current.x;
-    const movementY: number = event.changedTouches[0].clientY - movementRef.current.y;
-
-    if (!swipeAction) {
-      setSwipeAction(Math.abs(movementX) > Math.abs(movementY) ? 'slide' : 'scroll');
-    }
 
     // Follow touch horizontally
     const maxLeft = rightItem ? -window.innerWidth : 0;
