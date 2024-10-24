@@ -24,7 +24,7 @@
   }
 
   @include responsive.mobile-and-small-tablet() {
-    height: 75vh;
+    height: 67vh;
     padding: 0;
   }
 }
@@ -63,7 +63,7 @@
   height: calc(60vh + 56px);
 
   @include responsive.mobile-and-small-tablet() {
-    height: calc(75vh + 56px);
+    height: calc(67vh + 56px);
   }
 }
 
@@ -100,7 +100,7 @@
   }
 
   @include responsive.mobile-and-small-tablet() {
-    height: calc(75vh + 56px);
+    height: calc(67vh + 56px);
     -webkit-mask-image: linear-gradient(to top, #0000 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 80%);
     mask-image: linear-gradient(to top, #0000 0, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.8) 80%);
   }
@@ -237,7 +237,7 @@
   transform: translateX(-50%);
 
   @include responsive.mobile-and-small-tablet() {
-    top: calc(75vh + 24px);
+    top: calc(67vh + 24px);
   }
 }
 
