@@ -61,68 +61,60 @@ const FeaturedShelf = ({ playlist, loading = false, error = null }: Props) => {
   const slideLeft = () => slideTo(index - 1);
   const slideRight = () => slideTo(index + 1);
 
-  const transitioningRef = React.useRef(false);
+  const handlingTransitionEnd = React.useRef(false);
 
   // Background animation takes longest, so it leads our animation flow
   const handleBackgroundAnimationEnd: TransitionEventHandler = () => {
-    if (transitioningRef.current) return;
+    if (handlingTransitionEnd.current) return;
     if (animation?.phase !== 'start') return;
 
-    transitioningRef.current = true;
-    setAnimation((current) => ({ ...current, phase: 'end' }));
+    handlingTransitionEnd.current = true; // Prevent multiple calls from different animations
+
     setTimeout(() => {
-      setAnimation(null);
-      setIndex(nextIndex);
-      transitioningRef.current = false;
-    }, 1); // Next render
+      setAnimation((current) => ({ ...current, phase: 'end' }));
+      setTimeout(() => {
+        setAnimation(null);
+        setIndex(nextIndex);
+        handlingTransitionEnd.current = false;
+      }, 1); // Next render
+    }, 250); // Difference between shortest and longest animation
   };
 
-  const item = playlist.playlist[index];
-  const leftItem = index - 1 >= 0 ? playlist.playlist[index - 1] : null;
-  const rightItem = index + 1 < playlist.playlist.length ? playlist.playlist[index + 1] : null;
+  const isAnimating = animation?.phase === 'start' || animation?.phase === 'end';
+  const directionFactor = animation?.direction === 'left' ? 1 : animation?.direction === 'right' ? -1 : 0;
 
   // Background animation
-  const isAnimating = animation?.phase === 'start' || animation?.phase === 'end';
-
-  const backgroundX = {
-    left: 50,
-    right: -50,
-  };
-  const translateX = isAnimating && animation?.direction ? backgroundX[animation.direction] : 0;
+  const backgroundX = 40;
   const backgroundCurrentStyle: CSSProperties = {
-    transform: `scale(1.2) translateX(${translateX}px)`,
+    transform: `scale(1.2) translateX(${isAnimating ? backgroundX * directionFactor : 0}px)`,
     opacity: isAnimating ? 0 : 1,
-    transition: isAnimating ? 'opacity 0.3s ease-out, transform 0.3s ease-out' : 'none',
+    transition: isAnimating ? 'opacity 0.1s ease-out, transform 0.3s ease-in' : 'none',
   };
-  const translateXAlt = animation?.direction === 'left' ? -50 : animation?.direction === 'right' ? 50 : 0;
   const backgroundAltStyle: CSSProperties = {
-    transform: `scale(1.2) translateX(${animation?.phase === 'initial' ? translateXAlt : 0}px)`,
+    transform: `scale(1.2) translateX(${animation?.phase === 'initial' ? backgroundX * directionFactor * -1 : 0}px)`,
     opacity: isAnimating ? 1 : 0,
     transition: isAnimating ? 'opacity 0.3s ease-out, transform 0.3s ease-out' : 'none',
   };
 
   // Metadata animation
-  const metadataX = {
-    left: 70,
-    right: -70,
-  };
-  const distanceMetadata = 70;
-  const defaultTransition = 'opacity 0.2s ease-out, left 0.2s ease-out, right 0.2s ease-out';
-  const left = isAnimating && animation?.direction ? metadataX[animation.direction] : 0;
+  const left = 60;
   const metadataCurrentStyle: CSSProperties = {
-    left: left,
+    left: isAnimating && animation?.direction ? left * directionFactor : 0,
     opacity: isAnimating ? 0 : 1,
-    transition: isAnimating ? defaultTransition : 'none',
+    transition: isAnimating ? 'opacity 0.15s ease-out, left 0.15s ease-out' : 'none',
     pointerEvents: isAnimating ? 'none' : 'initial',
   };
 
-  const distanceAlt = animation?.direction === 'left' ? -distanceMetadata : animation?.direction === 'right' ? distanceMetadata : 0;
   const metadataAltStyle: CSSProperties = {
-    left: animation?.phase === 'initial' ? distanceAlt : 0,
+    left: animation?.phase === 'initial' ? left * directionFactor * -1 : 0,
     opacity: isAnimating ? 1 : 0,
-    transition: isAnimating ? defaultTransition : 'none',
+    transition: isAnimating ? 'opacity 0.2s ease-out, left 0.2s ease-out' : 'none',
     pointerEvents: 'none',
   };
+
+  const item = playlist.playlist[index];
+  const leftItem = index - 1 >= 0 ? playlist.playlist[index - 1] : null;
+  const rightItem = index + 1 < playlist.playlist.length ? playlist.playlist[index + 1] : null;
 
   const renderedItem = animation?.phase !== 'end' ? item : animation?.direction === 'right' ? rightItem : leftItem;
   const altItem = animation?.direction === 'right' ? rightItem : leftItem;
