@@ -41,13 +41,13 @@ Scenario('Header button navigates to playlist screen', async ({ I }) => {
 
 Scenario('I can slide within the featured shelf', async ({ I }) => {
   const isDesktop = await I.isDesktop();
-  const visibleTilesLocator = locate({ css: `section[data-testid="shelf-${ShelfId.featured}"] .TileSlider--visible` });
+  const visibleTileLocator = locate({ css: `section[data-testid="shelf-${ShelfId.featured}"] div[data-testid="featured-metadata--visible"]` });
 
-  async function slide(swipeText: string) {
+  async function slide(swipeText: string, forward = true) {
     if (isDesktop) {
-      I.click({ css: 'button[aria-label="Next slide"]' });
+      I.click({ css: `button[aria-label="${forward ? 'Next' : 'Previous'} slide"]` });
     } else {
-      await I.swipeLeft({ text: swipeText });
+      forward ? await I.swipeLeft({ text: swipeText }) : await I.swipeRight({ text: swipeText });
     }
   }
 
@@ -55,18 +55,18 @@ Scenario('I can slide within the featured shelf', async ({ I }) => {
     I.see('Blender Channel');
   });
 
-  await within(visibleTilesLocator, function () {
+  await within(visibleTileLocator, function () {
     I.dontSee('Spring');
-    I.dontSee('8 min');
+    I.dontSee('Spring is a 2019 animated');
   });
 
   await within(makeShelfXpath(ShelfId.featured), async () => {
     await slide('Blender Channel');
   });
 
-  await within(visibleTilesLocator, function () {
+  await within(visibleTileLocator, function () {
     I.waitForElement('text=Spring', 3);
-    I.see('8 min');
+    I.see('Spring is a 2019 animated');
   });
 
   // Without this extra wait, the second slide action happens too fast after the first and even though the
@@ -74,10 +74,10 @@ Scenario('I can slide within the featured shelf', async ({ I }) => {
   I.wait(1);
 
   await within(makeShelfXpath(ShelfId.featured), async () => {
-    await slide('Spring');
+    await slide('Spring', false);
   });
 
-  await within(visibleTilesLocator, function () {
+  await within(visibleTileLocator, function () {
     I.waitForElement('text="Blender Channel"', 3);
     I.dontSee('Spring');
   });

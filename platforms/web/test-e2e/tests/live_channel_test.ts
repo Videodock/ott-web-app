@@ -184,6 +184,7 @@ Scenario('I can select a previous program on the same channel and watch the vide
 
 Scenario('I can select a program on another channel', async ({ I }) => {
   await I.openVideoCard('Channel 1');
+  I.wait(1);
   I.click(channel2Locator);
 
   waitForEpgAnimation(I);

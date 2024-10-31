@@ -17,6 +17,7 @@
   "filter_videos_by_genre": "Filtrar videos por género",
   "home": "Inicio",
   "live": "EN VIVO",
+  "more_info": "Más información",
   "now": "Ahora",
   "play_item": "Reproducir {{title}}",
   "scheduled": "Programada",
@@ -27,5 +28,6 @@
   "slide_next": "Siguiente diapositiva",
   "slide_previous": "Diapositiva anterior",
   "slide_right": "Deslizar hacia la derecha",
+  "slide_to": "Desliza al ítem {{item}} de {{items}}",
   "videoplayer": "Reproductor de video"
 }

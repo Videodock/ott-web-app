@@ -21,6 +21,11 @@ export const setThemingVariables = (config: Config) => {
   if (backgroundColor) {
     root.style.setProperty('--body-background-color', backgroundColor);
     root.style.setProperty('--background-contrast-color', calculateContrastColor(backgroundColor));
+
+    // Featured shelf should always be dark, so on a light background we fall back to gray
+    if (calculateContrastColor(backgroundColor) !== '#FFFFFF') {
+      root.style.setProperty('--featured-shelf-background-color', '#1f1f1f');
+    }
   }
   if (bodyFont) {
     root.style.setProperty('--body-font-family', bodyFont);
