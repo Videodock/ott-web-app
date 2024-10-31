@@ -6,7 +6,11 @@ exports[`<TruncatedText> > renders and matches snapshot 1`] = `
     class="_truncatedText_b1c064"
     style="max-height: calc(1.5em * 8); -webkit-line-clamp: 8;"
   >
-    Test...
+    <div
+      class="_markdown_e219e2"
+    >
+      Test...
+    </div>
   </div>
 </div>
 `;

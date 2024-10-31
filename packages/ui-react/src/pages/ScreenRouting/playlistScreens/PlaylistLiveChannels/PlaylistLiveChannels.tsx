@@ -211,14 +211,7 @@ const PlaylistLiveChannels: ScreenComponent<Playlist> = ({ data: { feedid, playl
           />
         )}
         <div className={styles.epgContainer}>
-          <Epg
-            channels={channels}
-            onChannelClick={handleChannelClick}
-            onProgramClick={handleProgramClick}
-            selectedChannel={channel}
-            program={program}
-            config={config}
-          />
+          <Epg channels={channels} onChannelClick={handleChannelClick} onProgramClick={handleProgramClick} selectedChannel={channel} program={program} />
         </div>
       </VideoDetails>
     </>

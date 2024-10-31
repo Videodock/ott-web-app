@@ -5,6 +5,7 @@ import ChevronRight from '@jwp/ott-theme/assets/icons/chevron_right.svg?react';
 import IconButton from '../IconButton/IconButton';
 import Icon from '../Icon/Icon';
 import useBreakpoint from '../../hooks/useBreakpoint';
+import MarkdownComponent from '../MarkdownComponent/MarkdownComponent';
 
 import styles from './CollapsibleText.module.scss';
 
@@ -36,7 +37,7 @@ const CollapsibleText: React.FC<Props> = ({ text, className }: Props) => {
         className={classNames(styles.textContainer, className, { [styles.collapsed]: !expanded && doesFlowOver })}
         style={{ maxHeight: expanded ? divRef.current.scrollHeight : maxHeight }}
       >
-        {text}
+        <MarkdownComponent tag="span" markdownString={text} inline />
       </p>
       {doesFlowOver && (
         <IconButton

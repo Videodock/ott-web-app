@@ -111,7 +111,7 @@ const LayoutGrid = <Item extends object>({ className, columnCount, data, renderC
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [columnCount]);
 
-  const gridCellStyle = useMemo(() => ({ width: `${Math.round(100 / columnCount)}%` }), [columnCount]);
+  const gridCellStyle = useMemo(() => ({ width: `${Math.floor((100 / columnCount) * 100) / 100}%` }), [columnCount]);
 
   return (
     <div role="grid" ref={gridRef} aria-rowcount={rowCount} className={className} onKeyDown={handleKeyDown}>

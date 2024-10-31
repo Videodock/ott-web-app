@@ -554,6 +554,15 @@ const stepsObj = {
   clickHome: function (this: CodeceptJS.I) {
     this.click('a[href="/"]');
   },
+  seeCssProperties: async function (this: CodeceptJS.I, locatorOrString: CodeceptJS.LocatorOrString, cssProperties: Record<string, string>) {
+    for (const property in cssProperties) {
+      const locator = locate(locatorOrString);
+      const actual = await this.grabCssPropertyFrom(locator, property);
+      const expected = cssProperties[property];
+
+      assert.equal(actual, expected, `CSS property '${property}' for ${locator.toString()} doesn't match the expected value.`);
+    }
+  },
 };
 declare global {
   // noinspection JSUnusedGlobalSymbols

@@ -32,7 +32,12 @@ const PlaylistGrid: ScreenComponent<Playlist> = ({ data, isLoading }) => {
 
   const pageTitle = `${data.title} - ${config.siteName}`;
 
-  const getUrl = (playlistItem: PlaylistItem) => mediaURL({ id: playlistItem.mediaid, title: playlistItem.title, playlistId: playlistItem.feedid });
+  const getUrl = (playlistItem: PlaylistItem) =>
+    mediaURL({
+      id: playlistItem.mediaid,
+      title: playlistItem.title,
+      playlistId: playlistItem.feedid,
+    });
 
   return (
     <div className={styles.playlist}>
@@ -41,21 +46,19 @@ const PlaylistGrid: ScreenComponent<Playlist> = ({ data, isLoading }) => {
         <meta property="og:title" content={pageTitle} />
         <meta name="twitter:title" content={pageTitle} />
       </Helmet>
-      <div className={styles.main}>
-        <header className={styles.header}>
-          <h1>{data.title}</h1>
-          {shouldShowFilter && <Filter name="genre" value={filter} defaultLabel="All" options={categories} setValue={setFilter} />}
-        </header>
-        <CardGrid
-          getUrl={getUrl}
-          playlist={filteredPlaylist}
-          accessModel={accessModel}
-          isLoggedIn={!!user}
-          hasSubscription={!!subscription}
-          isLoading={isLoading}
-          headingLevel={2}
-        />
-      </div>
+      <header className={styles.header}>
+        <h1>{data.title}</h1>
+        {shouldShowFilter && <Filter name="genre" value={filter} defaultLabel="All" options={categories} setValue={setFilter} />}
+      </header>
+      <CardGrid
+        getUrl={getUrl}
+        playlist={filteredPlaylist}
+        accessModel={accessModel}
+        isLoggedIn={!!user}
+        hasSubscription={!!subscription}
+        isLoading={isLoading}
+        headingLevel={2}
+      />
     </div>
   );
 };

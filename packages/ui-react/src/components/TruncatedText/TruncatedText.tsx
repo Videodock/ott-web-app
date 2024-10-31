@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import MarkdownComponent from '../MarkdownComponent/MarkdownComponent';
+
 import styles from './TruncatedText.module.scss';
 
 type TruncatedTextProps = {
@@ -18,7 +20,7 @@ const TruncatedText: React.FC<TruncatedTextProps> = ({ text, maximumLines, class
         WebkitLineClamp: maximumLines,
       }}
     >
-      {text}
+      <MarkdownComponent markdownString={text} inline />
     </div>
   );
 };

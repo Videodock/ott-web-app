@@ -5,10 +5,9 @@
 
 .details {
   padding: 24px 0;
-  color: var(--primary-color);
-  font-family: var(--body-font-family);
+  font-family: var(--body-font-family), sans-serif;
   font-weight: 400;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.14), 0 3px 4px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.2);
+  text-shadow: var(--body-text-shadow);
 
   @include responsive.desktop-small-only() {
     padding: 24px 0;

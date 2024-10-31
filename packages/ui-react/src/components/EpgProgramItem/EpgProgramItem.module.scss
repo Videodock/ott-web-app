@@ -31,11 +31,11 @@
   }
 
   &.live {
-    border: 2px solid theme.$primary-color;
+    border: 2px solid variables.$white;
   }
 
   &.selected {
-    background-color: var(--highlight-color, theme.$primary-color);
+    background-color: variables.$white;
 
     .epgProgramTitle {
       color: theme.$epg-title-selected-color;
@@ -47,7 +47,7 @@
   }
 
   &:not(.disabled):hover {
-    border: 2px solid theme.$primary-color;
+    border: 2px solid variables.$white;
     transform: scale(1.01);
   }
 

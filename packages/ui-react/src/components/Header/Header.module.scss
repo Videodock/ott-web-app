@@ -10,8 +10,8 @@
 
 .header {
   height: variables.$header-height;
-  padding: 0 calc(#{variables.$base-spacing} * 2);
-  color: var(--header-contrast-color, variables.$white);
+  padding: 0 calc(variables.$base-spacing * 3);
+  color: var(--header-contrast-color, --body-color, variables.$white);
   background: var(--header-background, transparent);
 
   //
@@ -166,7 +166,7 @@
     bottom: 0;
     left: calc(variables.$base-spacing / 2);
     height: 2px;
-    background-color: variables.$white;
+    background-color: var(--highlight-color);
     content: '';
   }
 
@@ -180,11 +180,6 @@
 // --------------------------------
 
 @include responsive.mobile-and-tablet() {
-  .header {
-    height: variables.$header-height-mobile;
-    padding: 10px calc(variables.$base-spacing * 2);
-  }
-
   .menu {
     display: block;
   }
@@ -203,6 +198,12 @@
     .actions > *:not(:first-child) { // all action buttons except the search bar
       display: none;
     }
+  }
+}
+
+@include responsive.tablet-only() {
+  .header {
+    padding: 10px calc(variables.$base-spacing * 2);
   }
 }
 

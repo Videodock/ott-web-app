@@ -22,10 +22,10 @@ export const formatDuration = (duration: number) => {
   const hours = Math.floor(duration / 3600);
   const minutes = Math.round((duration - hours * 3600) / 60);
 
-  const hoursString = hours ? `${hours}hrs ` : '';
-  const minutesString = minutes ? `${minutes}min ` : '';
+  const hoursString = hours ? `${hours}hrs` : '';
+  const minutesString = minutes ? `${minutes}min` : '';
 
-  return `${hoursString}${minutesString}`;
+  return [hoursString, minutesString].filter(Boolean).join(' ');
 };
 
 export const formatPrice = (price: number, currency: string, country?: string) => {

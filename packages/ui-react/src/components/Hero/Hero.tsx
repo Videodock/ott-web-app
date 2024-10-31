@@ -1,36 +1,21 @@
-import classNames from 'classnames';
-import React from 'react';
+import React, { type PropsWithChildren } from 'react';
 
-import useBreakpoint, { Breakpoint } from '../../hooks/useBreakpoint';
-import CollapsibleText from '../CollapsibleText/CollapsibleText';
 import Image from '../Image/Image';
-import TruncatedText from '../TruncatedText/TruncatedText';
 
 import styles from './Hero.module.scss';
 
-type Props = {
-  title: string;
-  description: string;
+type Props = PropsWithChildren<{
   image?: string;
-};
+}>;
 
-const Hero = ({ title, description, image }: Props) => {
-  const breakpoint: Breakpoint = useBreakpoint();
-  const isMobile = breakpoint === Breakpoint.xs;
+const Hero = ({ image, children }: Props) => {
   const alt = ''; // intentionally empty for a11y, because adjacent text alternative
 
   return (
-    <div className={classNames(styles.hero, styles.heroPadding)}>
+    <div className={styles.hero}>
       <Image className={styles.poster} image={image} width={1280} alt={alt} />
       <div className={styles.posterFade} />
-      <div className={styles.info}>
-        <h1 className={styles.title}>{title}</h1>
-        {isMobile ? (
-          <CollapsibleText text={description} className={styles.description} />
-        ) : (
-          <TruncatedText text={description} maximumLines={8} className={styles.description} />
-        )}
-      </div>
+      <div className={styles.info}>{children}</div>
     </div>
   );
 };

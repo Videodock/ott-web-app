@@ -34,7 +34,7 @@ exports[`<Favorites> > renders and matches snapshot 1`] = `
             class="_cell_19b484"
             id="layout_grid_0-0"
             role="gridcell"
-            style="width: 33%;"
+            style="width: 33.33%;"
           >
             <a
               class="_card_d75732"
@@ -81,7 +81,7 @@ exports[`<Favorites> > renders and matches snapshot 1`] = `
             class="_cell_19b484"
             id="layout_grid_0-1"
             role="gridcell"
-            style="width: 33%;"
+            style="width: 33.33%;"
           >
             <a
               class="_card_d75732"
@@ -128,7 +128,7 @@ exports[`<Favorites> > renders and matches snapshot 1`] = `
             class="_cell_19b484"
             id="layout_grid_0-2"
             role="gridcell"
-            style="width: 33%;"
+            style="width: 33.33%;"
           >
             <a
               class="_card_d75732"

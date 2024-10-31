@@ -10,7 +10,11 @@ exports[`<CollapsibleText> > renders and matches snapshot 1`] = `
       id="collapsible-content"
       style="max-height: 60px;"
     >
-      Test...
+      <span
+        class="_markdown_e219e2"
+      >
+        Test...
+      </span>
     </p>
   </div>
 </div>
