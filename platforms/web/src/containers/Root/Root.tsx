@@ -14,6 +14,7 @@ import AppRoutes from '../AppRoutes/AppRoutes';
 
 import registerCustomScreens from '#src/screenMapping';
 import { useTrackConfigKeyChange } from '#src/hooks/useTrackConfigKeyChange';
+import accountModals from '#src/accountModals';
 
 const IS_DEMO_OR_PREVIEW = IS_DEMO_MODE || IS_PREVIEW_MODE;
 
@@ -93,7 +94,7 @@ const Root: FC = () => {
   return (
     <>
       {isReady && <AppRoutes />}
-      {isReady && <AccountModal />}
+      {isReady && <AccountModal modals={accountModals} />}
       {/*This is moved to a separate, parallel component to reduce rerenders */}
       <RootLoader onReady={onReadyCallback} />
     </>
