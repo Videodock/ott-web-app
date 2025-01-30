@@ -1,37 +1,17 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { isValidElement, type PropsWithChildren, type ReactElement, Suspense, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { shallow } from '@jwp/ott-common/src/utils/compare';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
 import { useAccountStore } from '@jwp/ott-common/src/stores/AccountStore';
-import { modalURLFromLocation, createURLFromLocation } from '@jwp/ott-ui-react/src/utils/location';
+import { createURLFromLocation, modalURLFromLocation } from '@jwp/ott-ui-react/src/utils/location';
 import useEventCallback from '@jwp/ott-hooks-react/src/useEventCallback';
 import useQueryParam from '@jwp/ott-ui-react/src/hooks/useQueryParam';
 
 import LoadingOverlay from '../../components/LoadingOverlay/LoadingOverlay';
-import Welcome from '../../components/Welcome/Welcome';
-import PaymentFailed from '../../components/PaymentFailed/PaymentFailed';
 import Dialog from '../../components/Dialog/Dialog';
-import DeleteAccountModal from '../../components/DeleteAccountModal/DeleteAccountModal';
-import FinalizePayment from '../../components/FinalizePayment/FinalizePayment';
-import WaitingForPayment from '../../components/WaitingForPayment/WaitingForPayment';
-import UpgradeSubscription from '../../components/UpgradeSubscription/UpgradeSubscription';
-import DeleteAccountPasswordWarning from '../../components/DeleteAccountPasswordWarning/DeleteAccountPasswordWarning';
-import UpdatePaymentMethod from '../UpdatePaymentMethod/UpdatePaymentMethod';
+import type { ModalRouteProps } from '../AccountModalRoute/AccountModalRoute';
 
-import EditCardDetails from './forms/EditCardDetails';
-import EditPassword from './forms/EditPassword';
-import RenewSubscription from './forms/RenewSubscription';
-import CancelSubscription from './forms/CancelSubscription';
-import ResetPassword from './forms/ResetPassword';
-import Checkout from './forms/Checkout';
-import ChooseOffer from './forms/ChooseOffer';
-import PersonalDetails from './forms/PersonalDetails';
-import Registration from './forms/Registration';
-import Login from './forms/Login';
 import styles from './AccountModal.module.scss';
-
-// @todo: connect with route typings
-const PUBLIC_VIEWS = ['login', 'create-account', 'forgot-password', 'reset-password', 'send-confirmation', 'edit-password'];
 
 export type AccountModals = {
   login: 'login';
@@ -63,19 +43,16 @@ export type AccountModals = {
   'finalize-payment': 'finalize-payment';
 };
 
-const AccountModal = () => {
+const AccountModal = ({ children }: PropsWithChildren) => {
   const navigate = useNavigate();
   const location = useLocation();
   const viewParam = useQueryParam('u');
   const viewParamRef = useRef(viewParam);
-  const message = useQueryParam('message');
   const { loading, user } = useAccountStore(({ loading, user }) => ({ loading, user }), shallow);
   const config = useConfigStore((s) => s.config);
   const {
     assets: { banner },
-    siteName,
   } = config;
-  const isPublicView = viewParam && PUBLIC_VIEWS.includes(viewParam);
 
   const toLogin = useEventCallback(() => {
     navigate(modalURLFromLocation(location, 'login'));
@@ -87,83 +64,36 @@ const AccountModal = () => {
     return viewParamRef.current;
   }, [viewParam]);
 
+  const currentModal = useMemo(() => {
+    return React.Children.toArray(children).find((child) => {
+      if (isValidElement(child) && child.props.param) {
+        return child.props.param === view;
+      }
+
+      return false;
+    });
+  }, [children, view]) as ReactElement<ModalRouteProps> | undefined;
+
+  const isPublicView = !!currentModal?.props.isPublic;
+  const shouldShowBanner = !currentModal?.props.hideBanner;
+  const dialogSize = currentModal?.props.size || 'small';
+  const unauthorized = !!viewParam && !loading && !user && !isPublicView;
+
   useEffect(() => {
-    if (!!viewParam && !loading && !user && !isPublicView) {
+    if (unauthorized) {
       toLogin();
     }
-  }, [viewParam, loading, isPublicView, user, toLogin]);
+  }, [toLogin, unauthorized]);
 
   const closeHandler = useEventCallback(() => {
     navigate(createURLFromLocation(location, { u: null, message: null }));
   });
 
-  const renderForm = () => {
-    if (!user && loading && !isPublicView) {
-      return (
-        <div style={{ height: 300 }}>
-          <LoadingOverlay inline />
-        </div>
-      );
-    }
-
-    switch (view) {
-      case 'login':
-        return <Login />;
-      case 'create-account':
-        return <Registration />;
-      case 'personal-details':
-        return <PersonalDetails />;
-      case 'choose-offer':
-        return <ChooseOffer />;
-      case 'edit-card':
-        return <EditCardDetails />;
-      case 'upgrade-subscription':
-        return <ChooseOffer />;
-      case 'upgrade-subscription-error':
-        return <UpgradeSubscription type="error" onCloseButtonClick={closeHandler} />;
-      case 'upgrade-subscription-success':
-        return <UpgradeSubscription type="success" onCloseButtonClick={closeHandler} />;
-      case 'upgrade-subscription-pending':
-        return <UpgradeSubscription type="pending" onCloseButtonClick={closeHandler} />;
-      case 'checkout':
-        return <Checkout />;
-      case 'payment-error':
-        return <PaymentFailed type="error" message={message} onCloseButtonClick={closeHandler} />;
-      case 'payment-cancelled':
-        return <PaymentFailed type="cancelled" message={message} onCloseButtonClick={closeHandler} />;
-      case 'welcome':
-        return <Welcome onCloseButtonClick={closeHandler} onCountdownCompleted={closeHandler} siteName={siteName} />;
-      case 'reset-password':
-        return <ResetPassword type="reset" />;
-      case 'forgot-password':
-        return <ResetPassword type="forgot" />;
-      case 'add-password':
-        return <EditPassword type="add" />;
-      case 'delete-account':
-      case 'delete-account-confirmation':
-        return <DeleteAccountModal />;
-      case 'warning-account-deletion':
-        return <DeleteAccountPasswordWarning />;
-      case 'send-confirmation':
-        return <ResetPassword type="confirmation" />;
-      case 'edit-password':
-        return <EditPassword />;
-      case 'unsubscribe':
-        return <CancelSubscription />;
-      case 'renew-subscription':
-        return <RenewSubscription />;
-      case 'payment-method':
-      case 'payment-method-success':
-        return <UpdatePaymentMethod onCloseButtonClick={closeHandler} />;
-      case 'waiting-for-payment':
-        return <WaitingForPayment />;
-      case 'finalize-payment':
-        return <FinalizePayment />;
-    }
-  };
-
-  const shouldShowBanner = !['delete-account', 'delete-account-confirmation', 'edit-card', 'warning-account-deletion'].includes(view ?? '');
-  const dialogSize = ['delete-account-confirmation'].includes(view ?? '') ? 'large' : 'small';
+  const fallback = (
+    <div style={{ height: 300 }}>
+      <LoadingOverlay inline />
+    </div>
+  );
 
   return (
     <Dialog size={dialogSize} open={!!viewParam} onClose={closeHandler}>
@@ -172,7 +102,7 @@ const AccountModal = () => {
           <img src={banner} alt="" />
         </div>
       )}
-      {renderForm()}
+      <Suspense fallback={fallback}>{unauthorized ? fallback : currentModal}</Suspense>
     </Dialog>
   );
 };
