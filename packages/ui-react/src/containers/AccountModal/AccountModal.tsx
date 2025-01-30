@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useMemo, useRef } from 'react';
+import React, { isValidElement, type PropsWithChildren, Suspense, useEffect, useMemo, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { shallow } from '@jwp/ott-common/src/utils/compare';
 import { useConfigStore } from '@jwp/ott-common/src/stores/ConfigStore';
@@ -42,15 +42,7 @@ export type AccountModals = {
   'finalize-payment': 'finalize-payment';
 };
 
-type ModalDef = {
-  key: string;
-  component: React.ReactNode;
-  public?: boolean;
-  hideBanner?: boolean;
-  size?: 'large' | 'small';
-};
-
-const AccountModal = ({ modals }: { modals: ModalDef[] }) => {
+const AccountModal = ({ children }: PropsWithChildren) => {
   const navigate = useNavigate();
   const location = useLocation();
   const viewParam = useQueryParam('u');
@@ -71,9 +63,27 @@ const AccountModal = ({ modals }: { modals: ModalDef[] }) => {
     return viewParamRef.current;
   }, [viewParam]);
 
-  const currentModal = useMemo(() => modals.find(({ key }) => key === view), [view, modals]);
-  const isPublicView = !!currentModal?.public;
-  const shouldShowBanner = !!currentModal?.hideBanner;
+  const modals = useMemo(() => {
+    return (
+      React.Children.map(children, (child) => {
+        if (!isValidElement(child) || !('param' in child.props) || !('element' in child.props)) {
+          throw new Error('<AccountModalRoute /> component expected as children');
+        }
+
+        return {
+          param: child.props.param,
+          element: child.props.element,
+          isPublic: !!child.props.isPublic,
+          hideBanner: false,
+          size: 'small' as const,
+        };
+      }) || []
+    );
+  }, [children]);
+
+  const currentModal = useMemo(() => modals.find(({ param }) => param === view), [modals, view]);
+  const isPublicView = !!currentModal?.isPublic;
+  const shouldShowBanner = !currentModal?.hideBanner;
   const dialogSize = currentModal?.size || 'small';
 
   useEffect(() => {
@@ -99,17 +109,18 @@ const AccountModal = ({ modals }: { modals: ModalDef[] }) => {
 
     if (!currentModal) return null;
 
-    return currentModal.component;
+    return currentModal.element;
   };
 
   return (
     <Dialog size={dialogSize} open={!!viewParam} onClose={closeHandler}>
-      {!shouldShowBanner && banner && (
+      {shouldShowBanner && banner && (
         <div className={styles.banner}>
           <img src={banner} alt="" />
         </div>
       )}
       <Suspense fallback={fallback}>{renderForm()}</Suspense>
+      {children}
     </Dialog>
   );
 };

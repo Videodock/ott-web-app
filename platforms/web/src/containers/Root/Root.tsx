@@ -1,7 +1,6 @@
 import React, { useEffect, useState, type FC, useCallback } from 'react';
 import { IS_DEMO_MODE, IS_DEVELOPMENT_BUILD, IS_PREVIEW_MODE, IS_PROD_MODE } from '@jwp/ott-common/src/utils/common';
 import ErrorPage from '@jwp/ott-ui-react/src/components/ErrorPage/ErrorPage';
-import AccountModal from '@jwp/ott-ui-react/src/containers/AccountModal/AccountModal';
 import DevConfigSelector from '@jwp/ott-ui-react/src/components/DevConfigSelector/DevConfigSelector';
 import LoadingOverlay from '@jwp/ott-ui-react/src/components/LoadingOverlay/LoadingOverlay';
 import { type BootstrapData, type OnReadyCallback, useBootstrapApp } from '@jwp/ott-hooks-react/src/useBootstrapApp';
@@ -14,7 +13,6 @@ import AppRoutes from '../AppRoutes/AppRoutes';
 
 import registerCustomScreens from '#src/screenMapping';
 import { useTrackConfigKeyChange } from '#src/hooks/useTrackConfigKeyChange';
-import accountModals from '#src/accountModals';
 
 const IS_DEMO_OR_PREVIEW = IS_DEMO_MODE || IS_PREVIEW_MODE;
 
@@ -94,7 +92,6 @@ const Root: FC = () => {
   return (
     <>
       {isReady && <AppRoutes />}
-      {isReady && <AccountModal modals={accountModals} />}
       {/*This is moved to a separate, parallel component to reduce rerenders */}
       <RootLoader onReady={onReadyCallback} />
     </>
