@@ -77,8 +77,8 @@ export default function AppRoutes() {
         <AccountModalRoute param="upgrade-subscription-success" element={<UpgradeSubscription type="success" onCloseButtonClick={() => undefined} />} />
         <AccountModalRoute param="upgrade-subscription-pending" element={<UpgradeSubscription type="pending" onCloseButtonClick={() => undefined} />} />
 
-        <AccountModalRoute param="reset-password" element={<ResetPassword type="reset" />} />
-        <AccountModalRoute param="forgot-password" element={<ResetPassword type="forgot" />} />
+        <AccountModalRoute param="reset-password" element={<ResetPassword type="reset" />} isPublic />
+        <AccountModalRoute param="forgot-password" element={<ResetPassword type="forgot" />} isPublic />
         <AccountModalRoute param="edit-password" element={<EditPassword />} />
         <AccountModalRoute param="send-confirmation" element={<ResetPassword type="confirmation" />} />
         <AccountModalRoute param="add-password" element={<EditPassword type="add" />} />
